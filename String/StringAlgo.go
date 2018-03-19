@@ -18,8 +18,8 @@ func main() {
 	fmt.Println(isPalindrome("aplelpa"))
 	fmt.Println(isPalindrome("applppe"))
 	fmt.Println(isPalindrome("apllpa"))
-	fmt.Println(isPermutation("apllpa", "pllpaa"))
-	fmt.Println(isPermutation("apllpa", "apllpaa"))
+	fmt.Println(isPermutation("apple", "plpae"))
+	fmt.Println(isPermutation("apple", "plpbe"))
 	fmt.Println(pow(2, 10))
 
 	printAnagram("12345")
