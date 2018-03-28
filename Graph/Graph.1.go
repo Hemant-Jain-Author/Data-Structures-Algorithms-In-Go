@@ -1,4 +1,5 @@
 package main
+
 /*
 import (
 	"container/heap"
@@ -399,7 +400,7 @@ func (g *Graph) IsConnected() bool {
 	}
 	visited[0] = 1
 	g.DFSRec(0, visited)
-	
+
 	for i := 0; i < count; i++ {
 		if visited[i] == 0 {
 			return false

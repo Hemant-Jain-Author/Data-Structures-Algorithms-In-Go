@@ -5,18 +5,18 @@ import (
 	"strings"
 )
 
-type Node struct {
+type TreeNode struct {
 	value  string
 	count  int
-	lChild *Node
-	rChild *Node
+	lChild *TreeNode
+	rChild *TreeNode
 }
 
 type StringTree struct {
-	root *Node
+	root *TreeNode
 }
 
-func main() {
+func main3() {
 	tt := new(StringTree)
 	tt.Insert("banana")
 	tt.Insert("apple")
@@ -43,7 +43,7 @@ func (t *StringTree) print() {
 	t.printUtil(t.root)
 }
 
-func (t *StringTree) printUtil(curr *Node) {
+func (t *StringTree) printUtil(curr *TreeNode) {
 	if curr != nil {
 		fmt.Println(" value is ::", curr.value)
 		fmt.Println(" count is :: ", curr.count)
@@ -56,10 +56,10 @@ func (t *StringTree) Insert(value string) {
 	t.root = t.insertUtil(value, t.root)
 }
 
-func (t *StringTree) insertUtil(value string, curr *Node) *Node {
+func (t *StringTree) insertUtil(value string, curr *TreeNode) *TreeNode {
 	var compare int
 	if curr == nil {
-		curr = new(Node)
+		curr = new(TreeNode)
 		curr.value = value
 	} else {
 		compare = strings.Compare(curr.value, value)
@@ -84,7 +84,7 @@ func (t *StringTree) Find(value string) bool {
 	return ret
 }
 
-func (t *StringTree) findUtil(curr *Node, value string) bool {
+func (t *StringTree) findUtil(curr *TreeNode, value string) bool {
 	var compare int
 	if curr == nil {
 		return false
@@ -104,7 +104,7 @@ func (t *StringTree) frequency(value string) int {
 	return t.frequencyUtil(t.root, value)
 }
 
-func (t *StringTree) frequencyUtil(curr *Node, value string) int {
+func (t *StringTree) frequencyUtil(curr *TreeNode, value string) int {
 	var compare int
 	if curr == nil {
 		return 0

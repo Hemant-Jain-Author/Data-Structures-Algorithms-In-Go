@@ -24,6 +24,6 @@ func maxAreaCheck(length, width, limit int) bool {
 		return false
 	}
 }
-func main() {
+func main13() {
 
 }

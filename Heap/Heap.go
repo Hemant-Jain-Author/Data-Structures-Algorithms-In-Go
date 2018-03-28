@@ -14,7 +14,7 @@ func main() {
 	for i := 0; i < n; i++ {
 		fmt.Println("pop value :: ", hp.Remove())
 	}
-	*/
+
 	/*n := len(a)
 	hp := NewHeap(a, true)
 

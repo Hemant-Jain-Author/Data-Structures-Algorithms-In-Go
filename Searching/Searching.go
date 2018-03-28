@@ -6,31 +6,31 @@ import (
 )
 
 func main() {
-	/*
-		first := []int{1, 3, 5, 7, 9, 7, 25, 21, 30}
-		second := []int{2, 4, 6, 8, 10, 12, 14, 8, 21, 23, 24}
-		fmt.Println(linearSearchUnsorted(first, 8))
-		fmt.Println(linearSearchUnsorted(second, 8))
-		fmt.Println(Binarysearch(second, 18))
-		fmt.Println(Binarysearch(second, 16))
 
-		printRepeating(second)
-		printRepeating(first)
-		printRepeating2(second)
-		printRepeating2(first)
-		printRepeating3(second)
-		printRepeating3(first)
-		printRepeating4(second, 100)
-		printRepeating4(first, 100)
+	/*first := []int{1, 3, 5, 7, 9, 7, 25, 21, 30}
+	second := []int{2, 4, 6, 8, 10, 12, 14, 8, 21, 23, 24}
+	fmt.Println(linearSearchUnsorted(first, 8))
+	fmt.Println(linearSearchUnsorted(second, 8))
+	fmt.Println(Binarysearch(second, 18))
+	fmt.Println(Binarysearch(second, 16))
 
-		fmt.Println(getMax(first))
-		fmt.Println(getMax(second))
-		fmt.Println(getMax2(first))
-		fmt.Println(getMax2(second))
-		fmt.Println(getMax3(first,100))
-		fmt.Println(getMax3(second,100))
-	*/
-	/*
+	printRepeating(second)
+	printRepeating(first)
+	printRepeating2(second)
+	printRepeating2(first)
+	printRepeating3(second)
+	printRepeating3(first)
+	printRepeating4(second, 100)
+	printRepeating4(first, 100)
+
+	fmt.Println(getMax(first))
+	fmt.Println(getMax(second))
+	fmt.Println(getMax2(first))
+	fmt.Println(getMax2(second))
+	fmt.Println(getMax3(first, 100))
+	fmt.Println(getMax3(second, 100))
+
+
 		first := []int{1, 3, 5, 7, 9, 7, 25, 21, 30}
 		second := []int{1, 3, 3, 7, 3, 7, 2, 3, 3}
 		fmt.Println(getMajority(first))
@@ -39,8 +39,8 @@ func main() {
 		fmt.Println(getMajority2(second))
 		fmt.Println(getMajority3(first))
 		fmt.Println(getMajority3(second))
-	*/
-	/*
+
+
 		first := []int{1, 3, 5, 7, 2, 4, 6, 10, 9}
 		second := []int{1, 3, 2, 5, 4, 7, 6, 8, 9}
 		fmt.Println(findMissingNumber(first))
@@ -53,25 +53,25 @@ func main() {
 		fmt.Println(FindPair2(second, 7))
 		fmt.Println(FindPair3(first, 7))
 		fmt.Println(FindPair3(second, 7))
-	*/
-	/*
+
+
 		first := []int{1, 3, 5, -7, 2, -4, 6, -10, -9}
-		minabsSumPair(first)
-		minabsSumPair2(first)
-	*/
-	/*
+		minAbsSumPair(first)
+		minAbsSumPair2(first)
+
+
 		first := []int{1, 3, 5, 7, 4, 1, -1, -9}
 		fmt.Println(SearchBitonicArrayMax(first))
 		fmt.Println(FindMaxBitonicArray(first))
 		fmt.Println(SearchBitonicArray(first, 6))
-	*/
-	/*
+
+
 		first := []int{1, 3, 5, 7, 2, 4, 6, 8, 9}
 		second := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
-		fmt.Println(checkPermutation(first, second))
-		fmt.Println(checkPermutation2(first, second))
-	*/
-	/*
+		fmt.Println(CheckPermutation(first, second))
+		fmt.Println(CheckPermutation2(first, second))
+
+
 		first := []int{1, 3, 5, 7, 3, 4, 3, 8, 9}
 		second := []int{1, 2, 3, 3, 5, 5, 5, 6, 6}
 
@@ -79,8 +79,8 @@ func main() {
 		fmt.Println(findKeyCount(second, 3))
 		fmt.Println(findKeyCount(second, 5))
 		fmt.Println(findKeyCount(second, 6))
-	*/
-	/*
+
+
 		first := []int{1, 3, 5, 7, 3, 4, 3, 8, 9}
 		maxProfit(first)
 		seperateEvenAndOdd(first)
@@ -90,20 +90,19 @@ func main() {
 		second := []int{1, 2, 3, 3, 5, 5, 5, 6, 6}
 		sort.Ints(second)
 		fmt.Println(findMedian(first, second))
-	*/
-	/*
-		first := []int{0, 0, 1, 1, 1, 1, 1, 1, 1}
-		fmt.Println(BinarySearch01(first))
 
-		second := []int{5, 5, 6, 6, 1, 2, 3, 3, 4}
-		fmt.Println(BinarySearchRotateArray(second, 4))
-		fmt.Println(BinarySearchRotateArray(second, 2))
-		fmt.Println(BinarySearchRotateArray(second, 5))
-		fmt.Println(BinarySearchRotateArray(second, 7))
 
-		first := []int{1, 3, 5, 7,6,6, 3, 4, 3, 8, 9}
-		fmt.Println(FirstRepeated(first))
+	first := []int{0, 0, 1, 1, 1, 1, 1, 1, 1}
+	fmt.Println(BinarySearch01(first))
+
+	second := []int{5, 5, 6, 6, 1, 2, 3, 3, 4}
+	fmt.Println(BinarySearchRotateArray(second, 4))
+	fmt.Println(BinarySearchRotateArray(second, 2))
+	fmt.Println(BinarySearchRotateArray(second, 5))
+	fmt.Println(BinarySearchRotateArray(second, 7))
 	*/
+	first := []int{1, 3, 5, 7, 6, 6, 3, 4, 3, 8, 9}
+	fmt.Println(FirstRepeated(first))
 
 }
 
@@ -129,6 +128,7 @@ func linearSearchSorted(data []int, value int) bool {
 	return false
 }
 
+/*Binarysearch algorithm */
 func Binarysearch(data []int, value int) bool {
 	size := len(data)
 	low := 0
@@ -136,7 +136,7 @@ func Binarysearch(data []int, value int) bool {
 	mid := 0
 
 	for low <= high {
-		mid = low + (high-low)/2
+		mid = (low + high) / 2
 		if data[mid] == value {
 			return true
 		} else if data[mid] < value {
@@ -148,6 +148,7 @@ func Binarysearch(data []int, value int) bool {
 	return false
 }
 
+/*BinarySearchRecursive algorithm */
 func BinarySearchRecursive(data []int, low int, high int, value int) bool {
 	if low > high {
 		return false
@@ -188,15 +189,20 @@ func printRepeating2(data []int) {
 	fmt.Println()
 }
 
+/*Set type is defined using map */
 type Set map[interface{}]bool
 
+/*Add function of Set type */
 func (s *Set) Add(key interface{}) {
 	(*s)[key] = true
 }
+
+/*Remove function of Set type */
 func (s *Set) Remove(key interface{}) {
 	delete((*s), key)
 }
 
+/*Find function of Set type */
 func (s *Set) Find(key interface{}) bool {
 	return (*s)[key]
 }
@@ -399,6 +405,7 @@ func findMissingNumber2(data []int, dataRange int) int {
 	return xorSum
 }
 
+/*FindPair function*/
 func FindPair(data []int, value int) bool {
 	size := len(data)
 	ret := false
@@ -413,6 +420,7 @@ func FindPair(data []int, value int) bool {
 	return ret
 }
 
+/*FindPair2 function*/
 func FindPair2(data []int, value int) bool {
 	size := len(data)
 	first := 0
@@ -434,6 +442,7 @@ func FindPair2(data []int, value int) bool {
 	return ret
 }
 
+/*FindPair3 function*/
 func FindPair3(data []int, value int) bool {
 	s := make(Set)
 	size := len(data)
@@ -505,6 +514,7 @@ func minAbsSumPair2(data []int) {
 	fmt.Println(" The two elements with minimum sum are : ", data[minFirst], " , ", data[minSecond])
 }
 
+/*SearchBitonicArrayMax function*/
 func SearchBitonicArrayMax(data []int) (int, bool) {
 	size := len(data)
 	start := 0
@@ -536,17 +546,18 @@ func SearchBitonicArrayMax(data []int) (int, bool) {
 	return mid, true
 }
 
+/*SearchBitonicArray function*/
 func SearchBitonicArray(data []int, key int) int {
 	size := len(data)
 	maxIndex, _ := FindMaxBitonicArray(data)
 	k := BinarySearch(data, 0, maxIndex, key, true)
 	if k != -1 {
 		return k
-	} else {
-		return BinarySearch(data, maxIndex+1, size-1, key, false)
 	}
+	return BinarySearch(data, maxIndex+1, size-1, key, false)
 }
 
+/*FindMaxBitonicArray function*/
 func FindMaxBitonicArray(data []int) (int, bool) {
 	size := len(data)
 	start := 0
@@ -572,6 +583,7 @@ func FindMaxBitonicArray(data []int) (int, bool) {
 	return -1, false
 }
 
+/*BinarySearch algorithm. */
 func BinarySearch(data []int, start int, end int, key int, isInc bool) int {
 	if end < start {
 		return -1
@@ -597,6 +609,7 @@ func findKeyCount(data []int, key int) int {
 	return count
 }
 
+/* FindKeyCount2 function.*/
 func findKeyCount2(data []int, key int) int {
 	size := len(data)
 	firstIndex := findFirstIndex(data, 0, size-1, key)
@@ -719,15 +732,16 @@ func max(a int, b int) int {
 	return a
 }
 
+/*BinarySearch01 Function */
 func BinarySearch01(data []int) int {
 	size := len(data)
 	if size == 1 && data[0] == 1 {
 		return -1
 	}
-	return BinarySearch01Util(data, 0, size-1)
+	return binarySearch01Util(data, 0, size-1)
 }
 
-func BinarySearch01Util(data []int, start int, end int) int {
+func binarySearch01Util(data []int, start int, end int) int {
 	if end < start {
 		return -1
 	}
@@ -736,12 +750,13 @@ func BinarySearch01Util(data []int, start int, end int) int {
 		return mid
 	}
 	if 0 == data[mid] {
-		return BinarySearch01Util(data, mid+1, end)
+		return binarySearch01Util(data, mid+1, end)
 	}
-	return BinarySearch01Util(data, start, mid-1)
+	return binarySearch01Util(data, start, mid-1)
 }
 
-func BinarySearchRotateArrayUtil(data []int, start int, end int, key int) int {
+/* Function */
+func binarySearchRotateArrayUtil(data []int, start int, end int, key int) int {
 	if end < start {
 		return -1
 	}
@@ -751,22 +766,23 @@ func BinarySearchRotateArrayUtil(data []int, start int, end int, key int) int {
 	}
 	if data[mid] > data[start] {
 		if data[start] <= key && key < data[mid] {
-			return BinarySearchRotateArrayUtil(data, start, mid-1, key)
+			return binarySearchRotateArrayUtil(data, start, mid-1, key)
 		}
-		return BinarySearchRotateArrayUtil(data, mid+1, end, key)
-	} else {
-		if data[mid] < key && key <= data[end] {
-			return BinarySearchRotateArrayUtil(data, mid+1, end, key)
-		}
-		return BinarySearchRotateArrayUtil(data, start, mid-1, key)
+		return binarySearchRotateArrayUtil(data, mid+1, end, key)
 	}
+	if data[mid] < key && key <= data[end] {
+		return binarySearchRotateArrayUtil(data, mid+1, end, key)
+	}
+	return binarySearchRotateArrayUtil(data, start, mid-1, key)
 }
 
+/*BinarySearchRotateArray Function*/
 func BinarySearchRotateArray(data []int, key int) int {
 	size := len(data)
-	return BinarySearchRotateArrayUtil(data, 0, size-1, key)
+	return binarySearchRotateArrayUtil(data, 0, size-1, key)
 }
 
+/*FirstRepeated function*/
 func FirstRepeated(data []int) int {
 	size := len(data)
 	for i := 0; i < size; i++ {
@@ -791,6 +807,7 @@ func transformArrayAB1(str string) string {
 	return string(data)
 }
 
+/*CheckPermutation function */
 func CheckPermutation(data1 []int, data2 []int) bool {
 	size1 := len(data1)
 	size2 := len(data2)
@@ -810,6 +827,7 @@ func CheckPermutation(data1 []int, data2 []int) bool {
 	return true
 }
 
+/*Search Function */
 func Search(data []int, value int) bool {
 	for _, key := range data {
 		if key == value {
@@ -819,7 +837,8 @@ func Search(data []int, value int) bool {
 	return false
 }
 
-func checkPermutation2(data1 []int, data2 []int) bool {
+/*CheckPermutation2 function*/
+func CheckPermutation2(data1 []int, data2 []int) bool {
 	size1 := len(data1)
 	size2 := len(data2)
 	h := make(map[int]int)
@@ -858,6 +877,7 @@ func removeDuplicates(data []int) int {
 	return j + 1
 }
 
+/*FindElementIn2DArray function*/
 func FindElementIn2DArray(data [][]int, r int, c int, value int) bool {
 	row := 0
 	column := c - 1

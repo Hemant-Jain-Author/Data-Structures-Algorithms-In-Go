@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func main() {
+func main7() {
 	data := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
 	SelectionSort(data)
 	fmt.Println(data)
@@ -12,7 +12,7 @@ func main() {
 	SelectionSort2(data2)
 	fmt.Println(data2)
 }
-
+/*
 func less(value1 int, value2 int) bool {
 	return value1 < value2
 }
@@ -20,10 +20,10 @@ func less(value1 int, value2 int) bool {
 func more(value1 int, value2 int) bool {
 	return value1 > value2
 }
-
+*/
 func SelectionSort(arr []int) {
 	size := len(arr)
-	var i, j, max, temp int
+	var i, j, max int
 	for i = 0; i < size-1; i++ {
 		max = 0
 		for j = 1; j < size-1-i; j++ {
@@ -37,7 +37,7 @@ func SelectionSort(arr []int) {
 
 func SelectionSort2(arr []int) {
 	size := len(arr)
-	var i, j, min, temp int
+	var i, j, min int
 	for i = 0; i < size-1; i++ {
 		min = i
 		for j = i + 1; j < size; j++ {

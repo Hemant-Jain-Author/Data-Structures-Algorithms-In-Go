@@ -2,23 +2,23 @@ package main
 
 import "fmt"
 
-type Node struct {
+type TSTNode struct {
 	data               byte
 	isLastChar         bool
-	left, equal, right *Node
+	left, equal, right *TSTNode
 }
 
 type TST struct {
-	root *Node
+	root *TSTNode
 }
 
 func (t *TST) Insert(word string) {
 	t.root = t.insertUtil(t.root, word, 0)
 }
 
-func (t *TST) insertUtil(curr *Node, word string, wordIndex int) *Node {
+func (t *TST) insertUtil(curr *TSTNode, word string, wordIndex int) *TSTNode {
 	if curr == nil {
-		curr = new(Node)
+		curr = new(TSTNode)
 		curr.data = word[wordIndex]
 	}
 	if word[wordIndex] < curr.data {
@@ -35,7 +35,7 @@ func (t *TST) insertUtil(curr *Node, word string, wordIndex int) *Node {
 	return curr
 }
 
-func (t *TST) findUtil(curr *Node, word string, wordIndex int) bool {
+func (t *TST) findUtil(curr *TSTNode, word string, wordIndex int) bool {
 	if curr == nil {
 		return false
 	}

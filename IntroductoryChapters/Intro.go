@@ -10,7 +10,7 @@ func IncrementPassByPointer(ptr *int) {
 	(*ptr)++
 }
 
-func main1() {
+func main14() {
 	i := 10
 	fmt.Println("Value of i before increment is :  ", i)
 	IncrementPassByValue(i)
@@ -68,7 +68,7 @@ func Permutation(data []int, i int, length int) {
 	}
 }
 
-func main2() {
+func main15() {
 	var data [5]int
 	for i := 0; i < 5; i++ {
 		data[i] = i
@@ -96,7 +96,7 @@ func function1() {
 	fmt.Println("fun1 line 2")
 }
 
-func main3() {
+func main16() {
 	fmt.Println("main line 1")
 	function1()
 	fmt.Println("main line 2")
@@ -119,7 +119,7 @@ func MaxSubArraySum(data []int) int {
 	return maxSoFar
 }
 
-func main4() {
+func main17() {
 	data := []int{1, -2, 3, 4, -4, 6, -14, 8, 2}
 	fmt.Println("Max sub array sum :", MaxSubArraySum(data))
 }
@@ -168,7 +168,7 @@ func SumArray(data []int) int {
 	return total
 }
 
-func main5() {
+func main18() {
 	data := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	fmt.Println("sum of all the values in array:", SumArray(data))
 }
@@ -230,18 +230,14 @@ func ReverseArray2(data []int) {
 	}
 }
 
-func main() {
+func main19() {
 	point := &coord{10, 10}
 	fmt.Println("X axis coord value is  ", point.x)
 	fmt.Println("Y axis coord value is  ", point.y)
 }
 
-func (s student) GetFirstName() string {
-	return s.firstName
-}
-
-func (s student) GetLastName() string {
-	return s.lastName
+func (s student) GetName() string {
+	return s.name
 }
 
 func (s student) GetRollNo() int {
@@ -249,28 +245,43 @@ func (s student) GetRollNo() int {
 }
 
 type student struct {
-	rollNo    int
-	firstName string
-	lastName  string
+	rollNo int
+	name   string
 }
 
-func main77() {
-	ptrStud := &student{1, "hemant", "jain"}
-	fmt.Println("Roll No:   Student Name:  ", ptrStud.GetFirstName(), ptrStud.GetLastName(), ptrStud.GetRollNo())
+func main20() {
+	stud := student{1, "johny"}
+	fmt.Println(stud)
+	fmt.Println("Student name ::", stud.name) // Accessing inner fields.
+
+	pstud := &stud
+	fmt.Println("Student name ::", pstud.name) // Accessing inner fields.
+
+	fmt.Println(student{rollNo: 2, name: "Ann"}) // Named initialization.
+	fmt.Println(student{name: "Ann", rollNo: 2}) // Order does not matter.
+	fmt.Println(student{name: "Alice"})          // Default initialization of rollNo.
 }
 
+/*
+{1 johny}
+Student name :: johny
+Student name :: johny
+{2 Ann}
+{2 Ann}
+{0 Alice}
+*/
 func Sum(num1 int, num2 int) int {
 	result := num1 + num2
 	return result
 }
 
-func main77() {
+func main21() {
 	// calling a function to calculate sum
 	result := Sum(10, 20)
 	fmt.Println("Sum is : ", result)
 }
 
-func main7() {
+func main22() {
 	// local variable definition
 	x := 10
 	y := 20
@@ -288,7 +299,7 @@ func Factorial(i int) int {
 	return i * Factorial(i-1)
 }
 
-func main(){
+func main23() {
 	fmt.Println("factorial 5 is :: ", Factorial(5))
 }
 

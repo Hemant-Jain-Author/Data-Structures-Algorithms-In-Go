@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func main() {
+func main1() {
 	st1 := "hello, world! world hello wor world"
 	st2 := "world"
 	fmt.Println("BruteForceSearch return : ", BruteForceSearch(st1, st2))

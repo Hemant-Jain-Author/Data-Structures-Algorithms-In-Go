@@ -1,9 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
-
+/*
 type item struct {
 	value    interface{}
 	priority int
@@ -122,3 +119,4 @@ func main() {
 		fmt.Println(pq.Remove())
 	}
 }
+*/

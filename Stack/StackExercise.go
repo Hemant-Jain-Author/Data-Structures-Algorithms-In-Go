@@ -32,7 +32,7 @@ func IsBalancedParenthesis(expn string) bool {
 	return stk.IsEmpty()
 }
 
-func main111() {
+func main3() {
 	expn := "{()}[]"
 	value := IsBalancedParenthesis(expn)
 	fmt.Println("Given Expn:", expn)
@@ -84,7 +84,7 @@ func postfixEvaluate(expn string) int {
 	return stk.Pop().(int)
 }
 
-func main222() {
+func main4() {
 	expn := "6 5 2 3 + 8 * + 3 + *"
 	value := postfixEvaluate(expn)
 	fmt.Println("Given Postfix Expn: ", expn)
@@ -145,7 +145,7 @@ func InfixToPostfix(expn string) string {
 	return output
 }
 
-func main333() {
+func main5() {
 	expn := "10+((3))*5/(16-4)"
 	value := InfixToPostfix(expn)
 	fmt.Println("Infix Expn: ", expn)
@@ -186,7 +186,7 @@ func replaceParanthesis(str string) string {
 	return string(a)
 }
 
-func main4444() {
+func main6() {
 	expn := "10+((3))*5/(16-4)"
 	value := InfixToPrefix(expn)
 	fmt.Println("Infix Expn: ", expn)
@@ -227,7 +227,7 @@ func StockSpanRange2(arr []int) []int {
 	return SR
 }
 
-func main666() {
+func main7() {
 	stock := []int{4, 6, 8, 12, 2, 1, 7, 8}
 	fmt.Println(stock)
 	fmt.Println(StockSpanRange(stock))
@@ -283,7 +283,7 @@ func GetMaxArea2(arr []int) int {
 	return maxArea
 }
 
-func main77() {
+func main8() {
 	stock := []int{4, 6, 8, 12, 2, 1, 7, 8}
 	fmt.Println(stock)
 	fmt.Println(GetMaxArea(stock))

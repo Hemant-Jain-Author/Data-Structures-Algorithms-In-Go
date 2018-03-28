@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main1() {
 	que := new(QueueUsingStack)
 	que.Add(1)
 	que.Add(11)

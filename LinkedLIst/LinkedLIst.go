@@ -5,13 +5,13 @@ import (
 )
 
 type List struct {
-	head  *Node
+	head  *ListNode
 	count int
 }
 
-type Node struct {
+type ListNode struct {
 	value int
-	next  *Node
+	next  *ListNode
 }
 
 // Sum returns the sum of the list elements.
@@ -33,7 +33,7 @@ func main() {
 	lst.AddHead(3)
 	lst.Print()
 	lst2 := lst.CopyList()
-	fmt.Println(lst.compareList(lst2))
+	fmt.Println(lst.CompareList(lst2))
 	lst3 := lst.CopyListReversed()
 	lst3.Print()
 	fmt.Println(lst.IsPresent(7))
@@ -57,13 +57,13 @@ func (list *List) Peek() (int, bool) {
 }
 
 func (list *List) AddHead(value int) {
-	list.head = &Node{value, list.head}
+	list.head = &ListNode{value, list.head}
 	list.count++
 }
 
 func (list *List) addTail(value int) {
 	curr := list.head
-	newNode := &Node{value, nil}
+	newNode := &ListNode{value, nil}
 
 	if curr == nil {
 		list.head = newNode
@@ -87,7 +87,7 @@ func (list *List) Print() {
 }
 
 func (list *List) SortedInsert(value int) {
-	newNode := &Node{value, nil}
+	newNode := &ListNode{value, nil}
 	curr := list.head
 
 	if curr == nil || curr.value > value {
@@ -173,7 +173,7 @@ func (list *List) FreeList() {
 
 func (list *List) Reverse() {
 	curr := list.head
-	var prev, next *Node
+	var prev, next *ListNode
 	for curr != nil {
 		next = curr.next
 		curr.next = prev
@@ -187,8 +187,8 @@ func (list *List) ReverseRecurse() {
 	list.head = list.reverseRecurseUtil(list.head, nil)
 }
 
-func (list *List) reverseRecurseUtil(currentNode *Node, nextNode *Node) *Node {
-	var ret *Node
+func (list *List) reverseRecurseUtil(currentNode *ListNode, nextNode *ListNode) *ListNode {
+	var ret *ListNode
 	if currentNode == nil {
 		return nil
 	}
@@ -214,10 +214,10 @@ func (list *List) RemoveDuplicate() {
 	}
 }
 func (list *List) CopyListReversed() *List {
-	var tempNode, tempNode2 *Node
+	var tempNode, tempNode2 *ListNode
 	curr := list.head
 	for curr != nil {
-		tempNode2 = &Node{curr.value, tempNode}
+		tempNode2 = &ListNode{curr.value, tempNode}
 		curr = curr.next
 		tempNode = tempNode2
 	}
@@ -227,7 +227,7 @@ func (list *List) CopyListReversed() *List {
 }
 
 func (list *List) CopyList() *List {
-	var headNode, tailNode, tempNode *Node
+	var headNode, tailNode, tempNode *ListNode
 	curr := list.head
 
 	if curr == nil {
@@ -236,12 +236,12 @@ func (list *List) CopyList() *List {
 		return ll2
 	}
 
-	headNode = &Node{curr.value, nil}
+	headNode = &ListNode{curr.value, nil}
 	tailNode = headNode
 	curr = curr.next
 
 	for curr != nil {
-		tempNode = &Node{curr.value, nil}
+		tempNode = &ListNode{curr.value, nil}
 		tailNode.next = tempNode
 		tailNode = tempNode
 		curr = curr.next
@@ -255,7 +255,7 @@ func (list *List) CompareList(ll *List) bool {
 	return list.compareListUtil(list.head, ll.head)
 }
 
-func (list *List) compareListUtil(head1 *Node, head2 *Node) bool {
+func (list *List) compareListUtil(head1 *ListNode, head2 *ListNode) bool {
 	if head1 == nil && head2 == nil {
 		return true
 	} else if (head1 == nil) || (head2 == nil) || (head1.value != head2.value) {
@@ -290,7 +290,7 @@ func (list *List) NthNodeFromBegining(index int) (int, bool) {
 }
 
 func (list *List) NthNodeFromEnd(index int) (int, bool) {
-	size := list.findLength()
+	size := list.FindLength()
 	if size != 0 && size < index {
 		fmt.Println("TooFewNodes")
 		return 0, false
@@ -402,7 +402,7 @@ func (list *List) RemoveLoop() {
 	secondPtr.next = nil
 }
 
-func (list *List) LoopPointDetect() *Node {
+func (list *List) LoopPointDetect() *ListNode {
 	slowPtr := list.head
 	fastPtr := list.head
 
@@ -416,7 +416,7 @@ func (list *List) LoopPointDetect() *Node {
 	return nil
 }
 
-func (list *List) FindIntersection(head *Node, head2 *Node) *Node {
+func (list *List) FindIntersection(head *ListNode, head2 *ListNode) *ListNode {
 	l1 := 0
 	l2 := 0
 	tempHead := head

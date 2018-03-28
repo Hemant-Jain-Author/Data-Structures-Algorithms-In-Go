@@ -6,7 +6,7 @@ import (
 )
 const PI2  = 3.1428
 
-func main() {
+func main24() {
 	maxInt8 := math.MaxInt8
 	minInt8 := math.MinInt8
 

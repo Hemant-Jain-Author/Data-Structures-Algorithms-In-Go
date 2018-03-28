@@ -5,14 +5,14 @@ import "github.com/golang-collections/collections/queue"
 import "github.com/golang-collections/collections/stack"
 import "github.com/golang-collections/collections/set"
 
-func main1() {
+func main3() {
 	st := set.New()
 	st.Insert(1)
 	st.Insert(2)
 	fmt.Println(st.Has(1))
 	fmt.Println(st.Has(3))
 }
-func main2() {
+func main4() {
 	s := stack.New()
 	s.Push(2)
 	s.Push(3)
@@ -25,7 +25,7 @@ func main2() {
 }
 
 
-func main() {
+func main5() {
 	q := queue.New()
 	q.Enqueue(2)
 	q.Enqueue(3)

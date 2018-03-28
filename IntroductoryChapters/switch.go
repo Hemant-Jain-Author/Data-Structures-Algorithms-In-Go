@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main1() {
+func main35() {
 	i := 2
 	switch i {
 	case 1:
@@ -16,7 +16,7 @@ func main1() {
 	}
 }
 
-func main() {
+func main36() {
 	i := 2
 	switch i {
 	case 1, 2, 3:
@@ -33,19 +33,6 @@ func isEven(value int) {
 	default:
 		fmt.Println("I is odd")
 	}
-}
-
-func max(x, y int) int {
-	var max int
-	if x > y {
-		max = x
-	} else {
-		max = y
-	}
-	return max
-}
-func main3() {
-	fmt.Println(max(10, 20))
 }
 
 // switch with precondition.

@@ -58,7 +58,7 @@ func getBulbStatus(bi BulbInterface) {
 	fmt.Println("bulb is on: ", bi.isOnFun())
 }
 
-func main99() {
+func main2() {
 	b := Bulb{false, SMALL}
 	fmt.Println("bulb is on return : ", b.isOnFun())
 	b.turnOn()

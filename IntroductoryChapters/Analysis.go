@@ -144,7 +144,7 @@ func fun13(n int) int {
 	return m
 }
 
-func main() {
+func main1() {
 	fmt.Println("N = 100, Number of instructions O(n):: ", fun1(100))
 	fmt.Println("N = 100, Number of instructions O(n^2):: ", fun2(100))
 	fmt.Println("N = 100, Number of instructions O(n^2):: ", fun3(100))

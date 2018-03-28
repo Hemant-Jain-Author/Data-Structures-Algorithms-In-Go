@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func main() {
+func main2() {
 	ll := new(DoublyCircularLinkedList)
 	ll.AddHead(1)
 	ll.AddHead(2)
@@ -16,15 +16,15 @@ func main() {
 }
 
 type DoublyCircularLinkedList struct {
-	head  *Node
-	tail  *Node
+	head  *DCListNode
+	tail  *DCListNode
 	count int
 }
 
-type Node struct {
+type DCListNode struct {
 	value int
-	next  *Node
-	prev  *Node
+	next  *DCListNode
+	prev  *DCListNode
 }
 
 func (list *DoublyCircularLinkedList) Size() int {
@@ -84,7 +84,7 @@ func (list *DoublyCircularLinkedList) Print() {
 }
 
 func (list *DoublyCircularLinkedList) AddHead(value int) {
-	newNode := new(Node)
+	newNode := new(DCListNode)
 	newNode.value = value
 	if list.count == 0 {
 		list.tail = newNode
@@ -102,7 +102,7 @@ func (list *DoublyCircularLinkedList) AddHead(value int) {
 }
 
 func (list *DoublyCircularLinkedList) AddTail(value int) {
-	newNode := new(Node)
+	newNode := new(DCListNode)
 	newNode.value = value
 	if list.count == 0 {
 		list.head = newNode

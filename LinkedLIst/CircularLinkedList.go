@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main1() {
 	ll := new(CircularLinkedList)
 
 	ll.AddHead(1)
@@ -15,13 +15,13 @@ func main() {
 }
 
 type CircularLinkedList struct {
-	tail  *Node
+	tail  *CircularLinkedListNode
 	count int
 }
 
-type Node struct {
+type CircularLinkedListNode struct {
 	value int
-	next  *Node
+	next  *CircularLinkedListNode
 }
 
 func (list *CircularLinkedList) Size() int {
@@ -41,7 +41,7 @@ func (list *CircularLinkedList) Peek() int {
 }
 
 func (list *CircularLinkedList) AddHead(value int) {
-	temp := &Node{value, nil}
+	temp := &CircularLinkedListNode{value, nil}
 	if list.IsEmpty() {
 		list.tail = temp
 		temp.next = temp
@@ -53,7 +53,7 @@ func (list *CircularLinkedList) AddHead(value int) {
 }
 
 func (list *CircularLinkedList) AddTail(value int) {
-	temp := &Node{value, nil}
+	temp := &CircularLinkedListNode{value, nil}
 	if list.IsEmpty() {
 		list.tail = temp
 		temp.next = temp
@@ -166,11 +166,11 @@ func (list *CircularLinkedList) CopyList() *CircularLinkedList {
 	head := curr
 
 	if curr != nil {
-		cl.addTail(curr.value)
+		cl.AddTail(curr.value)
 		curr = curr.next
 	}
 	for curr != head {
-		cl.addTail(curr.value)
+		cl.AddTail(curr.value)
 		curr = curr.next
 	}
 	return cl

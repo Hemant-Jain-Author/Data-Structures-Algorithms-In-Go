@@ -9,20 +9,20 @@ type Node struct {
 	next  *Node
 }
 
-type Stack struct {
+type StackLinkedList struct {
 	head *Node
 	size int
 }
 
-func (s *Stack) Size() int {
+func (s *StackLinkedList) Size() int {
 	return s.size
 }
 
-func (s *Stack) IsEmpty() bool {
+func (s *StackLinkedList) IsEmpty() bool {
 	return s.size == 0
 }
 
-func (s *Stack) Peek() (int, bool) {
+func (s *StackLinkedList) Peek() (int, bool) {
 	if s.IsEmpty() {
 		fmt.Println("StackEmptyException")
 		return 0, false
@@ -30,12 +30,12 @@ func (s *Stack) Peek() (int, bool) {
 	return s.head.value, true
 }
 
-func (s *Stack) Push(value int) {
+func (s *StackLinkedList) Push(value int) {
 	s.head = &Node{value, s.head}
 	s.size++
 }
 
-func (s *Stack) Pop() (int, bool) {
+func (s *StackLinkedList) Pop() (int, bool) {
 	if s.IsEmpty() {
 		fmt.Println("StackEmptyException")
 		return 0, false
@@ -47,7 +47,7 @@ func (s *Stack) Pop() (int, bool) {
 	return value, true
 }
 
-func (s *Stack) Print() {
+func (s *StackLinkedList) Print() {
 	temp := s.head
 	fmt.Print("Value stored in stck are :: ")
 	for temp != nil {
@@ -57,24 +57,25 @@ func (s *Stack) Print() {
 	fmt.Println()
 }
 
-func (s *Stack) insertAtBottom(value int) {
+func (s *StackLinkedList) insertAtBottom(value int) {
 	if s.IsEmpty() {
 		s.Push(value)
 	} else {
-		temp := s.Pop()
+		temp,_ := s.Pop()
 		s.insertAtBottom(value)
 		s.Push(temp)
 	}
 }
 
 func main() {
-	s := new(Stack)
+	s := new(StackLinkedList)
 	for i := 1; i <= 100; i++ {
 		s.Push(i)
 	}
 	fmt.Println("popped values are :: ")
 	for i := 1; i <= 50; i++ {
-		fmt.Print(s.Pop(), " ")
+		value,_ := s.Pop()
+		fmt.Print(value, " ")
 	}
 
 	s.Print()

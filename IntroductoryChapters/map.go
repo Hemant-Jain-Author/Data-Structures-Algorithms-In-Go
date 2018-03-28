@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main26() {
 	m := make(map[string]int)
 	m["Apple"] = 40
 	m["Banana"] = 30
@@ -30,7 +30,7 @@ Apple price: 0 Present: false
 Banana price: 30 Present: true
 */
 
-func main22() {
+func main27() {
 	m := make(map[string]int) // [1]
 	m["k1"] = 7               // [2]
 	m["k2"] = 13

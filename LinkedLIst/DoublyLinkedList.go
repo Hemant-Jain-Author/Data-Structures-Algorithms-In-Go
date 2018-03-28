@@ -5,18 +5,18 @@ import (
 )
 
 type DoublyLinkedList struct {
-	head  *Node
-	tail  *Node
+	head  *DLLNode
+	tail  *DLLNode
 	count int
 }
 
-type Node struct {
+type DLLNode struct {
 	value int
-	next  *Node
-	prev  *Node
+	next  *DLLNode
+	prev  *DLLNode
 }
 
-func main() {
+func main3() {
 	ll := new(DoublyLinkedList)
 	ll.AddHead(1)
 	ll.AddHead(2)
@@ -55,7 +55,7 @@ func (list *DoublyLinkedList) Peek() int {
 }
 
 func (list *DoublyLinkedList) AddHead(value int) {
-	newNode := &Node{value, nil, nil}
+	newNode := &DLLNode{value, nil, nil}
 	if list.count == 0 {
 		list.tail = newNode
 		list.head = newNode
@@ -68,7 +68,7 @@ func (list *DoublyLinkedList) AddHead(value int) {
 }
 
 func (list *DoublyLinkedList) AddTail(value int) {
-	newNode := &Node{value, nil, nil}
+	newNode := &DLLNode{value, nil, nil}
 	if list.count == 0 {
 		list.head = newNode
 		list.tail = newNode
@@ -103,7 +103,7 @@ func (list *DoublyLinkedList) RemoveNode(key int) bool {
 	if curr == nil { // empty list
 		return false
 	}
-	if curr.value == key { // head is the node with value key.
+	if curr.value == key { // head is the Node with value key.
 		curr = curr.next
 		list.count--
 		if curr != nil {
@@ -158,7 +158,7 @@ func (list *DoublyLinkedList) Print() {
 
 func (list *DoublyLinkedList) ReverseList() {
 	curr := list.head
-	var tempNode *Node
+	var tempNode *DLLNode
 	for curr != nil {
 		tempNode = curr.next
 		curr.next = curr.prev
@@ -189,7 +189,7 @@ func (list *DoublyLinkedList) CopyList(dll *DoublyLinkedList) {
 	}
 }
 func (list *DoublyLinkedList) SortedInsert(value int) {
-	temp := &Node{value, nil, nil}
+	temp := &DLLNode{value, nil, nil}
 	curr := list.head
 	if curr == nil { // first element
 		list.head = temp
@@ -220,7 +220,7 @@ func (list *DoublyLinkedList) SortedInsert(value int) {
 
 func (list *DoublyLinkedList) RemoveDuplicate() {
 	curr := list.head
-	var deleteMe *Node
+	var deleteMe *DLLNode
 	for curr != nil {
 		if (curr.next != nil) && curr.value == curr.next.value {
 			deleteMe = curr.next

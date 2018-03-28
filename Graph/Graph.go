@@ -64,7 +64,7 @@ func (g *Graph) Print() {
 		}
 	}
 }
-
+/*
 func main() {
 	g := new(Graph)
 	g.Init(9)
@@ -83,7 +83,7 @@ func main() {
 	//g.Dijkstra(1)
 	g.Prims()
 }
-
+*/
 func (g *Graph) Dijkstra(source int) {
 	count := g.count
 	previous := make([]int, count)
@@ -97,10 +97,9 @@ func (g *Graph) Dijkstra(source int) {
 
 	dist[source] = 0
 	edge := &Edge{source, source, 0, nil}
-	que.Push(edge, edge.cost)
-
+	que.Add(edge, edge.cost)
 	for que.Len() != 0 {
-		edge = que.Pop().(*Edge) // Pop from PQ
+		edge = que.Remove().(*Edge) // Pop from PQ
 		if dist[edge.destination] < edge.cost {
 			continue
 		}
@@ -111,7 +110,7 @@ func (g *Graph) Dijkstra(source int) {
 		for adn != nil {
 			if previous[adn.destination] == -1 {
 				edge = &Edge{adn.source, adn.destination, adn.cost + dist[adn.source], nil}
-				que.Push(edge, edge.cost)
+				que.Add(edge, edge.cost)
 			}
 			adn = adn.next
 		}
@@ -140,10 +139,10 @@ func (g *Graph) Prims() {
 
 	dist[source] = 0
 	edge := &Edge{source, source, 0, nil}
-	que.Push(edge, edge.cost)
+	que.Add(edge, edge.cost)
 
 	for que.Len() != 0 {
-		edge = que.Pop().(*Edge) // Pop from PQ
+		edge = que.Remove().(*Edge) // Pop from PQ
 		if dist[edge.destination] < edge.cost {
 			continue
 		}
@@ -154,7 +153,7 @@ func (g *Graph) Prims() {
 		for adn != nil {
 			if previous[adn.destination] == -1 {
 				edge = &Edge{adn.source, adn.destination, adn.cost, nil}
-				que.Push(edge, edge.cost)
+				que.Add(edge, edge.cost)
 			}
 			adn = adn.next
 		}

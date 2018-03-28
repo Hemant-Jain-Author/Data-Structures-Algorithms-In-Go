@@ -5,13 +5,13 @@ import (
 	"strings"
 )
 
-type Node struct {
+type TrieNode struct {
 	isLastChar bool
-	child      [26](*Node)
+	child      [26](*TrieNode)
 }
 
 type Trie struct {
-	root *Node
+	root *TrieNode
 }
 
 func (t *Trie) Insert(s string) {
@@ -23,9 +23,9 @@ func (t *Trie) Insert(s string) {
 	t.root = t.InsertUtil(t.root, str, 0)
 }
 
-func (t *Trie) InsertUtil(curr *Node, str string, index int) *Node {
+func (t *Trie) InsertUtil(curr *TrieNode, str string, index int) *TrieNode {
 	if curr == nil {
-		curr = new(Node)
+		curr = new(TrieNode)
 	}
 	if len(str) == index {
 		curr.isLastChar = true
@@ -44,7 +44,7 @@ func (t *Trie) Remove(s string) {
 	t.RemoveUtil(t.root, str, 0)
 }
 
-func (t *Trie) RemoveUtil(curr *Node, str string, index int) {
+func (t *Trie) RemoveUtil(curr *TrieNode, str string, index int) {
 	if curr == nil {
 		return
 	}
@@ -66,7 +66,7 @@ func (t *Trie) Find(s string) bool {
 	return t.FindUtil(t.root, str, 0)
 }
 
-func (t *Trie) FindUtil(curr *Node, str string, index int) bool {
+func (t *Trie) FindUtil(curr *TrieNode, str string, index int) bool {
 	if curr == nil {
 		return false
 	}
@@ -76,7 +76,7 @@ func (t *Trie) FindUtil(curr *Node, str string, index int) bool {
 	return t.FindUtil(curr.child[str[index]-'a'], str, index+1)
 }
 
-func main() {
+func main4() {
 	t := new(Trie)
 	a := "apple"
 	b := "app"

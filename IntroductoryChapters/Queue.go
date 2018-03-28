@@ -27,7 +27,7 @@ func (h *HeapArr) Pop() interface{}{
 	return x
 }
 
-func main() {
+func main31() {
 	q := new(queue.Queue)
 	q.Put(2)
 	q.Put(3)

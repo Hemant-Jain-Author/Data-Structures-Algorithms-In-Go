@@ -9,21 +9,21 @@ type Node struct {
 	next  *Node
 }
 
-type Queue struct {
+type QueueLinkedList struct {
 	head *Node
 	tail *Node
 	size int
 }
 
-func (q *Queue) Size() int {
+func (q *QueueLinkedList) Size() int {
 	return q.size
 }
 
-func (q *Queue) IsEmpty() bool {
+func (q *QueueLinkedList) IsEmpty() bool {
 	return q.size == 0
 }
 
-func (q *Queue) Peek() int {
+func (q *QueueLinkedList) Peek() int {
 	if q.IsEmpty() {
 		fmt.Println("QueueEmptyException")
 		return 0
@@ -32,8 +32,8 @@ func (q *Queue) Peek() int {
 	return q.head.value
 }
 
-func (q *Queue) Add(value int) {
-	temp := &Node{value}
+func (q *QueueLinkedList) Add(value int) {
+	temp := &Node{value, nil}
 	if q.head == nil {
 		q.head = temp
 		q.tail = temp
@@ -44,7 +44,7 @@ func (q *Queue) Add(value int) {
 	q.size++
 }
 
-func (q *Queue) Remove() int {
+func (q *QueueLinkedList) Remove() int {
 	if q.IsEmpty() {
 		fmt.Println("QueueEmptyException")
 		return 0
@@ -56,7 +56,7 @@ func (q *Queue) Remove() int {
 	return value
 }
 
-func (q *Queue) Print() {
+func (q *QueueLinkedList) Print() {
 	temp := q.head
 	for temp != nil {
 		fmt.Println(temp.value, " ")
@@ -64,8 +64,8 @@ func (q *Queue) Print() {
 	}
 }
 
-func main() {
-	q := new(Queue)
+func main2() {
+	q := new(QueueLinkedList)
 	for i := 1; i <= 10; i++ {
 		q.Add(i)
 	}

@@ -6,7 +6,7 @@ import "fmt"
    comment */
 
 // This is a Single line comment
-func main() {
+func main12() {
 
 	fmt.Println("Hello, World!")
 }

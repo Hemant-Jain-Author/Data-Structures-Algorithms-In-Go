@@ -16,7 +16,7 @@ type Node struct {
 func (list *List) Insert(v int) *List {
 	if list == nil {
 		fmt.Println("list is not created.")
-		return
+		return nil
 	}
 	temp := new(Node)
 	temp.value = v
@@ -52,7 +52,7 @@ func (list *List) Print() {
 	}
 }
 
-func main() {
+func main25() {
 	// lst := new(List)
 	lst := List{}
 	lst.Insert(1)

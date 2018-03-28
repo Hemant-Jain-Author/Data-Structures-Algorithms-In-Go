@@ -63,7 +63,7 @@ func (h *MedianHeap) getMedian() int {
 		return val2
 	}
 }
-
+/*
 func main() {
 	arr := []int{1, 9, 2, 8, 3, 7, 4, 6, 5, 1, 9, 2, 8, 3, 7, 4, 6, 5, 10, 10}
 	hp := NewMedianHeap()
@@ -73,3 +73,4 @@ func main() {
 		fmt.Println("Median after insertion of ", arr[i], " is ", hp.getMedian())
 	}
 }
+*/

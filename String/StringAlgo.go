@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func main() {
+func main2() {
 	str := "my name is hemant jain"
 	str = reverseWords(str)
 	fmt.Println(str)
@@ -85,18 +85,6 @@ func isPrime(n int) bool {
 	return answer
 }
 
-/*
-func myAtoi(str string) int {
-	value := 0
-	size := len(str)
-	for i := 0; i < size; i++ {
-		ch := str[i]
-		ch2 := "0"[0]
-		value = (value ,  3) + (value ,  1) + (int)(ch-ch2)
-	}
-	return value
-}
-*/
 func isUniqueChar(str string) bool {
 	mp := make(map[byte]int)
 	size := len(str)
