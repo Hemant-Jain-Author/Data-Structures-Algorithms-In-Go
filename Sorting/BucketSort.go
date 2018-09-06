@@ -7,10 +7,6 @@ func BucketSort(data []int, lowerRange int, upperRange int) {
 	size := len(data)
 	count := make([]int, rng)
 
-	for i := 0; i < rng; i++ {
-		count[i] = 0
-	}
-
 	for i := 0; i < size; i++ {
 		count[data[i]-lowerRange]++
 	}
@@ -28,5 +24,4 @@ func main2() {
 	data := []int{23, 24, 22, 21, 26, 25, 27, 28, 21, 21}
 	BucketSort(data, 20, 30)
 	fmt.Println(data)
-
 }

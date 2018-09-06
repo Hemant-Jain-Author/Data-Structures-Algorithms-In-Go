@@ -224,9 +224,6 @@ func printRepeating3(data []int) {
 func printRepeating4(data []int, intrange int) {
 	size := len(data)
 	count := make([]int, intrange)
-	for i := 0; i < size; i++ {
-		count[i] = 0
-	}
 	fmt.Println("Repeating elements are : ")
 	for i := 0; i < size; i++ {
 		if count[data[i]] == 1 {
