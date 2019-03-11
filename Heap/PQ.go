@@ -117,9 +117,9 @@ func (pq *PQueue) Peek() (interface{}, bool) {
 	return pq.items[1].value, true
 }
 
-func main2() {
+func main() {
 	a := []int{1, 9, 6, 7, 8, -1, 2, 4, 5, 3}
-	pq := NewPQueue(true)
+	pq := NewPQueue(false)
 	for _, val := range a {
 		pq.Add(strconv.Itoa(val), val)
 	}

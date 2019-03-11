@@ -76,7 +76,7 @@ func (t *Trie) FindUtil(curr *TrieNode, str string, index int) bool {
 	return t.FindUtil(curr.child[str[index]-'a'], str, index+1)
 }
 
-func main4() {
+func main() {
 	t := new(Trie)
 	a := "apple"
 	b := "app"

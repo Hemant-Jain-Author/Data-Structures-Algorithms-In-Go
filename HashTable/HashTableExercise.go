@@ -87,17 +87,60 @@ func main() {
 	var2 := "elloh"
 	var3 := "world"
 
-	fmt.Println("isAnagram : ", isAnagram(var1, var2))
-	fmt.Println("isAnagram : ", isAnagram(var1, var3))
+	fmt.Println("IsAnagram : ", IsAnagram(var1, var2))
+	fmt.Println("IsAnagram : ", IsAnagram(var1, var3))
 
-	fmt.Println(removeDuplicate(var1))
+	fmt.Println(RemoveDuplicate(var1))
 
 	arr := []int{1, 2, 3, 5, 6, 7, 9, 8, 10}
 	fmt.Print("Missing number is :: ")
-	fmt.Println(findMissing(arr, 1, 10))
+	fmt.Println(FindMissing(arr, 1, 10))
 
 	arr1 := []int{1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 1}
-	printRepeating(arr1)
+	PrintRepeating(arr1)
 
-	printFirstRepeating(arr1)
+	PrintFirstRepeating(arr1)
 }
+
+// ***********************
+type Counter map[interface{}]int
+
+func (s *Counter) Add(key interface{}) {
+	(*s)[key]++
+}
+func (s *Counter) Find(key interface{}) bool {
+	_, ok := (*s)[key]
+	return ok
+}
+
+func (s *Counter) Remove(key interface{}) {
+	val, ok := (*s)[key]
+	if ok == false {
+		return
+	} else if val == 1 {
+		delete((*s), key)
+		return
+	}
+	(*s)[key]--
+}
+
+func (s *Counter) Get(key interface{}) (int, bool) {
+	val, ok := (*s)[key]
+	return val, ok
+}
+
+
+
+type Set map[interface{}]bool
+
+func (s *Set) Add(key interface{}) {
+	(*s)[key] = true
+}
+func (s *Set) Remove(key interface{}) {
+	delete((*s), key)
+}
+
+func (s *Set) Find(key interface{}) bool {
+	return (*s)[key]
+}
+//**************************************

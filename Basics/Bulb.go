@@ -58,13 +58,15 @@ func getBulbStatus(bi BulbInterface) {
 	fmt.Println("bulb is on: ", bi.isOnFun())
 }
 
-func main2() {
+func main() {
 	b := Bulb{false, SMALL}
 	fmt.Println("bulb is on return : ", b.isOnFun())
 	b.turnOn()
 	fmt.Println("bulb is on return : ", b.isOnFun())
 	ab := AdvanceBulb{Bulb{false, MEDIUM}, 10}
 	fmt.Println("bulb is on return : ", ab.isOnFun(), "its intensity is : ", ab.getIntersity())
+	fmt.Println(ab.isOnFun())
+	
 	getBulbStatus(&b)
 	getBulbStatus(&ab)
 }

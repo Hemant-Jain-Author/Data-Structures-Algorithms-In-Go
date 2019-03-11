@@ -4,10 +4,16 @@ import "fmt"
 
 func main() {
 	ht := new(HashTableSC)
-	ht.Init()
-	ht.Add(89)
+	ht.Init(101)
+	ht.Add(1)
+	ht.Add(2)
+	ht.Add(3)
 	ht.Print()
-	fmt.Println("89 found : ", ht.Find(89))
+	fmt.Println("1 found : ", ht.Find(1))
+	fmt.Println("4 found : ", ht.Find(4))
+	fmt.Println("1 remove : ", ht.Remove(1))
+	fmt.Println("4 remove : ", ht.Remove(4))
+	ht.Print()
 }
 
 type Node struct {
@@ -20,8 +26,8 @@ type HashTableSC struct {
 	tableSize int
 }
 
-func (h *HashTableSC) Init() {
-	h.tableSize = 101
+func (h *HashTableSC) Init(tSize int) {
+	h.tableSize = tSize
 	h.listArray = make([](*Node), h.tableSize)
 
 	for i := 0; i < h.tableSize; i++ {
@@ -65,7 +71,7 @@ func (h *HashTableSC) Print() {
 	for i := 0; i < h.tableSize; i++ {
 		head := h.listArray[i]
 		if head != nil {
-			fmt.Print("\nValues at index :: ", i, " Are :: ")
+			fmt.Print("\nValues at index :: ", i, " are :: ")
 		}
 		for head != nil {
 			fmt.Print(head.value, " ")

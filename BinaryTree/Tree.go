@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"math"
-
-	"github.com/golang-collections/go-datastructures/queue"
-)
+	"github.com/golang-collections/collections/queue"
+	"github.com/golang-collections/collections/stack"
+	)
 
 type Node struct {
 	value       int
@@ -15,6 +15,7 @@ type Node struct {
 type Tree struct {
 	root *Node
 }
+
 
 func LevelOrderBinaryTree(arr []int) *Tree {
 	tree := new(Tree)
@@ -56,6 +57,7 @@ func addUtil(n *Node, value int) *Node {
 }
 
 func (t *Tree) PrintPreOrder() {
+	fmt.Print("Pre Order")
 	printPreOrder(t.root)
 	fmt.Println()
 }
@@ -67,77 +69,6 @@ func printPreOrder(n *Node) {
 	fmt.Print(n.value, " ")
 	printPreOrder(n.left)
 	printPreOrder(n.right)
-}
-
-func (t *Tree) PrintPostOrder() {
-	printPostOrder(t.root)
-	fmt.Println()
-}
-
-func printPostOrder(n *Node) {
-	if n == nil {
-		return
-	}
-	printPostOrder(n.left)
-	printPostOrder(n.right)
-	fmt.Print(n.value)
-}
-func (t *Tree) PrintInOrder() {
-	printInOrder(t.root)
-	fmt.Println()
-}
-
-func printInOrder(n *Node) {
-	if n == nil {
-		return
-	}
-	printInOrder(n.left)
-	fmt.Print(n.value)
-	printInOrder(n.right)
-}
-
-// Sort sorts values in place.
-func Sort(values []int) {
-	t := new(Tree)
-	for _, v := range values {
-		t.Add(v)
-	}
-	appendValues(values[:0], t.root)
-}
-
-// appendValues appends the elements of t to values in order
-// and returns the resulting slice.
-func appendValues(values []int, t *Node) []int {
-	if t != nil {
-		values = appendValues(values, t.left)
-		values = append(values, t.value)
-		values = appendValues(values, t.right)
-	}
-	return values
-}
-
-func (t *Tree) PrintBredthFirst() {
-	que := new(queue.Queue)
-	var temp *Node
-
-	if t.root != nil {
-		que.Put(t.root)
-	}
-
-	for que.Empty() == false {
-		temp2, _ := que.Get(1)
-		temp = temp2[0].(*Node)
-
-		fmt.Print(temp.value, " ")
-
-		if temp.left != nil {
-			que.Put(temp.left)
-		}
-		if temp.right != nil {
-			que.Put(temp.right)
-		}
-	}
-	fmt.Println()
 }
 
 func (t *Tree) NthPreOrder(index int) {
@@ -156,6 +87,21 @@ func nthPreOrder(node *Node, index int, counter *int) {
 	}
 }
 
+func (t *Tree) PrintPostOrder() {
+	fmt.Print("Post Order: ")
+	printPostOrder(t.root)
+	fmt.Println()
+}
+
+func printPostOrder(n *Node) {
+	if n == nil {
+		return
+	}
+	printPostOrder(n.left)
+	printPostOrder(n.right)
+	fmt.Print(n.value, " ")
+}
+
 func (t *Tree) NthPostOrder(index int) {
 	var counter int
 	nthPostOrder(t.root, index, &counter)
@@ -170,6 +116,21 @@ func nthPostOrder(node *Node, index int, counter *int) {
 			fmt.Println(node.value)
 		}
 	}
+}
+
+func (t *Tree) PrintInOrder() {
+	fmt.Print("In Order")
+	printInOrder(t.root)
+	fmt.Println()
+}
+
+func printInOrder(n *Node) {
+	if n == nil {
+		return
+	}
+	printInOrder(n.left)
+	fmt.Print(n.value, " ")
+	printInOrder(n.right)
 }
 
 func (t *Tree) NthInOrder(index int) {
@@ -188,6 +149,138 @@ func nthInOrder(node *Node, index int, counter *int) {
 	}
 }
 
+func (t *Tree) PrintBreadthFirst() {
+	que := new(queue.Queue)
+	var temp *Node
+
+	if t.root != nil {
+		que.Enqueue(t.root)
+	}
+	fmt.Println("Breadth First")
+	for que.Len() != 0 {
+		temp2 := que.Dequeue()
+		temp = temp2.(*Node)
+
+		fmt.Print(temp.value, " ")
+
+		if temp.left != nil {
+			que.Enqueue(temp.left)
+		}
+		if temp.right != nil {
+			que.Enqueue(temp.right)
+		}
+	}
+	fmt.Println()
+}
+
+
+func (t *Tree) PrintLevelOrderLineByLine() {
+	que1 := new(queue.Queue)
+	que2 := new(queue.Queue)
+	var temp *Node
+
+	if t.root != nil {
+		que1.Enqueue(t.root)
+	}
+
+	for que1.Len() != 0 || que2.Len() != 0 {
+		for que1.Len() != 0 {
+			temp2 := que1.Dequeue()
+			temp = temp2.(*Node)
+			fmt.Print(temp.value, " ")
+
+			if temp.left != nil {
+				que2.Enqueue(temp.left)
+			}
+			if temp.right != nil {
+				que2.Enqueue(temp.right)
+			}
+		}
+		fmt.Println(" ")		
+		for que2.Len() != 0{
+			temp2 := que2.Dequeue()
+			temp = temp2.(*Node)
+			fmt.Print(temp.value, " ")
+			if temp.left != nil {
+				que1.Enqueue(temp.left)
+			}
+			if temp.right != nil {
+				que1.Enqueue(temp.right)
+			}
+		}
+		fmt.Println(" ")		
+	}
+}
+
+
+func (t *Tree) PrintLevelOrderLineByLine2() {
+	que := new(queue.Queue)
+	var temp *Node
+	var count int
+
+	if t.root != nil {
+		que.Enqueue(t.root)
+	}
+
+	for que.Len() != 0 {
+		
+		count = que.Len()
+		
+		for count > 0 {
+			temp2 := que.Dequeue()
+			temp = temp2.(*Node)
+			fmt.Print(temp.value, " ")
+			if temp.left != nil {
+				que.Enqueue(temp.left)
+			}
+			if temp.right != nil {
+				que.Enqueue(temp.right)
+			}
+			count -= 1
+		}
+		fmt.Println(" ")		
+	}
+}
+
+func (t *Tree) PrintSpiralTree() {
+	stk1 := new(stack.Stack)
+	stk2 := new(stack.Stack)
+	var temp *Node
+
+	if t.root != nil {
+		stk1.Push(t.root)
+	}
+
+	for stk1.Len() != 0 || stk2.Len() != 0 {
+		for stk1.Len() != 0 {
+			temp2 := stk1.Pop()
+			temp = temp2.(*Node)
+			fmt.Print(temp.value, " ")
+			if temp.left != nil {
+				stk2.Push(temp.left)
+			}
+			if temp.right != nil {
+				stk2.Push(temp.right)
+			}
+		}
+		fmt.Println(" ")		
+		for stk2.Len() != 0{
+			temp2 := stk2.Pop()
+			temp = temp2.(*Node)
+			fmt.Print(temp.value, " ")
+			if temp.right != nil {
+				stk1.Push(temp.right)
+			}
+			if temp.left != nil {
+				stk1.Push(temp.left)
+			}
+			
+		}
+		fmt.Println(" ")		
+	}
+}
+
+
 func (t *Tree) Find(value int) bool {
 	var curr *Node = t.root
 	for curr != nil {
@@ -201,6 +294,9 @@ func (t *Tree) Find(value int) bool {
 	}
 	return false
 }
+
+
+
 
 func (t *Tree) FindMin() (int, bool) {
 	var node *Node = t.root
@@ -524,13 +620,13 @@ func IsBST(curr *Node, min int, max int) bool {
 
 func (t *Tree) IsBST2() bool {
 	var c int
-	return IsBST2(t.root, &c)
+	return isBST2(t.root, &c)
 }
 
-func IsBST2(root *Node, count *int) bool {
+func isBST2(root *Node, count *int) bool {
 	var ret bool
 	if root != nil {
-		ret = IsBST2(root.left, count)
+		ret = isBST2(root.left, count)
 		if !ret {
 			return false
 		}
@@ -541,7 +637,7 @@ func IsBST2(root *Node, count *int) bool {
 
 		*count = root.value
 
-		ret = IsBST2(root.right, count)
+		ret = isBST2(root.right, count)
 		if !ret {
 			return false
 		}
@@ -549,51 +645,112 @@ func IsBST2(root *Node, count *int) bool {
 	return true
 }
 
-type Stack struct {
-	s []int
+func (t *Tree) IsCompleteTree() bool {
+	return isCompleteTree(t.root)
 }
 
-func (s *Stack) Push(value int) {
-	s.s = append(s.s, value)
-}
+func isCompleteTree(root *Node) bool {
+	que := new(queue.Queue)
+	var temp *Node
+	var noChild = false
 
-func (s *Stack) Pop() int {
-	length := len(s.s)
-	res := s.s[length-1]
-	s.s = s.s[:length-1]
-	return res
-}
-
-func (s *Stack) IsEmpty() bool {
-	length := len(s.s)
-	return length == 0
-}
-
-func (s *Stack) Length() int {
-	length := len(s.s)
-	return length
-}
-
-func (s *Stack) Print() {
-	length := len(s.s)
-	for i := 0; i < length; i++ {
-		fmt.Print(s.s[i], " ")
+	if root != nil {
+		que.Enqueue(root)
 	}
-	fmt.Println()
+
+	for que.Len() != 0{
+		temp = que.Dequeue().(*Node)
+		if temp.left != nil {
+			if noChild == true {
+				return false
+			}
+			que.Enqueue(temp.left)
+		} else {
+			noChild = true
+		}
+
+		if temp.right != nil {
+			if noChild == true {
+				return false
+			}
+			que.Enqueue(temp.right)
+		} else {
+			noChild = true
+		}
+	}
+	return true
 }
+
+func (t *Tree) IsCompleteTree2() bool {
+	count := t.NumNodes()
+	return isCompleteTreeUtil(t.root, 0, count)
+}
+
+func isCompleteTreeUtil(curr *Node, index int, count int) bool {
+
+		if (curr == nil){
+			return true
+		}
+		if (index > count){
+			return false
+		}
+
+	return isCompleteTreeUtil(curr.left, index * 2 + 1, count) && isCompleteTreeUtil(curr.right, index * 2 + 2, count)
+}
+
+func (t *Tree) IsHeap() bool {
+	parentValue := -99999999
+	return t.IsCompleteTree() && isHeapUtil(t.root, parentValue)
+}
+
+func isHeapUtil(curr *Node, parentValue int) bool {
+
+		if (curr == nil){
+			return true
+		}
+		if (curr.value < parentValue){
+			return false
+		}
+
+	return isHeapUtil(curr.left, curr.value) && isHeapUtil(curr.right, curr.value)
+}
+
+
+func (t *Tree) IsHeap2() bool {
+	count := t.NumNodes()
+	parentValue := -99999999
+	return isHeapUtil2(t.root, 0, count, parentValue)
+}
+
+func isHeapUtil2(curr *Node, index int, count int, parentValue int) bool {
+
+		if (curr == nil){
+			return true
+		}
+		if (index > count){
+			return false
+		}
+		if (curr.value < parentValue){
+			return false
+		}
+
+		return isHeapUtil2(curr.left, index * 2 + 1, count, curr.value) && isHeapUtil2(curr.right, index * 2 + 2, count, curr.value)
+}
+
 
 func (t *Tree) PrintAllPath() {
-	stk := new(Stack)
+	stk := new(stack.Stack)
 	printAllPath(t.root, stk)
 }
 
-func printAllPath(curr *Node, stk *Stack) {
+func printAllPath(curr *Node, stk *stack.Stack) {
 	if curr == nil {
 		return
 	}
 	stk.Push(curr.value)
 	if curr.left == nil && curr.right == nil {
 		stk.Print()
+		fmt.Println()
 		stk.Pop()
 		return
 	}
@@ -784,35 +941,78 @@ func createBinaryTreeUtil(arr []int, start int, end int) *Node {
 	return curr
 }
 
+func isBSTArray( preorder[] int, size int) bool {
+	stk := new(stack.Stack)
+	var value int
+	root := -999999;
+	for i := 0; i < size; i++ {
+		value = preorder[i]
+
+		// If value of the right child is less than root.
+		if (value < root){
+			return false
+		}
+		// First left child values will be popped
+		// Last popped value will be the root.
+		for (stk.Len() > 0 && stk.Peek().(int) < value){
+			root = stk.Pop().(int)
+		}
+		// add current value to the stack.
+		stk.Push(value)
+	}
+	return true
+}
+
+// Sort sorts values in place.
+func Sort(values []int) {
+	t := new(Tree)
+	for _, v := range values {
+		t.Add(v)
+	}
+	appendValues(values[:0], t.root)
+}
+
+// appendValues appends the elements of t to values in order
+// and returns the resulting slice.
+func appendValues(values []int, t *Node) []int {
+	if t != nil {
+		values = appendValues(values, t.left)
+		values = append(values, t.value)
+		values = appendValues(values, t.right)
+	}
+	return values
+}
+
 func main() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	t := CreateBinaryTree(arr)
 
 	//t := LevelOrderBinaryTree(arr)
 	t.PrintPreOrder()
-	//t := new(Tree)
-	//t.Add(2)
-	//t.Add(1)
-	//t.Add(3)
-	//t.Add(4)
-	//t.InOrder()
-	//t.PreOrder()
-	//t.PostOrder()
-	//lst := []int{2, 1, 3, 4}
-	//sort(lst)
-	//fmt.Println(lst)
-	//t.PrintBredthFirst()
-	//t.NthPreOrder(2)
-	//t.NthPostOrder(2)
-	//t.NthInOrder(2)
-	//fmt.Println(t.Find(10))
-	//fmt.Println(t.Find(3))
-	//fmt.Println(t.FindMax())
-	//fmt.Println(t.FindMaxNode())
-	//fmt.Println(t.FindMin())
-	//fmt.Println(t.FindMinNode())
-	//t.Free()
-	//t.InOrder()
-	//fmt.Println()
-	//t.PrintAllPath()
+	t.PrintLevelOrderLineByLine()
+	t.PrintLevelOrderLineByLine2()
+	t.PrintSpiralTree()
+
+	t = new(Tree)
+	t.Add(2)
+	t.Add(1)
+	t.Add(3)
+	t.Add(4)
+	t.PrintInOrder()
+	t.PrintPreOrder()
+	t.PrintPostOrder()
+	t.PrintBreadthFirst()
+	t.NthPreOrder(2)
+	t.NthPostOrder(2)
+	t.NthInOrder(2)
+	fmt.Println("Print All Path")
+	t.PrintAllPath()
+	fmt.Println(t.Find(10))
+	fmt.Println(t.Find(3))
+	fmt.Println(t.FindMax())
+	fmt.Println(t.FindMaxNode())
+	fmt.Println(t.FindMin())
+	fmt.Println(t.FindMinNode())
+	t.Free()
+	t.PrintInOrder()	
 }

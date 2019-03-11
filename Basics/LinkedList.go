@@ -12,7 +12,7 @@ type Node struct {
 	value int
 	next  *Node
 }
-
+source
 func (list *List) Insert(v int) *List {
 	if list == nil {
 		fmt.Println("list is not created.")

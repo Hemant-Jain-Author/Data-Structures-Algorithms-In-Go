@@ -4,7 +4,7 @@ import "fmt"
 
 const (
 	EmptyNode byte = iota
-	LazyDeleted
+	DeletedNode
 	FillledNode
 )
 
@@ -31,7 +31,7 @@ func (ht *HashTable) ResolverFun(index int) int {
 func (ht *HashTable) Add(value int) bool {
 	hashValue := ht.ComputeHash(value)
 	for i := 0; i < ht.tableSize; i++ {
-		if ht.Flag[hashValue] == EmptyNode || ht.Flag[hashValue] == LazyDeleted {
+		if ht.Flag[hashValue] == EmptyNode || ht.Flag[hashValue] == DeletedNode {
 			ht.Arr[hashValue] = value
 			ht.Flag[hashValue] = FillledNode
 			return true
@@ -64,7 +64,7 @@ func (ht *HashTable) Remove(value int) bool {
 			return false
 		}
 		if ht.Flag[hashValue] == FillledNode && ht.Arr[hashValue] == value {
-			ht.Flag[hashValue] = LazyDeleted
+			ht.Flag[hashValue] = DeletedNode
 			return true
 		}
 		hashValue += ht.ResolverFun(i)
@@ -85,43 +85,29 @@ func (ht *HashTable) Print() {
 func main() {
 	ht := new(HashTable)
 	ht.Init(1000)
-	ht.Add(89)
-	ht.Add(18)
-	ht.Add(49)
-	ht.Add(58)
-	ht.Add(69)
-	ht.Add(89)
-	ht.Add(18)
-	ht.Add(49)
-	ht.Add(58)
-	ht.Add(69)
+	ht.Add(1)
+	ht.Add(2)
+	ht.Add(3)
 	ht.Print()
-	fmt.Println("89 found : ", ht.Find(89))
-	ht.Remove(89)
-	ht.Remove(18)
-	ht.Remove(49)
-	ht.Remove(58)
-	ht.Remove(69)
+	fmt.Println("1 found : ", ht.Find(1))
+	fmt.Println("4 found : ", ht.Find(4))
+	fmt.Println("1 remove : ", ht.Remove(1))
+	fmt.Println("4 remove : ", ht.Remove(4))
 	ht.Print()
+
 }
 
 /*
 Values Stored in HashTable are::
-Node at index [18 ] :: 18
-Node at index [19 ] :: 18
-Node at index [49 ] :: 49
-Node at index [50 ] :: 49
-Node at index [58 ] :: 58
-Node at index [59 ] :: 58
-Node at index [69 ] :: 69
-Node at index [70 ] :: 69
-Node at index [89 ] :: 89
-Node at index [90 ] :: 89
+Node at index [ 1  ] ::  1
+Node at index [ 2  ] ::  2
+Node at index [ 3  ] ::  3
+1 found :  true
+4 found :  false
+1 remove :  true
+4 remove :  false
 
 Values Stored in HashTable are::
-Node at index [19 ] :: 18
-Node at index [50 ] :: 49
-Node at index [59 ] :: 58
-Node at index [70 ] :: 69
-Node at index [90 ] :: 89
+Node at index [ 2  ] ::  2
+Node at index [ 3  ] ::  3
 */

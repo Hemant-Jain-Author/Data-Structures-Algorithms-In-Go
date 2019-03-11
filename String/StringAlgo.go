@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func main2() {
+func main() {
 	str := "my name is hemant jain"
 	str = reverseWords(str)
 	fmt.Println(str)

@@ -10,7 +10,7 @@ func IncrementPassByPointer(ptr *int) {
 	(*ptr)++
 }
 
-func main14() {
+func main1() {
 	i := 10
 	fmt.Println("Value of i before increment is :  ", i)
 	IncrementPassByValue(i)
@@ -68,7 +68,7 @@ func Permutation(data []int, i int, length int) {
 	}
 }
 
-func main15() {
+func main2() {
 	var data [5]int
 	for i := 0; i < 5; i++ {
 		data[i] = i
@@ -96,7 +96,7 @@ func function1() {
 	fmt.Println("fun1 line 2")
 }
 
-func main16() {
+func main3() {
 	fmt.Println("main line 1")
 	function1()
 	fmt.Println("main line 2")
@@ -119,7 +119,7 @@ func MaxSubArraySum(data []int) int {
 	return maxSoFar
 }
 
-func main17() {
+func main4() {
 	data := []int{1, -2, 3, 4, -4, 6, -14, 8, 2}
 	fmt.Println("Max sub array sum :", MaxSubArraySum(data))
 }
@@ -168,7 +168,7 @@ func SumArray(data []int) int {
 	return total
 }
 
-func main18() {
+func main5() {
 	data := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	fmt.Println("sum of all the values in array:", SumArray(data))
 }
@@ -230,7 +230,7 @@ func ReverseArray2(data []int) {
 	}
 }
 
-func main19() {
+func main6() {
 	point := &coord{10, 10}
 	fmt.Println("X axis coord value is  ", point.x)
 	fmt.Println("Y axis coord value is  ", point.y)
@@ -249,7 +249,7 @@ type student struct {
 	name   string
 }
 
-func main20() {
+func main7() {
 	stud := student{1, "johny"}
 	fmt.Println(stud)
 	fmt.Println("Student name ::", stud.name) // Accessing inner fields.
@@ -275,13 +275,13 @@ func Sum(num1 int, num2 int) int {
 	return result
 }
 
-func main21() {
+func main8() {
 	// calling a function to calculate sum
 	result := Sum(10, 20)
 	fmt.Println("Sum is : ", result)
 }
 
-func main22() {
+func main9() {
 	// local variable definition
 	x := 10
 	y := 20
@@ -299,12 +299,12 @@ func Factorial(i int) int {
 	return i * Factorial(i-1)
 }
 
-func main23() {
+func main10() {
 	fmt.Println("factorial 5 is :: ", Factorial(5))
 }
 
 func BinarySearchRecursive(data []int, low int, high int, value int) int {
-	mid := low + (high-low)/2 // To afunc the overflow
+	mid := (low + high)/2 
 	if data[mid] == value {
 		return mid
 	} else if data[mid] < value {
@@ -312,4 +312,17 @@ func BinarySearchRecursive(data []int, low int, high int, value int) int {
 	} else {
 		return BinarySearchRecursive(data, low, mid-1, value)
 	}
+}
+
+func main(){
+	main1()
+	main2()
+	main3()
+	main4()
+	main5()
+	main6()
+	main7()
+	main8()
+	main9()
+	main10()
 }

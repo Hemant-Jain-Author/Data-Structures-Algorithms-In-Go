@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main34() {
+func main() {
 	s := "hello, World!"
 	r := []rune(s)
 	r[0] = 'H'

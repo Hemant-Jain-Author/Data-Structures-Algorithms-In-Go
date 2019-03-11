@@ -64,7 +64,7 @@ func (q *QueueLinkedList) Print() {
 	}
 }
 
-func main2() {
+func main() {
 	q := new(QueueLinkedList)
 	for i := 1; i <= 10; i++ {
 		q.Add(i)

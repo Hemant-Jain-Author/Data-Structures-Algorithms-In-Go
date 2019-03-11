@@ -16,7 +16,7 @@ type StringTree struct {
 	root *TreeNode
 }
 
-func main3() {
+func main() {
 	tt := new(StringTree)
 	tt.Insert("banana")
 	tt.Insert("apple")
