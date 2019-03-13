@@ -39,6 +39,7 @@ func (q *Queue) IsEmpty() bool {
 func (q *Queue) Size() int {
 	return q.size
 }
+
 func main() {
 	q := new(Queue)
 	for i := 0; i < 20; i++ {

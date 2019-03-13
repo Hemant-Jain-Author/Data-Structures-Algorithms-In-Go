@@ -43,6 +43,6 @@ func Print(Q []int, n int) {
 	fmt.Println()
 }
 
-func main28() {
+func main() {
 	NQueens(8)
 }

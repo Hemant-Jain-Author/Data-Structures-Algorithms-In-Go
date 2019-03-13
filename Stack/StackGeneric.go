@@ -45,7 +45,7 @@ func (s *Stack) Print() {
 	fmt.Println()
 }
 
-func main9() {
+func main() {
 	s := new(Stack)
 	length := 10
 	for i := 0; i < length; i++ {
@@ -55,6 +55,5 @@ func main9() {
 	for i := 0; i < length; i++ {
 		fmt.Print(s.Pop(), " ")
 	}
-	fmt.Println()
 	fmt.Println(s.Length())
 }

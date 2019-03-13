@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func main4() {
+func main() {
 	data := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
 	MergeSort(data)
 	fmt.Println(data)

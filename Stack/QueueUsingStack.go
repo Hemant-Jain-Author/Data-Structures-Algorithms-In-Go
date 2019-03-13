@@ -2,15 +2,15 @@ package main
 
 import "fmt"
 
-func main1() {
+func main() {
 	que := new(QueueUsingStack)
 	que.Add(1)
-	que.Add(11)
-	que.Add(111)
-	fmt.Println(que.Remove())
 	que.Add(2)
-	que.Add(21)
-	que.Add(211)
+	que.Add(3)
+	fmt.Println(que.Remove())
+	que.Add(4)
+	que.Add(5)
+	que.Add(6)
 	fmt.Println(que.Remove())
 	fmt.Println(que.Remove())
 	fmt.Println(que.Remove())
@@ -41,4 +41,47 @@ func (que *QueueUsingStack) Remove() int {
 
 	value = que.stk2.Pop().(int)
 	return value
+}
+
+type Stack struct {
+	s []interface{}
+}
+
+func (s *Stack) Push(value interface{}) {
+	s.s = append(s.s, value)
+}
+
+func (s *Stack) Pop() interface{} {
+	if s.IsEmpty() {
+		return nil
+	}
+
+	length := len(s.s)
+	res := s.s[length-1]
+	s.s = s.s[:length-1]
+	return res
+}
+
+func (s *Stack) Top() interface{} {
+	length := len(s.s)
+	res := s.s[length-1]
+	return res
+}
+
+func (s *Stack) IsEmpty() bool {
+	length := len(s.s)
+	return length == 0
+}
+
+func (s *Stack) Length() int {
+	length := len(s.s)
+	return length
+}
+
+func (s *Stack) Print() {
+	length := len(s.s)
+	for i := 0; i < length; i++ {
+		fmt.Print(s.s[i], " ")
+	}
+	fmt.Println()
 }

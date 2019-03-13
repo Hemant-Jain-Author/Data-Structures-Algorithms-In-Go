@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func maina() {
+func main() {
 	var arr [10]int
 	fmt.Println(arr)
 	for i := 0; i < 10; i++ {

@@ -7,6 +7,7 @@ func QuickSelect(arr []int, key int) int {
 	quickSelectUtil(arr, 0, size-1, key)
 	return arr[key-1]
 }
+
 func quickSelectUtil(arr []int, lower int, upper int, key int) {
 	if upper <= lower {
 		return
@@ -34,7 +35,8 @@ func quickSelectUtil(arr []int, lower int, upper int, key int) {
 func swap(arr []int, first int, second int) {
 	arr[first], arr[second] = arr[second], arr[first]
 }
-func main5() {
+
+func main() {
 	data := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
 	fmt.Println(QuickSelect(data, 5))
 }

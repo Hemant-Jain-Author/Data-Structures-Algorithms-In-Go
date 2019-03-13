@@ -8,18 +8,18 @@ func main() {
 	data := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
 	BubbleSort(data, more)
 	fmt.Println(data)
-}
 
-/*
+
 	data3 := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
 	BubbleSort(data3, less)
 	fmt.Println(data3)
+
 	data2 := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
 	BubbleSort2(data2, less)
 	fmt.Println(data2)
 
 }
-*/
+
 func less(value1 int, value2 int) bool {
 	return value1 < value2
 }

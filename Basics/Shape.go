@@ -51,7 +51,7 @@ func TotalPerimeter(shapes ...Shape) float64 {
 	return peri
 }
 
-func main33() {
+func main() {
 	r := Rect{width: 10, height: 10}
 	fmt.Println("Area: ", r.Area())
 	fmt.Println("Perimeter: ", r.Perimeter())

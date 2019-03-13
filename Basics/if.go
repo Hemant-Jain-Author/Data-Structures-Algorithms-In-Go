@@ -1,6 +1,7 @@
 package main
 
-// Basic if
+import "fmt"
+
 func max(x, y int) int {
 	if x > y {
 		return x
@@ -17,13 +18,16 @@ func more(x, y int) bool {
 }
 
 // If with precondition.
-func maxAreaCheck(length, width, limit int) bool {
+func maxAreaCheck(length int, width int, limit int) bool {
 	if area := length * width; area < limit {
 		return true
 	} else {
 		return false
 	}
 }
-func main13() {
 
+func main() {
+	fmt.Println("Max : ", max(35, 33))
+	fmt.Println("More : ", more(35, 33))
+	fmt.Println("Max area check : ", maxAreaCheck(30, 10, 200))
 }

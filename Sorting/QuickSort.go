@@ -4,12 +4,12 @@ import (
 	"fmt"
 )
 
-func main6() {
+func main() {
 	data := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
 	QuickSort(data)
 	fmt.Println(data)
 }
-/*
+
 func less(value1 int, value2 int) bool {
 	return value1 < value2
 }
@@ -17,10 +17,11 @@ func less(value1 int, value2 int) bool {
 func more(value1 int, value2 int) bool {
 	return value1 > value2
 }
+
 func swap(arr []int, first int, second int) {
 	arr[first], arr[second] = arr[second], arr[first]
 }
-*/
+
 func QuickSort(arr []int) {
 	size := len(arr)
 	quickSortUtil(arr, 0, size-1)

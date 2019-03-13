@@ -25,21 +25,6 @@ func (list *List) Sum() int {
 	return sum
 }
 
-func main() {
-	lst := new(List)
-	//lst := List{}
-	lst.AddHead(1)
-	lst.AddHead(2)
-	lst.AddHead(3)
-	lst.Print()
-	lst2 := lst.CopyList()
-	fmt.Println(lst.CompareList(lst2))
-	lst3 := lst.CopyListReversed()
-	lst3.Print()
-	fmt.Println(lst.IsPresent(7))
-	fmt.Println(lst.IsPresent(4))
-}
-
 func (list *List) Size() int {
 	return list.count
 }
@@ -446,4 +431,20 @@ func (list *List) FindIntersection(head *ListNode, head2 *ListNode) *ListNode {
 		head2 = head2.next
 	}
 	return head
+}
+
+
+func main() {
+	lst := new(List)
+	//lst := List{}
+	lst.AddHead(1)
+	lst.AddHead(2)
+	lst.AddHead(3)
+	lst.Print()
+	lst2 := lst.CopyList()
+	fmt.Println(lst.CompareList(lst2))
+	lst3 := lst.CopyListReversed()
+	lst3.Print()
+	fmt.Println(lst.IsPresent(7))
+	fmt.Println(lst.IsPresent(4))
 }

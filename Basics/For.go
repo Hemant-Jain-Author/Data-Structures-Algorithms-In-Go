@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main7() {
+func main1() {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	sum := 0
 	for i := 0; i < len(numbers); i++ {
@@ -11,7 +11,7 @@ func main7() {
 	fmt.Println("Sum is :: ", sum)
 }
 
-func main8() {
+func main2() {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	sum := 0
 	for _, val := range numbers {
@@ -20,7 +20,7 @@ func main8() {
 	fmt.Println("Sum is :: ", sum)
 }
 
-func main9() {
+func main3() {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	sum := 0
 	i := 0
@@ -32,7 +32,7 @@ func main9() {
 	fmt.Println("Sum is :: ", sum)
 }
 
-func main10() {
+func main4() {
 	numbers := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	sum := 0
 	i := 0
@@ -46,9 +46,9 @@ func main10() {
 	fmt.Println("Sum is :: ", sum)
 }
 
-func main11() {
+func main() {
+	main1()
 	main2()
 	main3()
 	main4()
-	main5()
 }

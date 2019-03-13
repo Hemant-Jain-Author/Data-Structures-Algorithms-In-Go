@@ -2,42 +2,6 @@ package main
 
 import "fmt"
 
-func main() {
-	a := []int{1, 9, 6, 7, 8, -1, 2, 4, 5, 3}
-	HeapSort(a)
-	fmt.Println(a)
-	hp := NewHeap(nil, true)
-	n := len(a)
-	for i := 0; i < n; i++ {
-		hp.Add(a[i])
-	}
-	for i := 0; i < n; i++ {
-		fmt.Println("pop value :: ", hp.Remove())
-	}
-
-	/*n := len(a)
-	hp := NewHeap(a, true)
-
-	for i := 0; i < n; i++ {
-		hp.Add(i)
-	}
-	for i := 0; i < n; i++ {
-		fmt.Println("pop value :: ", hp.Remove())
-	}
-	aa := []int{1, 9, 6, 7, 8, 1, 2, 4, 5, 3}
-	HeapSort(aa)
-	fmt.Println("value after heap sort::")
-	for i := 0; i < n; i++ {
-		fmt.Print(" ", aa[i])
-	}
-	bb := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
-	fmt.Println(IsMinHeap(bb))
-	cc := []int{9, 8, 7, 6, 5, 4, 3, 2, 1}
-	fmt.Println(IsMaxHeap(cc))
-	*/
-
-}
-
 type Heap struct {
 	size  int
 	arr   []int
@@ -182,4 +146,114 @@ func HeapSort(arrInput []int) {
 	for i := 0; i < n; i++ {
 		arrInput[i] = hp.Remove()
 	}
+}
+
+type MedianHeap struct {
+	minHeap *Heap
+	maxHeap *Heap
+}
+
+func NewMedianHeap() *MedianHeap {
+	min := NewHeap(nil, true)
+	max := NewHeap(nil, false)
+
+	return &MedianHeap{
+		minHeap: min,
+		maxHeap: max,
+	}
+}
+
+func (h *MedianHeap) insert(value int) {
+	empty := h.maxHeap.Empty()
+
+	if empty {
+		h.maxHeap.Add(value)
+	} else {
+		top := h.maxHeap.Peek()
+		if top >= value {
+			h.maxHeap.Add(value)
+		} else {
+			h.minHeap.Add(value)
+		}
+	}
+
+	// size balancing
+	if h.maxHeap.Size() > h.minHeap.Size()+1 {
+		value := h.maxHeap.Remove()
+		h.minHeap.Add(value)
+	}
+
+	if h.minHeap.Size() > h.maxHeap.Size()+1 {
+		value := h.minHeap.Remove()
+		h.maxHeap.Add(value)
+	}
+}
+
+func (h *MedianHeap) getMedian() int {
+	if h.maxHeap.Size() == 0 && h.minHeap.Size() == 0 {
+		fmt.Println("HeapEmptyException")
+		return 0
+	}
+
+	if h.maxHeap.Size() == h.minHeap.Size() {
+		val1 := h.maxHeap.Peek()
+		val2 := h.minHeap.Peek()
+		return (val1 + val2) / 2
+	} else if h.maxHeap.Size() > h.minHeap.Size() {
+		val1 := h.maxHeap.Peek()
+		return val1
+	} else {
+		val2 := h.minHeap.Peek()
+		return val2
+	}
+}
+
+func main1() {
+	a := []int{1, 9, 6, 7, 8, -1, 2, 4, 5, 3}
+	HeapSort(a)
+	fmt.Println(a)
+	hp := NewHeap(nil, true)
+	n := len(a)
+	for i := 0; i < n; i++ {
+		hp.Add(a[i])
+	}
+	for i := 0; i < n; i++ {
+		fmt.Println("pop value :: ", hp.Remove())
+	}
+
+	n = len(a)
+	hp = NewHeap(a, true)
+	for i := 0; i < n; i++ {
+		hp.Add(i)
+	}
+	for i := 0; i < n; i++ {
+		fmt.Println("pop value :: ", hp.Remove())
+	}
+
+	aa := []int{1, 9, 6, 7, 8, 1, 2, 4, 5, 3}
+	HeapSort(aa)
+	fmt.Println("value after heap sort::")
+	for i := 0; i < n; i++ {
+		fmt.Print(" ", aa[i])
+	}
+
+	bb := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	fmt.Println(IsMinHeap(bb))
+	cc := []int{9, 8, 7, 6, 5, 4, 3, 2, 1}
+	fmt.Println(IsMaxHeap(cc))
+}
+
+func main2() {
+	arr := []int{1, 9, 2, 8, 3, 7, 4, 6, 5, 1, 9, 2, 8, 3, 7, 4, 6, 5, 10, 10}
+	hp := NewMedianHeap()
+
+	for i := 0; i < 20; i++ {
+		hp.insert(arr[i])
+		fmt.Println("Median after insertion of ", arr[i], " is ", hp.getMedian())
+	}
+}
+
+func main(){
+	main1()
+	main2()
 }

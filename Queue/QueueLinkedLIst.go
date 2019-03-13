@@ -59,9 +59,10 @@ func (q *QueueLinkedList) Remove() int {
 func (q *QueueLinkedList) Print() {
 	temp := q.head
 	for temp != nil {
-		fmt.Println(temp.value, " ")
+		fmt.Print(temp.value, " ")
 		temp = temp.next
 	}
+	fmt.Println()
 }
 
 func main() {

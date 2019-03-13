@@ -18,6 +18,17 @@ func (s *Counter) Get(key interface{}) (int, bool) {
 	return val, ok
 }
 
+func (s *Counter) Remove(key interface{}) {
+	val, ok := (*s)[key]
+	if ok == false {
+		return
+	} else if val == 1 {
+		delete((*s), key)
+		return
+	}
+	(*s)[key]--
+}
+
 func main() {
 	mp := make(Counter)
 	mp.Add("a")

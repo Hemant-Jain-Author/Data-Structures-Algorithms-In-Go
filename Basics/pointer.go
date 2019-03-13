@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func main29() {
+func main() {
 	data := 10
 	ptr := &data
 

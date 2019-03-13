@@ -20,7 +20,7 @@ func BucketSort(data []int, lowerRange int, upperRange int) {
 	}
 }
 
-func main2() {
+func main() {
 	data := []int{23, 24, 22, 21, 26, 25, 27, 28, 21, 21}
 	BucketSort(data, 20, 30)
 	fmt.Println(data)

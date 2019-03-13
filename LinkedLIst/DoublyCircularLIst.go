@@ -4,17 +4,6 @@ import (
 	"fmt"
 )
 
-func main2() {
-	ll := new(DoublyCircularLinkedList)
-	ll.AddHead(1)
-	ll.AddHead(2)
-	ll.AddHead(3)
-	ll.AddHead(1)
-	ll.AddHead(2)
-	ll.AddHead(3)
-	ll.Print()
-}
-
 type DoublyCircularLinkedList struct {
 	head  *DCListNode
 	tail  *DCListNode
@@ -160,4 +149,15 @@ func (list *DoublyCircularLinkedList) RemoveTail() (int, bool) {
 	list.head.prev = prev
 	list.tail = prev
 	return value, true
+}
+
+func main() {
+	ll := new(DoublyCircularLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
 }

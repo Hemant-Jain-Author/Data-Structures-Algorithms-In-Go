@@ -129,8 +129,6 @@ func (s *Counter) Get(key interface{}) (int, bool) {
 	return val, ok
 }
 
-
-
 type Set map[interface{}]bool
 
 func (s *Set) Add(key interface{}) {

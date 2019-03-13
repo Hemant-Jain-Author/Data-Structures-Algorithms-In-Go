@@ -16,29 +16,6 @@ type DLLNode struct {
 	prev  *DLLNode
 }
 
-func main3() {
-	ll := new(DoublyLinkedList)
-	ll.AddHead(1)
-	ll.AddHead(2)
-	ll.AddHead(3)
-	ll.AddHead(4)
-	ll.AddHead(5)
-	ll.AddHead(6)
-	ll.Print()
-	ll.RemoveHead()
-	ll.Print()
-	ll.FreeList()
-	ll.Print()
-	ll.AddHead(11)
-	ll.AddHead(21)
-	ll.AddHead(31)
-	ll.AddHead(41)
-	ll.AddHead(51)
-	ll.AddHead(61)
-	ll.Print()
-
-}
-
 func (list *DoublyLinkedList) Size() int {
 	return list.count
 }
@@ -233,4 +210,27 @@ func (list *DoublyLinkedList) RemoveDuplicate() {
 			curr = curr.next
 		}
 	}
+}
+
+func main() {
+	ll := new(DoublyLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.AddHead(4)
+	ll.AddHead(5)
+	ll.AddHead(6)
+	ll.Print()
+	ll.RemoveHead()
+	ll.Print()
+	ll.FreeList()
+	ll.Print()
+	ll.AddHead(11)
+	ll.AddHead(21)
+	ll.AddHead(31)
+	ll.AddHead(41)
+	ll.AddHead(51)
+	ll.AddHead(61)
+	ll.Print()
+
 }

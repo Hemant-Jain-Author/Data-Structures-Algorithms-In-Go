@@ -64,7 +64,7 @@ func main() {
 	b.turnOn()
 	fmt.Println("bulb is on return : ", b.isOnFun())
 	ab := AdvanceBulb{Bulb{false, MEDIUM}, 10}
-	fmt.Println("bulb is on return : ", ab.isOnFun(), "its intensity is : ", ab.getIntersity())
+	fmt.Println("bulb is on return : ", ab.isOnFun(), " and its intensity is : ", ab.getIntersity())
 	fmt.Println(ab.isOnFun())
 	
 	getBulbStatus(&b)

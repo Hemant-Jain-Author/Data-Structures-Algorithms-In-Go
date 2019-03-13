@@ -41,7 +41,7 @@ func (s *StackInt) Print() {
 	fmt.Println()
 }
 
-func main2() {
+func main() {
 	s := new(StackInt)
 	length := 10
 	for i := 0; i < length; i++ {

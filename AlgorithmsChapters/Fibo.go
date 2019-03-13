@@ -28,7 +28,7 @@ func fibonacci2(n int) int {
 	return temp
 }
 
-func main6() {
+func main() {
 	fmt.Println(fibonacci(6))
 	fmt.Println(fibonacci2(6))
 }

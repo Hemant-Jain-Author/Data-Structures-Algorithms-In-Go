@@ -96,7 +96,6 @@ func (gph *Graph) DFSUtil(index int, visited []bool) {
 	fmt.Print(index, " ")
 	for head != nil {
 		if visited[head.destination] == false {
-			//fmt.Print(index)
 			visited[head.destination] = true
 			gph.DFSUtil(head.destination, visited)
 		}
@@ -106,7 +105,7 @@ func (gph *Graph) DFSUtil(index int, visited []bool) {
 
 func (gph *Graph) DFSUtil2(index int, visited []bool, stk *stack.Stack) {
 	head := gph.Edges[index]
-	fmt.Print(index, " ")
+	//fmt.Print(index, " ")
 	for head != nil {
 		if visited[head.destination] == false {
 			//fmt.Print(index)
@@ -280,7 +279,8 @@ func (gph *Graph) rootVertex() int {
 			retVal = i
 		}
 	}
-	fmt.Print("Root vertex is :: ${retVal}")
+	fmt.Println("")
+	fmt.Print("Root vertex is :: ", retVal)
 	return retVal
 }
 
@@ -299,7 +299,7 @@ func main3() {
 	gph.rootVertex()
 }
 
-func (gph *Graph) transitiveClosureUtil(source int, dest int, tc[10][10] int) {
+func (gph *Graph) transitiveClosureUtil(source int, dest int, tc *[10][10]int) {
 	tc[source][dest] = 1
 	head := gph.Edges[dest]
 	for head != nil {
@@ -314,7 +314,7 @@ func (gph *Graph) transitiveClosure() [10][10]int {
 	count := gph.count
 	tc := [10][10]int{}
 	for i := 0; i < count; i++ {
-		gph.transitiveClosureUtil(i, i, tc)
+		gph.transitiveClosureUtil(i, i, &tc)
 	}
 	return tc
 }
@@ -331,7 +331,7 @@ func main4() {
 	tc := gph.transitiveClosure()
 	for i := 0; i < 4; i++ {
 		for j := 0; j < 4; j++ {
-			fmt.Println(tc[i][j] , " ")
+			fmt.Print(tc[i][j] , " ")
 		}
 		fmt.Println()
 	}
@@ -619,16 +619,16 @@ func (gph *Graph)stronglyConnectedComponent() {
 		}
 	}
 	gReversed := gph.transposeGraph()
-	for i := 0; i < count; i++ {
-		visited[i] = false
-	}
+	visited = make([]bool, count)
+
 
 	for (stk.Len() > 0) {
 		index := stk.Pop().(int)
 		if (visited[index] == false) {
 			stk2 := stack.New() 
 			gReversed.DFSUtil2(index, visited, stk2)
-			fmt.Println(stk2)
+			stk2.Print()
+			fmt.Println("")
 		}
 	}
 }
@@ -1087,7 +1087,6 @@ func main(){
 	main14()
 }
 
-
 // *********************
 type Item struct {
 	value    interface{}
@@ -1152,5 +1151,4 @@ func (queue *PQueue) Len() int {
 func (queue *PQueue) IsEmpty() bool {
 	return queue.pq.Len() == 0
 }
-
 // ************************************

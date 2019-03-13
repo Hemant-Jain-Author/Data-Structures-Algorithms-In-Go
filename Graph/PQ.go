@@ -84,14 +84,3 @@ func main() {
 		fmt.Println(pq.Remove())
 	}
 }
-
-/*	pq := make(ItemList, 0)
-	heap.Init(&pq)
-	heap.Push(&pq, &Item{value: "banana", priority: 3})
-	heap.Push(&pq, &Item{value: "apple", priority: 2})
-	heap.Push(&pq, &Item{value: "mango", priority: 4})
-	heap.Push(&pq, &Item{value: "orange", priority: 1})
-	for pq.Len() > 0 {
-		fmt.Println(heap.Pop(&pq).(*Item))
-	}
-*/

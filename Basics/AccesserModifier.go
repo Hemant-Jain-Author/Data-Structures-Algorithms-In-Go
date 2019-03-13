@@ -25,4 +25,3 @@ value before increment1() call : 1
 value after increment1() call : 1
 value after increment2() call : 2
 */
-

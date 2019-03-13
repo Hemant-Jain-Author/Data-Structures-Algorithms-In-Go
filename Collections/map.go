@@ -1,16 +1,11 @@
 package main
 
-/*
-func main() {
+import ("fmt"
+"sort")
 
-	x := make(map[string]int) // map need to be initialized before using using make.
-	x["key"] = 10
-	fmt.Println(x["key"])
-	if val, ok := x["key"]; ok {
-		fmt.Println(val, ok)
-	}
 
-	elements := map[string]string{
+func main1() {
+	eleMap := map[string]string{
 		"H":  "Hydrogen",
 		"He": "Helium",
 		"Li": "Lithium",
@@ -23,29 +18,59 @@ func main() {
 		"Ne": "Neon",
 	}
 
+	var symbols []string
+	var elements []string
+	for sym,name := range eleMap {
+		symbols = append(symbols, sym)
+		elements = append(elements, name)
+	}
+
+	fmt.Println(symbols)
+	fmt.Println(elements)
+}
+
+func main2(){
 	ages := make(map[string]int) // mapping from strings to ints
 	ages["bob"] = 28
 	ages["alice"] = 31
 	ages["charlie"] = 34
+	
 	var names []string
 	for name := range ages {
 		names = append(names, name)
 	}
+	
 	sort.Strings(names)
+	
 	for _, name := range names {
-		fmt.Printf("%s\t%d\n", name, ages[name])
+		fmt.Printf("[%s : %d] ", name, ages[name])
 	}
-
-	age, ok := ages["alice"]
-	fmt.Println(age, ok)
-	delete(ages, "alice")
-	age, ok = ages["alice"]
-	fmt.Println(age, ok)
-	fmt.Println(ages)
-	if age, ok = ages["boby"]; !ok {
-		fmt.Println("not found")
-	} else {
-		fmt.Println(age)
-	}
+	fmt.Println()
 }
-*/
+
+func main3() {
+	m := make(map[string]int)
+	m["Apple"] = 40
+	m["Banana"] = 30
+	m["Mango"] = 50
+	for key, val := range m {
+		fmt.Print("[ ",key," -> ", val," ]")
+	}
+	fmt.Println()
+
+	fmt.Println("Apple price:", m["Apple"])	
+	delete(m, "Apple")
+	fmt.Println("Apple price:", m["Apple"])
+	
+	v, ok := m["Apple"]
+	fmt.Println("Apple price:", v, "Present:", ok)
+	
+	v2, ok2 := m["Banana"]
+	fmt.Println("Banana price:", v2, "Present:", ok2)
+}
+
+func main(){
+	main1()
+	main2()
+	main3()
+}

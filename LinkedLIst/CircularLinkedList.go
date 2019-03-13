@@ -2,18 +2,6 @@ package main
 
 import "fmt"
 
-func main1() {
-	ll := new(CircularLinkedList)
-
-	ll.AddHead(1)
-	ll.AddHead(2)
-	ll.AddHead(3)
-	ll.AddHead(1)
-	ll.AddHead(2)
-	ll.AddHead(3)
-	ll.Print()
-}
-
 type CircularLinkedList struct {
 	tail  *CircularLinkedListNode
 	count int
@@ -98,7 +86,7 @@ func (list *CircularLinkedList) Print() {
 	}
 	temp := list.tail.next
 	for temp != list.tail {
-		fmt.Println(temp.value, " ")
+		fmt.Print(temp.value, " ")
 		temp = temp.next
 	}
 	fmt.Println(temp.value)
@@ -174,4 +162,16 @@ func (list *CircularLinkedList) CopyList() *CircularLinkedList {
 		curr = curr.next
 	}
 	return cl
+}
+
+func main() {
+	ll := new(CircularLinkedList)
+
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
 }
