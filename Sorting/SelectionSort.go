@@ -26,7 +26,7 @@ func SelectionSort(arr []int) {
 	var i, j, max int
 	for i = 0; i < size-1; i++ {
 		max = 0
-		for j = 1; j < size-1-i; j++ {
+		for j = 1; j < size-i; j++ {
 			if arr[j] > arr[max] {
 				max = j
 			}

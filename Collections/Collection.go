@@ -28,19 +28,20 @@ func main2() {
 	}
 }
 
-
 func main3() {
 	q := queue.New()
 	q.Enqueue(1)
 	q.Enqueue(2)
 	q.Enqueue(3)
+	fmt.Println(q)
+	fmt.Println(q)
+	val := 0
 
 	for q.Len() != 0 {
-		val := q.Dequeue()
+		val = q.Dequeue().(int)
 		fmt.Print(val, " ")
 	}
 }
-
 
 
 func main4() {

@@ -70,7 +70,5 @@ func main3() {
 }
 
 func main(){
-	main1()
-	main2()
 	main3()
 }

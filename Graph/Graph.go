@@ -379,7 +379,7 @@ func (gph *Graph)bfsDistance(source int, dest int) int {
 		head := gph.Edges[curr]
 		for head != nil {
 			if (head.destination == dest) {
-				return depth
+				return depth+1
 			}
 			if (visited[head.destination] == false) {
 				visited[head.destination] = true
@@ -564,7 +564,7 @@ func  (gph *Graph)isConnectedUndirected()bool {
 	return true
 }
 
-/*
+	/*
 	* Kosaraju Algorithm
 	* 
 	* Kosaraju’s Algorithm to find strongly connected directed graph based on DFS :

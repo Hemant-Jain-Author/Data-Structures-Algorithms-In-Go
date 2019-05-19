@@ -250,6 +250,21 @@ func (list *List) compareListUtil(head1 *ListNode, head2 *ListNode) bool {
 	}
 }
 
+func (list *List) compareList2(head1 *ListNode, head2 *ListNode) bool {
+	for head1 != nil && head2 != nil {
+		if head1.value != head2.value {
+			return false;
+		}
+		head1 = head1.next
+        head2 = head2.next
+	}
+
+	if head1 == nil && head2 == nil {
+		return true
+	}
+    return false
+}
+
 func (list *List) FindLength() int {
 	curr := list.head
 	count := 0

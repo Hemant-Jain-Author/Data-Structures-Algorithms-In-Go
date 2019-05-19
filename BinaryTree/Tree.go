@@ -242,6 +242,27 @@ func (t *Tree) PrintLevelOrderLineByLine2() {
 	}
 }
 
+func (t *Tree) PrintDepthFirst(){
+	stk := new(stack.Stack)
+    
+    if t.root != nil {
+        stk.Push(t.root)
+    }
+
+    for stk.Len() != 0 {
+    	temp := stk.Pop().(*Node)
+        fmt.Println(temp.value, ' ')
+        if temp.right != nil {
+            stk.Push(temp.right)    
+        }
+        if temp.left != nil {
+            stk.Push(temp.left)
+        }
+    }
+}
+    
+
+
 func (t *Tree) PrintSpiralTree() {
 	stk1 := new(stack.Stack)
 	stk2 := new(stack.Stack)
@@ -590,6 +611,47 @@ func sumAllBT(curr *Node) int {
 	sum = rightSum + leftSum + curr.value
 	return sum
 }
+
+func (t *Tree)treeToListRec() *Node{
+	return treeToListRec(t.root)
+}
+
+func treeToListRec(curr *Node) *Node {
+    if curr == nil{
+        return nil 
+    }
+    var Head, Tail, tempHead *Node
+   
+
+    if curr.left == nil && curr.right == nil{
+    	curr.left = curr
+        curr.right = curr
+        return curr
+    }
+        
+    if curr.left != nil {
+    	Head = treeToListRec(curr.left)
+        Tail = Head.left
+        curr.left = Tail
+        Tail.right = curr
+    } else {
+        Head = curr
+    }
+
+    if curr.right != nil {
+    	tempHead = treeToListRec(curr.right)
+        Tail = tempHead.left
+        curr.right = tempHead
+        tempHead.left = curr
+    } else {
+        Tail = curr
+    }
+
+    Head.left = Tail
+    Tail.right = Head
+    return Head
+}
+
 
 func IsBST3(root *Node) bool {
 	if root == nil {

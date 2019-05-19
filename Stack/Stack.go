@@ -43,13 +43,12 @@ func (s *StackInt) Print() {
 
 func main() {
 	s := new(StackInt)
-	length := 10
-	for i := 0; i < length; i++ {
-		s.Push(i)
-	}
-	fmt.Println(s.Length())
+	s.Push(1)
+	s.Push(2)
+	s.Push(3)
+	
+	length := s.Length()
 	for i := 0; i < length; i++ {
 		fmt.Print(s.Pop(), " ")
 	}
-	fmt.Println()
 }

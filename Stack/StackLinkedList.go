@@ -67,16 +67,16 @@ func (s *StackLinkedList) insertAtBottom(value int) {
 	}
 }
 
+
 func main() {
 	s := new(StackLinkedList)
-	for i := 1; i <= 100; i++ {
-		s.Push(i)
+	s.Push(1)
+	s.Push(2)
+	s.Push(3)
+	
+	length := s.Size()
+	for i := 0; i < length; i++ {
+		val, flag := s.Pop()
+		fmt.Println( val, " ", flag)
 	}
-	fmt.Println("popped values are :: ")
-	for i := 1; i <= 50; i++ {
-		value,_ := s.Pop()
-		fmt.Print(value, " ")
-	}
-
-	s.Print()
 }
