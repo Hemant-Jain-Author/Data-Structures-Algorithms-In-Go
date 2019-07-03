@@ -150,33 +150,43 @@ func (list *DoublyLinkedList) ReverseList() {
 	return
 }
 
-func (list *DoublyLinkedList) CopyListReversed(dll *DoublyLinkedList) {
+func (list *DoublyLinkedList) CopyListReversed( ) *DoublyLinkedList {
+	dll := new(DoublyLinkedList)
+
 	curr := list.head
 	for curr != nil {
 		dll.AddHead(curr.value)
 		curr = curr.next
 	}
+	dll.count = list.count
+	return dll
 }
 
-func (list *DoublyLinkedList) CopyList(dll *DoublyLinkedList) {
+func (list *DoublyLinkedList) CopyList( ) *DoublyLinkedList {
+	dll := new(DoublyLinkedList)
 	curr := list.head
 	for curr != nil {
 		dll.AddTail(curr.value)
 		curr = curr.next
 	}
+	dll.count = list.count
+	return dll
 }
+
 func (list *DoublyLinkedList) SortedInsert(value int) {
 	temp := &DLLNode{value, nil, nil}
 	curr := list.head
 	if curr == nil { // first element
 		list.head = temp
 		list.tail = temp
+		return
 	}
 
 	if list.head.value <= value { // at the begining
 		temp.next = list.head
 		list.head.prev = temp
 		list.head = temp
+		return 
 	}
 
 	for curr.next != nil && curr.next.value > value { // treversal
@@ -225,6 +235,7 @@ func main() {
 	ll.Print()
 	ll.FreeList()
 	ll.Print()
+
 	ll.AddHead(11)
 	ll.AddHead(21)
 	ll.AddHead(31)
@@ -232,5 +243,9 @@ func main() {
 	ll.AddHead(51)
 	ll.AddHead(61)
 	ll.Print()
+	ll2 := ll.CopyList()
+	ll2.Print()
+	ll2 = ll.CopyListReversed()
+	ll2.Print()
 
 }

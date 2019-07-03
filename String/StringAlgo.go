@@ -11,8 +11,8 @@ func main() {
 
 	fmt.Println(matchExp("*world?", "hello worldi"))
 
-	for i := 1; i < 100; i++ {
-		fmt.Println(isPrime(i))
+	for i := 1; i < 10; i++ {
+		fmt.Println(i, "IsPrime :" ,isPrime(i))
 	}
 	fmt.Println(isUniqueChar("aple"))
 	fmt.Println(isPalindrome("aplelpa"))
@@ -22,14 +22,12 @@ func main() {
 	fmt.Println(isPermutation("apple", "plpbe"))
 	fmt.Println(pow(2, 10))
 
-	printAnagram("12345")
+	printAnagram("123")
 	fmt.Println(shuffle("aaaabbbb"))
 	fmt.Println(strcmp("a", "b"))
 	fmt.Println(strcmp("b", "a"))
 	fmt.Println(strcmp("a", "a"))
 	fmt.Println(strcmp("ba", "baaa"))
-	fmt.Println(strcmp("bad", "bae"))
-	fmt.Println(strcmp("bad", "baa"))
 }
 
 func matchExpUtil(exp string, str string, i int, j int) bool {
@@ -69,7 +67,6 @@ func match(source string, pattern string) int {
 }
 
 func isPrime(n int) bool {
-	fmt.Print(n)
 	answer := false
 
 	if n > 1 {

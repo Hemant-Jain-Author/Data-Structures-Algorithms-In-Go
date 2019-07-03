@@ -38,5 +38,5 @@ func swap(arr []int, first int, second int) {
 
 func main() {
 	data := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
-	fmt.Println(QuickSelect(data, 5))
+	fmt.Println("Fifth value is :", QuickSelect(data, 5))
 }

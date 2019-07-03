@@ -23,7 +23,7 @@ func newItem(value interface{}, priority int) *item {
 	}
 }
 
-func NewPQueue(isMin bool) *PQueue {
+func CreatePQueue(isMin bool) *PQueue {
 	items := make([]*item, 1)
 	items[0] = nil // Heap queue first element should always be nil
 
@@ -119,7 +119,7 @@ func (pq *PQueue) Peek() (interface{}, bool) {
 
 func main() {
 	a := []int{1, 9, 6, 7, 8, -1, 2, 4, 5, 3}
-	pq := NewPQueue(false)
+	pq := CreatePQueue(false)
 	for _, val := range a {
 		pq.Add(strconv.Itoa(val), val)
 	}
@@ -129,7 +129,7 @@ func main() {
 		fmt.Print(value, " ")
 	}
 	fmt.Println()
-	pq2 := NewPQueue(false)
+	pq2 := CreatePQueue(false)
 	for _, val := range a {
 		pq2.Add(strconv.Itoa(val), val)
 	}

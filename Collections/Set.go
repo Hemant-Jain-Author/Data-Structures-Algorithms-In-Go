@@ -17,10 +17,10 @@ func (s *Set) Find(key interface{}) bool {
 
 func main() {
 	mp := make(Set)
-	mp.Add("a")
-	mp.Add("b")
-	mp.Add("a")
-	fmt.Println(mp.Find("a"))
-	fmt.Println(mp.Find("b"))
-	fmt.Println(mp.Find("c"))
+	mp.Add(1)
+	mp.Add(2)
+	fmt.Println(mp.Find(1))
+	fmt.Println(mp.Find(3))
+	mp.Remove(1)
+	fmt.Println(mp.Find(1))
 }

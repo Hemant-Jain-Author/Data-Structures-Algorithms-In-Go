@@ -6,7 +6,7 @@ import (
 	"math"
 )
 
-func printArray(arr []int, count int) {
+func PrintArr(arr []int, count int) {
 	fmt.Print("[")
 	for i := 0; i < count; i++ {
 		fmt.Print(" " , arr[i])
@@ -63,10 +63,10 @@ func Partition012(arr []int, size int) {
 func main1() {
 	arr := []int{ 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1 }
 	Partition01(arr, len(arr))
-	printArray(arr, len(arr))
+	fmt.Println(arr)
 	arr2 := []int{ 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 }
 	Partition012(arr2, len(arr))
-	printArray(arr2, len(arr))
+	fmt.Println(arr2)
 }
 
 func RangePartition(arr []int, size int, lower int, higher int) {
@@ -91,7 +91,7 @@ func RangePartition(arr []int, size int, lower int, higher int) {
 func main2() {
 	arr  := []int{ 1, 21, 2, 20, 3, 19, 4, 18, 5, 17, 6, 16, 7, 15, 8, 14, 9, 13, 10, 12, 11 }
 	RangePartition(arr, len(arr), 9, 12)
-	printArray(arr, len(arr))
+	fmt.Println(arr)
 }
 
 func minSwaps(arr []int, size int, val int) int {
@@ -100,9 +100,9 @@ func minSwaps(arr []int, size int, val int) int {
 	second := size - 1
 	var temp int
 	for first < second {
-		if (arr[first] <= val) {
+		if (arr[first] < val) {
 			first += 1
-		} else if (arr[second] > val) {
+		} else if (arr[second] >= val) {
 			second -= 1
 		} else {
 			temp = arr[first]
@@ -112,6 +112,12 @@ func minSwaps(arr []int, size int, val int) int {
 		}
 	}
 	return swapCount;
+}
+
+func main3(){
+	arr := []int {2,7,5,6,1,3,4,9,10,8}
+	val := 5
+	fmt.Println(minSwaps(arr, 10, val))
 }
 
 func seperateEvenAndOdd(data []int, size int) {
@@ -130,6 +136,12 @@ func seperateEvenAndOdd(data []int, size int) {
 	}
 }
 
+func main4(){
+	arr := []int{2,7,5,6,1,3,4,9,10,8}
+	seperateEvenAndOdd(arr, 10)
+	fmt.Println(arr)
+}
+
 func absMore(value1 int, value2 int, reference int)  bool{
 	return (math.Abs(float64(value1 - reference)) > math.Abs(float64(value2 - reference)))
 }
@@ -145,11 +157,11 @@ func absBubbleSort(arr []int, size int, reference int) {
 }
 
 // Testing code
-func main3() {
+func main5() {
 	array := []int{ 9, 1, 8, 2, 7, 3, 6, 4, 5 }
 	reference := 5
 	absBubbleSort(array, len(array), reference)
-	printArray(array, len(array))
+	fmt.Println(array)
 }
 
 func EqMore(value1 int, value2 int, A int) bool {
@@ -191,22 +203,19 @@ func SortByOrder(arr []int, size int, arr2 []int, size2 int) {
 }
 
 // Testing code
-func main4() {
+func main6() {
 	arr := []int { 2, 1, 2, 5, 7, 1, 9, 3, 6, 8, 8 }
 	arr2 := []int{ 2, 1, 8, 3 }
 	SortByOrder(arr, len(arr), arr2, len(arr2))
 }
 
 func ArrayReduction(arr []int, size int) {
-
 	sort.Ints(arr)
-
 	count := 1
 	reduction := arr[0]
 
 	for i := 0; i < size; i++ {
 		if (arr[i] - reduction > 0) {
-			fmt.Println(size - i)
 			reduction = arr[i]
 			count += 1
 		}
@@ -215,7 +224,7 @@ func ArrayReduction(arr []int, size int) {
 }
 
 // Testing code
-func main5() {
+func main7() {
 	arr := []int { 5, 1, 1, 1, 2, 3, 5 }
 	ArrayReduction(arr, len(arr))
 }
@@ -242,12 +251,12 @@ func merge(arr1 []int, size1 int, arr2 []int, size2 int) {
 }
 
 // Testing code.
-func main6() {
+func main8() {
 	arr1 := []int{ 1, 5, 9, 10, 15, 20 }
 	arr2 := []int{ 2, 3, 8, 13 }
 	merge(arr1, len(arr1), arr2, len(arr2))
-	printArray(arr1, len(arr1))
-	printArray(arr2, len(arr2))
+	fmt.Println(arr1)
+	fmt.Println(arr2)
 }
 
 func checkReverse(arr []int, size int) bool {
@@ -287,6 +296,11 @@ func checkReverse(arr []int, size int) bool {
 		}
 	}
 	return true
+}
+
+func main9() {
+	arr := []int {1, 3, 8, 5, 4, 3, 10, 11, 12, 18, 28}
+	fmt.Println("checkReverse : ", checkReverse(arr, len(arr)))
 }
 
 func min(X int, Y int) int {
@@ -334,8 +348,8 @@ func UnionIntersectionSorted(arr1 []int, size1 int, arr2 []int, size2 int) {
 		uIndex++
 		second += 1
 	}
-	printArray(unionArr, uIndex)
-	printArray(interArr, iIndex)
+	PrintArr(unionArr, uIndex)
+	PrintArr(interArr, iIndex)
 }
 
 func UnionIntersectionUnsorted(arr1 []int, size1 int, arr2 []int, size2 int) {
@@ -344,7 +358,7 @@ func UnionIntersectionUnsorted(arr1 []int, size1 int, arr2 []int, size2 int) {
 	UnionIntersectionSorted(arr1, size1, arr2, size2)
 }
 
-func main7() {
+func main10() {
 	arr1 := []int { 1, 11, 2, 3, 14, 5, 6, 8, 9 }
 	arr2 := []int { 2, 4, 5, 12, 7, 8, 13, 10 }
 	UnionIntersectionUnsorted(arr1, len(arr1), arr2, len(arr2))
@@ -358,4 +372,7 @@ func main(){
 	main5()
 	main6()
 	main7()
+	main8()
+	main9()
+	main10()
 }

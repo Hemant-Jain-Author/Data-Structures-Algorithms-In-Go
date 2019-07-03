@@ -18,6 +18,6 @@ func TOHUtil(num int, from string, to string, temp string) {
 }
 
 
-func main() {
+func main4() {
 	TowersOfHanoi(3)
 }

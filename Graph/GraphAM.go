@@ -52,7 +52,7 @@ func main1() {
 	gph.Print()
 }
 
-func (gph *Graph) dijkstra(source int) {
+func (gph *Graph) Dijkstra(source int) {
 	count := gph.count
 	previous := make([]int, count)
 	dist := make([]int, count)
@@ -71,9 +71,14 @@ func (gph *Graph) dijkstra(source int) {
 	que.Init()
 	que.Add(source, 0)
 
-	for (que.IsEmpty() != true) {
+	for que.Len() != 0 {
 		source := que.Remove().(int)
+		
+		if (visited[source] == true) {
+            continue
+        }
 		visited[source] = true
+		
 		for dest := 0; dest < gph.count; dest++ {
 			cost := gph.adj[source][dest]
 			if (cost != 0) {
@@ -96,7 +101,7 @@ func (gph *Graph) dijkstra(source int) {
 	}
 }
 
-func (gph *Graph) prims() {
+func (gph *Graph) Prims() {
 	count := gph.count
 	previous := make([]int, count)
 	dist := make([]int, count)
@@ -105,7 +110,7 @@ func (gph *Graph) prims() {
 
 	for i := 0; i < gph.count; i++ {
 		previous[i] = -1
-		dist[i] = 999999// infinite
+		dist[i] = 999999 // infinite
 		visited[i] = false
 	}
 
@@ -116,17 +121,21 @@ func (gph *Graph) prims() {
 	que.Init()
 	que.Add(source, 0)
 
-	for (que.IsEmpty() != true) {
+	for que.Len() != 0 {
 		source := que.Remove().(int)
+		
+		if (visited[source] == true) {
+            continue
+        }
 		visited[source] = true
+		
 		for dest := 0; dest < gph.count; dest++ {
 			cost := gph.adj[source][dest]
 			if (cost != 0) {
-				alt := cost
-				if (dist[dest] > alt && visited[dest] == false) {
-					dist[dest] = alt
+				if (dist[dest] > cost && visited[dest] == false) {
+					dist[dest] = cost
 					previous[dest] = source
-					que.Add(dest, alt)
+					que.Add(dest, cost)
 				}
 			}
 		}
@@ -158,29 +167,11 @@ func main2() {
 	gph.AddUndirectedEdge(6, 7, 1)
 	gph.AddUndirectedEdge(6, 8, 6)
 	gph.AddUndirectedEdge(7, 8, 7)
-	gph.Print()
-	gph.prims()
-	gph.dijkstra(0)
+	//gph.Print()
+	gph.Dijkstra(1)
+	gph.Prims()
 }
 
-func main3() {
-	gph := new(Graph)
-	gph.Init(9)
-	gph.AddUndirectedEdge(0, 2, 1)
-	gph.AddUndirectedEdge(1, 2, 5)
-	gph.AddUndirectedEdge(1, 3, 7)
-	gph.AddUndirectedEdge(1, 4, 9)
-	gph.AddUndirectedEdge(3, 2, 2)
-	gph.AddUndirectedEdge(3, 5, 4)
-	gph.AddUndirectedEdge(4, 5, 6)
-	gph.AddUndirectedEdge(4, 6, 3)
-	gph.AddUndirectedEdge(5, 7, 1)
-	gph.AddUndirectedEdge(6, 7, 7)
-	gph.AddUndirectedEdge(7, 8, 17)
-	gph.Print()
-	gph.prims()
-	gph.dijkstra(1)
-}
 
 func (gph *Graph) hamiltonianPathUtil(path []int, pSize int, added []int) bool {
 	// Base case full length path is found
@@ -217,7 +208,7 @@ func (gph *Graph)hamiltonianPath() bool {
 		}
 		return true
 	}
-	fmt.Println("Hamiltonian Path not found")
+	fmt.Print("Hamiltonian Path not found")
 	return false
 }
 
@@ -261,11 +252,11 @@ func (gph *Graph)hamiltonianCycle() bool {
 		}
 		return true
 	}
-	fmt.Println("Hamiltonian Cycle not found")
+	fmt.Print("Hamiltonian Cycle not found")
 	return false
 }
 
-func main4() {
+func main3() {
 	count := 5
 	gph := new(Graph)
 	gph.Init(count)
@@ -285,8 +276,8 @@ func main4() {
 		}
 	}
 	
-	fmt.Println("hamiltonianPath : " , gph.hamiltonianPath())
-	fmt.Println("hamiltonianCycle : " , gph.hamiltonianCycle())
+	fmt.Println("\nhamiltonianPath : " , gph.hamiltonianPath())
+	fmt.Println("\nhamiltonianCycle : " , gph.hamiltonianCycle())
 
 	gph2 := new(Graph)
 	gph2.Init(count)
@@ -306,15 +297,14 @@ func main4() {
 		}
 	}
 
-	fmt.Println("hamiltonianPath :  " , gph2.hamiltonianPath())
-	fmt.Println("hamiltonianCycle :  " , gph2.hamiltonianCycle())
+	fmt.Println("\nhamiltonianPath :  " , gph2.hamiltonianPath())
+	fmt.Println("\nhamiltonianCycle :  " , gph2.hamiltonianCycle())
 }
 
 func main(){
-	main1()
-	main2()
+	//main1()
+	//main2()
 	main3()
-	main4()
 }
 
 // *********************

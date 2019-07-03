@@ -74,9 +74,8 @@ func main() {
 	s.Push(2)
 	s.Push(3)
 	
-	length := s.Size()
-	for i := 0; i < length; i++ {
-		val, flag := s.Pop()
-		fmt.Println( val, " ", flag)
+	for s.IsEmpty() == false {
+		val, _ := s.Pop()
+		fmt.Print( val, " ")
 	}
 }

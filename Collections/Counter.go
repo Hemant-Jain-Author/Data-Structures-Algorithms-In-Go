@@ -34,9 +34,11 @@ func main() {
 	mp.Add("a")
 	mp.Add("b")
 	mp.Add("a")
+
 	fmt.Println(mp.Find("a"))
 	fmt.Println(mp.Find("b"))
 	fmt.Println(mp.Find("c"))
+
 	fmt.Println(mp.Get("a"))
 	fmt.Println(mp.Get("b"))
 	fmt.Println(mp.Get("c"))

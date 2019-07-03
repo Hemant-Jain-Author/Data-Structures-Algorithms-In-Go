@@ -18,6 +18,15 @@ func IsAnagram(str1 string, str2 string) bool {
 	return (len(cm) == 0)
 }
 
+func main1() {
+	var1 := "hello"
+	var2 := "elloh"
+	var3 := "world"
+
+	fmt.Println("IsAnagram : ", IsAnagram(var1, var2))
+	fmt.Println("IsAnagram : ", IsAnagram(var1, var3))
+}
+
 func RemoveDuplicate(str string) string {
 	input := []rune(str)
 	hs := make(Set)
@@ -29,6 +38,11 @@ func RemoveDuplicate(str string) string {
 		}
 	}
 	return string(output)
+}
+
+func main2() {
+	var1 := "hello"
+	fmt.Println(RemoveDuplicate(var1))
 }
 
 func FindMissing(arr []int, start int, end int) (int, bool) {
@@ -44,6 +58,12 @@ func FindMissing(arr []int, start int, end int) (int, bool) {
 	return 0, false
 }
 
+func main3() {
+	arr := []int{1, 2, 3, 5, 6, 7, 9, 8, 10}
+	fmt.Print("Missing number is :: ")
+	fmt.Println(FindMissing(arr, 1, 10))
+}
+
 func PrintRepeating(arr []int) {
 	hs := make(Set)
 	fmt.Print("Repeating elements are :: ")
@@ -55,6 +75,11 @@ func PrintRepeating(arr []int) {
 		}
 	}
 	fmt.Println()
+}
+
+func main4() {
+	arr1 := []int{1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 1}
+	PrintRepeating(arr1)
 }
 
 func PrintFirstRepeating(arr []int) {
@@ -73,6 +98,11 @@ func PrintFirstRepeating(arr []int) {
 	}
 }
 
+func main5() {
+	arr1 := []int{1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 1}
+	PrintFirstRepeating(arr1)
+}
+
 func hornerHash(key []rune, tableSize int) int {
 	size := len(key)
 	h := 0
@@ -82,24 +112,12 @@ func hornerHash(key []rune, tableSize int) int {
 	return h
 }
 
-func main() {
-	var1 := "hello"
-	var2 := "elloh"
-	var3 := "world"
-
-	fmt.Println("IsAnagram : ", IsAnagram(var1, var2))
-	fmt.Println("IsAnagram : ", IsAnagram(var1, var3))
-
-	fmt.Println(RemoveDuplicate(var1))
-
-	arr := []int{1, 2, 3, 5, 6, 7, 9, 8, 10}
-	fmt.Print("Missing number is :: ")
-	fmt.Println(FindMissing(arr, 1, 10))
-
-	arr1 := []int{1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 1}
-	PrintRepeating(arr1)
-
-	PrintFirstRepeating(arr1)
+func main(){
+	main1()
+	//main2()
+	//main3()
+	//main4()
+	//main5()
 }
 
 // ***********************
@@ -128,6 +146,8 @@ func (s *Counter) Get(key interface{}) (int, bool) {
 	val, ok := (*s)[key]
 	return val, ok
 }
+
+//*******************************************
 
 type Set map[interface{}]bool
 

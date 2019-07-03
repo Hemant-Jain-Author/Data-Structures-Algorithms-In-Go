@@ -67,13 +67,12 @@ func (q *QueueLinkedList) Print() {
 
 func main() {
 	q := new(QueueLinkedList)
-	for i := 1; i <= 10; i++ {
-		q.Add(i)
-	}
+	q.Add(1)
+	q.Add(2)
+	q.Add(3)
 
-	for i := 1; i <= 5; i++ {
-		q.Remove()
+	for q.IsEmpty() == false {
+		val := q.Remove()
+		fmt.Println(val, " ")
 	}
-
-	q.Print()
 }

@@ -2,38 +2,38 @@ package main
 
 import "fmt"
 
-type StackInt struct {
+type Stack struct {
 	s []int
 }
 
-func (s *StackInt) Push(value int) {
+func (s *Stack) Push(value int) {
 	s.s = append(s.s, value)
 }
 
-func (s *StackInt) Pop() int {
+func (s *Stack) Pop() int {
 	length := len(s.s)
 	res := s.s[length-1]
 	s.s = s.s[:length-1]
 	return res
 }
 
-func (s *StackInt) Top() int {
+func (s *Stack) Top() int {
 	length := len(s.s)
 	res := s.s[length-1]
 	return res
 }
 
-func (s *StackInt) IsEmpty() bool {
+func (s *Stack) IsEmpty() bool {
 	length := len(s.s)
 	return length == 0
 }
 
-func (s *StackInt) Length() int {
+func (s *Stack) Length() int {
 	length := len(s.s)
 	return length
 }
 
-func (s *StackInt) Print() {
+func (s *Stack) Print() {
 	length := len(s.s)
 	for i := 0; i < length; i++ {
 		fmt.Print(s.s[i], " ")
@@ -42,13 +42,12 @@ func (s *StackInt) Print() {
 }
 
 func main() {
-	s := new(StackInt)
+	s := new(Stack)
 	s.Push(1)
 	s.Push(2)
 	s.Push(3)
 	
-	length := s.Length()
-	for i := 0; i < length; i++ {
+	for s.IsEmpty() == false {
 		fmt.Print(s.Pop(), " ")
 	}
 }

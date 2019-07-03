@@ -5,14 +5,6 @@ import (
 	"sort"
 )
 
-func printArray(arr []int, count int) {
-	fmt.Print("[")
-	for i := 0; i < count; i++ {
-		fmt.Print(" ", arr[i])
-	}
-	fmt.Println(" ]")
-}
-
 func swap(data []int, x int, y int) {
 	data[x], data[y] = data[y], data[x]
 }
@@ -28,7 +20,7 @@ func SumArray(data []int) int {
 
 func main1() {
 	data := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
-	fmt.Println("sum of all the values in array:", SumArray(data))
+	fmt.Println("Sum of all the values in array:", SumArray(data))
 }
 
 func function2() {
@@ -78,9 +70,11 @@ func BinarySearch(data []int, value int) bool {
 }
 
 func main3() {
-	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
+	arr := []int{1, 2, 3, 4, 5, 6, 7, 9}
 	fmt.Println("SequentialSearch:", SequentialSearch(arr, 7))
+	fmt.Println("SequentialSearch:", SequentialSearch(arr, 8))
 	fmt.Println("BinarySearch:", BinarySearch(arr, 7))
+	fmt.Println("BinarySearch:", BinarySearch(arr, 8))
 }
 
 func RotateArray(data []int, k int) {
@@ -112,9 +106,9 @@ func ReverseArray2(data []int) {
 
 func main4() {
 	arr := []int{1, 2, 3, 4, 5, 6}
-    printArray(arr, len(arr))
+    fmt.Println("Input array :", arr)
 	RotateArray(arr, 2)
-	printArray(arr, len(arr))
+    fmt.Println("Rotated array :", arr)
 }
 
 func MaxSubArraySum(data []int) int {
@@ -135,11 +129,11 @@ func MaxSubArraySum(data []int) int {
 }
 
 func main5() {
-	data := []int{1, -2, 3, 4, -4, 6, -14, 8, 2}
+	data := []int{1, -2, 3, 4, -4, 6, -14, 6, 2}
 	fmt.Println("Max sub array sum :", MaxSubArraySum(data))
 }
 
-func WaveArray2(arr []int) {
+func WaveArray(arr []int) {
 	size := len(arr)
 	/* Odd elements are lesser then even elements. */
 	for i := 1; i < size; i += 2 {
@@ -152,7 +146,7 @@ func WaveArray2(arr []int) {
 	}
 }
 
-func WaveArray(arr []int) {
+func WaveArray2(arr []int) {
 	size := len(arr)
 	sort.Ints(arr)
 	for i := 0; i < size-1; i += 2 {
@@ -163,14 +157,14 @@ func WaveArray(arr []int) {
 /* Testing code */
 func main6() {
 	arr := []int{8, 1, 2, 3, 4, 5, 6, 4, 2}
-	printArray(arr, len(arr))
 	WaveArray(arr)
-	printArray(arr, len(arr))
+    fmt.Println(arr)
 
 	arr2 := []int{8, 1, 2, 3, 4, 5, 6, 4, 2}
 	WaveArray2(arr2)
-	printArray(arr2, len(arr2))
+    fmt.Println(arr2)
 }
+
 
 func indexArray(arr []int, size int) {
 	for i := 0; i < size; i++ {
@@ -209,11 +203,11 @@ func main7() {
 	arr := []int{8, -1, 6, 1, 9, 3, 2, 7, 4, -1}
 	size := len(arr)
 	indexArray2(arr, size)
-	printArray(arr, size)
+    fmt.Println(arr)
 	arr2 := []int{8, -1, 6, 1, 9, 3, 2, 7, 4, -1}
 	size2 := len(arr2)
 	indexArray(arr2, size2)
-	printArray(arr2, size2)
+    fmt.Println(arr2)
 }
 
 func Sort1toN(arr []int, size int) {
@@ -246,14 +240,14 @@ func main8() {
 	arr := []int{8, 5, 6, 1, 9, 3, 2, 7, 4, 10}
 	size := len(arr)
 	Sort1toN2(arr, size)
-	printArray(arr, size)
+    fmt.Println(arr)
 
 	arr2 := []int{8, 5, 6, 1, 9, 3, 2, 7, 4, 10}
 	size2 := len(arr2)
 	Sort1toN(arr2, size2)
-	printArray(arr2, size2)
-
+    fmt.Println(arr2)
 }
+
 
 func SmallestPositiveMissingNumber(arr []int, size int) int {
 	found := 0
@@ -327,10 +321,10 @@ func main9() {
 	arr := []int{8, 5, 6, 1, 9, 11, 2, 7, 4, 10}
 	size := len(arr)
 
-	fmt.Println("Max sub array sum :", SmallestPositiveMissingNumber(arr, size))
-	fmt.Println("Max sub array sum :", SmallestPositiveMissingNumber2(arr, size))
-	fmt.Println("Max sub array sum :", SmallestPositiveMissingNumber3(arr, size))
-	fmt.Println("Max sub array sum :", SmallestPositiveMissingNumber4(arr, size))
+	fmt.Println("Missing Number :", SmallestPositiveMissingNumber(arr, size))
+	fmt.Println("Missing Number :", SmallestPositiveMissingNumber2(arr, size))
+	fmt.Println("Missing Number :", SmallestPositiveMissingNumber3(arr, size))
+	fmt.Println("Missing Number :", SmallestPositiveMissingNumber4(arr, size))
 }
 
 func MaxMinArr(arr []int, size int) {
@@ -368,12 +362,12 @@ func main10() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7}
 	size := len(arr)
 	MaxMinArr(arr, size)
-	printArray(arr, size)
+    fmt.Println(arr)
 
 	arr2 := []int{1, 2, 3, 4, 5, 6, 7}
 	size2 := len(arr2)
 	MaxMinArr2(arr2, size2)
-	printArray(arr2, size2)
+    fmt.Println(arr2)
 }
 
 func maxCircularSum(arr []int, size int) int {
@@ -397,7 +391,7 @@ func maxCircularSum(arr []int, size int) int {
 /* Testing code */
 func main11() {
 	arr := []int{10, 9, 8, 7, 6, 5, 4, 3, 2, 1}
-	fmt.Println("MaxCirculrSm: ", maxCircularSum(arr, len(arr)))
+	fmt.Println("MaxCirculrSum: ", maxCircularSum(arr, len(arr)))
 }
 
 func ArrayIndexMaxDiff(arr []int, size int) int {
@@ -459,7 +453,6 @@ func main12() {
 	arr := []int{33, 9, 10, 3, 2, 60, 30, 33, 1}
 	fmt.Println("ArrayIndexMaxDiff : ", ArrayIndexMaxDiff(arr, len(arr)))
 	fmt.Println("ArrayIndexMaxDiff : ", ArrayIndexMaxDiff2(arr, len(arr)))
-	//  fmt.Println("ArrayIndexMaxDiff : " , ArrayIndexMaxDiff3(arr, len(arr)));
 }
 
 func maxPathSum(arr1 []int, size1 int, arr2 []int, size2 int) int {
@@ -540,12 +533,17 @@ func printInt1(number int) {
 func printInt(number int) {
 	conversion := "0123456789ABCDEF"
 	base := 16
-	digit := (number % base)
+	digit := number % base
 	number = number / base
+	
 	if number != 0 {
 		printInt(number)
 	}
-	fmt.Println(conversion[digit])
+	
+	fmt.Print(string(conversion[digit]))
+}
+func main15() {
+	printInt(95)
 }
 
 func towerOfHanoi(num int, src byte, dst byte, temp byte) {
@@ -558,8 +556,8 @@ func towerOfHanoi(num int, src byte, dst byte, temp byte) {
 	towerOfHanoi(num-1, temp, dst, src)
 }
 
-func main15() {
-	num := 4
+func main16() {
+	num := 3
 	fmt.Println("The sequence of moves involved in the Tower of Hanoi are :")
 	towerOfHanoi(num, 'A', 'C', 'B')
 }
@@ -574,11 +572,19 @@ func GCD(m int, n int) int {
 	return GCD(n, m%n)
 }
 
+func main17() {
+fmt.Println("GCD is :", GCD(24, 18))
+}
+
 func fibonacci(n int) int {
 	if n <= 1 {
 		return n
 	}
 	return fibonacci(n-1) + fibonacci(n-2)
+}
+
+func main18() {
+	fmt.Println("10th number in fibonacci series :", fibonacci(10))
 }
 
 func Permutation(data []int, i int, length int) {
@@ -594,40 +600,61 @@ func Permutation(data []int, i int, length int) {
 	}
 }
 
-func main16() {
-	var data [5]int
-	for i := 0; i < 5; i++ {
+func main19() {
+	var data [3]int
+	for i := 0; i < 3; i++ {
 		data[i] = i
 	}
-	Permutation(data[:], 0, 5)
+	Permutation(data[:], 0, 3)
 }
 
-func BinarySearchRecursive(data []int, low int, high int, value int) int {
-	mid := (low + high) / 2
+
+
+func BinarySearchRecursive(data []int, value int) bool {
+	size := len(data)
+	return BinarySearchRecursiveUtil(data, 0, size - 1, value)
+}
+
+func BinarySearchRecursiveUtil(data []int, low int, high int, value int) bool {
+	if low > high {
+		return false
+	}
+	mid := (low + high)/2
 	if data[mid] == value {
-		return mid
+		return true
 	} else if data[mid] < value {
-		return BinarySearchRecursive(data, mid+1, high, value)
+		return BinarySearchRecursiveUtil(data, mid+1, high, value)
 	} else {
-		return BinarySearchRecursive(data, low, mid-1, value)
+		return BinarySearchRecursiveUtil(data, low, mid-1, value)
 	}
 }
 
+func main20() {
+	arr := []int{1, 2, 3, 4, 5, 6, 7, 9}
+	fmt.Println("BinarySearchRecursive:", BinarySearchRecursive(arr, 7))
+	fmt.Println("BinarySearchRecursive:", BinarySearchRecursive(arr, 8))
+}
+BinarySearchRecursive: true
+BinarySearchRecursive: false
 func main() {
-	// main1()
-	// main2()
-	// main3()
-	//main4()
-	//main5()
-	// main6()
-	// main7()
-	// main8()
-	// main9()
-	// main10()
-    // main11()
-    main12()
-    // main13()
-    main14()
-    main15()
-    main16()
+//	main1()
+//	main2()
+//	main3()
+//	main4()
+//	main5()
+//	main6()
+//	main7()
+//	main8()
+//	main9()
+//	main10()
+//  main11()
+//  main12()
+//  main13()
+//  main14()
+//  main15()
+//  main16()
+// main17()
+// main18()
+// main19()
+ main20()
 }

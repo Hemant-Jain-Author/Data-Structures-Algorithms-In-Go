@@ -2,21 +2,8 @@ package main
 
 import "fmt"
 
-func main() {
-	ht := new(HashTableSC)
-	ht.Init(101)
-	ht.Add(1)
-	ht.Add(2)
-	ht.Add(3)
-	ht.Print()
-	fmt.Println("1 found : ", ht.Find(1))
-	fmt.Println("4 found : ", ht.Find(4))
-	fmt.Println("1 remove : ", ht.Remove(1))
-	fmt.Println("4 remove : ", ht.Remove(4))
-	ht.Print()
-}
-
 type Node struct {
+	key int
 	value int
 	next  *Node
 }
@@ -26,8 +13,8 @@ type HashTableSC struct {
 	tableSize int
 }
 
-func (h *HashTableSC) Init(tSize int) {
-	h.tableSize = tSize
+func (h *HashTableSC) Init() {
+	h.tableSize = 101
 	h.listArray = make([](*Node), h.tableSize)
 
 	for i := 0; i < h.tableSize; i++ {
@@ -36,29 +23,34 @@ func (h *HashTableSC) Init(tSize int) {
 }
 
 func (h *HashTableSC) ComputeHash(key int) int {
-	hashValue := key
-	return hashValue % h.tableSize
+	return key % h.tableSize
 }
 
-func (h *HashTableSC) Add(value int) {
-	index := h.ComputeHash(value)
+func (h *HashTableSC) Add(key int, args ...int) {
+	value := key
+	if len(args) > 0 {
+		value = args[0]
+	}
+
+	index := h.ComputeHash(key)
 	temp := new(Node)
+	temp.key = key
 	temp.value = value
 	temp.next = h.listArray[index]
 	h.listArray[index] = temp
 }
 
-func (h *HashTableSC) Remove(value int) bool {
-	index := h.ComputeHash(value)
+func (h *HashTableSC) Remove(key int) bool {
+	index := h.ComputeHash(key)
 	var nextNode, head *Node
 	head = h.listArray[index]
-	if head != nil && head.value == value {
+	if head != nil && head.key == key {
 		h.listArray[index] = head.next
 		return true
 	}
 	for head != nil {
 		nextNode = head.next
-		if nextNode != nil && nextNode.value == value {
+		if nextNode != nil && nextNode.key == key {
 			head.next = nextNode.next
 			return true
 		}
@@ -67,28 +59,59 @@ func (h *HashTableSC) Remove(value int) bool {
 	return false
 }
 
+func (h *HashTableSC) Find(key int) bool {
+	index := h.ComputeHash(key)
+	head := h.listArray[index]
+	for head != nil {
+		if head.key == key {
+			return true
+		}
+		head = head.next
+	}
+	return false
+}
+
+func (h *HashTableSC) Get(key int) int {
+	index := h.ComputeHash(key)
+	head := h.listArray[index]
+	for head != nil {
+		if head.key == key {
+			return head.value
+		}
+		head = head.next
+	}
+	return 0
+}
+
 func (h *HashTableSC) Print() {
+	fmt.Print("\nValues Stored in HashTable are::")
 	for i := 0; i < h.tableSize; i++ {
 		head := h.listArray[i]
 		if head != nil {
-			fmt.Print("\nValues at index :: ", i, " are :: ")
+			fmt.Print("\nValues at index ", i, " :: ")
 		}
 		for head != nil {
 			fmt.Print(head.value, " ")
 			head = head.next
 		}
 	}
-	fmt.Println()
+	fmt.Println("\n")	
 }
 
-func (h *HashTableSC) Find(value int) bool {
-	index := h.ComputeHash(value)
-	head := h.listArray[index]
-	for head != nil {
-		if head.value == value {
-			return true
-		}
-		head = head.next
-	}
-	return false
+func main() {
+	ht := new(HashTableSC)
+	ht.Init()
+
+	ht.Add(1, 10)
+	ht.Add(2, 20)
+	ht.Add(3, 30)
+	ht.Print()
+
+	fmt.Println("Find key 2 : ", ht.Find(2))
+	fmt.Println("Value at key 2 : ",ht.Get(2))
+
+	fmt.Println("\nAfter deleting node with key 2..")
+	ht.Remove(2)
+	fmt.Println("Find key 2 : ", ht.Find(2))
+	ht.Print()
 }

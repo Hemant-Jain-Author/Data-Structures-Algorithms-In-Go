@@ -58,15 +58,22 @@ func main3() {
 	}
 	fmt.Println()
 
-	fmt.Println("Apple price:", m["Apple"])	
-	delete(m, "Apple")
-	fmt.Println("Apple price:", m["Apple"])
-	
 	v, ok := m["Apple"]
-	fmt.Println("Apple price:", v, "Present:", ok)
+	if ok {
+		fmt.Println("Apple available at price :", v)	
+	} else {
+		fmt.Println("Apple unavailable.")
+	}
+
+	delete(m, "Apple")
 	
-	v2, ok2 := m["Banana"]
-	fmt.Println("Banana price:", v2, "Present:", ok2)
+	v, ok = m["Apple"]
+	if ok {
+		fmt.Println("Apple available at price :", v)	
+	} else {
+		fmt.Println("Apple unavailable.")
+	}
+	
 }
 
 func main(){

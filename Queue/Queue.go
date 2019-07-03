@@ -42,14 +42,12 @@ func (q *Queue) Size() int {
 
 func main() {
 	q := new(Queue)
-	for i := 0; i < 20; i++ {
-		q.Add(i)
-	}
+	q.Add(1)
+	q.Add(2)
+	q.Add(3)
 
-	for i := 0; i < 40; i++ {
-		val, ok := q.Remove()
-		if ok {
-			fmt.Print(val, " ")
-		}
+	for q.IsEmpty() == false {
+		val, _ := q.Remove()
+		fmt.Println(val, " ")
 	}
 }

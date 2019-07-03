@@ -7,6 +7,217 @@ import (
 	"math"
 	)
 
+func function2() {
+	fmt.Println("fun2 line 1")
+}
+
+func function1() {
+	fmt.Println("fun1 line 1")
+	function2()
+	fmt.Println("fun1 line 2")
+}
+
+func main0() {
+	fmt.Println("main line 1")
+	function1()
+	fmt.Println("main line 2")
+}
+
+
+func sortedInsert(stk *Stack, element int) {
+	var temp int
+	if (stk.Length() == 0 || element > stk.Top().(int)) {
+		stk.Push(element)
+	} else {
+		temp = stk.Pop().(int)
+		sortedInsert(stk, element)
+		stk.Push(temp)
+	}
+}
+
+func main1() {
+    stk := new(Stack)
+    stk.Push(1)
+    stk.Push(2)
+    stk.Push(4)
+    sortedInsert(stk, 3)
+    stk.Print()
+}
+
+func sortStack(stk *Stack) {
+	var temp int
+	if (stk.Length() > 0) {
+		temp = stk.Pop().(int)
+		sortStack(stk)
+		sortedInsert(stk, temp)
+	}
+}
+
+func sortStack2(stk *Stack) {
+	var temp int
+	stk2 := new(Stack)
+	for (stk.Length() > 0) {
+		temp = stk.Pop().(int)
+		for ((stk2.Length() > 0) && (stk2.Top().(int) < temp)) {
+			stk.Push(stk2.Pop().(int))
+		}
+		stk2.Push(temp)
+	}
+	for (stk2.Length() > 0) {
+		stk.Push(stk2.Pop().(int))
+	}
+}
+
+
+func main2() {
+    stk := new(Stack)
+    stk.Push(1)
+    stk.Push(4)
+    stk.Push(3)
+    stk.Push(2)
+	sortStack(stk)
+	stk.Print()
+}
+
+
+func insertAtBottom(stk *Stack, value interface{}) {
+	if stk.IsEmpty() {
+		stk.Push(value)
+	} else {
+		out := stk.Pop()
+		insertAtBottom(stk, value)
+		stk.Push(out)
+	}
+}
+
+func bottomInsert(stk *Stack, element int) {
+	var temp int
+	if (stk.Length() == 0) {
+		stk.Push(element)
+	} else {
+		temp = stk.Pop().(int)
+		bottomInsert(stk, element)
+		stk.Push(temp)
+	}
+}
+
+func main3() {
+    stk := new(Stack)
+    stk.Push(1)
+    stk.Push(2)
+    stk.Push(3)
+	insertAtBottom(stk, 5)
+    stk.Print()
+}
+
+func reverseStack(stk *Stack) {
+	if stk.IsEmpty() {
+		return
+	}
+	value := stk.Pop()
+	reverseStack(stk)
+	insertAtBottom(stk, value)
+}
+
+func reverseStack2(stk *Stack) {
+	que := new(Queue)
+	for (stk.Length() > 0) {
+		que.Enqueue(stk.Pop())
+	}
+
+	for (que.Length() != 0) {
+		stk.Push(que.Dequeue())
+	}
+}
+
+func main4() {
+    stk := new(Stack)
+    stk.Push(1)
+    stk.Push(2)
+    stk.Push(3)
+    fmt.Print("Stack before reversal : ")
+    stk.Print()
+    reverseStack(stk)
+    fmt.Print("Stack after reversal : ")
+    stk.Print()
+}
+
+func reverseKElementInStack(stk *Stack, k int) {
+	que := new(Queue)
+	i := 0
+	for (stk.Length() > 0 && i < k) {
+		que.Enqueue(stk.Pop())
+		i++
+	}
+	for (que.Length() != 0) {
+		stk.Push(que.Dequeue())
+	}
+}
+
+
+func main5() {
+    stk := new(Stack)
+    stk.Push(1)
+    stk.Push(2)
+    stk.Push(3)
+    stk.Push(4)
+    stk.Print()
+    reverseKElementInStack(stk, 2)    
+    stk.Print()
+}
+
+func reverseQueue(que *Queue) {
+	stk := new(Stack)
+	for (que.Length() != 0) {
+		stk.Push(que.Dequeue())
+	}
+
+	for (stk.Length() > 0) {
+		que.Enqueue(stk.Pop())
+	}
+}
+
+func main6() {
+	que := new(Queue)
+	que.Enqueue(1)
+	que.Enqueue(2)
+	que.Enqueue(3)
+	que.Enqueue(4)
+	que.Print()
+	reverseQueue(que)
+	que.Print()
+}
+
+func reverseKElementInQueue(que *Queue, k int) {
+	stk := new(Stack)
+	i := 0
+	var diff, temp int
+	for (que.Length() != 0 && i < k) {
+		stk.Push(que.Dequeue())
+		i++
+	}
+	for (stk.Length() > 0) {
+		que.Enqueue(stk.Pop())
+	}
+	diff = que.Length() - k
+	for (diff > 0) {
+		temp = que.Dequeue().(int)
+		que.Enqueue(temp)
+		diff -= 1
+	}
+}
+
+func main7() {
+	que := new(Queue)
+	que.Enqueue(1)
+	que.Enqueue(2)
+	que.Enqueue(3)
+	que.Enqueue(4)
+	que.Print()
+	reverseKElementInQueue(que, 2)
+	que.Print()
+}
+
 func IsBalancedParenthesis(expn string) bool {
 	stk := new(Stack)
 	for _, ch := range expn {
@@ -33,63 +244,203 @@ func IsBalancedParenthesis(expn string) bool {
 	return stk.IsEmpty()
 }
 
-func main1() {
+func main8() {
 	expn := "{()}[]"
 	value := IsBalancedParenthesis(expn)
-	fmt.Println("Given Expn:", expn)
-	fmt.Println("Result aft1er isParenthesisMatched:", value)
+	fmt.Println("Given Expn :", expn)
+	fmt.Println("IsBalancedParenthesis :", value)
 }
 
-func insertAtBottom(stk *Stack, value interface{}) {
-	if stk.IsEmpty() {
-		stk.Push(value)
-	} else {
-		out := stk.Pop()
-		insertAtBottom(stk, value)
-		stk.Push(out)
-	}
-}
-
-func reverseStack(stk *Stack) {
-	if stk.IsEmpty() {
-		return
-	}
-	value := stk.Pop()
-	reverseStack(stk)
-	insertAtBottom(stk, value)
-}
-
-func postfixEvaluate(expn string) int {
+func maxDepthParenthesis(expn string, size int) int {
 	stk := new(Stack)
-	str := strings.Split(expn, " ")
-	for _, tkn := range str {
-		value, err := strconv.Atoi(tkn)
-		if err == nil {
-			stk.Push(value)
-		} else {
-			num1 := stk.Pop().(int)
-			num2 := stk.Pop().(int)
+	maxDepth := 0
+	depth := 0
+	var ch byte
 
-			switch tkn {
-			case "+":
-				stk.Push(num1 + num2)
-			case "-":
-				stk.Push(num1 - num2)
-			case "*":
-				stk.Push(num1 * num2)
-			case "/":
-				stk.Push(num1 / num2)
+	for i := 0; i < size; i++ {
+		ch = expn[i]
+
+		if (ch == '(') {
+			stk.Push(ch)
+			depth += 1
+		} else  if (ch == ')') {
+			stk.Pop()
+			depth -= 1
+		}
+		if (depth > maxDepth) {
+			maxDepth = depth
+		}
+	}
+	return maxDepth
+}
+
+func maxDepthParenthesis2(expn string, size int) int {
+	maxDepth := 0
+	depth := 0
+	var ch byte
+	for i := 0; i < size; i++ {
+		ch = expn[i]
+		if (ch == '(') {
+			depth += 1
+		} else  if (ch == ')') {
+			depth -= 1
+		}
+
+		if (depth > maxDepth) {
+			maxDepth = depth
+		}
+	}
+	return maxDepth
+}
+
+func main9() {
+	expn := "((((A)))((((BBB()))))()()()())"
+	size := len(expn)
+	value :=maxDepthParenthesis(expn, size)
+
+	fmt.Println("Given expn " , expn)
+	fmt.Println("Max depth parenthesis is " , value)
+
+	value2 :=maxDepthParenthesis2(expn, size)
+	fmt.Println("Max depth parenthesis is " , value2)
+}
+
+func longestContBalParen(str string, size int) int {
+	stk := new(Stack)
+	stk.Push(-1)
+	length := 0
+
+	for i := 0; i < size; i++ {
+
+		if (str[i] == '(') {
+			stk.Push(i)
+		} else  // string[i] == ')'
+		{
+			stk.Pop()
+			if (stk.Length() != 0) {
+				if length < i - stk.Top().(int){
+					length = i - stk.Top().(int)
+				}
+			} else {
+				stk.Push(i)
 			}
 		}
 	}
-	return stk.Pop().(int)
+	return length
 }
 
-func main2() {
-	expn := "6 5 2 3 + 8 * + 3 + *"
-	value := postfixEvaluate(expn)
-	fmt.Println("Given Postfix Expn: ", expn)
-	fmt.Println("Result after Evaluation: ", value)
+func main10() {
+	expn := "())((()))(())()(()"
+	size := len(expn)
+	value :=longestContBalParen(expn, size)
+	fmt.Println("longestContBalParen " , value)
+}
+
+func reverseParenthesis(expn string, size int) int {
+	stk := new(Stack)
+	openCount := 0
+	closeCount := 0
+	var ch rune
+
+	if (size % 2 == 1) {
+		fmt.Println("Invalid odd length " , size)
+		return -1
+	}
+	for i := 0; i < size; i++ {
+		ch = rune(expn[i])
+		if (ch == '(') {
+			stk.Push(ch)
+		} else  if (ch == ')') {
+			if (stk.Length() != 0 && stk.Top() == '(') {
+				stk.Pop()
+			} else {
+				stk.Push(ch)
+			}
+		}
+	}
+
+	for (stk.Length() != 0) {
+		if (stk.Top().(rune) == '(') {
+			openCount += 1
+		} else {
+			closeCount += 1
+		}
+		stk.Pop()
+	}
+	reversal := int(math.Ceil(float64(openCount) / 2.0)) + int(math.Ceil(float64(closeCount) / 2.0))
+	return reversal
+}
+
+func main11() {
+	//expn := "())((()))(())()(()()()()))"
+	expn2 := ")(())((("
+	size := len(expn2)
+	value :=reverseParenthesis(expn2, size)
+	fmt.Println("Given expn : " , expn2)
+	fmt.Println("reverse Parenthesis is : " , value)
+}
+
+func findDuplicateParenthesis(expn string, size int) bool {
+	stk := new(Stack)
+	var ch byte
+	var count int
+
+	for i := 0; i < size; i++ {
+		ch = expn[i]
+		if (ch == ')') {
+			count = 0
+			for (stk.Length() != 0 && stk.Top().(byte) != '(') {
+				stk.Pop()
+				count += 1
+			}
+			if (count <= 1) {
+				return true
+			}
+		} else {
+			stk.Push(ch)
+		}
+	}
+	return false
+}
+
+func main12() {
+	// expn = "(((a+(b))+(c+d)))"
+	// expn = "(b)"
+	expn := "(((a+b))+c)"
+	fmt.Println("Given expn : " , expn)
+	size := len(expn)
+	value := findDuplicateParenthesis(expn, size)
+	fmt.Println("Duplicate Parenthesis Found : " , value)
+}
+
+func printParenthesisNumber(expn string, size int) {
+	var ch byte
+	stk := new(Stack)
+	output := ""
+	var count int = 1
+	for i := 0; i < size; i++ {
+		ch = expn[i]
+		if (ch == '(') {
+			stk.Push(count)
+			output += fmt.Sprintf("%v",count)
+			count += 1
+		} else if (ch == ')') {
+			output += fmt.Sprintf("%v",stk.Pop().(int))
+		}
+	}
+	fmt.Println("Parenthesis Count : " , output)
+}
+
+func main13() {
+	expn1 := "(((a+(b))+(c+d)))"
+	size := len(expn1)
+	fmt.Println("Given expn " , expn1)
+	printParenthesisNumber(expn1, size)
+
+	expn2 := "(((a+b))+c)((("
+	size = len(expn2)
+	fmt.Println("Given expn " , expn2)
+	printParenthesisNumber(expn2, size)
 }
 
 func precedence(x rune) int {
@@ -109,7 +460,6 @@ func precedence(x rune) int {
 }
 
 func InfixToPostfix(expn string) string {
-	fmt.Println(expn)
 	stk := new(Stack)
 	output := ""
 
@@ -146,7 +496,7 @@ func InfixToPostfix(expn string) string {
 	return output
 }
 
-func main3() {
+func main14() {
 	expn := "10+((3))*5/(16-4)"
 	value := InfixToPostfix(expn)
 	fmt.Println("Infix Expn: ", expn)
@@ -187,11 +537,44 @@ func replaceParanthesis(str string) string {
 	return string(a)
 }
 
-func main4() {
+func main15() {
 	expn := "10+((3))*5/(16-4)"
 	value := InfixToPrefix(expn)
 	fmt.Println("Infix Expn: ", expn)
 	fmt.Println("Prefix Expn: ", value)
+}
+
+func postfixEvaluate(expn string) int {
+	stk := new(Stack)
+	str := strings.Split(expn, " ")
+	for _, tkn := range str {
+		value, err := strconv.Atoi(tkn)
+		if err == nil {
+			stk.Push(value)
+		} else {
+			num1 := stk.Pop().(int)
+			num2 := stk.Pop().(int)
+
+			switch tkn {
+			case "+":
+				stk.Push(num1 + num2)
+			case "-":
+				stk.Push(num1 - num2)
+			case "*":
+				stk.Push(num1 * num2)
+			case "/":
+				stk.Push(num1 / num2)
+			}
+		}
+	}
+	return stk.Pop().(int)
+}
+
+func main16() {
+	expn := "6 5 2 3 + 8 * + 3 + *"
+	value := postfixEvaluate(expn)
+	fmt.Println("Given Postfix Expn: ", expn)
+	fmt.Println("Result after Evaluation: ", value)
 }
 
 func StockSpanRange(arr []int) []int {
@@ -228,9 +611,9 @@ func StockSpanRange2(arr []int) []int {
 	return SR
 }
 
-func main5() {
-	stock := []int{4, 6, 8, 12, 2, 1, 7, 8}
-	fmt.Println(stock)
+func main17() {
+	//stock := []int{4, 6, 8, 12, 2, 1, 7, 8}
+	stock := []int{6, 5, 4, 3, 2, 4, 5, 7, 9}
 	fmt.Println(StockSpanRange(stock))
 	fmt.Println(StockSpanRange2(stock))
 }
@@ -284,348 +667,13 @@ func GetMaxArea2(arr []int) int {
 	return maxArea
 }
 
-func main6() {
-	stock := []int{4, 6, 8, 12, 2, 1, 7, 8}
-	fmt.Println(stock)
-	fmt.Println(GetMaxArea(stock))
-	fmt.Println(GetMaxArea2(stock))
-}
-
-func sortedInsert(stk *Stack, element int) {
-	var temp int
-	if (stk.Length() == 0 || element > stk.Top().(int)) {
-		stk.Push(element)
-	} else {
-		temp = stk.Pop().(int)
-		sortedInsert(stk, element)
-		stk.Push(temp)
-	}
-}
-
-func sortStack(stk *Stack) {
-	var temp int
-	if (stk.Length() > 0) {
-		temp = stk.Pop().(int)
-		sortStack(stk)
-		stk.Push(temp)
-	}
-}
-
-func sortStack2(stk *Stack) {
-	var temp int
-	stk2 := new(Stack)
-	for (stk.Length() > 0) {
-		temp = stk.Pop().(int)
-		for ((stk.Length() > 0) && (stk2.Top().(int) < temp)) {
-			stk.Push(stk2.Pop().(int))
-		}
-		stk2.Push(temp)
-	}
-	for (stk2.Length() > 0) {
-		stk.Push(stk2.Pop().(int))
-	}
-}
-
-func bottomInsert(stk *Stack, element int) {
-	var temp int
-	if (stk.Length() == 0) {
-		stk.Push(element)
-	} else {
-		temp = stk.Pop().(int)
-		bottomInsert(stk, element)
-		stk.Push(temp)
-	}
-}
-
-func reverseStack2(stk *Stack) {
-	que := new(Queue)
-	for (stk.Length() > 0) {
-		que.Enqueue(stk.Pop())
-	}
-
-	for (que.Length() != 0) {
-		stk.Push(que.Dequeue())
-	}
-}
-
-func reverseKElementInStack(stk *Stack, k int) {
-	que := new(Queue)
-	i := 0
-	for (stk.Length() > 0 && i < k) {
-		que.Enqueue(stk.Pop())
-		i++
-	}
-	for (que.Length() != 0) {
-		stk.Push(que.Dequeue())
-	}
-}
-
-func reverseQueue(que *Queue) {
-	stk := new(Stack)
-	for (que.Length() != 0) {
-		stk.Push(que.Dequeue())
-	}
-
-	for (stk.Length() > 0) {
-		que.Enqueue(stk.Pop())
-	}
-}
-
-func reverseKElementInQueue(que *Queue, k int) {
-	stk := new(Stack)
-	i := 0
-	var diff, temp int
-	for (que.Length() != 0 && i < k) {
-		stk.Push(que.Dequeue())
-		i++
-	}
-	for (stk.Length() > 0) {
-		que.Enqueue(stk.Pop())
-	}
-	diff = que.Length() - k
-	for (diff > 0) {
-		temp = que.Dequeue().(int)
-		que.Enqueue(temp)
-		diff -= 1
-	}
-}
-
-func main7() {
-	stk := new(Stack)
-	stk.Push(1)
-	stk.Push(2)
-	stk.Push(3)
-	stk.Push(4)
-	stk.Push(5)
-	stk.Print()
-	fmt.Println()
-}
-
-func main8() {
-	stk := new(Stack)
-	stk.Push(-2)
-	stk.Push(13)
-	stk.Push(16)
-	stk.Push(-6)
-	stk.Push(40)
-	stk.Print()
-	fmt.Println()
-
-	reverseStack2(stk)
-	stk.Print()
-	fmt.Println()
-
-	reverseKElementInStack(stk, 2)
-	stk.Print()
-	fmt.Println()
-	/*
-		* System.out.println(stk) sortStack2(stk) System.out.println(stk)
-		*/
-	que := new(Queue)
-	que.Enqueue(1)
-	que.Enqueue(2)
-	que.Enqueue(3)
-	que.Enqueue(4)
-	que.Enqueue(5)
-	que.Enqueue(6)
-	que.Print()
-	fmt.Println()
-
-	reverseQueue(que)
-	que.Print()
-	fmt.Println()
-
-	reverseKElementInQueue(que, 2)
-	que.Print()
-	fmt.Println()
-}
-
-func maxDepthParenthesis(expn string, size int) int {
-	stk := new(Stack)
-	maxDepth := 0
-	depth := 0
-	var ch byte
-
-	for i := 0; i < size; i++ {
-		ch = expn[i]
-
-		if (ch == '(') {
-			stk.Push(ch)
-			depth += 1
-		} else  if (ch == ')') {
-			stk.Pop()
-			depth -= 1
-		}
-		if (depth > maxDepth) {
-			maxDepth = depth
-		}
-	}
-	return maxDepth
-}
-
-func maxDepthParenthesis2(expn string, size int) int {
-	maxDepth := 0
-	depth := 0
-	var ch byte
-	for i := 0; i < size; i++ {
-		ch = expn[i]
-		if (ch == '(') {
-			depth += 1
-		} else  if (ch == ')') {
-			depth -= 1
-		}
-
-		if (depth > maxDepth) {
-			maxDepth = depth
-		}
-	}
-	return maxDepth
-}
-
-func main9() {
-	expn := "((((A)))((((BBB()))))()()()())"
-	size := len(expn)
-	value :=maxDepthParenthesis(expn, size)
-	value2 :=maxDepthParenthesis2(expn, size)
-
-	fmt.Println("Given expn " , expn)
-	fmt.Println("Max depth parenthesis is " , value)
-	fmt.Println("Max depth parenthesis is " , value2)
-}
-
-func longestContBalParen(str string, size int) int {
-	stk := new(Stack)
-	stk.Push(-1)
-	length := 0
-
-	for i := 0; i < size; i++ {
-
-		if (str[i] == '(') {
-			stk.Push(i)
-		} else  // string[i] == ')'
-		{
-			stk.Pop()
-			if (stk.Length() != 0) {
-				if length < i - stk.Top().(int){
-					length = i - stk.Top().(int)
-				}
-			} else {
-				stk.Push(i)
-			}
-		}
-	}
-	return length
-}
-
-func main10() {
-	expn := "())((()))(())()(()"
-	size := len(expn)
-	value :=longestContBalParen(expn, size)
-	fmt.Println("longestContBalParen " , value)
-}
-
-func reverseParenthesis(expn string, size int) int {
-	stk := new(Stack)
-	openCount := 0
-	closeCount := 0
-	var ch byte
-
-	if (size % 2 == 1) {
-		fmt.Println("Invalid odd length " , size)
-		return -1
-	}
-	for i := 0; i < size; i++ {
-		ch = expn[i]
-		if (ch == '(') {
-			stk.Push(ch)
-		} else  if (ch == ')') {
-			if (stk.Length() != 0 && stk.Top().(byte) == '(') {
-				stk.Pop()
-			} else {
-				stk.Push(')')
-			}
-		}
-	}
-	for (stk.Length() != 0) {
-		if (stk.Pop() == '(') {
-			openCount += 1
-		} else {
-			closeCount += 1
-		}
-	}
-	reversal := int(math.Ceil(float64(openCount) / 2.0)) + int(math.Ceil(float64(closeCount) / 2.0))
-	return reversal
-}
-
-func main11() {
-	//expn := "())((()))(())()(()()()()))"
-	expn2 := ")(())((("
-	size := len(expn2)
-	value :=reverseParenthesis(expn2, size)
-	fmt.Println("Given expn : " , expn2)
-	fmt.Println("reverse Parenthesis is : " , value)
-}
-
-func findDuplicateParenthesis(expn string, size int) bool {
-	stk := new(Stack)
-	var ch byte
-	var count int
-
-	for i := 0; i < size; i++ {
-		ch = expn[i]
-		if (ch == ')') {
-			count = 0
-			for (stk.Length() != 0 && stk.Top().(byte) != '(') {
-				stk.Pop()
-				count += 1
-			}
-			if (count <= 1) {
-				return true
-			}
-		} else {
-			stk.Push(ch)
-		}
-	}
-	return false
-}
-
-func main12() {
-	// expn = "(((a+(b))+(c+d)))"
-	// expn = "(b)"
-	expn := "(((a+b))+c)"
-	fmt.Println("Given expn : " , expn)
-	size := len(expn)
-	value := findDuplicateParenthesis(expn, size)
-	fmt.Println("Duplicate Found : " , value)
-}
-
-func printParenthesisNumber(expn string, size int) {
-	var ch byte
-	stk := new(Stack)
-	output := ""
-	var count int = 1
-	for i := 0; i < size; i++ {
-		ch = expn[i]
-		if (ch == '(') {
-			stk.Push(count)
-			output += fmt.Sprintf("%v",count)
-			count += 1
-		} else if (ch == ')') {
-			output += fmt.Sprintf("%v",stk.Pop().(int))
-		}
-	}
-	fmt.Println("Parenthesis Count : " , output)
-}
-
-func main13() {
-	expn1 := "(((a+(b))+(c+d)))"
-	expn2 := "(((a+b))+c)((("
-	size := len(expn1)
-	fmt.Println("Given expn " , expn1)
-	printParenthesisNumber(expn1, size)
-	size = len(expn2)
-	fmt.Println("Given expn " , expn2)
-	printParenthesisNumber(expn2, size)
+func main18() {
+    arr := []int{7, 6, 5, 4, 4, 1, 6, 3, 1}
+    value := GetMaxArea(arr)
+    fmt.Println("GetMaxArea ::", value)
+    
+    value = GetMaxArea2(arr);
+    fmt.Println("GetMaxArea ::", value)
 }
 
 func nextLargerElement(arr []int, size int) {
@@ -701,7 +749,7 @@ func nextSmallerElement(arr []int, size int) {
 	fmt.Println()
 }
 
-func main14() {
+func main19() {
 	arr := []int { 13, 21, 3, 6, 20, 3 }
 	size := len(arr)
 	nextLargerElement(arr, size)
@@ -733,7 +781,7 @@ func nextLargerElementCircular(arr []int, size int) {
 	fmt.Println()
 }
 
-func main15() {
+func main20() {
 	arr := []int { 6, 3, 9, 8, 10, 2, 1, 15, 7 }
 	size := len(arr)
 	nextLargerElementCircular(arr, size)
@@ -793,14 +841,13 @@ func RottenFruit(arr [][]int, maxCol int, maxRow int) int {
 	return maxDay
 }
 
-func main16() {
+func main21() {
 	arr := make([][]int, 5)
     arr[0] = []int{1, 0, 1, 1, 0} 
     arr[1] = []int{2, 1, 0, 1, 0}
     arr[2] = []int{0, 0, 0, 2, 1}
     arr[3] = []int{0, 2, 0, 0, 1}
     arr[4] = []int{1, 1, 0, 0, 1}
-    //make([]int, col)
 	fmt.Println(RottenFruit(arr, 5, 5))
 }
 
@@ -845,7 +892,7 @@ func StepsOfKnight(size int, srcX int, srcY int, dstX int, dstY int) int {
 	return retval
 }
 
-func main17() {
+func main22() {
 	fmt.Println(StepsOfKnight(20, 10, 10, 20, 20))
 }
 
@@ -892,7 +939,7 @@ func DistNearestFill(arr [][]int, maxCol int, maxRow int) {
 	}
 }
 
-func main18() {
+func main23() {
 	arr := make([][]int, 5)
     arr[0] = []int{1, 0, 1, 1, 0} 
     arr[1] = []int{1, 1, 0, 1, 0}
@@ -942,7 +989,7 @@ func findLargestIsland(arr [][]int, maxCol int, maxRow int) int {
 }
 
 
-func main19() {
+func main24() {
 	arr := make([][]int, 5)
     arr[0] = []int{1, 0, 1, 1, 0} 
     arr[1] = []int{1, 0, 0, 1, 0}
@@ -1006,7 +1053,7 @@ func findCelebrity2(relation [][]int, count int) int {
 	return first
 }
 
-func main20() {
+func main25() {
 	arr := make([][]int, 5)
     arr[0] = []int{1, 0, 1, 1, 0} 
     arr[1] = []int{1, 0, 0, 1, 0}
@@ -1018,59 +1065,33 @@ func main20() {
 	fmt.Println("Celebrity : " , findCelebrity2(arr, 5))
 }
 
-func IsMinHeap(arr []int, size int) int {
-	for i := 0; i <= (size - 2) / 2; i++ {
-		if (2 * i + 1 < size) {
-			if (arr[i] > arr[2 * i + 1]) {
-				return 0
-			}
-		}
-		if (2 * i + 2 < size) {
-			if (arr[i] > arr[2 * i + 2]) {
-				return 0
-			}
-		}
-	}
-	return 1
-}
-
-func IsMaxHeap(arr []int, size int) int {
-	for i := 0; i <= (size - 2) / 2; i++ {
-		if (2 * i + 1 < size) {
-			if (arr[i] < arr[2 * i + 1]) {
-				return 0
-			}
-		}
-		if (2 * i + 2 < size) {
-			if (arr[i] < arr[2 * i + 2]) {
-				return 0
-			}
-		}
-	}
-	return 1
-}
 
 func main(){
-	main1()
-	main2()
-	main3()
-	main4()
-	main5()
-	main6()
-	main7()
-	main8()
-	main9()
-	main10()
-	main11()
-	main12()
-	main13()
-	main14()
-	main15()
-	main16()
-	main17()
-	main18()
-	main19()
-	main20()
+	// main1()
+	// main2()
+	// main3()
+	// main4()
+	// main5()
+	// main6()
+	// main7()
+	// main8()
+	// main9()
+	// main10()
+	// main11()
+	// main12()
+	// main13()
+	// main14()
+	// main15()
+	// main16()
+	// main17()
+	// main18()
+	// main19()
+	// main20()
+	// main21()
+	// main22()
+	// main23()
+	// main24()
+	 main25()
 }
 
 //**************************

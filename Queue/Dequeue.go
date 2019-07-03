@@ -112,11 +112,13 @@ func (q *Dequeue) Print() {
 
 func main() {
 	q := new(Dequeue)
-	for i := 1; i <= 5; i++ {
-		q.AddFront(i)
-	}
-	for i := 1; i <= 5; i++ {
-		fmt.Println(q.RemoveBack())
-	}
+	q.AddFront(1)
+	q.AddFront(1)
+	q.AddBack(2)
+	q.AddBack(2)
 	q.Print()
+	fmt.Println(q.RemoveBack())
+	q.Print()
+	fmt.Println(q.RemoveFront())
+	q.Print()		
 }

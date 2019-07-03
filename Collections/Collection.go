@@ -8,8 +8,8 @@ import "github.com/golang-collections/collections/set"
 func main1() {
 	st := set.New()
 	st.Insert(1)
-	st.Insert(1)
 	st.Insert(2)
+
 	fmt.Println(st.Has(1))
 	fmt.Println(st.Has(3))
 	st.Remove(1)
@@ -26,6 +26,7 @@ func main2() {
 		val := s.Pop()
 		fmt.Print(val, " ")
 	}
+	fmt.Println()
 }
 
 func main3() {
@@ -33,23 +34,22 @@ func main3() {
 	q.Enqueue(1)
 	q.Enqueue(2)
 	q.Enqueue(3)
-	fmt.Println(q)
-	fmt.Println(q)
-	val := 0
 
 	for q.Len() != 0 {
-		val = q.Dequeue().(int)
+		val := q.Dequeue().(int)
 		fmt.Print(val, " ")
 	}
+	fmt.Println()
 }
 
 
 func main4() {
+	m := make(map[int]string)
+	m[1] = "One"
+	m[2] = "Two"
+	fmt.Println(m[1])
+		fmt.Println(m[1])
 
-	m := make(map[string]int)
-	m["first"] = 1
-	m["second"] = 2
-	fmt.Println(m["first"])
 }
 
 func main() {

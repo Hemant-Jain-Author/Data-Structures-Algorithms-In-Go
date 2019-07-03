@@ -112,6 +112,7 @@ func (list *CircularLinkedList) RemoveNode(key int) bool {
 		} else { // head case
 			list.tail.next = list.tail.next.next
 		}
+		list.count--
 		return true
 	}
 
@@ -124,6 +125,7 @@ func (list *CircularLinkedList) RemoveNode(key int) bool {
 				list.tail = prev
 			}
 			prev.next = curr.next
+			list.count--
 			return true
 		}
 		prev = curr
@@ -145,8 +147,10 @@ func (list *CircularLinkedList) CopyListReversed() *CircularLinkedList {
 		cl.AddHead(curr.value)
 		curr = curr.next
 	}
+	cl.count = list.count
 	return cl
 }
+
 
 func (list *CircularLinkedList) CopyList() *CircularLinkedList {
 	cl := new(CircularLinkedList)
@@ -161,6 +165,7 @@ func (list *CircularLinkedList) CopyList() *CircularLinkedList {
 		cl.AddTail(curr.value)
 		curr = curr.next
 	}
+	cl.count = list.count
 	return cl
 }
 
@@ -174,4 +179,14 @@ func main() {
 	ll.AddHead(2)
 	ll.AddHead(3)
 	ll.Print()
+
+	ll.RemoveNode(3)
+	ll.Print()
+	ll.RemoveHead()
+	ll.Print()
+
+	ll2 := ll.CopyList()
+	ll2.Print()
+	ll3 := ll.CopyListReversed()
+	ll3.Print()
 }

@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+	"math"
+)
 
 type Heap struct {
 	size  int
@@ -8,20 +12,19 @@ type Heap struct {
 	isMin bool
 }
 
-func NewHeap(arrInput []int, isMin bool) *Heap {
-	size := len(arrInput)
+func CreateHeap(isMin bool, args ...[]int) *Heap {
 	arr := []int{1}
-	arr = append(arr, arrInput...)
+	size := 0
+	if len(args) > 0 {
+		arrInput := args[0]
+		arr = append(arr, arrInput...)
+		size = len(arrInput)
+	}
 	h := &Heap{size: size, arr: arr, isMin: isMin}
-	for i := (h.size / 2); i > 0; i-- {
+	for i := (size / 2); i > 0; i-- {
 		h.proclateDown(i)
 	}
-	return h
-}
 
-func NewHeap2(isMin bool) *Heap {
-	arr := []int{1}
-	h := &Heap{size: 0, arr: arr, isMin: isMin}
 	return h
 }
 
@@ -70,7 +73,7 @@ func (h *Heap) Add(value int) {
 }
 
 func (h *Heap) Remove() int {
-	if h.Empty() {
+	if h.IsEmpty() {
 		fmt.Println("HeapEmptyException.")
 		return 0
 	}
@@ -82,49 +85,7 @@ func (h *Heap) Remove() int {
 	return value
 }
 
-func (h *Heap) Print() {
-	fmt.Print("Printing Heap size :", h.size, " :: ")
-	for i := 1; i <= h.size; i++ {
-		fmt.Print(" ", h.arr[i])
-	}
-	fmt.Println()
-}
-
-func IsMinHeap(arr []int) bool {
-	size := len(arr)
-	for i := 0; i <= (size-2)/2; i++ {
-		if 2*i+1 < size {
-			if arr[i] > arr[2*i+1] {
-				return false
-			}
-		}
-		if 2*i+2 < size {
-			if arr[i] > arr[2*i+2] {
-				return false
-			}
-		}
-	}
-	return true
-}
-
-func IsMaxHeap(arr []int) bool {
-	size := len(arr)
-	for i := 0; i <= (size-2)/2; i++ {
-		if 2*i+1 < size {
-			if arr[i] < arr[2*i+1] {
-				return false
-			}
-		}
-		if 2*i+2 < size {
-			if arr[i] < arr[2*i+2] {
-				return false
-			}
-		}
-	}
-	return true
-}
-
-func (h *Heap) Empty() bool {
+func (h *Heap) IsEmpty() bool {
 	return (h.size == 0)
 }
 
@@ -133,20 +94,143 @@ func (h *Heap) Size() int {
 }
 
 func (h *Heap) Peek() int {
-	if h.Empty() {
+	if h.IsEmpty() {
 		fmt.Println("Heap empty exception.")
 		return 0
 	}
 	return h.arr[1]
 }
 
+func (h *Heap) Print() {
+	fmt.Print("Printing Heap size :", h.size, " :: ")
+	for i := 1; i <= h.size; i++ {
+		fmt.Print(" ", h.arr[i])
+	}
+	fmt.Println()
+}
+
+func main1() {
+    hp := CreateHeap(true)
+	hp.Print();
+    hp.Add(1)
+    hp.Add(9)
+    hp.Add(6)
+    hp.Add(7)
+    hp.Print()
+    for  hp.IsEmpty() == false {
+        fmt.Println(hp.Remove())
+    }
+}
+/*
+Printing Heap size :0 :: 
+Printing Heap size :4 ::  1 7 6 9
+1
+6
+7
+9
+*/
+
+func main2() {
+    a := []int{1, 0, 2, 4, 5, 3}
+    hp := CreateHeap(true, a)// Min Heap
+    hp.Print()
+    for hp.IsEmpty() == false {
+        fmt.Println(hp.Remove())
+    }
+}
+/*
+Printing Heap size :6 ::  0 1 2 4 5 3
+0
+1
+2
+3
+4
+5
+*/
+
+func main3() {
+    a := []int{1, 0, 2, 4, 5, 3}
+    hp := CreateHeap(false, a)// Max Heap
+    hp.Print()
+    for hp.IsEmpty() == false {
+        fmt.Println(hp.Remove())
+    }
+}
+/*
+Printing Heap size :6 ::  5 4 3 1 0 2
+5
+4
+3
+2
+1
+0
+*/
+
 func HeapSort(arrInput []int) {
-	hp := NewHeap(arrInput, true)
+	hp := CreateHeap(true, arrInput)
 	n := len(arrInput)
 	for i := 0; i < n; i++ {
 		arrInput[i] = hp.Remove()
 	}
 }
+
+//Testing Code 
+func main4() {
+	a := []int{1, 9, 6, 7, 8, -1, 2, 4, 5, 3}
+	fmt.Println("value before heap sort::", a)
+	HeapSort(a)
+	fmt.Println("value after heap sort::", a)
+}
+
+/*
+value before heap sort:: [1 9 6 7 8 -1 2 4 5 3]
+value after heap sort:: [-1 1 2 3 4 5 6 7 8 9]
+*/
+
+func IsMinHeap(arr[] int) bool {
+	var lchild, rchild int
+	size := len(arr)
+	// last element index size - 1
+	for parent := 0; parent < (size / 2 + 1); parent++ {
+		lchild = parent * 2 + 1
+		rchild = parent * 2 + 2
+		// heap property check.
+		if (((lchild < size) && (arr[parent] > arr[lchild])) ||
+		((rchild < size) && (arr[parent] > arr[rchild]))) {
+			return false
+		}
+	}
+	return true
+}
+
+func IsMaxHeap(arr[] int) bool {
+	var lchild, rchild int
+	size := len(arr)
+	// last element index size - 1
+	for parent := 0; parent < (size / 2 + 1); parent++ {
+		lchild = parent * 2 + 1
+		rchild = lchild + 1
+		// heap property check.
+		if (((lchild < size) && (arr[parent] < arr[lchild])) ||
+		((rchild < size) && (arr[parent] < arr[rchild]))) {
+			return false
+		}
+	}
+	return true
+}
+
+//Testing Code 
+func main5() {
+	bb := []int{1, 2, 3, 4, 5, 6, 7, 8}
+	fmt.Println(IsMinHeap(bb))
+	cc := []int{8, 7, 6, 5, 4, 3, 2, 1}
+	fmt.Println(IsMaxHeap(cc))
+}
+
+/*
+true
+true
+*/
 
 type MedianHeap struct {
 	minHeap *Heap
@@ -154,8 +238,8 @@ type MedianHeap struct {
 }
 
 func NewMedianHeap() *MedianHeap {
-	min := NewHeap(nil, true)
-	max := NewHeap(nil, false)
+	min := CreateHeap(true)
+	max := CreateHeap(false)
 
 	return &MedianHeap{
 		minHeap: min,
@@ -164,7 +248,7 @@ func NewMedianHeap() *MedianHeap {
 }
 
 func (h *MedianHeap) insert(value int) {
-	empty := h.maxHeap.Empty()
+	empty := h.maxHeap.IsEmpty()
 
 	if empty {
 		h.maxHeap.Add(value)
@@ -208,52 +292,339 @@ func (h *MedianHeap) getMedian() int {
 	}
 }
 
-func main1() {
-	a := []int{1, 9, 6, 7, 8, -1, 2, 4, 5, 3}
-	HeapSort(a)
-	fmt.Println(a)
-	hp := NewHeap(nil, true)
-	n := len(a)
-	for i := 0; i < n; i++ {
-		hp.Add(a[i])
-	}
-	for i := 0; i < n; i++ {
-		fmt.Println("pop value :: ", hp.Remove())
-	}
-
-	n = len(a)
-	hp = NewHeap(a, true)
-	for i := 0; i < n; i++ {
-		hp.Add(i)
-	}
-	for i := 0; i < n; i++ {
-		fmt.Println("pop value :: ", hp.Remove())
-	}
-
-	aa := []int{1, 9, 6, 7, 8, 1, 2, 4, 5, 3}
-	HeapSort(aa)
-	fmt.Println("value after heap sort::")
-	for i := 0; i < n; i++ {
-		fmt.Print(" ", aa[i])
-	}
-
-	bb := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
-	fmt.Println(IsMinHeap(bb))
-	cc := []int{9, 8, 7, 6, 5, 4, 3, 2, 1}
-	fmt.Println(IsMaxHeap(cc))
-}
-
-func main2() {
-	arr := []int{1, 9, 2, 8, 3, 7, 4, 6, 5, 1, 9, 2, 8, 3, 7, 4, 6, 5, 10, 10}
+//Testing Code 
+func main6() {
+	arr := []int{1, 9, 2, 8, 3, 7, 4, 6, 5}
 	hp := NewMedianHeap()
 
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 9; i++ {
 		hp.insert(arr[i])
 		fmt.Println("Median after insertion of ", arr[i], " is ", hp.getMedian())
 	}
 }
 
+func KthSmallest(arr[] int, size int, k int) int {
+	sort.Ints(arr)
+	return arr[k - 1]
+}
+
+func KthSmallest2(arr[] int, size int, k int) int {
+	i := 0
+	value := 0
+	hp := CreateHeap(true)
+	for i = 0; i < size; i++ {
+		hp.Add(arr[i])
+	}
+	i = 0
+	for i < size && i < k {
+		value = hp.Remove()
+		i += 1
+	}
+	return value
+}
+
+//Testing Code 
+func main7() {
+	arr :=  []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	fmt.Println("Kth Smallest :: " , KthSmallest(arr, len(arr), 3))
+	arr2 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	fmt.Println("Kth Smallest :: " , KthSmallest2(arr2, len(arr2), 3))
+}
+
+func KSmallestProduct(arr[] int, size int, k int) int {
+	sort.Ints(arr)
+	product := 1
+	for i := 0; i < k; i++ {
+		product *= arr[i]
+	}
+	return product
+}
+
+func KSmallestProduct2(arr[] int, size int, k int) int {
+	hp := CreateHeap(true)
+	i := 0
+	product := 1
+	for i = 0; i < size; i++ {
+		hp.Add(arr[i])
+	}
+	i = 0
+	for (i < size && i < k) {
+		product *= hp.Remove()
+		i += 1
+	}
+	return product
+}
+
+func swap(arr[] int, i int, j int) {
+	temp := arr[i]
+	arr[i] = arr[j]
+	arr[j] = temp
+}
+
+func QuickSelectUtil(arr[] int, lower int, upper int, k int) {
+	if (upper <= lower) {
+		return
+	}
+
+	pivot := arr[lower]
+	start := lower
+	stop := upper
+
+	for (lower < upper) {
+		for (lower < upper && arr[lower] <= pivot) {
+			lower++
+		}
+		for (lower <= upper && arr[upper] > pivot) {
+			upper--
+		}
+		if (lower < upper) {
+			swap(arr, upper, lower)
+		}
+	}
+
+	swap(arr, upper, start) // upper is the pivot position
+	if (k < upper) {
+		QuickSelectUtil(arr, start, upper - 1, k) // pivot -1 is the upper for left sub array.
+	}
+	if (k > upper) {
+		QuickSelectUtil(arr, upper + 1, stop, k) // pivot + 1 is the lower for right sub array.
+	}
+}
+
+func KSmallestProduct3(arr[] int, size int, k int) int {
+	QuickSelectUtil(arr, 0, size - 1, k)
+	product := 1
+	for i := 0; i < k; i++ {
+		product *= arr[i]
+	}
+	return product
+}
+
+//Testing Code 
+func main8() {
+	arr := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	fmt.Println("Kth Smallest product:: " , KSmallestProduct(arr, 8, 3))
+	arr2 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	fmt.Println("Kth Smallest product:: " , KSmallestProduct2(arr2, 8, 3))
+	arr3 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	fmt.Println("Kth Smallest product:: " , KSmallestProduct3(arr3, 8, 3))
+}
+
+func PrintLargerHalf(arr[] int, size int) {
+	sort.Ints(arr) // , size, 1)
+	for i := size / 2; i < size; i++ {
+		fmt.Print(arr[i], " ")
+	}
+	fmt.Println()
+}
+
+func PrintLargerHalf2(arr[] int, size int) {
+	hp := CreateHeap(false)
+	for i := 0; i < size; i++ {
+		hp.Add(arr[i])
+	}
+
+	for i := 0; i < size / 2; i++ {
+		fmt.Print(hp.Remove(), " ")
+	}
+	fmt.Println()
+}
+
+func PrintLargerHalf3(arr[] int, size int) {
+	QuickSelectUtil(arr, 0, size - 1, size / 2)
+	for i := size / 2; i < size; i++ {
+		fmt.Print(arr[i], " ")
+	}
+	fmt.Println()
+}
+
+//Testing Code 
+func main9() {
+	arr := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	PrintLargerHalf(arr, 8)
+	arr2 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	PrintLargerHalf2(arr2, 8)
+	arr3 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	PrintLargerHalf3(arr3, 8)
+}
+
+func sortK(arr[] int, size int, k int) {
+	hp := CreateHeap(true)
+	i := 0
+	for i = 0; i < k; i++ {
+		hp.Add(arr[i])
+	}
+
+	output := make([]int, size)
+	index := 0
+
+	for i = k; i < size; i++ {
+		output[index] = hp.Remove()
+		index++
+		hp.Add(arr[i])
+	}
+
+	for (hp.Size() > 0) {
+		output[index] = hp.Remove()
+		index++
+	}
+
+	for i = k; i < size; i++ {
+		arr[i] = output[i]
+	}
+	fmt.Println(output)
+}
+
+// Testing Code
+func main10() {
+	k := 3
+	arr := []int { 1, 5, 4, 10, 50, 9 }
+	size := len(arr)
+	sortK(arr, size, k)
+}
+
+func ChotaBhim(cups []int, size int) int {
+	time := 60
+	sort.Ints(cups)	
+	total := 0
+	var index, temp int
+	for (time > 0) 	{
+		total += cups[0]
+		cups[0] = int(math.Ceil(float64(cups[0]) / 2.0))
+		index = 0
+		temp = cups[0]
+		for (index < size - 1 && temp < cups[index + 1]) {
+			cups[index] = cups[index + 1]
+			index += 1
+		}
+		cups[index] = temp
+		time -= 1
+	}
+	fmt.Println("Total :" , total)
+	return total;
+}
+
+func ChotaBhim3(cups []int, size int) int {
+	time := 60;
+	hp := CreateHeap(false)
+	i := 0;
+	for i = 0; i < size; i++ {
+		hp.Add(cups[i])
+	}
+
+	total := 0;
+	var value int
+	for (time > 0) {
+		value = hp.Remove()
+		total += value;
+		value = int(math.Ceil(float64(value) / 2.0))
+		hp.Add(value)
+		time -= 1;
+	}
+	fmt.Println("Total :" , total)
+	return total;
+}
+
+//Testing Code 
+func main11() {
+	cups := []int { 2, 1, 7, 4, 2 }
+	ChotaBhim(cups, len(cups))
+	cups3 := []int { 2, 1, 7, 4, 2 }
+	ChotaBhim3(cups3, len(cups))
+}
+
+func JoinRopes(ropes []int , size int) int {
+	sort.Slice(ropes, func(i, j int) bool {
+	    return ropes[i] > ropes[j]
+	})
+
+	total := 0
+	value := 0
+	var index int
+	length := size
+
+	for (length >= 2) {
+		value = ropes[length - 1] + ropes[length - 2];
+		total += value
+		index = length - 2
+
+		for (index > 0 && ropes[index - 1] < value) {
+			ropes[index] = ropes[index - 1]
+			index -= 1
+		}
+		ropes[index] = value
+		length--
+	}
+	fmt.Println("Total :" , total)
+	return total
+}
+
+func JoinRopes2(ropes []int, size int) int {
+	hp := CreateHeap(true)
+	i := 0
+	for i = 0; i < size; i++ {
+		hp.Add(ropes[i])
+	}
+
+	total := 0
+	value := 0
+	for (hp.Size() > 1) {
+		value = hp.Remove()
+		value += hp.Remove()
+		hp.Add(value)
+		total += value
+	}
+	fmt.Println("Total :" , total)
+	return total
+}
+
+//Testing Code 
+func main12() {
+	ropes := []int { 2, 1, 7, 4, 2 }
+	JoinRopes(ropes, len(ropes))
+	rope2 := []int { 2, 1, 7, 4, 2 }
+	JoinRopes2(rope2, len(rope2))
+}
+/*
+func kthLargestStream(k int) int {
+	hp := CreateHeap(false)
+	size := 0
+	data := 0
+	for (true) {
+		fmt.Println("Enter data: ")
+		data = fmt.readline()
+
+		if (size < k - 1) {
+			hp.Add(data, data)
+		} else {
+			if (size == k - 1) {
+				hp.Add(data, data)
+			} else if (hp.peek() < data) {
+				hp.Add(data, data)
+				hp.Remove().(int)
+			}
+			fmt.Println("Kth larges element is :: " + hp.peek())
+		}
+		size += 1;
+	}
+}
+
+func Main13() {
+	kthLargestStream(3)
+}
+*/
 func main(){
 	main1()
-	main2()
+	//main2()
+	//main3()
+	//main4()
+	//main5()
+	//main6()
+	//main7()
+	//main8()
+	//main9()
+	//main10()
+	//main11()
+	//main12()
+	
 }
