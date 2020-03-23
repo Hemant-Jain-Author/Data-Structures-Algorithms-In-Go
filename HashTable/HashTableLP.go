@@ -38,17 +38,17 @@ func (ht *HashTable) Add(key int, args ...int) bool {
 
 	hashValue := ht.ComputeHash(key)
 	for i := 0; i < ht.tableSize; i++ {
-		if ht.Flag[hashValue] == EmptyNode || 
-		ht.Flag[key] == DeletedNode {
-			ht.Key[key] = key
+		if ht.Flag[hashValue] == EmptyNode ||
+			ht.Flag[hashValue] == DeletedNode {
+			ht.Key[hashValue] = key
 			ht.Value[hashValue] = value
 			ht.Flag[hashValue] = FillledNode
 			return true
-		} else if (ht.Flag[hashValue] == FillledNode && 
-			ht.Key[hashValue] == key) {
-            ht.Value[hashValue] = value
-            return true
-        }
+		} else if ht.Flag[hashValue] == FillledNode &&
+			ht.Key[hashValue] == key {
+			ht.Value[hashValue] = value
+			return true
+		}
 
 		hashValue += ht.ResolverFun(i)
 		hashValue %= ht.tableSize
@@ -62,8 +62,8 @@ func (ht *HashTable) Find(key int) bool {
 		if ht.Flag[hashValue] == EmptyNode {
 			return false
 		}
-		if ht.Flag[hashValue] == FillledNode && 
-		ht.Key[hashValue] == key {
+		if ht.Flag[hashValue] == FillledNode &&
+			ht.Key[hashValue] == key {
 			return true
 		}
 		hashValue += ht.ResolverFun(i)
@@ -72,15 +72,14 @@ func (ht *HashTable) Find(key int) bool {
 	return false
 }
 
-
 func (ht *HashTable) Get(key int) int {
 	hashValue := ht.ComputeHash(key)
 	for i := 0; i < ht.tableSize; i++ {
 		if ht.Flag[hashValue] == EmptyNode {
 			return 0
 		}
-		if ht.Flag[hashValue] == FillledNode && 
-		ht.Key[hashValue] == key {
+		if ht.Flag[hashValue] == FillledNode &&
+			ht.Key[hashValue] == key {
 			return ht.Value[hashValue]
 		}
 		hashValue += ht.ResolverFun(i)
@@ -95,8 +94,8 @@ func (ht *HashTable) Remove(key int) bool {
 		if ht.Flag[hashValue] == EmptyNode {
 			return false
 		}
-		if ht.Flag[hashValue] == FillledNode && 
-		ht.Key[hashValue] == key {
+		if ht.Flag[hashValue] == FillledNode &&
+			ht.Key[hashValue] == key {
 			ht.Flag[hashValue] = DeletedNode
 			return true
 		}
@@ -125,7 +124,7 @@ func main() {
 	ht.Print()
 
 	fmt.Println("Find key 2 : ", ht.Find(2))
-	fmt.Println("Value at key 2 : ",ht.Get(2))
+	fmt.Println("Value at key 2 : ", ht.Get(2))
 
 	ht.Remove(2)
 	fmt.Println("Find key 2 : ", ht.Find(2))
