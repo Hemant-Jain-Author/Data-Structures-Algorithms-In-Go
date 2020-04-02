@@ -3,9 +3,10 @@ package main
 import (
 	"fmt"
 	"math"
+
 	"github.com/golang-collections/collections/queue"
 	"github.com/golang-collections/collections/stack"
-	)
+)
 
 type Node struct {
 	value       int
@@ -15,7 +16,6 @@ type Node struct {
 type Tree struct {
 	root *Node
 }
-
 
 func LevelOrderBinaryTree(arr []int) *Tree {
 	tree := new(Tree)
@@ -61,8 +61,6 @@ func (t *Tree) PrintPreOrder() {
 	printPreOrder(t.root)
 	fmt.Println()
 }
-
-
 
 func printPreOrder(n *Node) {
 	if n == nil {
@@ -112,7 +110,7 @@ func nthPreOrder(node *Node, index int, counter *int) {
 	if node != nil {
 		(*counter)++
 		if *counter == index {
-			fmt.Println("NthPreOrder at index ",index ,"is :" , node.value)
+			fmt.Println("NthPreOrder at index ", index, "is :", node.value)
 		}
 		nthPreOrder(node.left, index, counter)
 		nthPreOrder(node.right, index, counter)
@@ -130,7 +128,7 @@ func nthPostOrder(node *Node, index int, counter *int) {
 		nthPostOrder(node.right, index, counter)
 		(*counter)++
 		if *counter == index {
-			fmt.Println("NthPostOrder at index ",index ,"is :" , node.value)
+			fmt.Println("NthPostOrder at index ", index, "is :", node.value)
 		}
 	}
 }
@@ -145,7 +143,7 @@ func nthInOrder(node *Node, index int, counter *int) {
 		nthInOrder(node.left, index, counter)
 		*counter++
 		if *counter == index {
-			fmt.Println("NthInOrder at index ",index ,"is :" , node.value)
+			fmt.Println("NthInOrder at index ", index, "is :", node.value)
 		}
 		nthInOrder(node.right, index, counter)
 	}
@@ -175,7 +173,6 @@ func (t *Tree) PrintBreadthFirst() {
 	fmt.Println()
 }
 
-
 func (t *Tree) PrintLevelOrderLineByLine() {
 	que1 := new(queue.Queue)
 	que2 := new(queue.Queue)
@@ -198,8 +195,8 @@ func (t *Tree) PrintLevelOrderLineByLine() {
 				que2.Enqueue(temp.right)
 			}
 		}
-		fmt.Println(" ")		
-		for que2.Len() != 0{
+		fmt.Println(" ")
+		for que2.Len() != 0 {
 			temp2 := que2.Dequeue()
 			temp = temp2.(*Node)
 			fmt.Print(temp.value, " ")
@@ -210,10 +207,9 @@ func (t *Tree) PrintLevelOrderLineByLine() {
 				que1.Enqueue(temp.right)
 			}
 		}
-		fmt.Println(" ")		
+		fmt.Println(" ")
 	}
 }
-
 
 func (t *Tree) PrintLevelOrderLineByLine2() {
 	que := new(queue.Queue)
@@ -225,9 +221,9 @@ func (t *Tree) PrintLevelOrderLineByLine2() {
 	}
 
 	for que.Len() != 0 {
-		
+
 		count = que.Len()
-		
+
 		for count > 0 {
 			temp2 := que.Dequeue()
 			temp = temp2.(*Node)
@@ -240,29 +236,28 @@ func (t *Tree) PrintLevelOrderLineByLine2() {
 			}
 			count -= 1
 		}
-		fmt.Println(" ")		
+		fmt.Println(" ")
 	}
 }
 
-func (t *Tree) PrintDepthFirst(){
+func (t *Tree) PrintDepthFirst() {
 	stk := new(stack.Stack)
-    
-    if t.root != nil {
-        stk.Push(t.root)
-    }
-    fmt.Print("Depth First : ")
-    for stk.Len() != 0 {
-    	temp := stk.Pop().(*Node)
-        fmt.Print(temp.value, " ")
-        if temp.right != nil {
-            stk.Push(temp.right)    
-        }
-        if temp.left != nil {
-            stk.Push(temp.left)
-        }
-    }
+
+	if t.root != nil {
+		stk.Push(t.root)
+	}
+	fmt.Print("Depth First : ")
+	for stk.Len() != 0 {
+		temp := stk.Pop().(*Node)
+		fmt.Print(temp.value, " ")
+		if temp.right != nil {
+			stk.Push(temp.right)
+		}
+		if temp.left != nil {
+			stk.Push(temp.left)
+		}
+	}
 }
-   
 
 func (t *Tree) PrintSpiralTree() {
 	stk1 := new(stack.Stack)
@@ -285,8 +280,8 @@ func (t *Tree) PrintSpiralTree() {
 				stk2.Push(temp.right)
 			}
 		}
-		fmt.Println(" ")		
-		for stk2.Len() != 0{
+		fmt.Println(" ")
+		for stk2.Len() != 0 {
 			temp2 := stk2.Pop()
 			temp = temp2.(*Node)
 			fmt.Print(temp.value, " ")
@@ -296,12 +291,11 @@ func (t *Tree) PrintSpiralTree() {
 			if temp.left != nil {
 				stk1.Push(temp.left)
 			}
-			
+
 		}
-		fmt.Println(" ")		
+		fmt.Println(" ")
 	}
 }
-
 
 func (t *Tree) Find(value int) bool {
 	var curr *Node = t.root
@@ -316,7 +310,6 @@ func (t *Tree) Find(value int) bool {
 	}
 	return false
 }
-
 
 func (t *Tree) FindMin() (int, bool) {
 	var node *Node = t.root
@@ -611,65 +604,62 @@ func sumAllBT(curr *Node) int {
 	return sum
 }
 
-func (t *Tree)TreeToListRec() *Node{
+func (t *Tree) TreeToListRec() *Node {
 	return treeToListRec(t.root)
 }
 
 func treeToListRec(curr *Node) *Node {
-    if curr == nil{
-        return nil 
-    }
-    var Head, Tail, tempHead *Node
-   
+	if curr == nil {
+		return nil
+	}
+	var Head, Tail, tempHead *Node
 
-    if curr.left == nil && curr.right == nil{
-    	curr.left = curr
-        curr.right = curr
-        return curr
-    }
-        
-    if curr.left != nil {
-    	Head = treeToListRec(curr.left)
-        Tail = Head.left
-        curr.left = Tail
-        Tail.right = curr
-    } else {
-        Head = curr
-    }
+	if curr.left == nil && curr.right == nil {
+		curr.left = curr
+		curr.right = curr
+		return curr
+	}
 
-    if curr.right != nil {
-    	tempHead = treeToListRec(curr.right)
-        Tail = tempHead.left
-        curr.right = tempHead
-        tempHead.left = curr
-    } else {
-        Tail = curr
-    }
+	if curr.left != nil {
+		Head = treeToListRec(curr.left)
+		Tail = Head.left
+		curr.left = Tail
+		Tail.right = curr
+	} else {
+		Head = curr
+	}
 
-    Head.left = Tail
-    Tail.right = Head
-    return Head
+	if curr.right != nil {
+		tempHead = treeToListRec(curr.right)
+		Tail = tempHead.left
+		curr.right = tempHead
+		tempHead.left = curr
+	} else {
+		Tail = curr
+	}
+
+	Head.left = Tail
+	Tail.right = Head
+	return Head
 }
 
-
 func (root *Node) PrintDLL() {
-    if (root == nil) {
-        return;
-    }
-    curr := root;
-    tail := curr.left;
-    fmt.Print(`DLL nodes are : `);
-    for (curr != tail) {
-        fmt.Print(curr.value, " ");
-        curr = curr.right;
-    };
-    fmt.Println(curr.value);
+	if root == nil {
+		return
+	}
+	curr := root
+	tail := curr.left
+	fmt.Print(`DLL nodes are : `)
+	for curr != tail {
+		fmt.Print(curr.value, " ")
+		curr = curr.right
+	}
+	fmt.Println(curr.value)
 }
 
 func (t *Tree) IsBST3() bool {
 	return IsBST3(t.root)
 }
-
 
 func IsBST3(root *Node) bool {
 	if root == nil {
@@ -738,7 +728,7 @@ func isCompleteTree(root *Node) bool {
 		que.Enqueue(root)
 	}
 
-	for que.Len() != 0{
+	for que.Len() != 0 {
 		temp = que.Dequeue().(*Node)
 		if temp.left != nil {
 			if noChild == true {
@@ -768,14 +758,14 @@ func (t *Tree) IsCompleteTree2() bool {
 
 func isCompleteTreeUtil(curr *Node, index int, count int) bool {
 
-		if (curr == nil){
-			return true
-		}
-		if (index > count){
-			return false
-		}
+	if curr == nil {
+		return true
+	}
+	if index > count {
+		return false
+	}
 
-	return isCompleteTreeUtil(curr.left, index * 2 + 1, count) && isCompleteTreeUtil(curr.right, index * 2 + 2, count)
+	return isCompleteTreeUtil(curr.left, index*2+1, count) && isCompleteTreeUtil(curr.right, index*2+2, count)
 }
 
 func (t *Tree) IsHeap() bool {
@@ -785,16 +775,15 @@ func (t *Tree) IsHeap() bool {
 
 func isHeapUtil(curr *Node, parentValue int) bool {
 
-		if (curr == nil){
-			return true
-		}
-		if (curr.value < parentValue){
-			return false
-		}
+	if curr == nil {
+		return true
+	}
+	if curr.value < parentValue {
+		return false
+	}
 
 	return isHeapUtil(curr.left, curr.value) && isHeapUtil(curr.right, curr.value)
 }
-
 
 func (t *Tree) IsHeap2() bool {
 	count := t.NumNodes()
@@ -804,19 +793,18 @@ func (t *Tree) IsHeap2() bool {
 
 func isHeapUtil2(curr *Node, index int, count int, parentValue int) bool {
 
-		if (curr == nil){
-			return true
-		}
-		if (index > count){
-			return false
-		}
-		if (curr.value < parentValue){
-			return false
-		}
+	if curr == nil {
+		return true
+	}
+	if index > count {
+		return false
+	}
+	if curr.value < parentValue {
+		return false
+	}
 
-		return isHeapUtil2(curr.left, index * 2 + 1, count, curr.value) && isHeapUtil2(curr.right, index * 2 + 2, count, curr.value)
+	return isHeapUtil2(curr.left, index*2+1, count, curr.value) && isHeapUtil2(curr.right, index*2+2, count, curr.value)
 }
-
 
 func (t *Tree) PrintAllPath() {
 	stk := new(stack.Stack)
@@ -869,6 +857,55 @@ func LCAUtil(curr *Node, first int, second int) *Node {
 		return left
 	} else {
 		return right
+	}
+}
+
+/**
+ * If we input two numbers that don't exist in the tree, the output of this function will have problems.
+ * eg:
+ * When the input slice is []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, we construct a BT using LevelOrderBinaryTree.
+ * If we want to find the least common ancestor of 8 and 11, actually we cannot find their common ancestor, because the number 11 don't exist in the tree.
+ * But the method LCA still return 8 && true.
+ * ------------
+ * So i make another method and add some code to fix it.
+ * I hope it can works.
+ * ------------
+ * Additionally, i add file named tree_test.go so that we can test this method.
+ *
+ * @author liuchuanjin.happy@163.com
+ */
+func (t *Tree) LCA2(first int, second int) (int, bool) {
+	ans, result := LCAUtil2(t.root, first, second)
+	if result == true {
+		return ans.value, true
+	}
+	fmt.Println("NotFoundException")
+	return 0, false
+}
+
+func LCAUtil2(curr *Node, first int, second int) (*Node, bool) {
+	var left, right *Node
+	var leftFound, rightFound bool
+
+	if curr == nil {
+		return nil, false
+	}
+
+	if curr.value == first || curr.value == second {
+		return curr, false
+	}
+
+	left, leftFound = LCAUtil2(curr.left, first, second)
+	right, rightFound = LCAUtil2(curr.right, first, second)
+
+	if left != nil && right != nil {
+		return curr, true
+	} else if left != nil {
+		return left, leftFound
+	} else if right != nil {
+		return right, rightFound
+	} else {
+		return nil, false
 	}
 }
 
@@ -935,7 +972,7 @@ func (t *Tree) FloorBST(val int) int {
 			break
 		} else if curr.value > val {
 			curr = curr.left
-		} else {
+		} else if curr.value < val {
 			floor = curr.value
 			curr = curr.right
 		}
@@ -1029,20 +1066,20 @@ func createBinarySearchTreeUtil(arr []int, start int, end int) *Node {
 	return curr
 }
 
-func isBSTArray( preorder[] int, size int) bool {
+func isBSTArray(preorder []int, size int) bool {
 	stk := new(stack.Stack)
 	var value int
-	root := -999999;
+	root := -999999
 	for i := 0; i < size; i++ {
 		value = preorder[i]
 
 		// If value of the right child is less than root.
-		if (value < root){
+		if value < root {
 			return false
 		}
 		// First left child values will be popped
 		// Last popped value will be the root.
-		for (stk.Len() > 0 && stk.Peek().(int) < value){
+		for stk.Len() > 0 && stk.Peek().(int) < value {
 			root = stk.Pop().(int)
 		}
 		// add current value to the stack.
@@ -1074,7 +1111,7 @@ func appendValues(values []int, t *Node) []int {
 /* Testing Code */
 func main() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	t := LevelOrderBinaryTree(arr)	
+	t := LevelOrderBinaryTree(arr)
 	t.PrintPreOrder()
 	t.PrintPostOrder()
 	t.PrintInOrder()
@@ -1082,7 +1119,7 @@ func main() {
 	t.PrintDepthFirst()
 	t.PrintLevelOrderLineByLine()
 	t.PrintLevelOrderLineByLine2()
-	t.PrintSpiralTree()	
+	t.PrintSpiralTree()
 	t.NthPreOrder(5)
 	t.NthPostOrder(5)
 	t.NthInOrder(5)
@@ -1095,6 +1132,13 @@ func main() {
 	fmt.Println(t.FindMaxBT())
 	fmt.Println(t.TreeDepth())
 	fmt.Println(t.MaxLengthPathBT())
+
+	// find the least common ancestor
+	fmt.Println(t.LCA(8, 10))
+	fmt.Println(t.LCA2(8, 10))
+	fmt.Println(t.LCA(8, 11))
+	fmt.Println(t.LCA2(8, 11))
+
 	//t2 := t.CopyTree()
 	t2 := t.CopyMirrorTree()
 	fmt.Println("Printing original tree")
@@ -1102,16 +1146,15 @@ func main() {
 	fmt.Println("Printing mirror tree")
 	t2.PrintLevelOrderLineByLine()
 	fmt.Println(t.IsEqual(t2))
-	fmt.Println(t.IsCompleteTree());
-	fmt.Println(t.IsCompleteTree2());
-	fmt.Println(t.IsHeap());
-	fmt.Println(t.IsHeap2());
+	fmt.Println(t.IsCompleteTree())
+	fmt.Println(t.IsCompleteTree2())
+	fmt.Println(t.IsHeap())
+	fmt.Println(t.IsHeap2())
 	t.PrintInOrder()
-	t3 := t.TreeToListRec(); 
-	t3.PrintDLL()	
+	t3 := t.TreeToListRec()
+	t3.PrintDLL()
 
-
-	t  = new(Tree)
+	t = new(Tree)
 	t.Add(2)
 	t.Add(1)
 	t.Add(3)
@@ -1121,9 +1164,9 @@ func main() {
 	fmt.Println(t.Find(6))
 	fmt.Println(t.FindMin())
 	fmt.Println(t.FindMax())
-	fmt.Println(t.IsBST());
-	fmt.Println(t.IsBST2());
-	fmt.Println(t.IsBST3());
+	fmt.Println(t.IsBST())
+	fmt.Println(t.IsBST2())
+	fmt.Println(t.IsBST3())
 	fmt.Println("Before delete operation.")
 	t.PrintInOrder()
 	t.DeleteNode(8)
