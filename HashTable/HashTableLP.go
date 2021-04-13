@@ -128,8 +128,8 @@ func main() {
 	fmt.Println("Value at key 2 : ",ht.Get(2))
 
 	ht.Remove(2)
+	fmt.Println("\nAfter deleting node with key 2..")
 	fmt.Println("Find key 2 : ", ht.Find(2))
-	ht.Print()
 }
 
 /*
@@ -140,6 +140,8 @@ Node at index 3 :: 30
 
 Find key 2 :  true
 Value at key 2 :  10
+
+After deleting node with key 2..
 Find key 2 :  false
 
 Values Stored in HashTable are::

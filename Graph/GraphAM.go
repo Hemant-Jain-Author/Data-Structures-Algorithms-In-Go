@@ -2,9 +2,6 @@
 
 import (
 	"fmt"
-	// "math"
-	// "github.com/golang-collections/collections/queue"
-	// "github.com/golang-collections/collections/stack"
 	"container/heap"
 )
 
@@ -32,10 +29,10 @@ func (gph *Graph) AddUndirectedEdge(src int, dst int, cost int) {
 
 func (gph *Graph) Print() {
 	for i := 0; i < gph.count; i++ {
-		fmt.Print("Node index [ " , i , " ] is connected with : ")
+		fmt.Print("Node index " , i , " is connected to : ")
 		for j := 0; j < gph.count; j++ {
 			if (gph.adj[i][j] != 0) {
-				fmt.Print(j , " ")
+				fmt.Print(j , "(cost:", gph.adj[i][j], ") ")
 			}
 		}
 		fmt.Println("")
@@ -51,6 +48,13 @@ func main1() {
 	gph.AddUndirectedEdge(2, 3, 1)
 	gph.Print()
 }
+
+/*
+Node index 0 is connected to : 1(cost:1) 2(cost:1) 
+Node index 1 is connected to : 0(cost:1) 2(cost:1) 
+Node index 2 is connected to : 0(cost:1) 1(cost:1) 3(cost:1) 
+Node index 3 is connected to : 2(cost:1) 
+*/
 
 func (gph *Graph) Dijkstra(source int) {
 	count := gph.count
@@ -168,10 +172,47 @@ func main2() {
 	gph.AddUndirectedEdge(6, 8, 6)
 	gph.AddUndirectedEdge(7, 8, 7)
 	//gph.Print()
-	gph.Dijkstra(1)
+	//gph.Dijkstra(1)
 	gph.Prims()
 }
 
+/*
+ node id  0   prev  1  distance :  4
+ node id  1   prev  -1  distance :  0
+ node id  2   prev  1  distance :  8
+ node id  3   prev  2  distance :  15
+ node id  4   prev  5  distance :  22
+ node id  5   prev  2  distance :  12
+ node id  6   prev  7  distance :  12
+ node id  7   prev  1  distance :  11
+ node id  8   prev  2  distance :  10
+
+ node id  0   prev  -1  distance :  0
+ node id  1   prev  0  distance :  4
+ node id  2   prev  5  distance :  4
+ node id  3   prev  2  distance :  7
+ node id  4   prev  3  distance :  9
+ node id  5   prev  6  distance :  2
+ node id  6   prev  7  distance :  1
+ node id  7   prev  0  distance :  8
+ node id  8   prev  2  distance :  2
+*/
+
+func (gph *Graph)hamiltonianPath() bool {
+	count := gph.count
+	path := make([]int, count)
+	added := make([]int, count)
+
+	if (gph.hamiltonianPathUtil(path, 0, added)) {
+		fmt.Print("Hamiltonian Path found :: ")
+		for i := 0; i < count; i++ {
+			fmt.Print(" " , path[i])
+		}
+		return true
+	}
+	fmt.Print("Hamiltonian Path not found")
+	return false
+}
 
 func (gph *Graph) hamiltonianPathUtil(path []int, pSize int, added []int) bool {
 	// Base case full length path is found
@@ -196,19 +237,70 @@ func (gph *Graph) hamiltonianPathUtil(path []int, pSize int, added []int) bool {
 	return false
 }
 
-func (gph *Graph)hamiltonianPath() bool {
-	count := gph.count
-	path := make([]int, count)
-	added := make([]int, count)
 
-	if (gph.hamiltonianPathUtil(path, 0, added)) {
-		fmt.Print("Hamiltonian Path found :: ")
-		for i := 0; i < count; i++ {
+func main3() {
+	count := 5
+	gph := new(Graph)
+	gph.Init(count)
+	
+	adj := make([][]int, 5)
+    adj[0] = []int{0, 1, 0, 1, 0} 
+    adj[1] = []int{1, 0, 1, 1, 0}
+    adj[2] = []int{0, 1, 0, 0, 1}
+    adj[3] = []int{1, 1, 0, 0, 1}
+    adj[4] = []int{0, 1, 1, 1, 0}
+
+	for i := 0; i < count; i++ {
+		for j := 0; j < count; j++ {
+			if (adj[i][j] == 1) {
+				gph.AddDirectedEdge(i, j, 1)
+			}
+		}
+	}
+	
+	fmt.Println("\nhamiltonianPath : " , gph.hamiltonianPath())
+
+	gph2 := new(Graph)
+	gph2.Init(count)
+
+	adj2 := make([][]int, 5)
+    adj2[0] = []int{0, 1, 0, 1, 0} 
+    adj2[1] = []int{1, 0, 1, 1, 0}
+    adj2[2] = []int{0, 1, 0, 0, 1}
+    adj2[3] = []int{1, 1, 0, 0, 0}
+    adj2[4] = []int{0, 1, 1, 0, 0}
+
+	for i := 0; i < count; i++ {
+		for j := 0; j < count; j++ {
+			if (adj2[i][j] == 1) {
+				gph2.AddDirectedEdge(i, j, 1)
+			}
+		}
+	}
+
+	fmt.Println("\nhamiltonianPath :  " , gph2.hamiltonianPath())
+}
+
+/*
+Hamiltonian Path found ::  0 1 2 4 3
+hamiltonianPath :  true
+Hamiltonian Path found ::  0 3 1 2 4
+hamiltonianPath :   true
+*/
+
+func (gph *Graph)hamiltonianCycle() bool {
+	count := gph.count
+	path := make([]int, count+1)
+	added := make([]int, count)
+	
+	if (gph.hamiltonianCycleUtil(path, 0, added)) {
+		fmt.Print("Hamiltonian Cycle found :: ")
+		for i := 0; i <= gph.count; i++ {
 			fmt.Print(" " , path[i])
 		}
 		return true
 	}
-	fmt.Print("Hamiltonian Path not found")
+	fmt.Print("Hamiltonian Cycle not found")
 	return false
 }
 
@@ -240,23 +332,8 @@ func (gph *Graph)hamiltonianCycleUtil(path []int, pSize int, added []int) bool {
 	return false
 }
 
-func (gph *Graph)hamiltonianCycle() bool {
-	count := gph.count
-	path := make([]int, count+1)
-	added := make([]int, count)
-	
-	if (gph.hamiltonianCycleUtil(path, 0, added)) {
-		fmt.Print("Hamiltonian Cycle found :: ")
-		for i := 0; i <= gph.count; i++ {
-			fmt.Print(" " , path[i])
-		}
-		return true
-	}
-	fmt.Print("Hamiltonian Cycle not found")
-	return false
-}
 
-func main3() {
+func main4() {
 	count := 5
 	gph := new(Graph)
 	gph.Init(count)
@@ -276,7 +353,6 @@ func main3() {
 		}
 	}
 	
-	fmt.Println("\nhamiltonianPath : " , gph.hamiltonianPath())
 	fmt.Println("\nhamiltonianCycle : " , gph.hamiltonianCycle())
 
 	gph2 := new(Graph)
@@ -297,14 +373,21 @@ func main3() {
 		}
 	}
 
-	fmt.Println("\nhamiltonianPath :  " , gph2.hamiltonianPath())
 	fmt.Println("\nhamiltonianCycle :  " , gph2.hamiltonianCycle())
 }
+
+/*
+Hamiltonian Cycle found ::  0 1 2 4 3 0
+hamiltonianCycle :  true
+Hamiltonian Cycle not found
+hamiltonianCycle :   false
+*/
 
 func main(){
 	//main1()
 	//main2()
-	main3()
+	//main3()
+	main4()
 }
 
 // *********************

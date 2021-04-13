@@ -78,16 +78,16 @@ func (t *Trie) FindUtil(curr *TrieNode, str string, index int) bool {
 
 func main() {
 	t := new(Trie)
-	a := "apple"
-	b := "app"
-	c := "appletree"
-	d := "tree"
-
-	t.Insert(a)
-	t.Insert(d)
-
-	fmt.Println(t.Find(a))
-	fmt.Println(t.Find(b))
-	fmt.Println(t.Find(c))
-	fmt.Println(t.Find(d))
+	t.Insert("banana")
+	t.Insert("apple")
+	t.Insert("mango")
+	fmt.Println("Apple Found :", t.Find("apple"))
+	fmt.Println("Grapes Found :", t.Find("grapes"))
+	fmt.Println("Banana Found :", t.Find("banana"))
 }
+
+/*
+Apple Found : true
+Grapes Found : false
+Banana Found : true
+*/

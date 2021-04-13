@@ -16,29 +16,6 @@ type StringTree struct {
 	root *TreeNode
 }
 
-func main() {
-	tt := new(StringTree)
-	tt.Insert("banana")
-	tt.Insert("apple")
-	tt.Insert("mango")
-	tt.Insert("banana")
-	tt.Insert("apple")
-	tt.Insert("mango")
-	fmt.Println("Search results for apple, banana, grapes and mango :")
-	tt.Find("apple")
-	tt.Find("banana")
-	tt.Find("banan")
-	tt.Find("applkhjkhkj")
-	tt.Find("grapes")
-	tt.Find("mango")
-
-	tt.print()
-	fmt.Println("frequency returned :: ", tt.frequency("apple"))
-	fmt.Println("frequency returned :: ", tt.frequency("banana"))
-	fmt.Println("frequency returned :: ", tt.frequency("mango"))
-	fmt.Println("frequency returned :: ", tt.frequency("hemant"))
-}
-
 func (t *StringTree) print() {
 	t.printUtil(t.root)
 }
@@ -79,9 +56,7 @@ func (t *StringTree) freeTree() {
 }
 
 func (t *StringTree) Find(value string) bool {
-	ret := t.findUtil(t.root, value)
-	fmt.Println("Find ", value, " Return ", ret)
-	return ret
+	return t.findUtil(t.root, value)
 }
 
 func (t *StringTree) findUtil(curr *TreeNode, value string) bool {
@@ -119,3 +94,19 @@ func (t *StringTree) frequencyUtil(curr *TreeNode, value string) int {
 	}
 	return t.frequencyUtil(curr.rChild, value)
 }
+
+func main() {
+	t := new(StringTree)
+	t.Insert("banana")
+	t.Insert("apple")
+	t.Insert("mango")
+	fmt.Println("Apple Found :", t.Find("apple"))
+	fmt.Println("Grapes Found :", t.Find("grapes"))
+	fmt.Println("Banana Found :", t.Find("banana"))
+}
+
+/*
+Apple Found : true
+Grapes Found : false
+Banana Found : true
+*/

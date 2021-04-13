@@ -27,6 +27,11 @@ func main1() {
 	fmt.Println("IsAnagram : ", IsAnagram(var1, var3))
 }
 
+/*
+IsAnagram :  true
+IsAnagram :  false
+*/
+
 func RemoveDuplicate(str string) string {
 	input := []rune(str)
 	hs := make(Set)
@@ -45,6 +50,10 @@ func main2() {
 	fmt.Println(RemoveDuplicate(var1))
 }
 
+/*
+helo
+*/
+
 func FindMissing(arr []int, start int, end int) (int, bool) {
 	hs := make(Set)
 	for _, i := range arr {
@@ -60,9 +69,13 @@ func FindMissing(arr []int, start int, end int) (int, bool) {
 
 func main3() {
 	arr := []int{1, 2, 3, 5, 6, 7, 9, 8, 10}
-	fmt.Print("Missing number is :: ")
-	fmt.Println(FindMissing(arr, 1, 10))
+	num, _ := FindMissing(arr, 1, 10)
+	fmt.Println("Missing number is :: ", num)
 }
+
+/*
+Missing number is ::  4
+*/
 
 func PrintRepeating(arr []int) {
 	hs := make(Set)
@@ -81,6 +94,10 @@ func main4() {
 	arr1 := []int{1, 2, 3, 4, 4, 5, 6, 7, 8, 9, 1}
 	PrintRepeating(arr1)
 }
+
+/*
+Repeating elements are :: 4  1  
+*/
 
 func PrintFirstRepeating(arr []int) {
 	size := len(arr)
@@ -103,6 +120,10 @@ func main5() {
 	PrintFirstRepeating(arr1)
 }
 
+/*
+First Repeating number is :  1
+*/
+
 func hornerHash(key []rune, tableSize int) int {
 	size := len(key)
 	h := 0
@@ -114,10 +135,10 @@ func hornerHash(key []rune, tableSize int) int {
 
 func main(){
 	main1()
-	//main2()
-	//main3()
-	//main4()
-	//main5()
+	main2()
+	main3()
+	main4()
+	main5()
 }
 
 // ***********************

@@ -177,13 +177,11 @@ func HeapSort(arrInput []int) {
 //Testing Code 
 func main4() {
 	a := []int{1, 9, 6, 7, 8, -1, 2, 4, 5, 3}
-	fmt.Println("value before heap sort::", a)
 	HeapSort(a)
 	fmt.Println("value after heap sort::", a)
 }
 
 /*
-value before heap sort:: [1 9 6 7 8 -1 2 4 5 3]
 value after heap sort:: [-1 1 2 3 4 5 6 7 8 9]
 */
 
@@ -294,15 +292,22 @@ func (h *MedianHeap) getMedian() int {
 
 //Testing Code 
 func main6() {
-	arr := []int{1, 9, 2, 8, 3, 7, 4, 6, 5}
+	arr := []int{1, 9, 2, 8, 3, 7}
 	hp := NewMedianHeap()
 
-	for i := 0; i < 9; i++ {
+	for i := 0; i < 6; i++ {
 		hp.insert(arr[i])
 		fmt.Println("Median after insertion of ", arr[i], " is ", hp.getMedian())
 	}
 }
-
+/*
+Median after insertion of  1  is  1
+Median after insertion of  9  is  5
+Median after insertion of  2  is  2
+Median after insertion of  8  is  5
+Median after insertion of  3  is  3
+Median after insertion of  7  is  5
+*/
 func KthSmallest(arr[] int, size int, k int) int {
 	sort.Ints(arr)
 	return arr[k - 1]
@@ -330,6 +335,10 @@ func main7() {
 	arr2 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
 	fmt.Println("Kth Smallest :: " , KthSmallest2(arr2, len(arr2), 3))
 }
+/*
+Kth Smallest ::  5
+Kth Smallest ::  5
+*/
 
 func KSmallestProduct(arr[] int, size int, k int) int {
 	sort.Ints(arr)
@@ -409,6 +418,11 @@ func main8() {
 	arr3 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
 	fmt.Println("Kth Smallest product:: " , KSmallestProduct3(arr3, 8, 3))
 }
+/*
+Kth Smallest product::  10
+Kth Smallest product::  10
+Kth Smallest product::  10
+*/
 
 func PrintLargerHalf(arr[] int, size int) {
 	sort.Ints(arr) // , size, 1)
@@ -448,6 +462,12 @@ func main9() {
 	PrintLargerHalf3(arr3, 8)
 }
 
+/*
+6 7 7 8 
+8 7 7 6 
+6 7 7 8
+*/
+
 func sortK(arr[] int, size int, k int) {
 	hp := CreateHeap(true)
 	i := 0
@@ -482,6 +502,10 @@ func main10() {
 	size := len(arr)
 	sortK(arr, size, k)
 }
+
+/*
+[1 4 5 9 10 50]
+*/
 
 func ChotaBhim(cups []int, size int) int {
 	time := 60
@@ -532,6 +556,11 @@ func main11() {
 	cups3 := []int { 2, 1, 7, 4, 2 }
 	ChotaBhim3(cups3, len(cups))
 }
+
+/*
+Total : 76
+Total : 76
+*/
 
 func JoinRopes(ropes []int , size int) int {
 	sort.Slice(ropes, func(i, j int) bool {
@@ -585,36 +614,42 @@ func main12() {
 	rope2 := []int { 2, 1, 7, 4, 2 }
 	JoinRopes2(rope2, len(rope2))
 }
+
 /*
-func kthLargestStream(k int) int {
-	hp := CreateHeap(false)
+Total : 33
+Total : 33
+*/
+
+func kthLargestStream(k int) {
+	hp := CreateHeap(true)
 	size := 0
 	data := 0
+
 	for (true) {
 		fmt.Println("Enter data: ")
-		data = fmt.readline()
+		fmt.Scanf("%d", &data)
 
 		if (size < k - 1) {
-			hp.Add(data, data)
+			hp.Add(data)
 		} else {
 			if (size == k - 1) {
-				hp.Add(data, data)
-			} else if (hp.peek() < data) {
-				hp.Add(data, data)
-				hp.Remove().(int)
+				hp.Add(data)
+			} else if (hp.Peek() < data) {
+				hp.Add(data)
+				hp.Remove()
 			}
-			fmt.Println("Kth larges element is :: " + hp.peek())
+			fmt.Println("Kth larges element is :: ", hp , hp.Peek())
 		}
 		size += 1;
 	}
 }
 
-func Main13() {
+func main13() {
 	kthLargestStream(3)
 }
-*/
+
 func main(){
-	main1()
+	//main1()
 	//main2()
 	//main3()
 	//main4()
@@ -625,6 +660,7 @@ func main(){
 	//main9()
 	//main10()
 	//main11()
-	//main12()
+	main12()
+	//main13()
 	
 }
