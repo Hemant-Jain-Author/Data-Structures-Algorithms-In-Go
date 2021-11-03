@@ -22,7 +22,7 @@ func CreateHeap(isMin bool, args ...[]int) *Heap {
 	}
 	h := &Heap{size: size, arr: arr, isMin: isMin}
 	for i := (size / 2); i > 0; i-- {
-		h.proclateDown(i)
+		h.percolateDown(i)
 	}
 
 	return h
@@ -39,7 +39,7 @@ func (h *Heap) swap(i, j int) {
 	h.arr[i], h.arr[j] = h.arr[j], h.arr[i]
 }
 
-func (h *Heap) proclateDown(parent int) {
+func (h *Heap) percolateDown(parent int) {
 	lChild := 2 * parent
 	rChild := lChild + 1
 	small := -1
@@ -51,25 +51,25 @@ func (h *Heap) proclateDown(parent int) {
 	}
 	if small != -1 && h.comp(parent, small) {
 		h.swap(parent, small)
-		h.proclateDown(small)
+		h.percolateDown(small)
 	}
 }
 
-func (h *Heap) proclateUp(child int) {
+func (h *Heap) percolateUp(child int) {
 	parent := child / 2
 	if parent == 0 {
 		return
 	}
 	if h.comp(parent, child) {
 		h.swap(child, parent)
-		h.proclateUp(parent)
+		h.percolateUp(parent)
 	}
 }
 
 func (h *Heap) Add(value int) {
 	h.size++
 	h.arr = append(h.arr, value)
-	h.proclateUp(h.size)
+	h.percolateUp(h.size)
 }
 
 func (h *Heap) Remove() int {
@@ -80,7 +80,7 @@ func (h *Heap) Remove() int {
 	value := h.arr[1]
 	h.arr[1] = h.arr[h.size]
 	h.size--
-	h.proclateDown(1)
+	h.percolateDown(1)
 	h.arr = h.arr[0 : h.size+1]
 	return value
 }

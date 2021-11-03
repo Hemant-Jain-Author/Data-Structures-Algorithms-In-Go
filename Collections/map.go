@@ -1,8 +1,9 @@
 package main
 
-import ("fmt"
-"sort")
-
+import (
+	"fmt"
+	"sort"
+)
 
 func main1() {
 	eleMap := map[string]string{
@@ -20,7 +21,7 @@ func main1() {
 
 	var symbols []string
 	var elements []string
-	for sym,name := range eleMap {
+	for sym, name := range eleMap {
 		symbols = append(symbols, sym)
 		elements = append(elements, name)
 	}
@@ -29,19 +30,19 @@ func main1() {
 	fmt.Println(elements)
 }
 
-func main2(){
+func main2() {
 	ages := make(map[string]int) // mapping from strings to ints
 	ages["bob"] = 28
 	ages["alice"] = 31
 	ages["charlie"] = 34
-	
+
 	var names []string
 	for name := range ages {
 		names = append(names, name)
 	}
-	
+
 	sort.Strings(names)
-	
+
 	for _, name := range names {
 		fmt.Printf("[%s : %d] ", name, ages[name])
 	}
@@ -54,28 +55,28 @@ func main3() {
 	m["Banana"] = 30
 	m["Mango"] = 50
 	for key, val := range m {
-		fmt.Print("[ ",key," -> ", val," ]")
+		fmt.Print("[ ", key, " -> ", val, " ]")
 	}
 	fmt.Println()
 
 	v, ok := m["Apple"]
 	if ok {
-		fmt.Println("Apple available at price :", v)	
+		fmt.Println("Apple available at price :", v)
 	} else {
 		fmt.Println("Apple unavailable.")
 	}
 
 	delete(m, "Apple")
-	
+
 	v, ok = m["Apple"]
 	if ok {
-		fmt.Println("Apple available at price :", v)	
+		fmt.Println("Apple available at price :", v)
 	} else {
 		fmt.Println("Apple unavailable.")
 	}
-	
+
 }
 
-func main(){
+func main() {
 	main3()
 }

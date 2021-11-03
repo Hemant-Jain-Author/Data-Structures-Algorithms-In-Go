@@ -13,13 +13,11 @@ type HashTableSC struct {
 	tableSize int
 }
 
-func (h *HashTableSC) Init() {
+func  NewHashTableSC() (h *HashTableSC){
+	h = new(HashTableSC)
 	h.tableSize = 101
 	h.listArray = make([](*Node), h.tableSize)
-
-	for i := 0; i < h.tableSize; i++ {
-		h.listArray[i] = nil
-	}
+	return
 }
 
 func (h *HashTableSC) ComputeHash(key int) int {
@@ -84,23 +82,19 @@ func (h *HashTableSC) Get(key int) int {
 }
 
 func (h *HashTableSC) Print() {
-	fmt.Print("\nValues Stored in HashTable are::")
+	fmt.Print("Values Stored in HashTable are::")
 	for i := 0; i < h.tableSize; i++ {
 		head := h.listArray[i]
-		if head != nil {
-			fmt.Print("\nValues at index ", i, " :: ")
-		}
 		for head != nil {
-			fmt.Print(head.value, " ")
+			fmt.Print("(Index: ", i, " Value:", head.value, ") ")
 			head = head.next
 		}
 	}
-	fmt.Println("\n")	
+	fmt.Println()
 }
 
 func main() {
-	ht := new(HashTableSC)
-	ht.Init()
+	ht := NewHashTableSC()
 
 	ht.Add(1, 10)
 	ht.Add(2, 20)
@@ -111,7 +105,7 @@ func main() {
 	fmt.Println("Value at key 2 : ",ht.Get(2))
 
 	ht.Remove(2)
-	fmt.Println("\nAfter deleting node with key 2..")
+	fmt.Println("After deleting node with key 2..")
 	fmt.Println("Find key 2 : ", ht.Find(2))
 }
 /*

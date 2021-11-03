@@ -3,32 +3,40 @@ package main
 import (
 	"fmt"
 	"math"
-	"github.com/golang-collections/collections/queue"
-	"github.com/golang-collections/collections/stack"
-	)
+)
 
 type Node struct {
 	value       int
 	left, right *Node
 }
 
+func NewNode(value int, l, r *Node) (self *Node) {
+	self = &Node{}
+	self.value = value
+	self.left = l
+	self.right = r
+	return
+}
+
 type Tree struct {
 	root *Node
 }
 
+func NewTree() (self *Tree) {
+	self = &Tree{}
+	return
+}
 
-func LevelOrderBinaryTree(arr []int) *Tree {
-	tree := new(Tree)
+func LevelOrderBinaryTree(arr []int) (*Tree) {
+	tree := NewTree()
 	tree.root = levelOrderBinaryTree(arr, 0, len(arr))
 	return tree
 }
 
 func levelOrderBinaryTree(arr []int, start int, size int) *Node {
-	curr := &Node{arr[start], nil, nil}
-
+	curr := NewNode(arr[start], nil, nil)
 	left := 2*start + 1
 	right := 2*start + 2
-
 	if left < size {
 		curr.left = levelOrderBinaryTree(arr, left, size)
 	}
@@ -39,234 +47,220 @@ func levelOrderBinaryTree(arr []int, start int, size int) *Node {
 }
 
 func (t *Tree) Add(value int) {
-	t.root = addUtil(t.root, value)
+	t.root = t.addUtil(t.root, value)
 }
 
-func addUtil(n *Node, value int) *Node {
+func (t *Tree) addUtil(n *Node, value int) *Node {
 	if n == nil {
-		n = new(Node)
-		n.value = value
-		return n
+		return NewNode(value, nil, nil)
 	}
 	if value < n.value {
-		n.left = addUtil(n.left, value)
+		n.left = t.addUtil(n.left, value)
 	} else {
-		n.right = addUtil(n.right, value)
+		n.right = t.addUtil(n.right, value)
 	}
 	return n
 }
 
 func (t *Tree) PrintPreOrder() {
-	fmt.Print("Pre Order : ")
-	printPreOrder(t.root)
+	fmt.Print("Pre Order:")
+	t.printPreOrder(t.root)
 	fmt.Println()
 }
 
-
-
-func printPreOrder(n *Node) {
-	if n == nil {
-		return
+func (t *Tree) printPreOrder(n *Node) {
+	if n != nil {
+		fmt.Print(n.value, " ")
+		t.printPreOrder(n.left)
+		t.printPreOrder(n.right)
 	}
-	fmt.Print(n.value, " ")
-	printPreOrder(n.left)
-	printPreOrder(n.right)
 }
 
 func (t *Tree) PrintPostOrder() {
-	fmt.Print("Post Order : ")
-	printPostOrder(t.root)
+	fmt.Print("Post Order:")
+	t.printPostOrder(t.root)
 	fmt.Println()
 }
 
-func printPostOrder(n *Node) {
-	if n == nil {
-		return
+func (t *Tree) printPostOrder(n *Node) {
+	if n != nil {
+		t.printPostOrder(n.left)
+		t.printPostOrder(n.right)
+		fmt.Print(n.value, " ")
 	}
-	printPostOrder(n.left)
-	printPostOrder(n.right)
-	fmt.Print(n.value, " ")
 }
 
 func (t *Tree) PrintInOrder() {
-	fmt.Print("In Order : ")
-	printInOrder(t.root)
+	fmt.Print("In Order:")
+	t.printInOrder(t.root)
 	fmt.Println()
 }
 
-func printInOrder(n *Node) {
-	if n == nil {
-		return
+func (t *Tree) printInOrder(n *Node) {
+	if n != nil {
+		t.printInOrder(n.left)
+		fmt.Print(n.value, " ")
+		t.printInOrder(n.right)
 	}
-	printInOrder(n.left)
-	fmt.Print(n.value, " ")
-	printInOrder(n.right)
 }
 
 func (t *Tree) NthPreOrder(index int) {
 	var counter int
-	nthPreOrder(t.root, index, &counter)
+	t.nthPreOrder(t.root, index, &counter)
 }
 
-func nthPreOrder(node *Node, index int, counter *int) {
+func (t *Tree) nthPreOrder(node *Node, index int, counter *int) {
 	if node != nil {
 		(*counter)++
 		if *counter == index {
-			fmt.Println("NthPreOrder at index ",index ,"is :" , node.value)
+			fmt.Println("NthPreOrder at index :", index, "is :", node.value)
 		}
-		nthPreOrder(node.left, index, counter)
-		nthPreOrder(node.right, index, counter)
+		t.nthPreOrder(node.left, index, counter)
+		t.nthPreOrder(node.right, index, counter)
 	}
 }
 
 func (t *Tree) NthPostOrder(index int) {
 	var counter int
-	nthPostOrder(t.root, index, &counter)
+	t.nthPostOrder(t.root, index, &counter)
 }
 
-func nthPostOrder(node *Node, index int, counter *int) {
+func (t *Tree) nthPostOrder(node *Node, index int, counter *int) {
 	if node != nil {
-		nthPostOrder(node.left, index, counter)
-		nthPostOrder(node.right, index, counter)
+		t.nthPostOrder(node.left, index, counter)
+		t.nthPostOrder(node.right, index, counter)
 		(*counter)++
 		if *counter == index {
-			fmt.Println("NthPostOrder at index ",index ,"is :" , node.value)
+			fmt.Println("NthPostOrder at index ", index, "is :", node.value)
 		}
 	}
 }
 
 func (t *Tree) NthInOrder(index int) {
 	var counter int
-	nthInOrder(t.root, index, &counter)
+	t.nthInOrder(t.root, index, &counter)
 }
 
-func nthInOrder(node *Node, index int, counter *int) {
+func (t *Tree) nthInOrder(node *Node, index int, counter *int) {
 	if node != nil {
-		nthInOrder(node.left, index, counter)
+		t.nthInOrder(node.left, index, counter)
 		*counter++
 		if *counter == index {
-			fmt.Println("NthInOrder at index ",index ,"is :" , node.value)
+			fmt.Println("NthInOrder at index :", index, "is :", node.value)
 		}
-		nthInOrder(node.right, index, counter)
+		t.nthInOrder(node.right, index, counter)
 	}
 }
 
 func (t *Tree) PrintBreadthFirst() {
-	que := new(queue.Queue)
+	que := new(Queue)
 	var temp *Node
 
 	if t.root != nil {
-		que.Enqueue(t.root)
+		que.Add(t.root)
 	}
 	fmt.Print("Breadth First : ")
 	for que.Len() != 0 {
-		temp2 := que.Dequeue()
+		temp2 := que.Remove()
 		temp = temp2.(*Node)
 
 		fmt.Print(temp.value, " ")
 
 		if temp.left != nil {
-			que.Enqueue(temp.left)
+			que.Add(temp.left)
 		}
 		if temp.right != nil {
-			que.Enqueue(temp.right)
+			que.Add(temp.right)
 		}
 	}
 	fmt.Println()
 }
 
-
 func (t *Tree) PrintLevelOrderLineByLine() {
-	que1 := new(queue.Queue)
-	que2 := new(queue.Queue)
+	que1 := new(Queue)
+	que2 := new(Queue)
 	var temp *Node
 
 	if t.root != nil {
-		que1.Enqueue(t.root)
+		que1.Add(t.root)
 	}
 
 	for que1.Len() != 0 || que2.Len() != 0 {
 		for que1.Len() != 0 {
-			temp2 := que1.Dequeue()
+			temp2 := que1.Remove()
 			temp = temp2.(*Node)
 			fmt.Print(temp.value, " ")
 
 			if temp.left != nil {
-				que2.Enqueue(temp.left)
+				que2.Add(temp.left)
 			}
 			if temp.right != nil {
-				que2.Enqueue(temp.right)
+				que2.Add(temp.right)
 			}
 		}
-		fmt.Println(" ")		
-		for que2.Len() != 0{
-			temp2 := que2.Dequeue()
+		fmt.Println(" ")
+		for que2.Len() != 0 {
+			temp2 := que2.Remove()
 			temp = temp2.(*Node)
 			fmt.Print(temp.value, " ")
 			if temp.left != nil {
-				que1.Enqueue(temp.left)
+				que1.Add(temp.left)
 			}
 			if temp.right != nil {
-				que1.Enqueue(temp.right)
+				que1.Add(temp.right)
 			}
 		}
-		fmt.Println(" ")		
+		fmt.Println(" ")
 	}
 }
 
-
 func (t *Tree) PrintLevelOrderLineByLine2() {
-	que := new(queue.Queue)
-	var temp *Node
+	que := new(Queue)
 	var count int
 
 	if t.root != nil {
-		que.Enqueue(t.root)
+		que.Add(t.root)
 	}
 
 	for que.Len() != 0 {
-		
 		count = que.Len()
-		
 		for count > 0 {
-			temp2 := que.Dequeue()
-			temp = temp2.(*Node)
+			temp := que.Remove().(*Node)
 			fmt.Print(temp.value, " ")
 			if temp.left != nil {
-				que.Enqueue(temp.left)
+				que.Add(temp.left)
 			}
 			if temp.right != nil {
-				que.Enqueue(temp.right)
+				que.Add(temp.right)
 			}
 			count -= 1
 		}
-		fmt.Println(" ")		
+		fmt.Println(" ")
 	}
 }
 
-func (t *Tree) PrintDepthFirst(){
-	stk := new(stack.Stack)
-    
-    if t.root != nil {
-        stk.Push(t.root)
-    }
-    fmt.Print("Depth First : ")
-    for stk.Len() != 0 {
-    	temp := stk.Pop().(*Node)
-        fmt.Print(temp.value, " ")
-        if temp.right != nil {
-            stk.Push(temp.right)    
-        }
-        if temp.left != nil {
-            stk.Push(temp.left)
-        }
-    }
+func (t *Tree) PrintDepthFirst() {
+	stk := new(Stack)
+
+	if t.root != nil {
+		stk.Push(t.root)
+	}
+	fmt.Print("Depth First : ")
+	for stk.Len() != 0 {
+		temp := stk.Pop().(*Node)
+		fmt.Print(temp.value, " ")
+		if temp.right != nil {
+			stk.Push(temp.right)
+		}
+		if temp.left != nil {
+			stk.Push(temp.left)
+		}
+	}
 }
-   
 
 func (t *Tree) PrintSpiralTree() {
-	stk1 := new(stack.Stack)
-	stk2 := new(stack.Stack)
+	stk1 := new(Stack)
+	stk2 := new(Stack)
 	var temp *Node
 
 	if t.root != nil {
@@ -285,8 +279,8 @@ func (t *Tree) PrintSpiralTree() {
 				stk2.Push(temp.right)
 			}
 		}
-		fmt.Println(" ")		
-		for stk2.Len() != 0{
+		fmt.Println(" ")
+		for stk2.Len() != 0 {
 			temp2 := stk2.Pop()
 			temp = temp2.(*Node)
 			fmt.Print(temp.value, " ")
@@ -296,12 +290,11 @@ func (t *Tree) PrintSpiralTree() {
 			if temp.left != nil {
 				stk1.Push(temp.left)
 			}
-			
+
 		}
-		fmt.Println(" ")		
+		fmt.Println(" ")
 	}
 }
-
 
 func (t *Tree) Find(value int) bool {
 	var curr *Node = t.root
@@ -316,7 +309,6 @@ func (t *Tree) Find(value int) bool {
 	}
 	return false
 }
-
 
 func (t *Tree) FindMin() (int, bool) {
 	var node *Node = t.root
@@ -370,7 +362,7 @@ func (t *Tree) FindMinNode() *Node {
 	return node
 }
 
-func FindMax(curr *Node) *Node {
+func (t *Tree) findMax(curr *Node) *Node {
 	var node *Node = curr
 	if node == nil {
 		fmt.Println("EmptyTreeException")
@@ -383,7 +375,7 @@ func FindMax(curr *Node) *Node {
 	return node
 }
 
-func FindMin(curr *Node) *Node {
+func (t *Tree) findMin(curr *Node) *Node {
 	var node *Node = curr
 	if node == nil {
 		fmt.Println("EmptyTreeException")
@@ -401,10 +393,10 @@ func (t *Tree) Free() {
 }
 
 func (t *Tree) DeleteNode(value int) {
-	t.root = DeleteNode(t.root, value)
+	t.root = t.deleteNode(t.root, value)
 }
 
-func DeleteNode(node *Node, value int) *Node {
+func (t *Tree) deleteNode(node *Node, value int) *Node {
 	var temp *Node = nil
 	if node != nil {
 		if node.value == value {
@@ -420,15 +412,15 @@ func DeleteNode(node *Node, value int) *Node {
 				return temp
 			}
 
-			maxNode := FindMax(node.left)
+			maxNode := t.findMax(node.left)
 			maxValue := maxNode.value
 			node.value = maxValue
-			node.left = DeleteNode(node.left, maxValue)
+			node.left = t.deleteNode(node.left, maxValue)
 		} else {
 			if node.value > value {
-				node.left = DeleteNode(node.left, value)
+				node.left = t.deleteNode(node.left, value)
 			} else {
-				node.right = DeleteNode(node.right, value)
+				node.right = t.deleteNode(node.right, value)
 			}
 		}
 	}
@@ -436,15 +428,15 @@ func DeleteNode(node *Node, value int) *Node {
 }
 
 func (t *Tree) TreeDepth() int {
-	return treeDepth(t.root)
+	return t.treeDepth(t.root)
 }
 
-func treeDepth(root *Node) int {
+func (t *Tree) treeDepth(root *Node) int {
 	if root == nil {
 		return 0
 	}
-	lDepth := treeDepth(root.left)
-	rDepth := treeDepth(root.right)
+	lDepth := t.treeDepth(root.left)
+	rDepth := t.treeDepth(root.right)
 
 	if lDepth > rDepth {
 		return lDepth + 1
@@ -453,101 +445,97 @@ func treeDepth(root *Node) int {
 }
 
 func (t *Tree) IsEqual(t2 *Tree) bool {
-	return isEqual(t.root, t2.root)
+	return t.isEqual(t.root, t2.root)
 }
 
-func isEqual(node1 *Node, node2 *Node) bool {
+func (t *Tree) isEqual(node1 *Node, node2 *Node) bool {
 	if node1 == nil && node2 == nil {
 		return true
 	} else if node1 == nil || node2 == nil {
 		return false
 	} else {
 		return ((node1.value == node2.value) &&
-			isEqual(node1.left, node2.left) &&
-			isEqual(node1.right, node2.right))
+			t.isEqual(node1.left, node2.left) &&
+			t.isEqual(node1.right, node2.right))
 	}
 }
 
 func (t *Tree) Ancestor(first int, second int) *Node {
 	if first > second {
-		temp := first
-		first = second
-		second = temp
+		first, second = second, first
 	}
-	return Ancestor(t.root, first, second)
+	return t.ancestor(t.root, first, second)
 }
 
-func Ancestor(curr *Node, first int, second int) *Node {
+func (t *Tree) ancestor(curr *Node, first int, second int) *Node {
 	if curr == nil {
 		return nil
 	}
 	if curr.value > first && curr.value > second {
-		return Ancestor(curr.left, first, second)
+		return t.ancestor(curr.left, first, second)
 	}
 	if curr.value < first && curr.value < second {
-		return Ancestor(curr.right, first, second)
+		return t.ancestor(curr.right, first, second)
 	}
 	return curr
 }
 
 func (t *Tree) CopyTree() *Tree {
-	Tree2 := new(Tree)
-	Tree2.root = copyTree(t.root)
+	Tree2 := NewTree()
+	Tree2.root = t.copyTree(t.root)
 	return Tree2
 }
 
-func copyTree(curr *Node) *Node {
+func (t *Tree) copyTree(curr *Node) *Node {
 	var temp *Node
 	if curr != nil {
-		temp = new(Node)
-		temp.value = curr.value
-		temp.left = copyTree(curr.left)
-		temp.right = copyTree(curr.right)
+		temp = NewNode(curr.value,
+			t.copyTree(curr.left),
+			t.copyTree(curr.right))
 		return temp
 	}
 	return nil
 }
 
 func (t *Tree) CopyMirrorTree() *Tree {
-	tree := new(Tree)
-	tree.root = copyMirrorTree(t.root)
+	tree := NewTree()
+	tree.root = t.copyMirrorTree(t.root)
 	return tree
 }
 
-func copyMirrorTree(curr *Node) *Node {
+func (t *Tree) copyMirrorTree(curr *Node) *Node {
 	var temp *Node
 	if curr != nil {
-		temp = new(Node)
-		temp.value = curr.value
-		temp.right = copyMirrorTree(curr.left)
-		temp.left = copyMirrorTree(curr.right)
+		temp = NewNode(curr.value,
+			t.copyMirrorTree(curr.left),
+			t.copyMirrorTree(curr.right))
 		return temp
 	}
 	return nil
 }
 
 func (t *Tree) NumNodes() int {
-	return numNodes(t.root)
+	return t.numNodes(t.root)
 }
 
-func numNodes(curr *Node) int {
+func (t *Tree) numNodes(curr *Node) int {
 	if curr == nil {
 		return 0
 	}
-	return (1 + numNodes(curr.right) + numNodes(curr.left))
+	return (1 + t.numNodes(curr.right) + t.numNodes(curr.left))
 }
 
 func (t *Tree) NumFullNodesBT() int {
-	return numFullNodesBT(t.root)
+	return t.numFullNodesBT(t.root)
 }
 
-func numFullNodesBT(curr *Node) int {
+func (t *Tree) numFullNodesBT(curr *Node) int {
 	var count int
 	if curr == nil {
 		return 0
 	}
 
-	count = numFullNodesBT(curr.right) + numFullNodesBT(curr.left)
+	count = t.numFullNodesBT(curr.right) + t.numFullNodesBT(curr.left)
 	if curr.right != nil && curr.left != nil {
 		count++
 	}
@@ -555,22 +543,22 @@ func numFullNodesBT(curr *Node) int {
 }
 
 func (t *Tree) MaxLengthPathBT() int {
-	return maxLengthPathBT(t.root)
+	return t.maxLengthPathBT(t.root)
 }
 
-func maxLengthPathBT(curr *Node) int {
+func (t *Tree) maxLengthPathBT(curr *Node) int {
 	var max, leftPath, rightPath, leftMax, rightMax int
 
 	if curr == nil {
 		return 0
 	}
 
-	leftPath = treeDepth(curr.left)
-	rightPath = treeDepth(curr.right)
+	leftPath = t.treeDepth(curr.left)
+	rightPath = t.treeDepth(curr.right)
 	max = leftPath + rightPath + 1
 
-	leftMax = maxLengthPathBT(curr.left)
-	rightMax = maxLengthPathBT(curr.right)
+	leftMax = t.maxLengthPathBT(curr.left)
+	rightMax = t.maxLengthPathBT(curr.right)
 	if leftMax > max {
 		max = leftMax
 	}
@@ -582,131 +570,123 @@ func maxLengthPathBT(curr *Node) int {
 }
 
 func (t *Tree) NumLeafNodes() int {
-	return numLeafNodes(t.root)
+	return t.numLeafNodes(t.root)
 }
 
-func numLeafNodes(curr *Node) int {
+func (t *Tree) numLeafNodes(curr *Node) int {
 	if curr == nil {
 		return 0
 	}
 	if curr.left == nil && curr.right == nil {
 		return 1
 	}
-	return (numLeafNodes(curr.right) + numLeafNodes(curr.left))
+	return (t.numLeafNodes(curr.right) + t.numLeafNodes(curr.left))
 }
 
 func (t *Tree) SumAllBT() int {
-	return sumAllBT(t.root)
+	return t.sumAllBT(t.root)
 }
 
-func sumAllBT(curr *Node) int {
-	var sum, leftSum, rightSum int
+func (t *Tree) sumAllBT(curr *Node) int {
 	if curr == nil {
 		return 0
 	}
-
-	rightSum = sumAllBT(curr.right)
-	leftSum = sumAllBT(curr.left)
-	sum = rightSum + leftSum + curr.value
-	return sum
+	return t.sumAllBT(curr.right) + t.sumAllBT(curr.left) + curr.value
 }
 
-func (t *Tree)TreeToListRec() *Node{
-	return treeToListRec(t.root)
+func (t *Tree) TreeToListRec() *Node {
+	return t.treeToListRec(t.root)
 }
 
-func treeToListRec(curr *Node) *Node {
-    if curr == nil{
-        return nil 
-    }
-    var Head, Tail, tempHead *Node
-   
+func (t *Tree) treeToListRec(curr *Node) *Node {
+	if curr == nil {
+		return nil
+	}
+	var Head, Tail, tempHead *Node
 
-    if curr.left == nil && curr.right == nil{
-    	curr.left = curr
-        curr.right = curr
-        return curr
-    }
-        
-    if curr.left != nil {
-    	Head = treeToListRec(curr.left)
-        Tail = Head.left
-        curr.left = Tail
-        Tail.right = curr
-    } else {
-        Head = curr
-    }
+	if curr.left == nil && curr.right == nil {
+		curr.left = curr
+		curr.right = curr
+		return curr
+	}
 
-    if curr.right != nil {
-    	tempHead = treeToListRec(curr.right)
-        Tail = tempHead.left
-        curr.right = tempHead
-        tempHead.left = curr
-    } else {
-        Tail = curr
-    }
+	if curr.left != nil {
+		Head = t.treeToListRec(curr.left)
+		Tail = Head.left
+		curr.left = Tail
+		Tail.right = curr
+	} else {
+		Head = curr
+	}
 
-    Head.left = Tail
-    Tail.right = Head
-    return Head
+	if curr.right != nil {
+		tempHead = t.treeToListRec(curr.right)
+		Tail = tempHead.left
+		curr.right = tempHead
+		tempHead.left = curr
+	} else {
+		Tail = curr
+	}
+
+	Head.left = Tail
+	Tail.right = Head
+	return Head
 }
-
 
 func (root *Node) PrintDLL() {
-    if (root == nil) {
-        return;
-    }
-    curr := root;
-    tail := curr.left;
-    fmt.Print(`DLL nodes are : `);
-    for (curr != tail) {
-        fmt.Print(curr.value, " ");
-        curr = curr.right;
-    };
-    fmt.Println(curr.value);
+	if root == nil {
+		return
+	}
+	curr := root
+	tail := curr.left
+	fmt.Print(`DLL nodes are : `)
+	for curr != tail {
+		fmt.Print(curr.value, " ")
+		curr = curr.right
+	}
+	fmt.Println(curr.value)
 }
 
 func (t *Tree) IsBST3() bool {
-	return IsBST3(t.root)
+	return t.isBST3(t.root)
 }
 
-
-func IsBST3(root *Node) bool {
+func (t *Tree) isBST3(root *Node) bool {
 	if root == nil {
 		return true
 	}
-	if root.left != nil && FindMax(root.left).value > root.value {
+	if root.left != nil && t.findMax(root.left).value > root.value {
 		return false
 	}
-	if root.right != nil && FindMin(root.right).value <= root.value {
+	if root.right != nil && t.findMin(root.right).value <= root.value {
 		return false
 	}
-	return (IsBST3(root.left) && IsBST3(root.right))
+	return (t.isBST3(root.left) && t.isBST3(root.right))
 }
 
 func (t *Tree) IsBST() bool {
-	return IsBST(t.root, math.MinInt32, math.MaxInt32)
+	return t.isBST(t.root, math.MinInt32, math.MaxInt32)
 }
 
-func IsBST(curr *Node, min int, max int) bool {
+func (t *Tree) isBST(curr *Node, min int, max int) bool {
 	if curr == nil {
 		return true
 	}
 	if curr.value < min || curr.value > max {
 		return false
 	}
-	return IsBST(curr.left, min, curr.value) && IsBST(curr.right, curr.value, max)
+	return t.isBST(curr.left, min, curr.value) && t.isBST(curr.right, curr.value, max)
 }
 
 func (t *Tree) IsBST2() bool {
 	var c int
-	return isBST2(t.root, &c)
+	return t.isBST2(t.root, &c)
 }
 
-func isBST2(root *Node, count *int) bool {
+func (t *Tree) isBST2(root *Node, count *int) bool {
 	var ret bool
 	if root != nil {
-		ret = isBST2(root.left, count)
+		ret = t.isBST2(root.left, count)
 		if !ret {
 			return false
 		}
@@ -717,7 +697,7 @@ func isBST2(root *Node, count *int) bool {
 
 		*count = root.value
 
-		ret = isBST2(root.right, count)
+		ret = t.isBST2(root.right, count)
 		if !ret {
 			return false
 		}
@@ -726,25 +706,25 @@ func isBST2(root *Node, count *int) bool {
 }
 
 func (t *Tree) IsCompleteTree() bool {
-	return isCompleteTree(t.root)
+	return t.isCompleteTree(t.root)
 }
 
-func isCompleteTree(root *Node) bool {
-	que := new(queue.Queue)
+func (t *Tree) isCompleteTree(root *Node) bool {
+	que := new(Queue)
 	var temp *Node
 	var noChild = false
 
 	if root != nil {
-		que.Enqueue(root)
+		que.Add(root)
 	}
 
-	for que.Len() != 0{
-		temp = que.Dequeue().(*Node)
+	for que.Len() != 0 {
+		temp = que.Remove().(*Node)
 		if temp.left != nil {
 			if noChild == true {
 				return false
 			}
-			que.Enqueue(temp.left)
+			que.Add(temp.left)
 		} else {
 			noChild = true
 		}
@@ -753,7 +733,7 @@ func isCompleteTree(root *Node) bool {
 			if noChild == true {
 				return false
 			}
-			que.Enqueue(temp.right)
+			que.Add(temp.right)
 		} else {
 			noChild = true
 		}
@@ -763,85 +743,79 @@ func isCompleteTree(root *Node) bool {
 
 func (t *Tree) IsCompleteTree2() bool {
 	count := t.NumNodes()
-	return isCompleteTreeUtil(t.root, 0, count)
+	return t.isCompleteTreeUtil(t.root, 0, count)
 }
 
-func isCompleteTreeUtil(curr *Node, index int, count int) bool {
+func (t *Tree) isCompleteTreeUtil(curr *Node, index int, count int) bool {
 
-		if (curr == nil){
-			return true
-		}
-		if (index > count){
-			return false
-		}
+	if curr == nil {
+		return true
+	}
+	if index > count {
+		return false
+	}
 
-	return isCompleteTreeUtil(curr.left, index * 2 + 1, count) && isCompleteTreeUtil(curr.right, index * 2 + 2, count)
+	return t.isCompleteTreeUtil(curr.left, index*2+1, count) && t.isCompleteTreeUtil(curr.right, index*2+2, count)
 }
 
 func (t *Tree) IsHeap() bool {
-	parentValue := -99999999
-	return t.IsCompleteTree() && isHeapUtil(t.root, parentValue)
+	parentValue := math.MinInt32
+	return t.IsCompleteTree() && t.isHeapUtil(t.root, parentValue)
 }
 
-func isHeapUtil(curr *Node, parentValue int) bool {
-
-		if (curr == nil){
-			return true
-		}
-		if (curr.value < parentValue){
-			return false
-		}
-
-	return isHeapUtil(curr.left, curr.value) && isHeapUtil(curr.right, curr.value)
+func (t *Tree) isHeapUtil(curr *Node, parentValue int) bool {
+	if curr == nil {
+		return true
+	}
+	if curr.value < parentValue {
+		return false
+	}
+	return t.isHeapUtil(curr.left, curr.value) && t.isHeapUtil(curr.right, curr.value)
 }
-
 
 func (t *Tree) IsHeap2() bool {
 	count := t.NumNodes()
-	parentValue := -99999999
-	return isHeapUtil2(t.root, 0, count, parentValue)
+	parentValue := math.MinInt32
+	return t.isHeapUtil2(t.root, 0, count, parentValue)
 }
 
-func isHeapUtil2(curr *Node, index int, count int, parentValue int) bool {
-
-		if (curr == nil){
-			return true
-		}
-		if (index > count){
-			return false
-		}
-		if (curr.value < parentValue){
-			return false
-		}
-
-		return isHeapUtil2(curr.left, index * 2 + 1, count, curr.value) && isHeapUtil2(curr.right, index * 2 + 2, count, curr.value)
+func (t *Tree) isHeapUtil2(curr *Node, index int, count int, parentValue int) bool {
+	if curr == nil {
+		return true
+	}
+	if index > count {
+		return false
+	}
+	if curr.value < parentValue {
+		return false
+	}
+	return t.isHeapUtil2(curr.left, index*2+1, count, curr.value) &&
+		t.isHeapUtil2(curr.right, index*2+2, count, curr.value)
 }
-
 
 func (t *Tree) PrintAllPath() {
-	stk := new(stack.Stack)
-	printAllPath(t.root, stk)
+	stk := new(Stack)
+	t.printAllPath(t.root, stk)
 }
 
-func printAllPath(curr *Node, stk *stack.Stack) {
+func (t *Tree) printAllPath(curr *Node, stk *Stack) {
 	if curr == nil {
 		return
 	}
 	stk.Push(curr.value)
 	if curr.left == nil && curr.right == nil {
 		stk.Print()
-		fmt.Println()
 		stk.Pop()
 		return
 	}
 
-	printAllPath(curr.right, stk)
-	printAllPath(curr.left, stk)
+	t.printAllPath(curr.right, stk)
+	t.printAllPath(curr.left, stk)
 	stk.Pop()
 }
 
 func (t *Tree) LCA(first int, second int) (int, bool) {
-	ans := LCAUtil(t.root, first, second)
+	ans := t.LCAUtil(t.root, first, second)
 	if ans != nil {
 		return ans.value, true
 	}
@@ -849,7 +823,7 @@ func (t *Tree) LCA(first int, second int) (int, bool) {
 	return 0, false
 }
 
-func LCAUtil(curr *Node, first int, second int) *Node {
+func (t *Tree) LCAUtil(curr *Node, first int, second int) *Node {
 	var left, right *Node
 
 	if curr == nil {
@@ -860,8 +834,8 @@ func LCAUtil(curr *Node, first int, second int) *Node {
 		return curr
 	}
 
-	left = LCAUtil(curr.left, first, second)
-	right = LCAUtil(curr.right, first, second)
+	left = t.LCAUtil(curr.left, first, second)
+	right = t.LCAUtil(curr.right, first, second)
 
 	if left != nil && right != nil {
 		return curr
@@ -873,34 +847,37 @@ func LCAUtil(curr *Node, first int, second int) *Node {
 }
 
 func (t *Tree) LcaBST(first int, second int) (int, bool) {
-	return LcaBST(t.root, first, second)
+	return t.LcaBSTUtil(t.root, first, second)
 }
 
-func LcaBST(curr *Node, first int, second int) (int, bool) {
+func (t *Tree) LcaBSTUtil(curr *Node, first int, second int) (int, bool) {
 	if curr == nil {
 		fmt.Println("NotFoundException")
 		return 0, false
 	}
 
 	if curr.value > first && curr.value > second {
-		return LcaBST(curr.left, first, second)
+		return t.LcaBSTUtil(curr.left, first, second)
 	}
 	if curr.value < first && curr.value < second {
-		return LcaBST(curr.right, first, second)
+		return t.LcaBSTUtil(curr.right, first, second)
 	}
-	return curr.value, true
+	if t.Find(first) && t.Find(second) {
+		return curr.value, true
+	}
+	return 0, false
 }
 
 func (t *Tree) TrimOutsidedataRange(min int, max int) {
-	t.root = trimOutsidedataRange(t.root, min, max)
+	t.root = t.trimOutsidedataRange(t.root, min, max)
 }
 
-func trimOutsidedataRange(curr *Node, min int, max int) *Node {
+func (t *Tree) trimOutsidedataRange(curr *Node, min int, max int) *Node {
 	if curr == nil {
 		return nil
 	}
-	curr.left = trimOutsidedataRange(curr.left, min, max)
-	curr.right = trimOutsidedataRange(curr.right, min, max)
+	curr.left = t.trimOutsidedataRange(curr.left, min, max)
+	curr.right = t.trimOutsidedataRange(curr.right, min, max)
 	if curr.value < min {
 		return curr.right
 	}
@@ -911,18 +888,18 @@ func trimOutsidedataRange(curr *Node, min int, max int) *Node {
 }
 
 func (t *Tree) PrintDataInRange(min int, max int) {
-	printDataInRange(t.root, min, max)
+	t.printDataInRange(t.root, min, max)
 }
 
-func printDataInRange(root *Node, min int, max int) {
+func (t *Tree) printDataInRange(root *Node, min int, max int) {
 	if root == nil {
 		return
 	}
-	printDataInRange(root.left, min, max)
+	t.printDataInRange(root.left, min, max)
 	if root.value >= min && root.value <= max {
 		fmt.Print(root.value, " ")
 	}
-	printDataInRange(root.right, min, max)
+	t.printDataInRange(root.right, min, max)
 }
 
 func (t *Tree) FloorBST(val int) int {
@@ -962,17 +939,17 @@ func (t *Tree) CeilBST(val int) int {
 }
 
 func (t *Tree) FindMaxBT() int {
-	return findMaxBT(t.root)
+	return t.findMaxBT(t.root)
 }
 
-func findMaxBT(curr *Node) int {
+func (t *Tree) findMaxBT(curr *Node) int {
 	if curr == nil {
 		return math.MinInt32
 	}
 
 	max := curr.value
-	left := findMaxBT(curr.left)
-	right := findMaxBT(curr.right)
+	left := t.findMaxBT(curr.left)
+	right := t.findMaxBT(curr.right)
 	if left > max {
 		max = left
 	}
@@ -984,10 +961,10 @@ func findMaxBT(curr *Node) int {
 }
 
 func (t *Tree) SearchBT(value int) bool {
-	return searchBT(t.root, value)
+	return t.searchBT(t.root, value)
 }
 
-func searchBT(root *Node, value int) bool {
+func (t *Tree) searchBT(root *Node, value int) bool {
 	var left, right bool
 	if root == nil {
 		return false
@@ -997,12 +974,12 @@ func searchBT(root *Node, value int) bool {
 		return true
 	}
 
-	left = searchBT(root.left, value)
+	left = t.searchBT(root.left, value)
 	if left {
 		return true
 	}
 
-	right = searchBT(root.right, value)
+	right = t.searchBT(root.right, value)
 	if right {
 		return true
 	}
@@ -1010,7 +987,7 @@ func searchBT(root *Node, value int) bool {
 }
 
 func CreateBinarySearchTree(arr []int) *Tree {
-	t := new(Tree)
+	t := NewTree()
 	size := len(arr)
 	t.root = createBinarySearchTreeUtil(arr, 0, size-1)
 	return t
@@ -1020,29 +997,27 @@ func createBinarySearchTreeUtil(arr []int, start int, end int) *Node {
 	if start > end {
 		return nil
 	}
-
 	mid := (start + end) / 2
-	curr := new(Node)
-	curr.value = arr[mid]
-	curr.left = createBinarySearchTreeUtil(arr, start, mid-1)
-	curr.right = createBinarySearchTreeUtil(arr, mid+1, end)
+	curr := NewNode(arr[mid],
+		createBinarySearchTreeUtil(arr, start, mid-1),
+		createBinarySearchTreeUtil(arr, mid+1, end))
 	return curr
 }
 
-func isBSTArray( preorder[] int, size int) bool {
-	stk := new(stack.Stack)
+func isBSTArray(preorder []int, size int) bool {
+	stk := new(Stack)
 	var value int
-	root := -999999;
+	root := -999999
 	for i := 0; i < size; i++ {
 		value = preorder[i]
 
 		// If value of the right child is less than root.
-		if (value < root){
+		if value < root {
 			return false
 		}
 		// First left child values will be popped
 		// Last popped value will be the root.
-		for (stk.Len() > 0 && stk.Peek().(int) < value){
+		for stk.Len() > 0 && stk.Top().(int) < value {
 			root = stk.Pop().(int)
 		}
 		// add current value to the stack.
@@ -1053,7 +1028,7 @@ func isBSTArray( preorder[] int, size int) bool {
 
 // Sort sorts values in place.
 func Sort(values []int) {
-	t := new(Tree)
+	t := NewTree()
 	for _, v := range values {
 		t.Add(v)
 	}
@@ -1074,7 +1049,7 @@ func appendValues(values []int, t *Node) []int {
 /* Testing Code */
 func main() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	t := LevelOrderBinaryTree(arr)	
+	t := LevelOrderBinaryTree(arr)
 	t.PrintPreOrder()
 	t.PrintPostOrder()
 	t.PrintInOrder()
@@ -1082,7 +1057,7 @@ func main() {
 	t.PrintDepthFirst()
 	t.PrintLevelOrderLineByLine()
 	t.PrintLevelOrderLineByLine2()
-	t.PrintSpiralTree()	
+	t.PrintSpiralTree()
 	t.NthPreOrder(5)
 	t.NthPostOrder(5)
 	t.NthInOrder(5)
@@ -1102,16 +1077,15 @@ func main() {
 	fmt.Println("Printing mirror tree")
 	t2.PrintLevelOrderLineByLine()
 	fmt.Println(t.IsEqual(t2))
-	fmt.Println(t.IsCompleteTree());
-	fmt.Println(t.IsCompleteTree2());
-	fmt.Println(t.IsHeap());
-	fmt.Println(t.IsHeap2());
+	fmt.Println(t.IsCompleteTree())
+	fmt.Println(t.IsCompleteTree2())
+	fmt.Println(t.IsHeap())
+	fmt.Println(t.IsHeap2())
 	t.PrintInOrder()
-	t3 := t.TreeToListRec(); 
-	t3.PrintDLL()	
+	t3 := t.TreeToListRec()
+	t3.PrintDLL()
 
-
-	t  = new(Tree)
+	t = NewTree()
 	t.Add(2)
 	t.Add(1)
 	t.Add(3)
@@ -1121,9 +1095,9 @@ func main() {
 	fmt.Println(t.Find(6))
 	fmt.Println(t.FindMin())
 	fmt.Println(t.FindMax())
-	fmt.Println(t.IsBST());
-	fmt.Println(t.IsBST2());
-	fmt.Println(t.IsBST3());
+	fmt.Println(t.IsBST())
+	fmt.Println(t.IsBST2())
+	fmt.Println(t.IsBST3())
 	fmt.Println("Before delete operation.")
 	t.PrintInOrder()
 	t.DeleteNode(8)
@@ -1143,4 +1117,79 @@ func main() {
 	arr2 := []int{5, 2, 6, 4, 7, 9, 10}
 	fmt.Println(isBSTArray(arr2, len(arr2)))
 
+}
+
+type Stack struct {
+	stk []interface{}
+}
+
+func (s *Stack) Push(data interface{}) {
+	s.stk = append(s.stk, data)
+}
+
+func (s *Stack) Pop() interface{} {
+	n := len(s.stk)
+	value := s.stk[n-1]
+	s.stk = s.stk[:n-1]
+	return value
+}
+
+func (s Stack) Top() interface{} {
+	n := len(s.stk)
+	return s.stk[n-1]
+}
+
+func (s Stack) Len() int {
+	return len(s.stk)
+}
+
+func (s Stack) IsEmpty() bool {
+	return len(s.stk) == 0
+}
+
+func (s Stack) Print() {
+	fmt.Println(s.stk)
+}
+
+type Queue struct {
+	que []interface{}
+}
+
+func (q *Queue) Add(value interface{}) {
+	q.que = append(q.que, value)
+}
+
+func (q *Queue) Remove() interface{} {
+	n := len(q.que)
+	value := q.que[0]
+	q.que = q.que[1:n]
+	return value
+}
+
+func (q *Queue) RemoveBack() interface{} {
+	n := len(q.que)
+	value := q.que[n-1]
+	q.que = q.que[:n-1]
+	return value
+}
+
+func (q Queue) Front() interface{} {
+	return q.que[0]
+}
+
+func (q Queue) Back() interface{} {
+	n := len(q.que)
+	return q.que[n-1]
+}
+
+func (q Queue) IsEmpty() bool {
+	return len(q.que) == 0
+}
+
+func (q Queue) Len() int {
+	return len(q.que)
+}
+
+func (q Queue) Print() {
+	fmt.Println(q.que)
 }

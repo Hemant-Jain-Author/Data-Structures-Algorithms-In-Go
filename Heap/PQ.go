@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
 type item struct {
@@ -23,7 +22,7 @@ func newItem(value interface{}, priority int) *item {
 	}
 }
 
-func CreatePQueue(isMin bool) *PQueue {
+func NewPriorityQueue(isMin bool) *PQueue {
 	items := make([]*item, 1)
 	items[0] = nil // Heap queue first element should always be nil
 
@@ -41,7 +40,7 @@ func (pq *PQueue) comp(i, j int) bool { // always i < j in use
 	return pq.items[i].priority < pq.items[j].priority // swap for max heap.
 }
 
-func (pq *PQueue) proclateDown(position int) {
+func (pq *PQueue) percolateDown(position int) {
 	lChild := 2 * position
 	rChild := lChild + 1
 	small := -1
@@ -56,11 +55,11 @@ func (pq *PQueue) proclateDown(position int) {
 
 	if small != -1 && pq.comp(position, small) {
 		pq.items[position], pq.items[small] = pq.items[small], pq.items[position]
-		pq.proclateDown(small)
+		pq.percolateDown(small)
 	}
 }
 
-func (pq *PQueue) proclateUp(position int) {
+func (pq *PQueue) percolateUp(position int) {
 	parent := position / 2
 	if parent == 0 {
 		return
@@ -68,7 +67,7 @@ func (pq *PQueue) proclateUp(position int) {
 
 	if pq.comp(parent, position) {
 		pq.items[position], pq.items[parent] = pq.items[parent], pq.items[position]
-		pq.proclateUp(parent)
+		pq.percolateUp(parent)
 	}
 }
 
@@ -76,7 +75,7 @@ func (pq *PQueue) Add(value interface{}, priority int) {
 	item := newItem(value, priority)
 	pq.items = append(pq.items, item)
 	pq.Count++
-	pq.proclateUp(pq.Count)
+	pq.percolateUp(pq.Count)
 }
 
 func (pq *PQueue) Print() {
@@ -97,7 +96,7 @@ func (pq *PQueue) Remove() (interface{}, bool) {
 	pq.items[1] = pq.items[pq.Count]
 	pq.items = pq.items[0:pq.Count]
 	pq.Count--
-	pq.proclateDown(1)
+	pq.percolateDown(1)
 	return value, true
 }
 
@@ -119,9 +118,9 @@ func (pq *PQueue) Peek() (interface{}, bool) {
 
 func main() {
 	a := []int{1, 9, 6, 7, 8, -1, 2, 4, 5, 3}
-	pq := CreatePQueue(false)
+	pq := NewPriorityQueue(false)
 	for _, val := range a {
-		pq.Add(strconv.Itoa(val), val)
+		pq.Add(val, val)
 	}
 
 	for _, _ = range a {
@@ -129,9 +128,10 @@ func main() {
 		fmt.Print(value, " ")
 	}
 	fmt.Println()
-	pq2 := CreatePQueue(false)
+	
+	pq2 := NewPriorityQueue(true)
 	for _, val := range a {
-		pq2.Add(strconv.Itoa(val), val)
+		pq2.Add(val, val)
 	}
 	for _, _ = range a {
 		value, _ := pq2.Remove()

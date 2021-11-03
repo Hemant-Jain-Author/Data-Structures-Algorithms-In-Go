@@ -1,47 +1,50 @@
 package main
 
 import "fmt"
-import "github.com/golang-collections/go-datastructures/queue"
-import "container/heap"
 
-type HeapArr []int
+type Queue []int
 
-func (h HeapArr) Len() int{
-	return len(h)
-}
-func (h HeapArr) Less(i,j int) bool {
-	return h[i] < h[j]
-}
-func (h HeapArr) Swap(i,j int){
-	h[i], h[j] = h[j], h[i]
-}
-func (h *HeapArr) Push(val interface{}){
-	*h = append(*h,val.(int))
+func (que *Queue) Add(x int) {
+	*que = append(*que, x)
 }
 
-func (h *HeapArr) Pop() interface{}{
-	old := *h
-	n := len(old)
-	x := old[n-1]
-	*h = old[0:n-1]
-	return x
+/*
+In the Remove() function , the memory allocated for
+the first element in the array is never returned so there is memory leak..
+*/
+func (que *Queue) Remove() int {
+	n := len(*que)
+	value := (*que)[0]
+	*que = (*que)[1:n]
+	return value
 }
 
-func main31() {
-	q := new(queue.Queue)
-	q.Put(2)
-	q.Put(3)
-	q.Put(3, 4, 5, 6, 7)
+func (que *Queue) Front() int {
+	return (*que)[0]
+}
 
-	for q.Empty() == false {
-		val, _ := q.Get(1)
-		fmt.Println(val[0])
+func (que Queue) Len() int {
+	return len(que)
+}
+
+func (que Queue) IsEmpty() bool {
+	return len(que) == 0
+}
+
+func (que Queue) Print() {
+	fmt.Println(que)
+}
+
+func main() {
+	que := &Queue{}
+	for i := 0; i < 5; i++ {
+		que.Add(i)
 	}
-
-	h:= &HeapArr{2,1,3}
-	heap.Init(h)
-	heap.Push(h,33)
-	for h.Len() > 0 {
-		fmt.Println(heap.Pop(h))
-	}	
+	for que.IsEmpty() == false {
+		fmt.Print(que.Remove(), " ")
+	}
 }
+
+/*
+0 1 2 3 4
+*/

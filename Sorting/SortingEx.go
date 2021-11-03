@@ -15,9 +15,7 @@ func PrintArr(arr []int, count int) {
 }
 
 func swap(arr []int, x int, y int) {
-	temp := arr[x]
-	arr[x] = arr[y]
-	arr[y] = temp
+	arr[x], arr[y] = arr[y], arr[x]
 }
 
 func Partition01(arr []int, size int) int {
@@ -39,6 +37,37 @@ func Partition01(arr []int, size int) int {
 		}
 	}
 	return count
+}
+
+func Partition012_(arr []int, size int) {
+	zero := 0
+	one := 0
+	two := 0
+	for i := 0; i < size; i++ {
+		if arr[i] == 0 {
+			zero += 1
+		} else if arr[i] == 1 {
+			one += 1
+		} else {
+			two += 1
+		}
+	}
+	index := 0
+	for zero > 0 {
+		arr[index] = 0
+		index++
+		zero -= 1
+	}
+	for one > 0 {
+		arr[index] = 1
+		index++
+		one -= 1
+	}
+	for two > 0 {
+		arr[index] = 2
+		index++
+		two -= 1
+	}
 }
 
 func Partition012(arr []int, size int) {
@@ -64,9 +93,12 @@ func main1() {
 	arr := []int{ 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1 }
 	Partition01(arr, len(arr))
 	fmt.Println(arr)
-	arr2 := []int{ 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 }
-	Partition012(arr2, len(arr))
-	fmt.Println(arr2)
+	arr = []int{ 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 }
+	Partition012(arr, len(arr))
+	fmt.Println(arr)
+	arr = []int{ 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 }
+	Partition012(arr, len(arr))
+	fmt.Println(arr)
 }
 
 func RangePartition(arr []int, size int, lower int, higher int) {
@@ -120,7 +152,25 @@ func main3(){
 	fmt.Println(minSwaps(arr, 10, val))
 }
 
-func seperateEvenAndOdd(data []int, size int) {
+func SeparateEvenAndOdd(data []int, size int) {
+	left := 0
+	right := size - 1
+	aux := make([]int, size)
+	for i := 0; i < size; i++ {
+		if data[i]%2 == 0 {
+			aux[left] = data[i]
+			left++
+		} else if data[i]%2 == 1 {
+			aux[right] = data[i]
+			right--
+		}
+	}
+	for i := 0; i < size; i++ {
+		data[i] = aux[i]
+	}
+}
+
+func SeparateEvenAndOdd2(data []int, size int) {
 	left := 0 
 	right := size - 1
 	for left < right {
@@ -138,7 +188,10 @@ func seperateEvenAndOdd(data []int, size int) {
 
 func main4(){
 	arr := []int{2,7,5,6,1,3,4,9,10,8}
-	seperateEvenAndOdd(arr, 10)
+	SeparateEvenAndOdd(arr, 10)
+	fmt.Println(arr)
+	arr = []int{2,7,5,6,1,3,4,9,10,8}
+	SeparateEvenAndOdd2(arr, 10)
 	fmt.Println(arr)
 }
 

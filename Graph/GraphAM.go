@@ -1,21 +1,24 @@
 ﻿package main
 
 import (
-	"fmt"
 	"container/heap"
+	"fmt"
+	"math"
 )
 
 type Graph struct {
 	count int
-	adj [][]int
+	adj   [][]int
 }
 
-func (gph *Graph) Init(count int) {
+func NewGraph(count int) (gph *Graph) {
+	gph = new(Graph)
 	gph.count = count
 	gph.adj = make([][]int, count)
 	for i := range gph.adj {
-        gph.adj[i] = make([]int, count)
-    }
+		gph.adj[i] = make([]int, count)
+	}
+	return
 }
 
 func (gph *Graph) AddDirectedEdge(src int, dst int, cost int) {
@@ -29,10 +32,10 @@ func (gph *Graph) AddUndirectedEdge(src int, dst int, cost int) {
 
 func (gph *Graph) Print() {
 	for i := 0; i < gph.count; i++ {
-		fmt.Print("Node index " , i , " is connected to : ")
+		fmt.Print("Node index ", i, " is connected to : ")
 		for j := 0; j < gph.count; j++ {
-			if (gph.adj[i][j] != 0) {
-				fmt.Print(j , "(cost:", gph.adj[i][j], ") ")
+			if gph.adj[i][j] != 0 {
+				fmt.Print(j, "(cost:", gph.adj[i][j], ") ")
 			}
 		}
 		fmt.Println("")
@@ -40,8 +43,7 @@ func (gph *Graph) Print() {
 }
 
 func main1() {
-	gph := new(Graph)
-	gph.Init(4)
+	gph := NewGraph(4)
 	gph.AddUndirectedEdge(0, 1, 1)
 	gph.AddUndirectedEdge(0, 2, 1)
 	gph.AddUndirectedEdge(1, 2, 1)
@@ -50,10 +52,10 @@ func main1() {
 }
 
 /*
-Node index 0 is connected to : 1(cost:1) 2(cost:1) 
-Node index 1 is connected to : 0(cost:1) 2(cost:1) 
-Node index 2 is connected to : 0(cost:1) 1(cost:1) 3(cost:1) 
-Node index 3 is connected to : 2(cost:1) 
+Node index 0 is connected to : 1(cost:1) 2(cost:1)
+Node index 1 is connected to : 0(cost:1) 2(cost:1)
+Node index 2 is connected to : 0(cost:1) 1(cost:1) 3(cost:1)
+Node index 3 is connected to : 2(cost:1)
 */
 
 func (gph *Graph) Dijkstra(source int) {
@@ -64,43 +66,51 @@ func (gph *Graph) Dijkstra(source int) {
 
 	for i := 0; i < gph.count; i++ {
 		previous[i] = -1
-		dist[i] = 999999 // infinite
+		dist[i] = math.MaxInt32 // infinite
 		visited[i] = false
 	}
 
 	dist[source] = 0
 	previous[source] = -1
 
-	que := new(PQueue)
-	que.Init()
-	que.Add(source, 0)
+	type Item struct {
+		index    int
+		priority int
+	}
 
-	for que.Len() != 0 {
-		source := que.Remove().(int)
-		
-		if (visited[source] == true) {
-            continue
-        }
+	cmp := func(a, b interface{}) bool {
+		return a.(Item).priority > b.(Item).priority
+	}
+
+	hp := NewHeap(cmp)
+	heap.Push(hp, Item{source, 0})
+
+	for hp.Len() != 0 {
+		source := heap.Pop(hp).(Item).index
+
+		if visited[source] == true {
+			continue
+		}
 		visited[source] = true
-		
+
 		for dest := 0; dest < gph.count; dest++ {
 			cost := gph.adj[source][dest]
-			if (cost != 0) {
+			if cost != 0 {
 				alt := cost + dist[source]
-				if (dist[dest] > alt && visited[dest] == false) {
+				if dist[dest] > alt && visited[dest] == false {
 					dist[dest] = alt
 					previous[dest] = source
-					que.Add(dest, alt)
+					heap.Push(hp, Item{dest, alt})
 				}
 			}
 		}
 	}
 
 	for i := 0; i < count; i++ {
-		if (dist[i] == 999999) {
-			fmt.Println(" node id " , i , "  prev " , previous[i] , " distance : Unreachable")
+		if dist[i] == math.MaxInt32 {
+			fmt.Println(" node id ", i, "  prev ", previous[i], " distance : Unreachable")
 		} else {
-			fmt.Println(" node id " , i , "  prev " , previous[i] , " distance : " , dist[i])
+			fmt.Println(" node id ", i, "  prev ", previous[i], " distance : ", dist[i])
 		}
 	}
 }
@@ -114,49 +124,55 @@ func (gph *Graph) Prims() {
 
 	for i := 0; i < gph.count; i++ {
 		previous[i] = -1
-		dist[i] = 999999 // infinite
+		dist[i] = math.MaxInt32 // infinite
 		visited[i] = false
 	}
 
 	dist[source] = 0
 	previous[source] = -1
 
-	que := new(PQueue)
-	que.Init()
-	que.Add(source, 0)
+	type Item struct {
+		index    int
+		priority int
+	}
 
-	for que.Len() != 0 {
-		source := que.Remove().(int)
-		
-		if (visited[source] == true) {
-            continue
-        }
+	cmp := func(a, b interface{}) bool {
+		return a.(Item).priority > b.(Item).priority
+	}
+
+	hp := NewHeap(cmp)
+	heap.Push(hp, Item{source, 0})
+	for hp.Len() != 0 {
+		source := heap.Pop(hp).(Item).index
+
+		if visited[source] == true {
+			continue
+		}
 		visited[source] = true
-		
+
 		for dest := 0; dest < gph.count; dest++ {
 			cost := gph.adj[source][dest]
-			if (cost != 0) {
-				if (dist[dest] > cost && visited[dest] == false) {
+			if cost != 0 {
+				if dist[dest] > cost && visited[dest] == false {
 					dist[dest] = cost
 					previous[dest] = source
-					que.Add(dest, cost)
+					heap.Push(hp, Item{dest, cost})
 				}
 			}
 		}
 	}
 
 	for i := 0; i < count; i++ {
-		if (dist[i] == 999999) {
-			fmt.Println(" node id " , i , "  prev " , previous[i] , " distance : Unreachable")
+		if dist[i] == math.MaxInt32 {
+			fmt.Println(" node id ", i, "  prev ", previous[i], " distance : Unreachable")
 		} else {
-			fmt.Println(" node id " , i , "  prev " , previous[i] , " distance : " , dist[i])
+			fmt.Println(" node id ", i, "  prev ", previous[i], " distance : ", dist[i])
 		}
 	}
 }
 
 func main2() {
-	gph := new(Graph)
-	gph.Init(9)
+	gph := NewGraph(9)
 	gph.AddUndirectedEdge(0, 1, 4)
 	gph.AddUndirectedEdge(0, 7, 8)
 	gph.AddUndirectedEdge(1, 2, 8)
@@ -198,15 +214,15 @@ func main2() {
  node id  8   prev  2  distance :  2
 */
 
-func (gph *Graph)hamiltonianPath() bool {
+func (gph *Graph) hamiltonianPath() bool {
 	count := gph.count
 	path := make([]int, count)
 	added := make([]int, count)
 
-	if (gph.hamiltonianPathUtil(path, 0, added)) {
+	if gph.hamiltonianPathUtil(path, 0, added) {
 		fmt.Print("Hamiltonian Path found :: ")
 		for i := 0; i < count; i++ {
-			fmt.Print(" " , path[i])
+			fmt.Print(" ", path[i])
 		}
 		return true
 	}
@@ -216,17 +232,17 @@ func (gph *Graph)hamiltonianPath() bool {
 
 func (gph *Graph) hamiltonianPathUtil(path []int, pSize int, added []int) bool {
 	// Base case full length path is found
-	if (pSize == gph.count) {
+	if pSize == gph.count {
 		return true
 	}
 	for vertex := 0; vertex < gph.count; vertex++ {
 		// there is a path from last element and next vertex
 		// and next vertex is not already included in path.
-		if (pSize == 0 || (gph.adj[path[pSize - 1]][vertex] == 1 && added[vertex] == 0)) {
+		if pSize == 0 || (gph.adj[path[pSize-1]][vertex] == 1 && added[vertex] == 0) {
 			path[pSize] = vertex
 			pSize++
 			added[vertex] = 1
-			if (gph.hamiltonianPathUtil(path, pSize, added)) {
+			if gph.hamiltonianPathUtil(path, pSize, added) {
 				return true
 			}
 			// backtracking
@@ -237,48 +253,45 @@ func (gph *Graph) hamiltonianPathUtil(path []int, pSize int, added []int) bool {
 	return false
 }
 
-
 func main3() {
 	count := 5
-	gph := new(Graph)
-	gph.Init(count)
-	
+	gph := NewGraph(count)
+
 	adj := make([][]int, 5)
-    adj[0] = []int{0, 1, 0, 1, 0} 
-    adj[1] = []int{1, 0, 1, 1, 0}
-    adj[2] = []int{0, 1, 0, 0, 1}
-    adj[3] = []int{1, 1, 0, 0, 1}
-    adj[4] = []int{0, 1, 1, 1, 0}
+	adj[0] = []int{0, 1, 0, 1, 0}
+	adj[1] = []int{1, 0, 1, 1, 0}
+	adj[2] = []int{0, 1, 0, 0, 1}
+	adj[3] = []int{1, 1, 0, 0, 1}
+	adj[4] = []int{0, 1, 1, 1, 0}
 
 	for i := 0; i < count; i++ {
 		for j := 0; j < count; j++ {
-			if (adj[i][j] == 1) {
+			if adj[i][j] == 1 {
 				gph.AddDirectedEdge(i, j, 1)
 			}
 		}
 	}
-	
-	fmt.Println("\nhamiltonianPath : " , gph.hamiltonianPath())
 
-	gph2 := new(Graph)
-	gph2.Init(count)
+	fmt.Println("\nhamiltonianPath : ", gph.hamiltonianPath())
+
+	gph2 := NewGraph(count)
 
 	adj2 := make([][]int, 5)
-    adj2[0] = []int{0, 1, 0, 1, 0} 
-    adj2[1] = []int{1, 0, 1, 1, 0}
-    adj2[2] = []int{0, 1, 0, 0, 1}
-    adj2[3] = []int{1, 1, 0, 0, 0}
-    adj2[4] = []int{0, 1, 1, 0, 0}
+	adj2[0] = []int{0, 1, 0, 1, 0}
+	adj2[1] = []int{1, 0, 1, 1, 0}
+	adj2[2] = []int{0, 1, 0, 0, 1}
+	adj2[3] = []int{1, 1, 0, 0, 0}
+	adj2[4] = []int{0, 1, 1, 0, 0}
 
 	for i := 0; i < count; i++ {
 		for j := 0; j < count; j++ {
-			if (adj2[i][j] == 1) {
+			if adj2[i][j] == 1 {
 				gph2.AddDirectedEdge(i, j, 1)
 			}
 		}
 	}
 
-	fmt.Println("\nhamiltonianPath :  " , gph2.hamiltonianPath())
+	fmt.Println("\nhamiltonianPath :  ", gph2.hamiltonianPath())
 }
 
 /*
@@ -288,15 +301,15 @@ Hamiltonian Path found ::  0 3 1 2 4
 hamiltonianPath :   true
 */
 
-func (gph *Graph)hamiltonianCycle() bool {
+func (gph *Graph) hamiltonianCycle() bool {
 	count := gph.count
 	path := make([]int, count+1)
 	added := make([]int, count)
-	
-	if (gph.hamiltonianCycleUtil(path, 0, added)) {
+
+	if gph.hamiltonianCycleUtil(path, 0, added) {
 		fmt.Print("Hamiltonian Cycle found :: ")
 		for i := 0; i <= gph.count; i++ {
-			fmt.Print(" " , path[i])
+			fmt.Print(" ", path[i])
 		}
 		return true
 	}
@@ -304,11 +317,11 @@ func (gph *Graph)hamiltonianCycle() bool {
 	return false
 }
 
-func (gph *Graph)hamiltonianCycleUtil(path []int, pSize int, added []int) bool {
+func (gph *Graph) hamiltonianCycleUtil(path []int, pSize int, added []int) bool {
 	// Base case full length path is found this last check can be modified to make it a path.
 	count := gph.count
-	if (pSize == count) {
-		if (gph.adj[path[pSize - 1]][path[0]] == 1) {
+	if pSize == count {
+		if gph.adj[path[pSize-1]][path[0]] == 1 {
 			path[pSize] = path[0]
 			return true
 		} else {
@@ -317,11 +330,11 @@ func (gph *Graph)hamiltonianCycleUtil(path []int, pSize int, added []int) bool {
 	}
 	for vertex := 0; vertex < gph.count; vertex++ {
 		// there is a path from last element and next vertex
-		if (pSize == 0 || (gph.adj[path[pSize - 1]][vertex] == 1 && added[vertex] == 0)) {
+		if pSize == 0 || (gph.adj[path[pSize-1]][vertex] == 1 && added[vertex] == 0) {
 			path[pSize] = vertex
 			pSize++
 			added[vertex] = 1
-			if (gph.hamiltonianCycleUtil(path, pSize, added)) {
+			if gph.hamiltonianCycleUtil(path, pSize, added) {
 				return true
 			}
 			// backtracking
@@ -332,48 +345,45 @@ func (gph *Graph)hamiltonianCycleUtil(path []int, pSize int, added []int) bool {
 	return false
 }
 
-
 func main4() {
 	count := 5
-	gph := new(Graph)
-	gph.Init(count)
-	
-	adj := make([][]int, 5)
-    adj[0] = []int{0, 1, 0, 1, 0} 
-    adj[1] = []int{1, 0, 1, 1, 0}
-    adj[2] = []int{0, 1, 0, 0, 1}
-    adj[3] = []int{1, 1, 0, 0, 1}
-    adj[4] = []int{0, 1, 1, 1, 0}
+	gph := NewGraph(count)
+
+	adj := [][]int{
+		{0, 1, 0, 1, 0},
+		{1, 0, 1, 1, 0},
+		{0, 1, 0, 0, 1},
+		{1, 1, 0, 0, 1},
+		{0, 1, 1, 1, 0}}
 
 	for i := 0; i < count; i++ {
 		for j := 0; j < count; j++ {
-			if (adj[i][j] == 1) {
+			if adj[i][j] == 1 {
 				gph.AddDirectedEdge(i, j, 1)
 			}
 		}
 	}
-	
-	fmt.Println("\nhamiltonianCycle : " , gph.hamiltonianCycle())
 
-	gph2 := new(Graph)
-	gph2.Init(count)
+	fmt.Println("\nhamiltonianCycle : ", gph.hamiltonianCycle())
 
-	adj2 := make([][]int, 5)
-    adj2[0] = []int{0, 1, 0, 1, 0} 
-    adj2[1] = []int{1, 0, 1, 1, 0}
-    adj2[2] = []int{0, 1, 0, 0, 1}
-    adj2[3] = []int{1, 1, 0, 0, 0}
-    adj2[4] = []int{0, 1, 1, 0, 0}
+	gph2 := NewGraph(count)
+
+	adj2 := [][]int{
+		{0, 1, 0, 1, 0},
+		{1, 0, 1, 1, 0},
+		{0, 1, 0, 0, 1},
+		{1, 1, 0, 0, 0},
+		{0, 1, 1, 0, 0}}
 
 	for i := 0; i < count; i++ {
 		for j := 0; j < count; j++ {
-			if (adj2[i][j] == 1) {
+			if adj2[i][j] == 1 {
 				gph2.AddDirectedEdge(i, j, 1)
 			}
 		}
 	}
 
-	fmt.Println("\nhamiltonianCycle :  " , gph2.hamiltonianCycle())
+	fmt.Println("\nhamiltonianCycle :  ", gph2.hamiltonianCycle())
 }
 
 /*
@@ -383,76 +393,58 @@ Hamiltonian Cycle not found
 hamiltonianCycle :   false
 */
 
-func main(){
-	//main1()
-	//main2()
-	//main3()
+func main() {
+	main1()
+	main2()
+	main3()
 	main4()
 }
 
 // *********************
-type Item struct {
-	value    interface{}
-	priority int
+type Heap struct {
+	heap []interface{}
+	comp func(x interface{}, y interface{}) bool
 }
 
-type ItemList []*Item
-
-func (lst ItemList) Len() int {
-	return len(lst)
+func NewHeap(comp func(x interface{}, y interface{}) bool) *Heap {
+	hp := new(Heap)
+	hp.comp = comp
+	return hp
 }
 
-func (lst ItemList) Less(i, j int) bool {
-	return lst[i].priority < lst[j].priority
+func (hp Heap) Len() int {
+	return len(hp.heap)
 }
 
-func (lst ItemList) Swap(i, j int) {
-	lst[i], lst[j] = lst[j], lst[i]
+func (hp Heap) Less(i, j int) bool {
+	return hp.comp(hp.heap[i], hp.heap[j])
 }
 
-func (lst *ItemList) Push(val interface{}) {
-	item := val.(*Item)
-	*lst = append(*lst, item)
+func (hp Heap) Swap(i, j int) {
+	hp.heap[i], hp.heap[j] = hp.heap[j], hp.heap[i]
 }
 
-func (lst *ItemList) Pop() interface{} {
-	old := *lst
-	n := len(old)
-	item := old[n-1]
-	*lst = old[0 : n-1]
-	return item
+func (hp *Heap) Push(x interface{}) {
+	hp.heap = append(hp.heap, x)
 }
 
-type PQueue struct {
-	pq ItemList
+func (hp *Heap) Pop() interface{} {
+	n := len(hp.heap)
+	value := hp.heap[n-1]
+	hp.heap = hp.heap[0 : n-1]
+	return value
 }
 
-func NewPQueue() *PQueue {
-	queue := new(PQueue)
-	queue.pq = make(ItemList, 0)
-	heap.Init(&queue.pq)
-	return queue
+func (hp Heap) Print() {
+	fmt.Println(hp.heap)
 }
 
-func (queue *PQueue) Init() {
-	queue.pq = make(ItemList, 0)
-	heap.Init(&queue.pq)
+func (hp Heap) Empty() bool {
+	return len(hp.heap) == 0
 }
 
-func (queue *PQueue) Add(value interface{}, priority int) {
-	heap.Push(&queue.pq, &Item{value: value, priority: priority})
-}
-
-func (queue *PQueue) Remove() interface{} {
-	return heap.Pop(&queue.pq).(*Item).value
-}
-
-func (queue *PQueue) Len() int {
-	return queue.pq.Len()
-}
-
-func (queue *PQueue) IsEmpty() bool {
-	return queue.pq.Len() == 0
+func (hp Heap) Peek() interface{} {
+	return hp.heap[0]
 }
 
 // ************************************

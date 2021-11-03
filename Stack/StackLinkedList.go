@@ -1,81 +1,61 @@
 package main
 
 import (
+	"container/list"
 	"fmt"
 )
 
-type Node struct {
-	value int
-	next  *Node
+type Stack struct {
+	stk *list.List
 }
 
-type StackLinkedList struct {
-	head *Node
-	size int
+func NewStack() *Stack {
+	st := new(Stack)
+	st.stk = list.New()
+	return st
 }
 
-func (s *StackLinkedList) Size() int {
-	return s.size
+func (st *Stack) Push(data interface{}) {
+	st.stk.PushBack(data)
 }
 
-func (s *StackLinkedList) IsEmpty() bool {
-	return s.size == 0
+func (st *Stack) Pop() interface{} {
+	back := st.stk.Back()
+	value := back.Value
+	st.stk.Remove(back)
+	return value
 }
 
-func (s *StackLinkedList) Peek() (int, bool) {
-	if s.IsEmpty() {
-		fmt.Println("StackEmptyException")
-		return 0, false
-	}
-	return s.head.value, true
+func (st *Stack) Top() interface{} {
+	return st.stk.Back().Value
 }
 
-func (s *StackLinkedList) Push(value int) {
-	s.head = &Node{value, s.head}
-	s.size++
+func (st Stack) Len() int {
+	return st.stk.Len()
 }
 
-func (s *StackLinkedList) Pop() (int, bool) {
-	if s.IsEmpty() {
-		fmt.Println("StackEmptyException")
-		return 0, false
-	}
-
-	value := s.head.value
-	s.head = s.head.next
-	s.size--
-	return value, true
+func (st Stack) IsEmpty() bool {
+	return st.stk.Len() == 0
 }
 
-func (s *StackLinkedList) Print() {
-	temp := s.head
-	fmt.Print("Value stored in stck are :: ")
-	for temp != nil {
-		fmt.Print(temp.value, " ")
-		temp = temp.next
+func (st Stack) Print() {
+	for e := st.stk.Front(); e != nil; e = e.Next() {
+		fmt.Print(e.Value, " ")
 	}
 	fmt.Println()
 }
 
-func (s *StackLinkedList) insertAtBottom(value int) {
-	if s.IsEmpty() {
-		s.Push(value)
-	} else {
-		temp,_ := s.Pop()
-		s.insertAtBottom(value)
-		s.Push(temp)
-	}
-}
-
-
 func main() {
-	s := new(StackLinkedList)
-	s.Push(1)
-	s.Push(2)
-	s.Push(3)
-	
-	for s.IsEmpty() == false {
-		val, _ := s.Pop()
-		fmt.Print( val, " ")
+	stk := NewStack()
+	for i := 0; i < 5; i++ {
+		stk.Push(i)
+	}
+	//stk.Print()
+	for stk.IsEmpty() == false {
+		fmt.Print(stk.Pop(), " ")
 	}
 }
+
+/*
+4 3 2 1 0
+*/

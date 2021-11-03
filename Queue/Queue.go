@@ -2,52 +2,58 @@ package main
 
 import "fmt"
 
-const capacity = 100
-
 type Queue struct {
-	size  int
-	data  [capacity]int
-	front int
-	back  int
+	que []interface{}
 }
 
-func (q *Queue) Add(value int) bool {
-	if q.size >= capacity {
-		return false
-	}
-	q.size++
-	q.data[q.back] = value
-	q.back = (q.back + 1) % (capacity - 1)
-	return true
+func (q *Queue) Add(value interface{}) {
+	q.que = append(q.que, value)
 }
 
-func (q *Queue) Remove() (int, bool) {
-	var value int
-	if q.size <= 0 {
-		return 0, false
-	}
-	q.size--
-	value = q.data[q.front]
-	q.front = (q.front + 1) % (capacity - 1)
-	return value, true
+func (q *Queue) Remove() interface{} {
+	n := len(q.que)
+	value := q.que[0]
+	q.que = q.que[1:n]
+	return value
+}
+
+func (q *Queue) RemoveBack() interface{} {
+	n := len(q.que)
+	value := q.que[n-1]
+	q.que = q.que[:n-1]
+	return value
+}
+
+func (q *Queue) Front() interface{} {
+	return q.que[0]
+}
+
+func (q *Queue) Back() interface{} {
+	n := len(q.que)
+	return q.que[n-1]
 }
 
 func (q *Queue) IsEmpty() bool {
-	return q.size == 0
+	return len(q.que) == 0
 }
 
-func (q *Queue) Size() int {
-	return q.size
+func (q *Queue) Len() int {
+	return len(q.que)
 }
+
+func (q Queue) Print() {
+	fmt.Println(q.que)
+}
+
 
 func main() {
 	q := new(Queue)
-	q.Add(1)
-	q.Add(2)
-	q.Add(3)
+	for i := 0; i < 20; i++ {
+		q.Add(i)
+	}
 
-	for q.IsEmpty() == false {
-		val, _ := q.Remove()
-		fmt.Println(val, " ")
+	for i := 0; i < 10; i++ {
+		val := q.Remove().(int)
+		fmt.Print(val, " ")
 	}
 }

@@ -28,11 +28,11 @@ func (que *QueueUsingStack) Remove() int {
 }
 
 func (que *QueueUsingStack) Length() int {
-    return (que.stk1.Length() + que.stk2.Length());
+    return (que.stk1.Len() + que.stk2.Len());
 }
 
 func (que *QueueUsingStack) IsEmpty() bool {
-    return (que.stk1.Length() + que.stk2.Length()) == 0;
+    return (que.stk1.Len() + que.stk2.Len()) == 0;
 }
 
 
@@ -52,44 +52,33 @@ func main() {
 }
 
 type Stack struct {
-	s []interface{}
+	stk []interface{}
 }
 
-func (s *Stack) Push(value interface{}) {
-	s.s = append(s.s, value)
+func (s *Stack) Push(data interface{}) {
+	s.stk = append(s.stk, data)
 }
 
 func (s *Stack) Pop() interface{} {
-	if s.IsEmpty() {
-		return nil
-	}
-
-	length := len(s.s)
-	res := s.s[length-1]
-	s.s = s.s[:length-1]
-	return res
+	n := len(s.stk)
+	value := s.stk[n-1]
+	s.stk = s.stk[: n-1]
+	return value
 }
 
 func (s *Stack) Top() interface{} {
-	length := len(s.s)
-	res := s.s[length-1]
-	return res
+	n := len(s.stk)
+	return s.stk[n-1]
 }
 
-func (s *Stack) IsEmpty() bool {
-	length := len(s.s)
-	return length == 0
+func (s Stack) Len() int {
+	return len(s.stk)
 }
 
-func (s *Stack) Length() int {
-	length := len(s.s)
-	return length
+func (s Stack) IsEmpty() bool {
+	return len(s.stk) == 0
 }
 
-func (s *Stack) Print() {
-	length := len(s.s)
-	for i := 0; i < length; i++ {
-		fmt.Print(s.s[i], " ")
-	}
-	fmt.Println()
+func (s Stack) Print() {
+	fmt.Println(s.stk)
 }
