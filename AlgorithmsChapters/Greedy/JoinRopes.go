@@ -30,7 +30,10 @@ func JoinRopes(ropes []int, size int) int {
 	return total
 }
 func JoinRopes2(ropes []int, size int) int {
-	pq := &PriorityQueue{}
+	cmp := func(a, b interface{}) bool { 
+		return a.(int) < b.(int) 
+	}
+	pq := NewHeap(cmp)
 	i := 0
 	for i = 0; i < size; i++ {
 		heap.Push(pq, ropes[i])
@@ -58,40 +61,48 @@ Total: 29
 Total: 29
 */
 
-type PriorityQueue []int
-
-func (pq *PriorityQueue) Print() {
-	fmt.Println(pq)
+type Heap struct {
+	heap []interface{}
+	comp func(x interface{}, y interface{}) bool
 }
 
-func (pq PriorityQueue) Len() int {
-	return len(pq)
+func NewHeap(comp func(x interface{}, y interface{}) bool) *Heap {
+	hp := new(Heap)
+	hp.comp = comp
+	return hp
 }
 
-func (pq PriorityQueue) Swap(i, j int) {
-	pq[i], pq[j] = pq[j], pq[i]
+func (hp Heap) Len() int {
+	return len(hp.heap)
 }
 
-func (pq PriorityQueue) Less(a, b int) bool {
-	return pq[a] < pq[b]
+func (hp Heap) Less(i, j int) bool {
+	return hp.comp(hp.heap[i], hp.heap[j])
 }
 
-func (pq PriorityQueue) Empty() bool {
-	return (pq.Len() == 0)
+func (hp Heap) Swap(i, j int) {
+	hp.heap[i], hp.heap[j] = hp.heap[j], hp.heap[i]
 }
 
-func (pq PriorityQueue) Peek() interface{} {
-	return pq[0]
+func (hp *Heap) Push(x interface{}) {
+	hp.heap = append(hp.heap, x)
 }
 
-func (pq *PriorityQueue) Push(x interface{}) {
-	*pq = append(*pq, x.(int))
-}
-
-func (pq *PriorityQueue) Pop() interface{} {
-	old := *pq
-	n := len(old)
-	value := old[n-1]
-	*pq = old[0 : pq.Len()-1]
+func (hp *Heap) Pop() interface{} {
+	n := len(hp.heap)
+	value := hp.heap[n-1]
+	hp.heap = hp.heap[0 : n-1]
 	return value
+}
+
+func (hp Heap) Print() {
+	fmt.Println(hp.heap)
+}
+
+func (hp Heap) Empty() bool {
+	return len(hp.heap) == 0
+}
+
+func (hp Heap) Peek() interface{} {
+	return hp.heap[0]
 }

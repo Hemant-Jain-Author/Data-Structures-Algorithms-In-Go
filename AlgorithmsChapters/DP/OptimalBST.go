@@ -47,10 +47,10 @@ func OptimalBSTCostTD(keys []int, freq []int) int {
 	for i := 0; i < n; i++ {
 		cost[i][i] = freq[i]
 	}
-	return OptimalBSTCostTDUtil(freq, cost, 0, n-1)
+	return optimalBSTCostTDUtil(freq, cost, 0, n-1)
 }
 
-func OptimalBSTCostTDUtil(freq []int, cost [][]int, i int, j int) int {
+func optimalBSTCostTDUtil(freq []int, cost [][]int, i int, j int) int {
 	if i > j {
 		return 0
 	}
@@ -60,8 +60,8 @@ func OptimalBSTCostTDUtil(freq []int, cost [][]int, i int, j int) int {
 	s := sumAll(freq, i, j)
 	for r := i; r <= j; r++ {
 		cost[i][j] = min(cost[i][j],
-			OptimalBSTCostTDUtil(freq, cost, i, r-1)+
-				OptimalBSTCostTDUtil(freq, cost, r+1, j)+s)
+			optimalBSTCostTDUtil(freq, cost, i, r-1)+
+				optimalBSTCostTDUtil(freq, cost, r+1, j)+s)
 	}
 	return cost[i][j]
 }

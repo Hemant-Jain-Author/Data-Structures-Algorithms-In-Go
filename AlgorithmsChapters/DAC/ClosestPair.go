@@ -25,7 +25,7 @@ func distance(a *Point, b *Point) float64 {
 func ClosestPairBF(arr [][]int) float64 {
 	n := len(arr)
 	var dMin float64
-	dMin = 999999
+	dMin = math.MaxInt32
 	var d float64
 	for i := 0; i < n-1; i++ {
 		for j := i + 1; j < n; j++ {
@@ -63,7 +63,7 @@ func ClosestPairDC(arr [][]int) float64 {
 
 func closestPairUtil(p []*Point, start int, stop int, q []*Point, n int) float64 {
 	if stop-start < 1 {
-		return 999999
+		return math.MaxInt32
 	}
 	if stop-start == 1 {
 		return distance(p[start], p[stop])

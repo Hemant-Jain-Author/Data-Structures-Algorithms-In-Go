@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
-var INF = 999999
+var INF = math.MaxInt32
 
 // Returns shortest distance from 0 to N-1.
 func GraphShortestDist(graph [][]int, n int) int {
@@ -18,10 +19,10 @@ func GraphShortestDist(graph [][]int, n int) int {
 	var value int
 	dist[0] = 0
 	path[0] = -1
-	
+
 	// Calculating shortest path for the nodes
 	for i := 0; i < n; i++ {
-		// Check all nodes of next 
+		// Check all nodes of next
 		for j := i; j < n; j++ {
 			// Reject if no edge exists
 			if graph[i][j] == INF {
@@ -59,6 +60,6 @@ func main() {
 }
 
 /*
-Path: 7 6 3 0 
+Path: 7 6 3 0
 Total Cost: 9
 */

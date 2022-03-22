@@ -9,7 +9,7 @@ func max(i, j int) int {
 	return j
 }
 
-func largestPalindromicSubsequence(str string) int {
+func LargestPalindromicSubsequence(str string) int {
 	n := len(str)
 	dp := make([][]int, n)
 	for i := range dp {
@@ -35,7 +35,7 @@ func largestPalindromicSubsequence(str string) int {
 
 func main() {
 	str := "ABCAUCBCxxCBA"
-	fmt.Println("Max Palindromic Subsequence length: ", largestPalindromicSubsequence(str))
+	fmt.Println("Max Palindromic Subsequence length: ", LargestPalindromicSubsequence(str))
 }
 
 /*

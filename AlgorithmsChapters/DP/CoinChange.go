@@ -7,7 +7,7 @@ import (
 )
 
 // Greedy
-func minCoins(coins []int, n int, val int) int {
+func MinCoins(coins []int, n int, val int) int {
 	if val <= 0 {
 		return 0
 	}
@@ -28,7 +28,7 @@ func minCoins(coins []int, n int, val int) int {
 }
 
 // Brute Force
-func minCoins2(coins []int, n int, val int) int {
+func MinCoins2(coins []int, n int, val int) int {
 	if val == 0 {
 		return 0
 	}
@@ -36,7 +36,7 @@ func minCoins2(coins []int, n int, val int) int {
 	count := math.MaxInt32
 	for i := 0; i < n; i++ {
 		if coins[i] <= val {
-			subCount := minCoins2(coins, n, val-coins[i])
+			subCount := MinCoins2(coins, n, val-coins[i])
 			if subCount >= 0 {
 				count = min(count, subCount+1)
 			}
@@ -48,7 +48,7 @@ func minCoins2(coins []int, n int, val int) int {
 	return -1
 }
 
-func minCoinsBU(coins []int, n int, val int) int {
+func MinCoinsBU(coins []int, n int, val int) int {
 	dp := make([]int, val+1)
 	for i := range dp {
 		dp[i] = math.MaxInt32
@@ -114,9 +114,9 @@ func main() {
 		value := 15
 	*/
 	n := len(coins)
-	fmt.Println("Count is:", minCoins(coins, n, value))
-	fmt.Println("Count is:", minCoins2(coins, n, value))
-	fmt.Println("Count is:", minCoinsBU(coins, n, value))
+	fmt.Println("Count is:", MinCoins(coins, n, value))
+	fmt.Println("Count is:", MinCoins2(coins, n, value))
+	fmt.Println("Count is:", MinCoinsBU(coins, n, value))
 	fmt.Println("Count is:", MinCoinsTD(coins, n, value))
 }
 

@@ -2,14 +2,6 @@ package main
 
 import "fmt"
 
-func printSolution(colour []int, V int) {
-	fmt.Print("Assigned colours are::")
-	for i := 0; i < V; i++ {
-		fmt.Print(colour[i], " ")
-	}
-	fmt.Println()
-}
-
 func GraphColouring(graph [][]bool, V int, m int) bool {
 	colour := make([]int, V)
 	if graphColouringUtil(graph, V, m, colour, 0) {
@@ -20,7 +12,7 @@ func GraphColouring(graph [][]bool, V int, m int) bool {
 
 func graphColouringUtil(graph [][]bool, V int, m int, colour []int, i int) bool {
 	if i == V {
-		printSolution(colour, V)
+		fmt.Println("Assigned colours are::", colour)
 		return true
 	}
 	for j := 1; j <= m; j++ {
@@ -55,7 +47,7 @@ func GraphColouring2(graph [][]bool, V int, m int) bool {
 func graphColouringUtil2(graph [][]bool, V int, m int, colour []int, i int) bool {
 	if i == V {
 		if isSafe2(graph, colour, V) {
-			printSolution(colour, V)
+			fmt.Println("Assigned colours are::", colour)
 			return true
 		}
 		return false
@@ -100,6 +92,6 @@ func main() {
 }
 
 /*
-Assigned colours are::1 2 1 2 3
-Assigned colours are::1 2 1 2 3
+Assigned colours are:: [1 2 1 2 3]
+Assigned colours are:: [1 2 1 2 3]
 */

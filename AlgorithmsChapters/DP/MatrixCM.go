@@ -8,10 +8,10 @@ import (
 func MatrixChainMulBruteForce(p []int, n int) int {
 	i := 1
 	j := n - 1
-	return MatrixChainMulBruteForceUtil(p, i, j)
+	return matrixChainMulBruteForceUtil(p, i, j)
 }
 
-func MatrixChainMulBruteForceUtil(p []int, i int, j int) int {
+func matrixChainMulBruteForceUtil(p []int, i int, j int) int {
 	if i == j {
 		return 0
 	}
@@ -22,8 +22,8 @@ func MatrixChainMulBruteForceUtil(p []int, i int, j int) int {
 	// count of multiplications for each parenthesis
 	// placement and return the minimum count
 	for k := i; k < j; k++ {
-		count := MatrixChainMulBruteForceUtil(p, i, k) +
-			MatrixChainMulBruteForceUtil(p, k+1, j) + p[i-1]*p[k]*p[j]
+		count := matrixChainMulBruteForceUtil(p, i, k) +
+			matrixChainMulBruteForceUtil(p, k+1, j) + p[i-1]*p[k]*p[j]
 		if count < min {
 			min = count
 		}
@@ -39,11 +39,11 @@ func MatrixChainMulTD(p []int, n int) int {
 			dp[i][j] = math.MaxInt32
 		}
 	}
-	return MatrixChainMulTDUtil(dp, p, 1, n-1)
+	return matrixChainMulTDUtil(dp, p, 1, n-1)
 }
 
 // Function for matrix chain multiplication
-func MatrixChainMulTDUtil(dp [][]int, p []int, i int, j int) int {
+func matrixChainMulTDUtil(dp [][]int, p []int, i int, j int) int {
 	// Base Case
 	if i == j {
 		return 0
@@ -54,8 +54,8 @@ func MatrixChainMulTDUtil(dp [][]int, p []int, i int, j int) int {
 
 	// Recursion
 	for k := i; k < j; k++ {
-		dp[i][j] = min(dp[i][j], MatrixChainMulTDUtil(dp, p, i, k)+
-			MatrixChainMulTDUtil(dp, p, k+1, j)+p[i-1]*p[k]*p[j])
+		dp[i][j] = min(dp[i][j], matrixChainMulTDUtil(dp, p, i, k)+
+			matrixChainMulTDUtil(dp, p, k+1, j)+p[i-1]*p[k]*p[j])
 	}
 	return dp[i][j]
 }

@@ -27,7 +27,11 @@ type HuffmanTree struct {
 func NewHuffmanTree(arr []rune, freq []int) (huffTree *HuffmanTree) {
 	huffTree = &HuffmanTree{}
 	n := len(arr)
-	hp := &Heap{}
+
+	cmp := func(a, b interface{}) bool { 
+		return a.(*Node).freq < b.(*Node).freq 
+	}
+	hp := NewHeap(cmp)
 
 	for i := 0; i < n; i++ {
 		node := NewNode(arr[i], freq[i], nil, nil)
@@ -40,7 +44,7 @@ func NewHuffmanTree(arr []rune, freq []int) (huffTree *HuffmanTree) {
 		nd := NewNode('+', lt.freq+rt.freq, lt, rt)
 		heap.Push(hp, nd)
 	}
-	huffTree.root = (*hp)[0]
+	huffTree.root = heap.Pop(hp).(*Node)
 	return
 }
 
@@ -65,44 +69,48 @@ func main() {
 	hf.Print()
 }
 
-type Heap []*Node
+type Heap struct {
+	heap []interface{}
+	comp func(x interface{}, y interface{}) bool
+}
+
+func NewHeap(comp func(x interface{}, y interface{}) bool) *Heap {
+	hp := new(Heap)
+	hp.comp = comp
+	return hp
+}
 
 func (hp Heap) Len() int {
-	return len(hp)
+	return len(hp.heap)
+}
+
+func (hp Heap) Less(i, j int) bool {
+	return hp.comp(hp.heap[i], hp.heap[j])
 }
 
 func (hp Heap) Swap(i, j int) {
-	hp[i], hp[j] = hp[j], hp[i]
-}
-
-func (hp Heap) Less(p, c int) bool {
-	return hp[p].freq < hp[c].freq
-}
-
-func (hp *Heap) Empty() bool {
-	return (hp.Len() == 0)
-}
-
-func (hp *Heap) Peek() interface{} {
-	return (*hp)[0]
-}
-
-func (hp *Heap) Print() {
-	n := hp.Len()
-	for i := 0; i < n; i++ {
-		fmt.Print((*hp)[i].freq, " ")
-	}
-	fmt.Println()
+	hp.heap[i], hp.heap[j] = hp.heap[j], hp.heap[i]
 }
 
 func (hp *Heap) Push(x interface{}) {
-	*hp = append(*hp, x.(*Node))
+	hp.heap = append(hp.heap, x)
 }
 
 func (hp *Heap) Pop() interface{} {
-	old := *hp
-	n := len(old)
-	value := old[n-1]
-	*hp = old[0 : hp.Len()-1]
+	n := len(hp.heap)
+	value := hp.heap[n-1]
+	hp.heap = hp.heap[0 : n-1]
 	return value
+}
+
+func (hp Heap) Print() {
+	fmt.Println(hp.heap)
+}
+
+func (hp Heap) Empty() bool {
+	return len(hp.heap) == 0
+}
+
+func (hp Heap) Peek() interface{} {
+	return hp.heap[0]
 }

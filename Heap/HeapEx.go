@@ -7,7 +7,7 @@ import (
 )
 
 func Demo(args []string) {
-	pq := &MinHeap{}
+	pq := NewMinHeap()
 	arr := []int{1, 2, 10, 8, 7, 3, 4, 6, 5, 9}
 	for _, i := range arr {
 		heap.Push(pq, i)
@@ -53,7 +53,7 @@ func KSmallestProduct(arr []int, size int, k int) int {
 	return product
 }
 func KSmallestProduct2(arr []int, size int, k int) int {
-	pq := &MinHeap{}
+	pq := NewMinHeap()
 	i := 0
 	product := 1
 	for i = 0; i < size; i++ {
@@ -75,7 +75,7 @@ func KSmallestProduct3(arr []int, size int, k int) int {
 	return product
 }
 func KSmallestProduct4(arr []int, size int, k int) int {
-	pq := &MaxHeap{}
+	pq := NewMaxHeap()
 	for i := 0; i < size; i++ {
 		if i < k {
 			heap.Push(pq, arr[i])
@@ -94,7 +94,7 @@ func KSmallestProduct4(arr []int, size int, k int) int {
 }
 func KthLargest(arr []int, size int, k int) int {
 	value := 0
-	pq := &MaxHeap{}
+	pq := NewMaxHeap()
 	for i := 0; i < size; i++ {
 		heap.Push(pq, arr[i])
 	}
@@ -110,7 +110,7 @@ func KthSmallest(arr []int, size int, k int) int {
 	return arr[k-1]
 }
 func KthSmallest2(arr []int, size int, k int) int {
-	pq := &MinHeap{}
+	pq := NewMinHeap()
 	for i := 0; i < size; i++ {
 		heap.Push(pq, arr[i])
 	}
@@ -120,7 +120,7 @@ func KthSmallest2(arr []int, size int, k int) int {
 	return pq.Peek().(int)
 }
 func KthSmallest3(arr []int, size int, k int) int {
-	pq := &MaxHeap{}
+	pq := NewMaxHeap()
 	for i := 0; i < size; i++ {
 		if i < k {
 			heap.Push(pq, arr[i])
@@ -166,7 +166,7 @@ func Main3() {
 }
 
 func SortK(arr []int, size int, k int) {
-	pq := &MinHeap{}
+	pq := NewMinHeap()
 	i := 0
 	for ; i < k; i++ {
 		heap.Push(pq, arr[i])
@@ -206,7 +206,7 @@ func PrintLargerHalf(arr []int, size int) {
 	fmt.Println()
 }
 func PrintLargerHalf2(arr []int, size int) {
-	pq := &MinHeap{}
+	pq := NewMinHeap()
 	for i := 0; i < size; i++ {
 		heap.Push(pq, arr[i])
 	}
@@ -263,78 +263,65 @@ func main() {
 	Main4()
 }
 
-type MinHeap []int
-
-func (pq MinHeap) Len() int {
-	return len(pq)
+func NewMaxHeap() *Heap {
+	cmp := func(a, b interface{}) bool { 
+		return a.(int) > b.(int) 
+	}
+	hp := NewHeap(cmp)
+	return hp
 }
 
-func (pq MinHeap) Less(i, j int) bool {
-	return pq[i] < pq[j]
+func NewMinHeap() *Heap {
+	cmp := func(a, b interface{}) bool { 
+		return a.(int) < b.(int) 
+	}
+	hp := NewHeap(cmp)
+	return hp
 }
 
-func (pq MinHeap) Swap(i, j int) {
-	pq[i], pq[j] = pq[j], pq[i]
+
+type Heap struct {
+	heap []interface{}
+	comp func(x interface{}, y interface{}) bool
 }
 
-func (pq *MinHeap) Push(x interface{}) {
-	*pq = append(*pq, x.(int))
+func NewHeap(comp func(x interface{}, y interface{}) bool) *Heap {
+	hp := new(Heap)
+	hp.comp = comp
+	return hp
 }
 
-func (pq *MinHeap) Pop() interface{} {
-	old := *pq
-	n := len(old)
-	value := old[n-1]
-	*pq = old[0 : pq.Len()-1]
+func (hp Heap) Len() int {
+	return len(hp.heap)
+}
+
+func (hp Heap) Less(i, j int) bool {
+	return hp.comp(hp.heap[i], hp.heap[j])
+}
+
+func (hp Heap) Swap(i, j int) {
+	hp.heap[i], hp.heap[j] = hp.heap[j], hp.heap[i]
+}
+
+func (hp *Heap) Push(x interface{}) {
+	hp.heap = append(hp.heap, x)
+}
+
+func (hp *Heap) Pop() interface{} {
+	n := len(hp.heap)
+	value := hp.heap[n-1]
+	hp.heap = hp.heap[0 : n-1]
 	return value
 }
 
-func (pq MinHeap) Print() {
-	fmt.Println(pq)
+func (hp Heap) Print() {
+	fmt.Println(hp.heap)
 }
 
-func (pq MinHeap) Empty() bool {
-	return (pq.Len() == 0)
+func (hp Heap) Empty() bool {
+	return len(hp.heap) == 0
 }
 
-func (pq MinHeap) Peek() interface{} {
-	return pq[0]
-}
-
-type MaxHeap []int
-
-func (pq MaxHeap) Len() int {
-	return len(pq)
-}
-
-func (pq MaxHeap) Less(i, j int) bool {
-	return pq[i] > pq[j]
-}
-
-func (pq MaxHeap) Swap(i, j int) {
-	pq[i], pq[j] = pq[j], pq[i]
-}
-
-func (pq *MaxHeap) Push(x interface{}) {
-	*pq = append(*pq, x.(int))
-}
-
-func (pq *MaxHeap) Pop() interface{} {
-	old := *pq
-	n := len(old)
-	value := old[n-1]
-	*pq = old[0 : pq.Len()-1]
-	return value
-}
-
-func (pq MaxHeap) Print() {
-	fmt.Println(pq)
-}
-
-func (pq MaxHeap) Empty() bool {
-	return (pq.Len() == 0)
-}
-
-func (pq MaxHeap) Peek() interface{} {
-	return pq[0]
+func (hp Heap) Peek() interface{} {
+	return hp.heap[0]
 }

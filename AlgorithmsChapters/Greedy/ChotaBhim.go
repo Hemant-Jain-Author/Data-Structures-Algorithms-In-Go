@@ -37,12 +37,14 @@ func ChotaBhim(cups []int) int {
 func ChotaBhim2(cups []int) int {
 	size := len(cups)
 	time := 60
-	pq := &MaxHeap{}
-
-	i := 0
-	for i = 0; i < size; i++ {
+	cmp := func(a, b interface{}) bool { 
+		return a.(int) > b.(int) 
+	}
+	pq := NewHeap(cmp)
+	for i := 0; i < size; i++ {
 		heap.Push(pq, cups[i])
 	}
+
 	total := 0
 	var value int
 	for time > 0 {
@@ -68,40 +70,48 @@ Total: 76
 Total: 76
 */
 
-type MaxHeap []int
-
-func (pq MaxHeap) Len() int {
-	return len(pq)
+type Heap struct {
+	heap []interface{}
+	comp func(x interface{}, y interface{}) bool
 }
 
-func (pq MaxHeap) Less(i, j int) bool {
-	return pq[i] > pq[j]
+func NewHeap(comp func(x interface{}, y interface{}) bool) *Heap {
+	hp := new(Heap)
+	hp.comp = comp
+	return hp
 }
 
-func (pq MaxHeap) Swap(i, j int) {
-	pq[i], pq[j] = pq[j], pq[i]
+func (hp Heap) Len() int {
+	return len(hp.heap)
 }
 
-func (pq *MaxHeap) Push(x interface{}) {
-	*pq = append(*pq, x.(int))
+func (hp Heap) Less(i, j int) bool {
+	return hp.comp(hp.heap[i], hp.heap[j])
 }
 
-func (pq *MaxHeap) Pop() interface{} {
-	old := *pq
-	n := len(old)
-	value := old[n-1]
-	*pq = old[0 : pq.Len()-1]
+func (hp Heap) Swap(i, j int) {
+	hp.heap[i], hp.heap[j] = hp.heap[j], hp.heap[i]
+}
+
+func (hp *Heap) Push(x interface{}) {
+	hp.heap = append(hp.heap, x)
+}
+
+func (hp *Heap) Pop() interface{} {
+	n := len(hp.heap)
+	value := hp.heap[n-1]
+	hp.heap = hp.heap[0 : n-1]
 	return value
 }
 
-func (pq *MaxHeap) Print() {
-	fmt.Println(pq)
+func (hp Heap) Print() {
+	fmt.Println(hp.heap)
 }
 
-func (pq *MaxHeap) Empty() bool {
-	return (pq.Len() == 0)
+func (hp Heap) Empty() bool {
+	return len(hp.heap) == 0
 }
 
-func (pq *MaxHeap) Peek() interface{} {
-	return (*pq)[0]
+func (hp Heap) Peek() interface{} {
+	return hp.heap[0]
 }

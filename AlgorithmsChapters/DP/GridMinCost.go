@@ -3,14 +3,11 @@ package main
 import "fmt"
 
 func MinCost(cost [][]int, m int, n int) int {
-	if m == 0 && n == 0 {
-		return 0
+	if m == 0 || n == 0 {
+		return 99999
 	}
-	if m == 0 {
-		return cost[0][n-1] + MinCost(cost, 0, n-1)
-	}
-	if n == 0 {
-		return cost[m-1][0] + MinCost(cost, m-1, 0)
+	if m == 1 && n == 1{
+		return cost[0][0]
 	}
 	return cost[m-1][n-1] + min(MinCost(cost, m-1, n-1), MinCost(cost, m-1, n), MinCost(cost, m, n-1))
 }
