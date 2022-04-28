@@ -4,6 +4,7 @@ import (
 	"container/heap"
 	"fmt"
 	"math"
+	"strconv"
 )
 
 type Graph struct {
@@ -71,56 +72,74 @@ func (gph *Graph) Dijkstra(source int) {
 	}
 
 	dist[source] = 0
-	previous[source] = -1
+	previous[source] = source
 
 	type Item struct {
 		index    int
 		priority int
 	}
 
-	cmp := func(a, b interface{}) bool {
-		return a.(Item).priority > b.(Item).priority
+	cmp := func(a, b interface{}) bool { // Less function
+		return a.(Item).priority < b.(Item).priority
 	}
-
 	hp := NewHeap(cmp)
 	heap.Push(hp, Item{source, 0})
 
 	for hp.Len() != 0 {
-		source := heap.Pop(hp).(Item).index
+		curr := heap.Pop(hp).(Item).index
 
-		if visited[source] == true {
+		if visited[curr] == true {
 			continue
 		}
-		visited[source] = true
+		visited[curr] = true
 
 		for dest := 0; dest < gph.count; dest++ {
-			cost := gph.adj[source][dest]
+			cost := gph.adj[curr][dest]
 			if cost != 0 {
-				alt := cost + dist[source]
+				alt := cost + dist[curr]
 				if dist[dest] > alt && visited[dest] == false {
 					dist[dest] = alt
-					previous[dest] = source
+					previous[dest] = curr
 					heap.Push(hp, Item{dest, alt})
 				}
 			}
 		}
 	}
 
-	for i := 0; i < count; i++ {
-		if dist[i] == math.MaxInt32 {
-			fmt.Println(" node id ", i, "  prev ", previous[i], " distance : Unreachable")
-		} else {
-			fmt.Println(" node id ", i, "  prev ", previous[i], " distance : ", dist[i])
-		}
-	}
+	// Printing result.
+	gph.printPath(previous, dist, count, source)
 }
 
-func (gph *Graph) Prims() {
+func (gph *Graph) printPathUtil(previous []int, source int, dest int) string {
+	var path = "";
+	if (dest == source){
+		path += strconv.Itoa(source);
+	} else {
+		path += gph.printPathUtil(previous, source, previous[dest]);
+		path += ("->" + strconv.Itoa(dest));
+	}
+	return path;
+}
+
+func (gph *Graph) printPath(previous []int, dist []int, count int, source int) {
+	output := "Shortest Paths: ";
+	for i := 0; i < count; i++ {
+		if (dist[i] == 99999) {
+			output += ("(" + strconv.Itoa(source) + "->" + strconv.Itoa(i) + " @ Unreachable) ");
+		} else if (i != previous[i]) {
+			output += "(";
+			output += gph.printPathUtil(previous, source, i);
+			output += (" @ " + strconv.Itoa(dist[i]) + ") ");
+		}
+	}
+	fmt.Println(output);
+}
+
+func (gph *Graph) PrimsMST() {
 	count := gph.count
 	previous := make([]int, count)
 	dist := make([]int, count)
 	visited := make([]bool, count)
-	source := 0
 
 	for i := 0; i < gph.count; i++ {
 		previous[i] = -1
@@ -128,8 +147,9 @@ func (gph *Graph) Prims() {
 		visited[i] = false
 	}
 
+	source := 0
 	dist[source] = 0
-	previous[source] = -1
+	previous[source] = source
 
 	type Item struct {
 		index    int
@@ -137,7 +157,7 @@ func (gph *Graph) Prims() {
 	}
 
 	cmp := func(a, b interface{}) bool {
-		return a.(Item).priority > b.(Item).priority
+		return a.(Item).priority < b.(Item).priority
 	}
 
 	hp := NewHeap(cmp)
@@ -162,13 +182,20 @@ func (gph *Graph) Prims() {
 		}
 	}
 
+	// Printing result.
+	total := 0
+	output := "Edges are : "
 	for i := 0; i < count; i++ {
 		if dist[i] == math.MaxInt32 {
-			fmt.Println(" node id ", i, "  prev ", previous[i], " distance : Unreachable")
-		} else {
-			fmt.Println(" node id ", i, "  prev ", previous[i], " distance : ", dist[i])
-		}
+			output += "( " + strconv.Itoa(i) + ",  Unreachable)"
+		} else if (previous[i] != i) {
+			output += "( " + strconv.Itoa(previous[i]) + "->" + strconv.Itoa(i) + " @ " + strconv.Itoa(dist[i]) + ") " 
+			total += dist[i]
+		}   
 	}
+	fmt.Println(output)
+    fmt.Println("Total MST cost :", total)
+
 }
 
 func main2() {
@@ -187,31 +214,15 @@ func main2() {
 	gph.AddUndirectedEdge(6, 7, 1)
 	gph.AddUndirectedEdge(6, 8, 6)
 	gph.AddUndirectedEdge(7, 8, 7)
-	//gph.Print()
-	//gph.Dijkstra(1)
-	gph.Prims()
+	gph.Dijkstra(1)
+	gph.PrimsMST()
 }
 
 /*
- node id  0   prev  1  distance :  4
- node id  1   prev  -1  distance :  0
- node id  2   prev  1  distance :  8
- node id  3   prev  2  distance :  15
- node id  4   prev  5  distance :  22
- node id  5   prev  2  distance :  12
- node id  6   prev  7  distance :  12
- node id  7   prev  1  distance :  11
- node id  8   prev  2  distance :  10
+Shortest Paths: (1->0 @ 4) (1->2 @ 8) (1->2->3 @ 15) (1->2->5->4 @ 22) (1->2->5 @ 12) (1->7->6 @ 12) (1->7 @ 11) (1->2->8 @ 10) 
 
- node id  0   prev  -1  distance :  0
- node id  1   prev  0  distance :  4
- node id  2   prev  5  distance :  4
- node id  3   prev  2  distance :  7
- node id  4   prev  3  distance :  9
- node id  5   prev  6  distance :  2
- node id  6   prev  7  distance :  1
- node id  7   prev  0  distance :  8
- node id  8   prev  2  distance :  2
+Edges are : ( 0->1 @ 4) ( 5->2 @ 4) ( 2->3 @ 7) ( 3->4 @ 9) ( 6->5 @ 2) ( 7->6 @ 1) ( 0->7 @ 8) ( 2->8 @ 2) 
+Total MST cost : 37
 */
 
 func (gph *Graph) hamiltonianPath() bool {

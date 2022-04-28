@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"sort"
+	"strconv"
 )
 
 // Greedy
@@ -49,54 +50,92 @@ func minCoins2(coins []int, n int, val int) int {
 }
 
 func minCoinsBU(coins []int, n int, val int) int {
-	dp := make([]int, val+1)
-	for i := range dp {
-		dp[i] = math.MaxInt32
+	count := make([]int, val+1)
+	for i := range count {
+		count[i] = math.MaxInt32
 	}
-	dp[0] = 0
+	count[0] = 0
 	for i := 1; i <= val; i++ {
 		for j := 0; j < n; j++ {
 			if coins[j] <= i {
-				if dp[i-coins[j]] != math.MaxInt32 {
-					dp[i] = min(dp[i], dp[i-coins[j]]+1)
+				if count[i-coins[j]] != math.MaxInt32 {
+					count[i] = min(count[i], count[i-coins[j]]+1)
 				}
 			}
 		}
 	}
-	if dp[val] != math.MaxInt32 {
-		return dp[val]
+	if count[val] != math.MaxInt32 {
+		return count[val]
 	}
 	return -1
 }
 
-func MinCoinsTD(coins []int, n int, val int) int {
-	dp := make([]int, val+1)
-	for i := range dp {
-		dp[i] = math.MaxInt32
+func minCoinsBU2(coins []int, n int, val int) int {
+	count := make([]int, val+1)
+	cvalue := make([]int, val+1)
+	for i := range count {
+		count[i] = math.MaxInt32
 	}
-	return minCoinsTDUtil(dp, coins, n, val)
+	count[0] = 0
+	for i := 1; i <= val; i++ {
+		for j := 0; j < n; j++ {
+			if coins[j] <= i {
+				if count[i-coins[j]] != math.MaxInt32 {
+					count[i] = min(count[i], count[i-coins[j]]+1)
+					cvalue[i] = coins[j];
+				}
+			}
+		}
+	}
+	if count[val] == math.MaxInt32 {
+		return -1
+	}
+	
+	printCoins(cvalue, val)
+	return count[val]
 }
 
-func minCoinsTDUtil(dp []int, coins []int, n int, val int) int {
+func printCoinsUtil(cvalue []int, val int) string {
+	if (val > 0) {
+		ret := printCoinsUtil(cvalue, val - cvalue[val]);
+		return ret + strconv.Itoa(cvalue[val]) + " ";
+	}
+	return "";
+}
+
+func printCoins(cvalue []int, val int) {
+	ret := printCoinsUtil(cvalue, val);
+	fmt.Println("Coins are :", ret);
+}
+
+func MinCoinsTD(coins []int, n int, val int) int {
+	count := make([]int, val+1)
+	for i := range count {
+		count[i] = math.MaxInt32
+	}
+	return minCoinsTDUtil(count, coins, n, val)
+}
+
+func minCoinsTDUtil(count []int, coins []int, n int, val int) int {
 	// Base Case
 	if val == 0 {
 		return 0
 	}
-	if dp[val] != math.MaxInt32 {
-		return dp[val]
+	if count[val] != math.MaxInt32 {
+		return count[val]
 	}
 
 	// Recursion
 	for i := 0; i < n; i++ {
 		// check validity of a sub-problem
 		if coins[i] <= val {
-			subCount := minCoinsTDUtil(dp, coins, n, val-coins[i])
+			subCount := minCoinsTDUtil(count, coins, n, val-coins[i])
 			if subCount != math.MaxInt32 {
-				dp[val] = min(dp[val], subCount+1)
+				count[val] = min(count[val], subCount+1)
 			}
 		}
 	}
-	return dp[val]
+	return count[val]
 }
 
 func min(a, b int) int {
@@ -114,15 +153,16 @@ func main() {
 		value := 15
 	*/
 	n := len(coins)
-	fmt.Println("Count is:", minCoins(coins, n, value))
-	fmt.Println("Count is:", minCoins2(coins, n, value))
-	fmt.Println("Count is:", minCoinsBU(coins, n, value))
-	fmt.Println("Count is:", MinCoinsTD(coins, n, value))
+	fmt.Println("Count is :", minCoins(coins, n, value))
+	fmt.Println("Count is :", minCoins2(coins, n, value))
+	fmt.Println("Count is :", minCoinsBU(coins, n, value))
+	fmt.Println("Count is :", minCoinsBU2(coins, n, value))
+	fmt.Println("Count is :", MinCoinsTD(coins, n, value))
 }
 
 /*
-Count is: -1
-Count is: 3
-Count is: 3
-Count is: 3
+Count is : -1
+Count is : 3
+Count is : 3
+Count is : 3
 */

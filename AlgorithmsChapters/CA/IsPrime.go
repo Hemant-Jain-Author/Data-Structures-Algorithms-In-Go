@@ -18,16 +18,11 @@ func IsPrime(n int) (bool) {
 }
 
 func main() {
-	for i := 5; i <= 10; i++ {
-		fmt.Println(i, IsPrime(i))
-	}
+	fmt.Println(7, IsPrime(7))
+	fmt.Println(8, IsPrime(8))
 }
 
 /*
-5 true
-6 false
 7 true
 8 false
-9 false
-10 false
 */

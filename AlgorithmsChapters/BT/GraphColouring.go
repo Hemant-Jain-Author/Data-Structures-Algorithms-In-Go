@@ -94,6 +94,7 @@ func main() {
 	if !GraphColouring2(graph, V, m) {
 		fmt.Println("Solution does not exist")
 	}
+	
 	if !GraphColouring(graph, V, m) {
 		fmt.Println("Solution does not exist")
 	}

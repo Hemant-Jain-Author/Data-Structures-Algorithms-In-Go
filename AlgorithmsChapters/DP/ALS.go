@@ -75,13 +75,13 @@ func main() {
 	e := []int{2, 4}
 	x := []int{3, 2}
 	n := 6
-	fmt.Println(FastestWayBU2(a, t, e, x, n))
-	fmt.Println(FastestWayBU(a, t, e, x, n))
-	fmt.Println(FastestWayTD(a, t, e, x, n))
+	fmt.Println("FastestWay :" , FastestWayBU2(a, t, e, x, n))
+	fmt.Println("FastestWay :" , FastestWayBU(a, t, e, x, n))
+	fmt.Println("FastestWay :" , FastestWayTD(a, t, e, x, n))
 }
 
 /*
-59
-59
-59
+FastestWay : 59
+FastestWay : 59
+FastestWay : 59
 */

@@ -40,11 +40,11 @@ func MaxRobbery2(house []int) int {
 
 func main() {
 	arr := []int{10, 12, 9, 23, 25, 55, 49, 70}
-	fmt.Println("Total cash: ", MaxRobbery(arr))
-	fmt.Println("Total cash: ", MaxRobbery2(arr))
+	fmt.Println("Total cash :", MaxRobbery(arr))
+	fmt.Println("Total cash :", MaxRobbery2(arr))
 }
 
 /*
-Total cash: 160
-Total cash: 160
+Total cash : 160
+Total cash : 160
 */

@@ -3,43 +3,40 @@ package main
 import "fmt"
 
 func Fibonacci(n int) int {
-	if n <= 2 {
-		return n - 1
+	if n < 2 {
+		return n	
 	}
 	return Fibonacci(n-1) + Fibonacci(n-2)
 }
-func FibonacciBU(n int) int {
-	if n <= 2 {
-		return n - 1
+
+func FibonacciBU2(n int) int {
+	if n < 2 {
+		return n
 	}
 	first := 0
 	second := 1
 	temp := 0
-	for i := 2; i < n; i++ {
+	for i := 2; i <= n; i++ {
 		temp = first + second
 		first = second
 		second = temp
 	}
 	return temp
 }
-func FibonacciSeries(n int) {
-	for i := 1; i <= n; i++ {
-		fmt.Print(Fibonacci(i), " ")
+
+func FibonacciBU(n int) int {
+	if n < 2 {
+		return n
 	}
-}
-func FibonacciSeriesBU(n int) {
-	if n < 1 {
-		return
-	}
-	dp := make([]int, n)
+	dp := make([]int, n+1)
 	dp[0] = 0
 	dp[1] = 1
-	for i := 2; i < n; i++ {
+	for i := 2; i <= n; i++ {
 		dp[i] = dp[i-2] + dp[i-1]
 	}
-	fmt.Print(dp)
+	return dp[n]
 }
-func fibonacciSeriesTDUtil(n int, dp []int) int {
+func fibonacciTDUtil(n int, dp []int) int {
 	if n <= 1 {
 		dp[n] = n
 		return n
@@ -47,29 +44,20 @@ func fibonacciSeriesTDUtil(n int, dp []int) int {
 	if dp[n] != 0 {
 		return dp[n]
 	}
-	dp[n] = fibonacciSeriesTDUtil(n-1, dp) + fibonacciSeriesTDUtil(n-2, dp)
+	dp[n] = fibonacciTDUtil(n-1, dp) + fibonacciTDUtil(n-2, dp)
 	return dp[n]
 }
 
-func FibonacciSeriesTD(n int) {
-	if n < 1 {
-		return
-	}
-	dp := make([]int, n)
-	fibonacciSeriesTDUtil(n-1, dp)
-	fmt.Print(dp)
+func FibonacciTD(n int) int {
+	dp := make([]int, n+1)
+	fibonacciTDUtil(n, dp)
+	return dp[n]
 }
 func main() {
-	for i := 6; i < 7; i++ {
-		FibonacciSeries(i)
-		fmt.Println()
-		FibonacciSeriesBU(i)
-		fmt.Println()
-		FibonacciSeriesTD(i)
-		fmt.Println()
-	}
 	fmt.Println(Fibonacci(6))
 	fmt.Println(FibonacciBU(6))
+	fmt.Println(FibonacciBU2(6))
+	fmt.Println(FibonacciTD(6))
 }
 
 /*

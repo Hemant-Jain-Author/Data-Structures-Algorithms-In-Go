@@ -97,12 +97,7 @@ func stripMin(q []*Point, n int, d float64) float64 {
 }
 
 func main() {
-	arr := [][]int{
-		{648, 896},
-		{269, 879},
-		{250, 922},
-		{453, 347},
-		{213, 17}}
+	arr := [][]int{{648, 896},{269, 879},{250, 922},{453, 347},{213, 17}}
 	fmt.Println("Smallest distance is:", ClosestPairBF(arr))
 	fmt.Println("Smallest distance is:", ClosestPairDC(arr))
 }

@@ -4,12 +4,15 @@ import (
 	"container/heap"
 	"fmt"
 	"math"
+	"sort"
+	"strconv"
 )
 
 type Edge struct {
-	destination int
-	cost        int
-	next        *Edge
+	src int
+	dest int
+	cost int
+	next *Edge
 }
 
 type Graph struct {
@@ -25,7 +28,7 @@ func NewGraph(cnt int) (gph *Graph) {
 }
 
 func (gph *Graph) AddDirectedEdge(source int, destination int, cost int) {
-	edge := &Edge{destination, cost, gph.Edges[source]}
+	edge := &Edge{source, destination, cost, gph.Edges[source]}
 	gph.Edges[source] = edge
 }
 
@@ -47,7 +50,7 @@ func (gph *Graph) Print() {
 		ad := gph.Edges[i]
 		fmt.Print("Vertex ", i, " is connected to : ")
 		for ad != nil {
-			fmt.Print(ad.destination, "(cost:", ad.cost, ") ")
+			fmt.Print(ad.dest, "(cost:", ad.cost, ") ")
 			ad = ad.next
 		}
 		fmt.Println()
@@ -85,9 +88,9 @@ func (gph *Graph) DFSStack(source int, target int) bool {
 		path = append(path, curr)
 		head := gph.Edges[curr]
 		for head != nil {
-			if visited[head.destination] == false {
-				visited[head.destination] = true
-				stk.Push(head.destination)
+			if visited[head.dest] == false {
+				visited[head.dest] = true
+				stk.Push(head.dest)
 			}
 			head = head.next
 		}
@@ -111,8 +114,8 @@ func (gph *Graph) DFSUtil(curr int, visited []bool) {
 	head := gph.Edges[curr]
 	//fmt.Print(curr, " ")
 	for head != nil {
-		if visited[head.destination] == false {
-			gph.DFSUtil(head.destination, visited)
+		if visited[head.dest] == false {
+			gph.DFSUtil(head.dest, visited)
 		}
 		head = head.next
 	}
@@ -123,8 +126,8 @@ func (gph *Graph) DFSUtil2(curr int, visited []bool, stk *Stack) {
 	head := gph.Edges[curr]
 
 	for head != nil {
-		if visited[head.destination] == false {
-			gph.DFSUtil2(head.destination, visited, stk)
+		if visited[head.dest] == false {
+			gph.DFSUtil2(head.dest, visited, stk)
 		}
 		head = head.next
 	}
@@ -145,9 +148,9 @@ func (gph *Graph) BFS(source int, target int) bool {
 
 		head := gph.Edges[curr]
 		for head != nil {
-			if visited[head.destination] == false {
-				visited[head.destination] = true
-				que.Add(head.destination)
+			if visited[head.dest] == false {
+				visited[head.dest] = true
+				que.Add(head.dest)
 			}
 			head = head.next
 		}
@@ -177,7 +180,7 @@ func main2() {
 }
 
 /*
-FS Path is :  [0 3 6 7 5 4 2 1]
+DFS Path is :  [0 3 6 7 5 4 2 1]
 Path between 0 & 6 :  true
 DFS Path is : 0 1 4 7 5 2 6 3
 Path between 0 & 6 :  true
@@ -206,9 +209,9 @@ func (gph *Graph) TopologicalSort() {
 func (gph *Graph) TopologicalSortDFS(index int, visited []bool, stk *Stack) {
 	head := gph.Edges[index]
 	for head != nil {
-		if visited[head.destination] == false {
-			visited[head.destination] = true
-			gph.TopologicalSortDFS(head.destination, visited, stk)
+		if visited[head.dest] == false {
+			visited[head.dest] = true
+			gph.TopologicalSortDFS(head.dest, visited, stk)
 		}
 		head = head.next
 	}
@@ -249,10 +252,10 @@ func (gph *Graph) countAllPathDFS(visited []bool, source int, dest int) int {
 	head := gph.Edges[source]
 
 	for head != nil {
-		if visited[head.destination] == false {
-			count += gph.countAllPathDFS(visited, head.destination, dest)
+		if visited[head.dest] == false {
+			count += gph.countAllPathDFS(visited, head.dest, dest)
 		}
-		visited[head.destination] = false
+		visited[head.dest] = false
 		head = head.next
 	}
 	return count
@@ -281,8 +284,8 @@ func (gph *Graph) printAllPathUtil(source int, dest int, visited []bool, path *S
 	visited[source] = true
 	head := gph.Edges[source]
 	for head != nil {
-		if visited[head.destination] == false {
-			gph.printAllPathUtil(head.destination, dest, visited, path)
+		if visited[head.dest] == false {
+			gph.printAllPathUtil(head.dest, dest, visited, path)
 		}
 		head = head.next
 	}
@@ -350,8 +353,8 @@ func (gph *Graph) transitiveClosureUtil(source int, dest int, tc *[10][10]int) {
 	tc[source][dest] = 1
 	head := gph.Edges[dest]
 	for head != nil {
-		if tc[source][head.destination] == 0 {
-			gph.transitiveClosureUtil(source, head.destination, tc)
+		if tc[source][head.dest] == 0 {
+			gph.transitiveClosureUtil(source, head.dest, tc)
 		}
 		head = head.next
 	}
@@ -408,10 +411,10 @@ func (gph *Graph) bfsLevelNode(source int) {
 		head := gph.Edges[curr]
 		fmt.Println(curr, " - ", depth)
 		for head != nil {
-			if visited[head.destination] == false {
-				visited[head.destination] = true
-				que.Add(head.destination)
-				level[head.destination] = depth + 1
+			if visited[head.dest] == false {
+				visited[head.dest] = true
+				que.Add(head.dest)
+				level[head.dest] = depth + 1
 			}
 			head = head.next
 		}
@@ -432,13 +435,13 @@ func (gph *Graph) bfsDistance(source int, dest int) int {
 		depth := level[curr]
 		head := gph.Edges[curr]
 		for head != nil {
-			if head.destination == dest {
+			if head.dest == dest {
 				return depth + 1
 			}
-			if visited[head.destination] == false {
-				visited[head.destination] = true
-				que.Add(head.destination)
-				level[head.destination] = depth + 1
+			if visited[head.dest] == false {
+				visited[head.dest] = true
+				que.Add(head.dest)
+				level[head.dest] = depth + 1
 			}
 			head = head.next
 		}
@@ -458,7 +461,7 @@ func main7() {
 	gph.AddUndirectedEdge(4, 5, 1)
 	gph.AddUndirectedEdge(4, 6, 1)
 	gph.bfsLevelNode(1)
-	fmt.Println(gph.bfsDistance(1, 6))
+	fmt.Println("bfsDistance :",gph.bfsDistance(1, 6))
 }
 
 /*
@@ -471,7 +474,7 @@ Node  - Level
 4  -  2
 6  -  3
 3  -  3
-3
+bfsDistance : 3
 */
 
 func (gph *Graph) isCyclePresentUndirectedDFS(index int, parentIndex int, visited []bool) bool {
@@ -479,7 +482,7 @@ func (gph *Graph) isCyclePresentUndirectedDFS(index int, parentIndex int, visite
 	var dest int
 	head := gph.Edges[index]
 	for head != nil {
-		dest = head.destination
+		dest = head.dest
 		if visited[dest] == false {
 			if gph.isCyclePresentUndirectedDFS(dest, index, visited) {
 				return true
@@ -513,12 +516,13 @@ func main8() {
 	gph.AddUndirectedEdge(3, 4, 1)
 	gph.AddUndirectedEdge(4, 2, 1)
 	gph.AddUndirectedEdge(2, 5, 1)
-	// gph.AddUndirectedEdge(4, 1, 1)
+	// 
 	// gph.AddUndirectedEdge(3, 5, 1)
-
 	fmt.Println(gph.isCyclePresentUndirected())
 	fmt.Println("IsConnectedUndirected : ", gph.isConnectedUndirected())
-
+	gph.AddUndirectedEdge(4, 1, 1)
+	fmt.Println(gph.isCyclePresentUndirected())
+	fmt.Println("IsConnectedUndirected : ", gph.isConnectedUndirected())
 }
 
 /*
@@ -535,7 +539,7 @@ func (gph *Graph) isCyclePresentDFS(index int, visited []int, marked []int) bool
 	marked[index] = 1
 	head := gph.Edges[index]
 	for head != nil {
-		dest := head.destination
+		dest := head.dest
 		if marked[dest] == 1 {
 			return true
 		}
@@ -570,7 +574,7 @@ func (gph *Graph) isCyclePresentDFSColor(index int, visited []int) bool {
 	var dest int
 	head := gph.Edges[index]
 	for head != nil {
-		dest = head.destination
+		dest = head.dest
 		if visited[dest] == 1 { // "Grey":
 			return true
 		}
@@ -623,7 +627,7 @@ func (gph *Graph) transposeGraph() *Graph {
 	for i := 0; i < count; i++ {
 		head := gph.Edges[i]
 		for head != nil {
-			dest := head.destination
+			dest := head.dest
 			g.AddDirectedEdge(dest, i, head.cost)
 			head = head.next
 		}
@@ -670,17 +674,6 @@ func (gph *Graph) isConnectedUndirected() bool {
 	return true
 }
 
-/*
-* Kosaraju Algorithm
-*
-* Kosaraju's Algorithm to find strongly connected directed graph based on DFS :
-* 1) Create a visited array of size V, and Initialize all count in visited array as 0.
-* 2) Choose any vertex and perform a DFS traversal of graph. For all visited count mark them visited as 1.
-* 3) If DFS traversal does not mark all count as 1, then return 0.
-* 4) Find transpose or reverse of graph
-* 5) Repeat step 1, 2 and 3 for the reversed graph.
-* 6) If DFS traversal mark all the count as 1, then return 1.
- */
 func (gph *Graph) isStronglyConnected() bool {
 	count := gph.count
 	visited := make([]bool, count)
@@ -711,12 +704,13 @@ func main11() {
 	gph.AddDirectedEdge(3, 0, 1)
 	gph.AddDirectedEdge(2, 4, 1)
 	gph.AddDirectedEdge(4, 2, 1)
-	fmt.Println(" IsStronglyConnected:: ", gph.isStronglyConnected())
+	fmt.Println("IsStronglyConnected :", gph.isStronglyConnected())
 }
 
 /*
- IsStronglyConnected::  true
+IsStronglyConnected : true
 */
+
 func (gph *Graph) stronglyConnectedComponent() {
 	count := gph.count
 	visited := make([]bool, count)
@@ -774,274 +768,6 @@ func (gph *Graph) IsConnected() bool {
 	return true
 }
 
-func (gph *Graph) Dijkstra(source int) {
-	count := gph.count
-	previous := make([]int, count)
-	dist := make([]int, count)
-	visited := make([]bool, count)
-
-	type Item struct {
-		index    int
-		priority int
-	}
-	cmp := func(a, b interface{}) bool {
-		return a.(Item).priority > b.(Item).priority
-	}
-	hp := NewHeap(cmp)
-
-	for i := 0; i < count; i++ {
-		previous[i] = -1
-		dist[i] = Infinite
-		visited[i] = false
-	}
-
-	dist[source] = 0
-	previous[source] = source
-	heap.Push(hp, Item{source, 0})
-
-	for hp.Len() != 0 {
-		curr := heap.Pop(hp).(Item).index // Pop from PQ
-		if visited[curr] == true {
-			continue
-		}
-		visited[curr] = true
-
-		head := gph.Edges[curr]
-		for head != nil {
-			alt := head.cost + dist[curr]
-			if alt < dist[head.destination] && (visited[head.destination] == false) {
-				heap.Push(hp, Item{head.destination, alt})
-				dist[head.destination] = alt
-				previous[head.destination] = curr
-			}
-			head = head.next
-		}
-	}
-	// Printing result.
-	for i := 0; i < count; i++ {
-		if dist[i] == Infinite {
-			fmt.Println(" edge id ", i, "  prev ", previous[i], " distance : Unreachable")
-		} else {
-			fmt.Println(" edge id ", i, "  prev ", previous[i], " distance : ", dist[i])
-		}
-	}
-}
-
-func (gph *Graph) Prims() {
-	count := gph.count
-	previous := make([]int, count)
-	dist := make([]int, count)
-	visited := make([]bool, count)
-
-	type Item struct {
-		index    int
-		priority int
-	}
-
-	cmp := func(a, b interface{}) bool {
-		return a.(Item).priority > b.(Item).priority
-	}
-
-	hp := NewHeap(cmp)
-	source := 0
-
-	for i := 0; i < count; i++ {
-		previous[i] = -1
-		dist[i] = Infinite
-		visited[i] = false
-	}
-
-	dist[source] = 0
-	previous[source] = source
-	heap.Push(hp, Item{source, 0})
-
-	for hp.Len() != 0 {
-		curr := heap.Pop(hp).(Item).index // Pop from PQ
-
-		if visited[curr] == true {
-			continue
-		}
-		visited[curr] = true
-
-		head := gph.Edges[curr]
-		for head != nil {
-			alt := head.cost
-			if alt < dist[head.destination] && (visited[head.destination] == false) {
-				heap.Push(hp, Item{head.destination, alt})
-				dist[head.destination] = alt
-				previous[head.destination] = curr
-			}
-			head = head.next
-		}
-	}
-	// Printing result.
-	for i := 0; i < count; i++ {
-		if dist[i] == Infinite {
-			fmt.Println(" edge id ", i, "  prev ", previous[i], " distance : Unreachable")
-		} else {
-			fmt.Println(" edge id ", i, "  prev ", previous[i], " distance : ", dist[i])
-		}
-	}
-}
-
-//Testing code
-func main13() {
-	gph := NewGraph(9)
-	gph.AddUndirectedEdge(0, 1, 4)
-	gph.AddUndirectedEdge(0, 7, 8)
-	gph.AddUndirectedEdge(1, 2, 8)
-	gph.AddUndirectedEdge(1, 7, 11)
-	gph.AddUndirectedEdge(2, 3, 7)
-	gph.AddUndirectedEdge(2, 8, 2)
-	gph.AddUndirectedEdge(2, 5, 4)
-	gph.AddUndirectedEdge(3, 4, 9)
-	gph.AddUndirectedEdge(3, 5, 14)
-	gph.AddUndirectedEdge(4, 5, 10)
-	gph.AddUndirectedEdge(5, 6, 2)
-	gph.AddUndirectedEdge(6, 7, 1)
-	gph.AddUndirectedEdge(6, 8, 6)
-	gph.AddUndirectedEdge(7, 8, 7)
-	//gph.Print()
-	gph.Dijkstra(1)
-	gph.Prims()
-}
-
-/*
-  edge id  0   prev  1  distance :  4
- edge id  1   prev  1  distance :  0
- edge id  2   prev  1  distance :  8
- edge id  3   prev  2  distance :  15
- edge id  4   prev  5  distance :  22
- edge id  5   prev  2  distance :  12
- edge id  6   prev  7  distance :  12
- edge id  7   prev  1  distance :  11
- edge id  8   prev  2  distance :  10
-
-
- edge id  0   prev  -1  distance :  0
- edge id  1   prev  0  distance :  4
- edge id  2   prev  5  distance :  4
- edge id  3   prev  2  distance :  7
- edge id  4   prev  3  distance :  9
- edge id  5   prev  6  distance :  2
- edge id  6   prev  7  distance :  1
- edge id  7   prev  0  distance :  8
- edge id  8   prev  2  distance :  2
-
-*/
-
-func (gph *Graph) ShortestPath(source int) {
-	var curr int
-	count := gph.count
-	distance := make([]int, count)
-	path := make([]int, count)
-	que := new(Queue)
-	for i := 0; i < count; i++ {
-		distance[i] = -1
-	}
-	que.Add(source)
-	distance[source] = 0
-	path[source] = source
-	for que.Len() != 0 {
-		curr = que.Remove().(int)
-		head := gph.Edges[curr]
-		for head != nil {
-			if distance[head.destination] == -1 {
-				distance[head.destination] = distance[curr] + 1
-				path[head.destination] = curr
-				que.Add(head.destination)
-			}
-			head = head.next
-		}
-	}
-	for i := 0; i < count; i++ {
-		fmt.Println(path[i], " to ", i, " weight ", distance[i])
-	}
-}
-
-const Infinite = math.MaxInt32
-
-func (gph *Graph) BellmanFordShortestPath(source int) {
-	count := gph.count
-	distance := make([]int, count)
-	path := make([]int, count)
-
-	for i := 0; i < count; i++ {
-		distance[i] = Infinite
-	}
-	distance[source] = 0
-	path[source] = source
-	for i := 0; i < count-1; i++ {
-		for j := 0; j < count; j++ {
-			head := gph.Edges[j]
-			for head != nil {
-				newDistance := distance[j] + head.cost
-				if distance[head.destination] > newDistance {
-					distance[head.destination] = newDistance
-					path[head.destination] = j
-				}
-				head = head.next
-			}
-		}
-	}
-	for i := 0; i < count; i++ {
-		fmt.Println(path[i], " to ", i, " weight ", distance[i])
-	}
-}
-
-//Testing code
-func main14() {
-	gph := NewGraph(9)
-	gph.AddUndirectedEdge(0, 1, 4)
-	gph.AddUndirectedEdge(0, 7, 8)
-	gph.AddUndirectedEdge(1, 2, 8)
-	gph.AddUndirectedEdge(1, 7, 11)
-	gph.AddUndirectedEdge(2, 3, 7)
-	gph.AddUndirectedEdge(2, 8, 2)
-	gph.AddUndirectedEdge(2, 5, 4)
-	gph.AddUndirectedEdge(3, 4, 9)
-	gph.AddUndirectedEdge(3, 5, 14)
-	gph.AddUndirectedEdge(4, 5, 10)
-	gph.AddUndirectedEdge(5, 6, 2)
-	gph.AddUndirectedEdge(6, 7, 1)
-	gph.AddUndirectedEdge(6, 8, 6)
-	gph.AddUndirectedEdge(7, 8, 7)
-	//gph.Print()
-	gph.ShortestPath(0)
-}
-
-/*
-0  to  0  weight  0
-0  to  1  weight  1
-1  to  2  weight  2
-2  to  3  weight  3
-5  to  4  weight  4
-6  to  5  weight  3
-7  to  6  weight  2
-0  to  7  weight  1
-7  to  8  weight  2
-*/
-
-//Testing code
-func main15() {
-	gph := NewGraph(5)
-	gph.AddDirectedEdge(0, 1, 3)
-	gph.AddDirectedEdge(0, 4, 2)
-	gph.AddDirectedEdge(1, 2, 1)
-	gph.AddDirectedEdge(2, 3, 1)
-	gph.AddDirectedEdge(4, 1, -2)
-	gph.AddDirectedEdge(4, 3, 1)
-	gph.BellmanFordShortestPath(0)
-}
-
-/*
-0  to  0  weight  0
-4  to  1  weight  0
-1  to  2  weight  1
-2  to  3  weight  2
-0  to  4  weight  2
-*/
-
 func heightTreeParentArr(arr []int) int {
 	count := len(arr)
 	heightArr := make([]int, count)
@@ -1068,10 +794,10 @@ func heightTreeParentArr(arr []int) int {
 		}
 		head := gph.Edges[curr]
 		for head != nil {
-			if visited[head.destination] == false {
-				visited[head.destination] = true
-				que.Add(head.destination)
-				heightArr[head.destination] = height + 1
+			if visited[head.dest] == false {
+				visited[head.dest] = true
+				que.Add(head.dest)
+				heightArr[head.dest] = height + 1
 			}
 			head = head.next
 		}
@@ -1100,7 +826,7 @@ func heightTreeParentArr2(arr []int) int {
 	return maxHeight
 }
 
-func main16() {
+func main13() {
 	parentArray := []int{-1, 0, 1, 2, 3}
 	fmt.Println(heightTreeParentArr(parentArray))
 	fmt.Println(heightTreeParentArr2(parentArray))
@@ -1152,7 +878,7 @@ func (gph *Graph) isEulerian() int {
 			head := gph.Edges[i]
 			for head != nil {
 				outDegree[i] += 1
-				inDegree[head.destination] += 1
+				inDegree[head.dest] += 1
 				head = head.next
 			}
 		}
@@ -1222,7 +948,7 @@ func (gph *Graph) isEulerianCycle() bool {
 		head := gph.Edges[i]
 		for head != nil {
 			outDegree[i] += 1
-			inDegree[head.destination] += 1
+			inDegree[head.dest] += 1
 			head = head.next
 		}
 	}
@@ -1235,7 +961,7 @@ func (gph *Graph) isEulerianCycle() bool {
 }
 
 //Testing code
-func main17() {
+func main14() {
 	gph := NewGraph(5)
 	gph.AddDirectedEdge(1, 0, 1)
 	gph.AddDirectedEdge(0, 2, 1)
@@ -1250,7 +976,7 @@ graph is Semi-Eulerian
 */
 
 //Testing code
-func main18() {
+func main15() {
 	gph := NewGraph(5)
 	gph.AddDirectedEdge(0, 1, 1)
 	gph.AddDirectedEdge(1, 2, 1)
@@ -1264,7 +990,452 @@ func main18() {
 /*
 true
 */
+
+func (gph *Graph) ShortestPath(source int) {
+	var curr int
+	count := gph.count
+	distance := make([]int, count)
+	path := make([]int, count)
+	que := new(Queue)
+	for i := 0; i < count; i++ {
+		distance[i] = -1
+	}
+	que.Add(source)
+	distance[source] = 0
+	path[source] = source
+	for que.Len() != 0 {
+		curr = que.Remove().(int)
+		head := gph.Edges[curr]
+		for head != nil {
+			if distance[head.dest] == -1 {
+				distance[head.dest] = distance[curr] + 1
+				path[head.dest] = curr
+				que.Add(head.dest)
+			}
+			head = head.next
+		}
+	}
+
+	gph.printPath(path, distance, count, source)
+}
+
+func (gph *Graph) printPathUtil(previous []int, source int, dest int) string {
+	var path = "";
+	if (dest == source){
+		path += strconv.Itoa(source);
+	} else {
+		path += gph.printPathUtil(previous, source, previous[dest]);
+		path += ("->" + strconv.Itoa(dest));
+	}
+	return path;
+}
+
+func (gph *Graph) printPath(previous []int, dist []int, count int, source int) {
+	output := "Shortest Paths: ";
+	for i := 0; i < count; i++ {
+		if (dist[i] == 99999) {
+			output += ("(" + strconv.Itoa(source) + "->" + strconv.Itoa(i) + " @ Unreachable) ");
+		} else if (i != previous[i]) {
+			output += "(";
+			output += gph.printPathUtil(previous, source, i);
+			output += (" @ " + strconv.Itoa(dist[i]) + ") ");
+		}
+	}
+	fmt.Println(output);
+}
+
+
+//Testing code
+func main16() {
+	gph := NewGraph(9)
+	gph.AddUndirectedEdgeUnweighted(0, 1)
+	gph.AddUndirectedEdgeUnweighted(0, 7)
+	gph.AddUndirectedEdgeUnweighted(1, 2)
+	gph.AddUndirectedEdgeUnweighted(1, 7)
+	gph.AddUndirectedEdgeUnweighted(2, 3)
+	gph.AddUndirectedEdgeUnweighted(2, 8)
+	gph.AddUndirectedEdgeUnweighted(2, 5)
+	gph.AddUndirectedEdgeUnweighted(3, 4)
+	gph.AddUndirectedEdgeUnweighted(3, 5)
+	gph.AddUndirectedEdgeUnweighted(4, 5)
+	gph.AddUndirectedEdgeUnweighted(5, 6)
+	gph.AddUndirectedEdgeUnweighted(6, 7)
+	gph.AddUndirectedEdgeUnweighted(6, 8)
+	gph.AddUndirectedEdgeUnweighted(7, 8)
+	gph.ShortestPath(0)
+}
+/*
+Shortest Paths: (0->1 @ 1) (0->1->2 @ 2) (0->1->2->3 @ 3) (0->7->6->5->4 @ 4) (0->7->6->5 @ 3) (0->7->6 @ 2) (0->7 @ 1) (0->7->8 @ 2) 
+*/
+
+func (gph *Graph) Dijkstra(source int) {
+	count := gph.count
+	previous := make([]int, count)
+	dist := make([]int, count)
+	visited := make([]bool, count)
+
+	for i := 0; i < count; i++ {
+		previous[i] = -1
+		dist[i] = math.MaxInt32
+		visited[i] = false
+	}
+
+	dist[source] = 0
+	previous[source] = source
+
+	type Item struct {
+		index    int
+		priority int
+	}
+	cmp := func(a, b interface{}) bool { // Less function
+		return a.(Item).priority < b.(Item).priority
+	}
+	hp := NewHeap(cmp)
+	heap.Push(hp, Item{source, 0})
+
+	for hp.Len() != 0 {
+		curr := heap.Pop(hp).(Item).index // Pop from PQ
+		if visited[curr] == true {
+			continue
+		}
+		visited[curr] = true
+
+		head := gph.Edges[curr]
+		for head != nil {
+			alt := head.cost + dist[curr]
+			if alt < dist[head.dest] && (visited[head.dest] == false) {
+				heap.Push(hp, Item{head.dest, alt})
+				dist[head.dest] = alt
+				previous[head.dest] = curr
+			}
+			head = head.next
+		}
+	}
+	// Printing result.
+	gph.printPath(previous, dist, count, source)
+}
+
+//Testing code
+func main17() {
+	gph := NewGraph(9)
+	gph.AddUndirectedEdge(0, 1, 4)
+	gph.AddUndirectedEdge(0, 7, 8)
+	gph.AddUndirectedEdge(1, 2, 8)
+	gph.AddUndirectedEdge(1, 7, 11)
+	gph.AddUndirectedEdge(2, 3, 7)
+	gph.AddUndirectedEdge(2, 8, 2)
+	gph.AddUndirectedEdge(2, 5, 4)
+	gph.AddUndirectedEdge(3, 4, 9)
+	gph.AddUndirectedEdge(3, 5, 14)
+	gph.AddUndirectedEdge(4, 5, 10)
+	gph.AddUndirectedEdge(5, 6, 2)
+	gph.AddUndirectedEdge(6, 7, 1)
+	gph.AddUndirectedEdge(6, 8, 6)
+	gph.AddUndirectedEdge(7, 8, 7)
+	gph.Dijkstra(0)
+}
+/*
+Shortest Paths: (0->1 @ 4) (0->1->2 @ 12) (0->1->2->3 @ 19) (0->7->6->5->4 @ 21) (0->7->6->5 @ 11) (0->7->6 @ 9) (0->7 @ 8) (0->1->2->8 @ 14) 
+*/
+
+func (gph *Graph) BellmanFordShortestPath(source int) {
+	count := gph.count
+	distance := make([]int, count)
+	path := make([]int, count)
+
+	for i := 0; i < count; i++ {
+		distance[i] = math.MaxInt32
+	}
+	distance[source] = 0
+	path[source] = source
+	for i := 0; i < count-1; i++ {
+		for j := 0; j < count; j++ {
+			head := gph.Edges[j]
+			for head != nil {
+				newDistance := distance[j] + head.cost
+				if distance[head.dest] > newDistance {
+					distance[head.dest] = newDistance
+					path[head.dest] = j
+				}
+				head = head.next
+			}
+		}
+	}
+	gph.printPath(path, distance, count, source)
+}
+
+//Testing code
+func main18() {
+	gph := NewGraph(5)
+	gph.AddDirectedEdge(0, 1, 3)
+	gph.AddDirectedEdge(0, 4, 2)
+	gph.AddDirectedEdge(1, 2, 1)
+	gph.AddDirectedEdge(2, 3, 1)
+	gph.AddDirectedEdge(4, 1, -2)
+	gph.AddDirectedEdge(4, 3, 1)
+	gph.BellmanFordShortestPath(0)
+}
+
+/*
+Shortest Paths: (0->4->1 @ 0) (0->4->1->2 @ 1) (0->4->1->2->3 @ 2) (0->4 @ 2) 
+
+*/
+
+func (gph *Graph) PrimsMST() {
+	count := gph.count
+	previous := make([]int, count)
+	dist := make([]int, count)
+	visited := make([]bool, count)
+	for i := 0; i < count; i++ {
+		previous[i] = -1
+		dist[i] = math.MaxInt32
+		visited[i] = false
+	}
+
+	source := 0
+	dist[source] = 0
+	previous[source] = source
+	
+	type Item struct {
+		index    int
+		priority int
+	}
+
+	cmp := func(a, b interface{}) bool { // Less function
+		return a.(Item).priority < b.(Item).priority
+	}
+
+	hp := NewHeap(cmp) 
+	heap.Push(hp, Item{source, 0})
+
+	for hp.Len() != 0 {
+		curr := heap.Pop(hp).(Item).index // Pop from PQ
+
+		if visited[curr] == true {
+			continue
+		}
+		visited[curr] = true
+
+		head := gph.Edges[curr]
+		for head != nil {
+			alt := head.cost
+			if alt < dist[head.dest] && (visited[head.dest] == false) {
+				heap.Push(hp, Item{head.dest, alt})
+				dist[head.dest] = alt
+				previous[head.dest] = curr
+			}
+			head = head.next
+		}
+	}
+	// Printing result.
+	total := 0
+	output := "Edges are : "
+	for i := 0; i < count; i++ {
+		if dist[i] == math.MaxInt32 {
+			output += "(" + strconv.Itoa(i) + ",  Unreachable)"
+		} else if (previous[i] != i) {
+			output += "(" + strconv.Itoa(previous[i]) + "->" + strconv.Itoa(i) + " @ " + strconv.Itoa(dist[i]) + ") " 
+			total += dist[i]
+		}   
+	}
+	fmt.Println(output)
+    fmt.Println("Total MST cost :", total)
+}
+
+type Sets struct {
+	parent int
+	rank int
+}
+
+func NewSet(p int, r int) (st *Sets) {	
+	st = new(Sets)
+	st.parent = p
+	st.rank = r
+	return st
+}
+
+// root element of set
+func find(sets []Sets, index int) int {
+	p := sets[index].parent;
+	for p != index {
+		index = p;
+		p = sets[index].parent;
+	}
+	return index;
+}
+
+// consider x and y are roots of sets.
+func union(sets []Sets, x int, y int) {
+	if sets[x].rank < sets[y].rank{
+		sets[x].parent = y;
+	} else if (sets[y].rank < sets[x].rank) {
+		sets[y].parent = x;
+	} else {
+		sets[x].parent = y;
+		sets[y].rank++;
+	}
+}
+
+func (gph *Graph) kruskalMST() {
+	count := gph.count
+	//Different subsets are created.
+	sets := make([]Sets, count)
+	for i := 0; i < count; i++ {
+		sets[i].parent = i
+		sets[i].rank = 0
+	}
+
+	// Edges are added to array and sorted.
+	
+	E := 0;
+	edge := make([]*Edge, 100)
+	
+	
+	for i := 0; i < count; i++ {
+		ad := gph.Edges[i]
+		for ad != nil {
+			edge[E] = ad
+			E++
+			ad = ad.next
+		}
+	}
+
+	sort.Slice(edge[0:E], func(i, j int) bool {
+		return edge[i].cost < edge[j].cost
+	})
+
+	sum := 0;
+	output := "Edges are : ";
+	for i := 0; i < E; i++ {
+		x := find(sets, edge[i].src);
+		y := find(sets, edge[i].dest);
+		if (x != y) {
+			output += ("(" + strconv.Itoa(edge[i].src) + "->" + strconv.Itoa(edge[i].dest) + " @ " + strconv.Itoa(edge[i].cost) + ") ");
+			sum += edge[i].cost;
+			union(sets, x, y);
+		}
+	}
+	fmt.Println(output);
+	fmt.Println("Total MST cost : " + strconv.Itoa(sum));
+}
+
+
+//Testing code
+func main19() {
+	gph := NewGraph(9)
+	gph.AddUndirectedEdge(0, 1, 4)
+	gph.AddUndirectedEdge(0, 7, 8)
+	gph.AddUndirectedEdge(1, 2, 8)
+	gph.AddUndirectedEdge(1, 7, 11)
+	gph.AddUndirectedEdge(2, 3, 7)
+	gph.AddUndirectedEdge(2, 8, 2)
+	gph.AddUndirectedEdge(2, 5, 4)
+	gph.AddUndirectedEdge(3, 4, 9)
+	gph.AddUndirectedEdge(3, 5, 14)
+	gph.AddUndirectedEdge(4, 5, 10)
+	gph.AddUndirectedEdge(5, 6, 2)
+	gph.AddUndirectedEdge(6, 7, 1)
+	gph.AddUndirectedEdge(6, 8, 6)
+	gph.AddUndirectedEdge(7, 8, 7)
+	gph.PrimsMST()
+	gph.kruskalMST()
+}
+
+/*
+Edges are : (0->1 @ 4) (5->2 @ 4) (2->3 @ 7) (3->4 @ 9) (6->5 @ 2) (7->6 @ 1) (0->7 @ 8) (2->8 @ 2) 
+Total MST cost : 37
+
+Edges are : (7->6 @ 1) (2->8 @ 2) (6->5 @ 2) (1->0 @ 4) (5->2 @ 4) (3->2 @ 7) (7->0 @ 8) (3->4 @ 9) 
+Total MST cost : 37
+*/
+var INF = 99999
+
+func (gph *Graph) FloydWarshall() {
+	V := gph.count
+	dist := make([][]int, V)
+	path := make([][]int, V)
+	for i := range dist {
+		dist[i] = make([]int, V)
+		path[i] = make([]int, V)
+	}
+	
+	for i := 0; i < V; i++ {
+		for j := 0; j < V; j++ {
+			path[i][j] = -1
+			dist[i][j] = INF
+		}
+		path[i][i] = 0
+	}
+
+	for i := 0; i < V; i++ {
+		ad := gph.Edges[i]
+		for ad != nil {
+			path[i][ad.dest] = i;
+			dist[i][ad.dest] = ad.cost;
+			ad = ad.next
+		}
+	}
+
+	for k := 0; k < V; k++ { // Pick intermediate vertices.
+		for i := 0; i < V; i++ { // Pick source vertices one by one.
+			for j := 0; j < V; j++ { // Pick destination vertices.
+				// If we have shorter path from i to j via k.
+				// then update dist[i][j]
+				if dist[i][k]+dist[k][j] < dist[i][j] {
+					dist[i][j] = dist[i][k] + dist[k][j]
+					path[i][j] = path[k][j]
+				}
+			}
+			// dist[i][i] is 0 in the start.
+			// If there is a better path from i to i and is better path then we have -ve cycle.                //
+			if (dist[i][i] < 0) {
+				fmt.Println("Negative-weight cycle found.");
+				return;
+			}
+		}
+	}
+	// Print the shortest distance matrix
+	printSolution(dist, path, V)
+}
+
+func printSolution(cost [][]int, path [][]int, V int) {
+	output := "Shortest Paths : ";
+	for u := 0; u < V; u++ {
+		for v := 0; v < V; v++ {
+			if (u != v && path[u][v] != -1) {
+				output += "(";
+				output += printPath(path, u, v);
+				output += " @ " + strconv.Itoa(cost[u][v]) + ") "
+			}
+		}
+	}
+	fmt.Println(output)
+}
+
+func printPath(path [][]int, u int, v int) string {
+	if (path[u][v] == u) {
+		return strconv.Itoa(u) + "->" + strconv.Itoa(v);
+	}
+	output := printPath(path, u, path[u][v]);
+	output += "->" + strconv.Itoa(v);
+	return output;
+}
+
+func main20() {
+	gph := NewGraph(4)
+	gph.AddDirectedEdge(0, 0, 0);
+    gph.AddDirectedEdge(1, 1, 0);
+    gph.AddDirectedEdge(2, 2, 0);
+    gph.AddDirectedEdge(3, 3, 0);
+    gph.AddDirectedEdge(0, 1, 5);
+    gph.AddDirectedEdge(0, 3, 10);
+    gph.AddDirectedEdge(1, 2, 3);
+    gph.AddDirectedEdge(2, 3, 1);
+	gph.FloydWarshall()
+}
+
 func main() {
+	/*
 	main1()
 	main2()
 	main3()
@@ -1283,6 +1454,9 @@ func main() {
 	main16()
 	main17()
 	main18()
+	*/
+	main19()
+	//main20()
 }
 
 // *********************

@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 func KS01UnboundBU(wt []int, cost []int, capacity int) int {
 	n := len(wt)
@@ -88,6 +91,7 @@ func GetMaxCost01BU(wt []int, cost []int, capacity int) int {
 			dp[w][i] = max(first, second)
 		}
 	}
+	printItems(dp, wt, cost, n, capacity)
 	// Number of weights considered and final capacity.
 	return dp[capacity][n]
 }
@@ -97,6 +101,19 @@ func max(i, j int) int {
 		return i
 	}
 	return j
+}
+
+func printItems(dp [][]int, wt []int, cost []int, n int, capacity int) {
+	totalCost := dp[capacity][n];
+	output := "";
+	for i := n - 1; i > 0; i-- {
+		if totalCost != dp[capacity][i - 1] {
+			output += " (wt:" + strconv.Itoa(wt[i]) + ", cost:" + strconv.Itoa(cost[i]) + ")";
+			capacity -= wt[i];
+			totalCost -= cost[i];
+		}
+	}
+	fmt.Println("Selected items are:" + output);
 }
 
 func main() {

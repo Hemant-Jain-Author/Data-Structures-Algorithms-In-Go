@@ -71,8 +71,10 @@ func main() {
 	}
 	Permutation(arr, 0, 4)
 	fmt.Println()
+
 	Permutation2(arr, 0, 4)
 	fmt.Println()
+	
 	Permutation3(arr, 0, 4)
 }
 
