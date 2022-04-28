@@ -353,10 +353,14 @@ func FindMissingNumber5(arr []int) (int, bool) {
 func FindMissingNumber6(arr []int) (int, bool) {
 	size := len(arr)
 	for i := 0; i < size; i++ {
-		arr[(arr[i]-1)%(size)] += (size)
+		// len(arr)+1 value should be ignored.
+		if arr[i] != size+1 && arr[i] != size*3+1 {
+			// 1 should not become (len(arr)+1) so multiplied by 2
+			arr[(arr[i]-1)%(size)] += (size * 2)
+		}
 	}
 	for i := 0; i < size; i++ {
-		if arr[i] < size+1 {
+		if arr[i] <= (size * 2) {
 			return i + 1, true
 		}
 	}
@@ -401,14 +405,15 @@ func FindMissingNumber8(arr []int, upperRange int) (int, bool) {
 }
 
 func main5() {
-	first := []int{1, 3, 5, 4, 6, 8, 7}
+	first := []int{1, 3, 5, 4, 6, 8, 2}
 	fmt.Println(FindMissingNumber(first))
 	fmt.Println(FindMissingNumber2(first))
 	fmt.Println(FindMissingNumber3(first))
 	fmt.Println(FindMissingNumber4(first))
 	fmt.Println(FindMissingNumber5(first))
+	first = []int{1, 3, 5, 4, 6, 8, 2}
 	fmt.Println(FindMissingNumber6(first))
-	first = []int{1, 3, 5, 4, 6, 8, 7}
+	first = []int{1, 3, 5, 4, 6, 8, 2}
 	fmt.Println(FindMissingNumber7(first, 8))
 	fmt.Println(FindMissingNumber8(first, 8))
 }
@@ -978,7 +983,7 @@ Minimum difference is ::  1
 */
 
 func ClosestPair(arr []int, value int) {
-	diff := 999999
+	diff := math.MaxInt32
 	first := -1
 	second := -1
 	curr := 0
@@ -2322,7 +2327,7 @@ func ClosestNumber(arr []int, size int, num int) int {
 	start := 0
 	stop := size - 1
 	output := -1
-	minDist := 9999
+	minDist := math.MaxInt32
 	var mid int
 
 	for start <= stop {
@@ -2796,7 +2801,7 @@ func main() {
 	// main2()
 	// main3()
 	// main4()
-	// main5()
+	main5()
 	// main6()
 	// main7()
 	// main8()

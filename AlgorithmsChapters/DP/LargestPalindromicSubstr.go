@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func largestPalindromicSubstr(str string) int {
+func LargestPalindromicSubstr(str string) int {
 	n := len(str)
 	dp := make([][]int, n)
 	for i := range dp {
@@ -34,7 +34,7 @@ func largestPalindromicSubstr(str string) int {
 
 func main() {
 	str := "ABCAUCBCxxCBA"
-	fmt.Println("Max Palindromic Substrings len: ", largestPalindromicSubstr(str))
+	fmt.Println("Max Palindromic Substrings len: ", LargestPalindromicSubstr(str))
 }
 
 /*

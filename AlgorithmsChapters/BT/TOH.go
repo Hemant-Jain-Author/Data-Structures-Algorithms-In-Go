@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func Toh(num int) {
+func TowerOfHanoi(num int) {
 	fmt.Println("The sequence of moves involved in the Tower of Hanoi are :")
 	tohUtil(num, "A", "C", "B")
 }
@@ -17,7 +17,7 @@ func tohUtil(num int, from string, to string, temp string) {
 }
 
 func main() {
-	Toh(3)
+	TowerOfHanoi(3)
 }
 
 /*

@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func main1() {
     q := new(Queue)
@@ -130,7 +133,7 @@ Max Sliding Windows : 75 92 92 92 90
 func minOfMaxSlidingWindows(arr []int, k int) {
     size := len(arr)
     que := new(Queue)
-    minVal := 999999
+    minVal := math.MaxInt32
     i := 0
     for i < size {
         // Remove out of range elements
@@ -162,7 +165,7 @@ func main5() {
 func maxOfMinSlidingWindows(arr []int, k int) {
     size := len(arr)
     que := new(Queue)
-    maxVal := -999999
+    maxVal := math.MinInt32
     i := 0
     for i < size {
         // Remove out of range elements

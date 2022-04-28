@@ -44,3 +44,7 @@ func main() {
 	n := len(s)
 	MaxActivities(s, f, n)
 }
+
+/*
+Activities are : (1,2), (3,4), (5,6), (6,7), (8,9)
+*/
