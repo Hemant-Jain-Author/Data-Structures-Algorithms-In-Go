@@ -64,7 +64,7 @@ func (jobSeq *JobSequencing) Print() {
 	}
 
 	fmt.Println("Profit is::", profit)
-	fmt.Print("Jobs selected are::")
+	fmt.Print("Jobs selected are :: ")
 	for i := 0; i < jobSeq.maxDL; i++ {
 		if job[i] != '0' {
 			fmt.Print(string(job[i]), " ")
@@ -82,5 +82,5 @@ func main() {
 
 /*
 Profit is:: 151
-Jobs selected are::b e a d 
+Jobs selected are :: b e a d 
 */

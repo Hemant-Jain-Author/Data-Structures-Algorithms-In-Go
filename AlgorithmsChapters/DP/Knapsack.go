@@ -133,6 +133,7 @@ func main() {
 /*
 Maximum cost obtained =  300
 Maximum cost obtained =  210
+Selected items are: (wt:30, cost:120) (wt:20, cost:90)
 Maximum cost obtained =  210
 Maximum cost obtained =  210
 */

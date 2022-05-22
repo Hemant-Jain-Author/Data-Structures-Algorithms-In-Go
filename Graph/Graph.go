@@ -1286,11 +1286,8 @@ func (gph *Graph) kruskalMST() {
 	}
 
 	// Edges are added to array and sorted.
-	
 	E := 0;
 	edge := make([]*Edge, 100)
-	
-	
 	for i := 0; i < count; i++ {
 		ad := gph.Edges[i]
 		for ad != nil {
@@ -1435,7 +1432,6 @@ func main20() {
 }
 
 func main() {
-	/*
 	main1()
 	main2()
 	main3()
@@ -1454,9 +1450,8 @@ func main() {
 	main16()
 	main17()
 	main18()
-	*/
 	main19()
-	//main20()
+	main20()
 }
 
 // *********************

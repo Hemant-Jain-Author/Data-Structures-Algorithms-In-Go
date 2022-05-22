@@ -69,6 +69,15 @@ func main() {
 	hf.Print()
 }
 
+/*
+Char = Huffman code
+C  = 00
+E  = 010
+D  = 011
+B  = 10
+A  = 11
+*/
+
 type Heap struct {
 	heap []interface{}
 	comp func(x interface{}, y interface{}) bool

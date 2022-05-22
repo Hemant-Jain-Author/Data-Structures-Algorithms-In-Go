@@ -148,4 +148,6 @@ func main() {
 Matrix Chain Multiplication is: 18
 Matrix Chain Multiplication is: 18
 Matrix Chain Multiplication is: 18
+OptimalParenthesis : ( ( M1 M2 ) M3 ) 
+Matrix Chain Multiplication is: 18
 */

@@ -50,3 +50,7 @@ func main() {
 	maxCost := GetMaxCostFractional(wt, cost, capacity)
 	fmt.Println("Maximum cost obtained = ", maxCost)
 }
+
+/*
+Maximum cost obtained =  230
+*/

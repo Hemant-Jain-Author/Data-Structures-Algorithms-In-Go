@@ -563,17 +563,17 @@ func main16() {
 }
 
 func GCD(m int, n int) int {
-	if m < n {
-		return GCD(n, m)
+	if n == 0 {
+		return m
 	}
-	if m%n == 0 {
+	if m == 0 {
 		return n
 	}
 	return GCD(n, m%n)
 }
 
 func main17() {
-fmt.Println("GCD is :", GCD(24, 18))
+	fmt.Println("GCD is :", GCD(24, 18))
 }
 
 func fibonacci(n int) int {
@@ -634,8 +634,9 @@ func main20() {
 	fmt.Println("BinarySearchRecursive:", BinarySearchRecursive(arr, 7))
 	fmt.Println("BinarySearchRecursive:", BinarySearchRecursive(arr, 8))
 }
-BinarySearchRecursive: true
-BinarySearchRecursive: false
+/* BinarySearchRecursive: true
+BinarySearchRecursive: false */
+
 func main() {
 //	main1()
 //	main2()

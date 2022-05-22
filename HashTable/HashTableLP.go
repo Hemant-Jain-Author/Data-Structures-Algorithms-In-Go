@@ -108,10 +108,10 @@ func (ht *HashTable) Remove(key int) bool {
 }
 
 func (ht *HashTable) Print() {
-	fmt.Println("\nValues Stored in HashTable are::")
+	fmt.Print("Hash Table contains :: ")
 	for i := 0; i < ht.tableSize; i++ {
 		if ht.Flag[i] == FillledNode {
-			fmt.Println("Node at index", i, "::", ht.Value[i])
+			fmt.Print("(", i, "=>", ht.Value[i], ") ")
 		}
 	}
 	fmt.Println()
@@ -126,20 +126,13 @@ func main() {
 
 	fmt.Println("Find key 2 :", ht.Find(2))
 	fmt.Println("Value at key 2 :", ht.Get(2))
-
 	ht.Remove(2)
-	fmt.Println("After deleting node with key 2..")
 	fmt.Println("Find key 2 :", ht.Find(2))
 }
 
 /*
-Values Stored in HashTable are::
-Node at index 1 :: 10
-Node at index 2 :: 20
-Node at index 3 :: 30
-
+Hash Table contains :: (1=>10) (2=>20) (3=>30) 
 Find key 2 : true
 Value at key 2 : 20
-After deleting node with key 2..
 Find key 2 : false
 */

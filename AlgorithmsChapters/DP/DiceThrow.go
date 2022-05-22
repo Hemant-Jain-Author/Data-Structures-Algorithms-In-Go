@@ -25,16 +25,9 @@ func FindWays(n int, m int, V int) int {
 }
 
 func main() {
-	for i := 1; i <= 6; i++ {
-		fmt.Println(FindWays(i, 6, 6))
-	}
+	fmt.Println(FindWays(3, 6, 6))
 }
 
 /*
-1
-5
 10
-10
-5
-1
 */

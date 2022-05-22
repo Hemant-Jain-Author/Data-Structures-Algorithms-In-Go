@@ -4,7 +4,7 @@ import "fmt"
 
 func QuickSelect(arr []int, key int) int {
 	size := len(arr)
-	quickSelectUtil(arr, 0, size-1, key)
+	quickSelectUtil(arr, 0, size-1, key-1)
 	return arr[key-1]
 }
 

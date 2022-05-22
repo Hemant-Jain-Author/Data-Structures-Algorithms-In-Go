@@ -57,7 +57,7 @@ type Person struct {
 
 func main() {
 	cmp := func(a, b interface{}) bool { 
-		return a.(int) > b.(int) 
+		return a.(int) < b.(int) 
 	}
 	pq := NewHeap(cmp)
 	arr := []int{1, 2, 10, 8, 7, 3, 4, 6, 5, 9}

@@ -31,13 +31,16 @@ func FibonacciBU(n int) int {
 	dp := make([]int, n+1)
 	dp[0] = 0
 	dp[1] = 1
+
 	for i := 2; i <= n; i++ {
 		dp[i] = dp[i-2] + dp[i-1]
 	}
+
 	return dp[n]
 }
+
 func fibonacciTDUtil(n int, dp []int) int {
-	if n <= 1 {
+	if n < 2 {
 		dp[n] = n
 		return n
 	}
@@ -54,16 +57,15 @@ func FibonacciTD(n int) int {
 	return dp[n]
 }
 func main() {
-	fmt.Println(Fibonacci(6))
-	fmt.Println(FibonacciBU(6))
-	fmt.Println(FibonacciBU2(6))
-	fmt.Println(FibonacciTD(6))
+	fmt.Println(Fibonacci(10))
+	fmt.Println(FibonacciBU(10))
+	fmt.Println(FibonacciBU2(10))
+	fmt.Println(FibonacciTD(10))
 }
 
 /*
-0 1 1 2 3 5 
-[0 1 1 2 3 5]
-[0 1 1 2 3 5]
-5
-5
+55
+55
+55
+55
 */
