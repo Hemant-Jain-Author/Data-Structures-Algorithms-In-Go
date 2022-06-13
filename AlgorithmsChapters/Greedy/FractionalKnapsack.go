@@ -48,9 +48,9 @@ func main() {
 	cost := []int{60, 40, 90, 120}
 	capacity := 50
 	maxCost := GetMaxCostFractional(wt, cost, capacity)
-	fmt.Println("Maximum cost obtained = ", maxCost)
+	fmt.Println("Maximum cost obtained =", maxCost)
 }
 
 /*
-Maximum cost obtained =  230
+Maximum cost obtained = 230
 */

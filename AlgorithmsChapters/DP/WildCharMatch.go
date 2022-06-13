@@ -73,3 +73,8 @@ func wildCharMatchExpUtilDP(exp string, str string, m int, n int) bool {
 	}
 	return lookup[m][n]
 }
+
+/*
+true
+true
+*/

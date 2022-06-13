@@ -16,6 +16,22 @@ func NewHeap(comp func(x interface{}, y interface{}) bool) *Heap {
 	return hp
 }
 
+func NewMaxHeap() *Heap {
+	cmp := func(a, b interface{}) bool { 
+		return a.(int) > b.(int) 
+	}
+	hp := NewHeap(cmp)
+	return hp
+}
+
+func NewMinHeap() *Heap {
+	cmp := func(a, b interface{}) bool { 
+		return a.(int) < b.(int) 
+	}
+	hp := NewHeap(cmp)
+	return hp
+}
+
 func (hp Heap) Len() int {
 	return len(hp.heap)
 }
@@ -40,7 +56,7 @@ func (hp *Heap) Pop() interface{} {
 }
 
 func (hp Heap) Print() {
-	fmt.Println(hp.heap)
+	fmt.Println("Heap :", hp.heap)
 }
 
 func (hp Heap) Empty() bool {
@@ -51,32 +67,25 @@ func (hp Heap) Peek() interface{} {
 	return hp.heap[0]
 }
 
-type Person struct {
-	Age int
-}
-
 func main() {
 	cmp := func(a, b interface{}) bool { 
 		return a.(int) < b.(int) 
 	}
 	pq := NewHeap(cmp)
+
 	arr := []int{1, 2, 10, 8, 7, 3, 4, 6, 5, 9}
 	for _, i := range arr {
 		heap.Push(pq, i)
 	}
-	fmt.Println("Printing Priority Queue Heap : ", pq)
-	fmt.Print("Dequeue elements of Priority Queue ::")
+
+	 pq.Print()
+	fmt.Print("Dequeue from Heap :: ")
 	for pq.Len() != 0 {
-		fmt.Print(" ", heap.Pop(pq))
-	}
-	p2 := NewHeap(func(a, b interface{}) bool { 
-		return a.(Person).Age > b.(Person).Age 
-	})
-	p2Data := []Person{{23}, {42}, {70}, {30}}
-	for _, d := range p2Data {
-		heap.Push(p2, d)
-	}
-	for p2.Len() > 0 {
-		fmt.Println(heap.Pop(p2))
+		fmt.Print(heap.Pop(pq), " ")
 	}
 }
+
+/*
+Heap : [1 2 3 5 7 10 4 8 6 9]
+Dequeue from Heap :: 1 2 3 4 5 6 7 8 9 10 
+*/

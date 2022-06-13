@@ -368,7 +368,6 @@ func reverseParenthesis(expn string, size int) int {
 }
 
 func main11() {
-	//expn := "())((()))(())()(()()()()))"
 	expn2 := ")(())((("
 	size := len(expn2)
 	value := reverseParenthesis(expn2, size)
@@ -400,8 +399,6 @@ func findDuplicateParenthesis(expn string, size int) bool {
 }
 
 func main12() {
-	// expn = "(((a+(b))+(c+d)))"
-	// expn = "(b)"
 	expn := "(((a+b))+c)"
 	fmt.Println("Given expn : ", expn)
 	size := len(expn)
@@ -608,7 +605,6 @@ func StockSpanRange2(arr []int) []int {
 }
 
 func main17() {
-	//stock := []int{4, 6, 8, 12, 2, 1, 7, 8}
 	stock := []int{6, 5, 4, 3, 2, 4, 5, 7, 9}
 	fmt.Println(StockSpanRange(stock))
 	fmt.Println(StockSpanRange2(stock))

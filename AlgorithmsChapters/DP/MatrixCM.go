@@ -138,16 +138,16 @@ func PrintOptimalParenthesis(n int, pos [][]int) {
 func main() {
 	arr := []int{1, 2, 3, 4}
 	n := len(arr)
-	fmt.Println("Matrix Chain Multiplication is:", MatrixChainMulBruteForce(arr, n))
-	fmt.Println("Matrix Chain Multiplication is:", MatrixChainMulTD(arr, n))
-	fmt.Println("Matrix Chain Multiplication is:", MatrixChainMulBU(arr, n))
-	fmt.Println("Matrix Chain Multiplication is:", MatrixChainMulBU2(arr, n))
+	fmt.Println("Matrix Chain Multiplication is :", MatrixChainMulBruteForce(arr, n))
+	fmt.Println("Matrix Chain Multiplication is :", MatrixChainMulTD(arr, n))
+	fmt.Println("Matrix Chain Multiplication is :", MatrixChainMulBU(arr, n))
+	fmt.Println("Matrix Chain Multiplication is :", MatrixChainMulBU2(arr, n))
 }
 
 /*
-Matrix Chain Multiplication is: 18
-Matrix Chain Multiplication is: 18
-Matrix Chain Multiplication is: 18
+Matrix Chain Multiplication is : 18
+Matrix Chain Multiplication is : 18
+Matrix Chain Multiplication is : 18
 OptimalParenthesis : ( ( M1 M2 ) M3 ) 
-Matrix Chain Multiplication is: 18
+Matrix Chain Multiplication is : 18
 */

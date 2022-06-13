@@ -6,10 +6,10 @@ import (
 
 type Counter map[interface{}]int
 
-func (s *Counter) Add(key interface{}) {
+func (s *Counter) Insert(key interface{}) {
 	(*s)[key] += 1
 }
-func (s *Counter) Find(key interface{}) bool {
+func (s *Counter) Has(key interface{}) bool {
 	_, ok := (*s)[key]
 	return ok
 }
@@ -31,13 +31,13 @@ func (s *Counter) Remove(key interface{}) {
 
 func main() {
 	mp := make(Counter)
-	mp.Add("a")
-	mp.Add("b")
-	mp.Add("a")
+	mp.Insert("a")
+	mp.Insert("b")
+	mp.Insert("a")
 
-	fmt.Println(mp.Find("a"))
-	fmt.Println(mp.Find("b"))
-	fmt.Println(mp.Find("c"))
+	fmt.Println(mp.Has("a"))
+	fmt.Println(mp.Has("b"))
+	fmt.Println(mp.Has("c"))
 
 	fmt.Println(mp.Get("a"))
 	fmt.Println(mp.Get("b"))

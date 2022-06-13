@@ -1,47 +1,26 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
 
-type Stack []int
-
-func (stk Stack) Len() int {
-	return len(stk)
-}
-
-func (stk *Stack) Push(x int) {
-	*stk = append(*stk, x)
-}
-
-func (stk *Stack) Pop() int {
-	n := len(*stk)
-	value := (*stk)[n-1]
-	*stk = (*stk)[: n-1]
-	return value
-}
-
-func (stk *Stack) Top() int {
-	n := len(*stk)
-	return (*stk)[n-1]
-}
-
-func (stk Stack) IsEmpty() bool {
-	return len(stk) == 0
-}
-
-func (stk Stack) Print() {
-	fmt.Println(stk)
-}
+	"github.com/golang-collections/collections/stack"
+)
 
 func main() {
-	stk := &Stack{}
-	for i := 0; i < 5; i++ {
-		stk.Push(i)
-	}
-	for stk.IsEmpty() == false {
-		fmt.Print(stk.Pop(), " ")
-	}
+    stk := stack.New()
+    stk.Push(1)
+    stk.Push(2)
+    stk.Push(3)
+
+    fmt.Println("Stack size :", stk.Len());
+    fmt.Println("Stack pop :", stk.Pop());
+    fmt.Println("Stack top :", stk.Peek());
+    fmt.Println("Stack isEmpty :", stk.Len() == 0);
 }
 
 /*
-4 3 2 1 0 
+Stack size : 3
+Stack pop : 3
+Stack top : 2
+Stack isEmpty : false
 */

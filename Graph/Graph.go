@@ -465,7 +465,6 @@ func main7() {
 }
 
 /*
-
 Node  - Level
 1  -  0
 2  -  1
@@ -508,6 +507,131 @@ func (gph *Graph) isCyclePresentUndirected() bool {
 	return false
 }
 
+func (gph *Graph) find(parent []int,  index  int)int {
+    var p  int = parent[index];
+    for(p != -1) {
+        index = p;
+        p = parent[index];
+    }
+    return index;
+}
+
+func (gph *Graph) union(parent []int,  x  int,  y  int) {
+    parent[y] = x;
+}
+
+func (gph *Graph) isCyclePresentUndirected2()bool {
+	count := gph.count
+
+	parent := make([]int, count)
+	for i := 0; i < count; i++ {
+		parent[i] = -1
+	}
+		
+
+    var edge []*Edge
+	flags := make([][]bool, count)
+	for  i  := 0; i < count; i++ {
+		flags[i] = make([]bool, count)
+	}
+
+    for  i  := 0; i < count; i++ {
+        ad := gph.Edges[i]
+        for ad != nil {
+            // Using flags[][] array, if considered edge x to y,
+            // then ignore edge y to x.
+            if (flags[ad.dest][ad.src] == false) {
+                edge = append(edge, ad);
+                flags[ad.src][ad.dest] = true;
+            }
+			ad = ad.next
+        }
+    }
+    for  _, e :=  range edge {
+        var x  int = gph.find(parent, e.src);
+        var y  int = gph.find(parent, e.dest);
+        if (x == y) {
+            return true;
+        }
+        gph.union(parent, x, y);
+    }
+    return false;
+}
+
+type Sets struct {
+	parent int
+	rank int
+}
+
+func NewSet(p int, r int) (st *Sets) {	
+	st = new(Sets)
+	st.parent = p
+	st.rank = r
+	return st
+}
+
+// root element of set
+func find(sets []Sets, index int) int {
+	p := sets[index].parent;
+	for p != index {
+		index = p;
+		p = sets[index].parent;
+	}
+	return index;
+}
+
+// consider x and y are roots of sets.
+func union(sets []Sets, x int, y int) {
+	if sets[x].rank < sets[y].rank{
+		sets[x].parent = y;
+	} else if (sets[y].rank < sets[x].rank) {
+		sets[y].parent = x;
+	} else {
+		sets[x].parent = y;
+		sets[y].rank++;
+	}
+}
+
+
+func (gph *Graph) isCyclePresentUndirected3()bool {
+    count := gph.count
+	//Different subsets are created.
+	sets := make([]Sets, count)
+	for i := 0; i < count; i++ {
+		sets[i].parent = i
+		sets[i].rank = 0
+	}
+
+    var edge []*Edge
+
+	flags := make([][]bool, count)
+	for  i  := 0; i < count; i++ {
+		flags[i] = make([]bool, count)
+	}
+
+    for  i  := 0; i < count; i++ {
+        ad := gph.Edges[i]
+        for ad != nil {
+            // Using flags[][] array, if considered edge x to y,
+            // then ignore edge y to x.
+            if (flags[ad.dest][ad.src] == false) {
+                edge = append(edge, ad);
+                flags[ad.src][ad.dest] = true;
+            }
+			ad = ad.next
+        }
+    }
+    for  _, e :=  range edge {
+        var x  int = find(sets, e.src);
+        var y  int = find(sets, e.dest);
+        if (x == y) {
+            return true;
+        }
+        union(sets, x, y);
+    }
+    return false;
+}
+
 //Testing code
 func main8() {
 	gph := NewGraph(6)
@@ -516,17 +640,25 @@ func main8() {
 	gph.AddUndirectedEdge(3, 4, 1)
 	gph.AddUndirectedEdge(4, 2, 1)
 	gph.AddUndirectedEdge(2, 5, 1)
-	// 
-	// gph.AddUndirectedEdge(3, 5, 1)
-	fmt.Println(gph.isCyclePresentUndirected())
+    fmt.Println("Cycle Present : ", gph.isCyclePresentUndirected());
+    fmt.Println("Cycle Present : ", gph.isCyclePresentUndirected2());
+    fmt.Println("Cycle Present : ", gph.isCyclePresentUndirected3());
 	fmt.Println("IsConnectedUndirected : ", gph.isConnectedUndirected())
 	gph.AddUndirectedEdge(4, 1, 1)
-	fmt.Println(gph.isCyclePresentUndirected())
+    fmt.Println("Cycle Present : ", gph.isCyclePresentUndirected());
+    fmt.Println("Cycle Present : ", gph.isCyclePresentUndirected2());
+    fmt.Println("Cycle Present : ", gph.isCyclePresentUndirected3());
 	fmt.Println("IsConnectedUndirected : ", gph.isConnectedUndirected())
 }
 
 /*
-false
+Cycle Presen :  false
+Cycle Presen :  false
+Cycle Presen :  false
+IsConnectedUndirected :  true
+Cycle Presen :  true
+Cycle Presen :  true
+Cycle Presen :  true
 IsConnectedUndirected :  true
 */
 
@@ -611,14 +743,18 @@ func main9() {
 	gph.AddDirectedEdge(2, 3, 1)
 	gph.AddDirectedEdge(1, 3, 1)
 	gph.AddDirectedEdge(3, 4, 1)
+	fmt.Println("isCyclePresent :", gph.isCyclePresent())
+	fmt.Println("isCyclePresent :", gph.isCyclePresentColor())
 	gph.AddDirectedEdge(4, 1, 1)
-	fmt.Println(gph.isCyclePresent())
-	fmt.Println(gph.isCyclePresentColor())
+	fmt.Println("isCyclePresent :", gph.isCyclePresent())
+	fmt.Println("isCyclePresent :", gph.isCyclePresentColor())
 }
 
 /*
-true
-true
+isCyclePresent : false
+isCyclePresent : false
+isCyclePresent : true
+isCyclePresent : true
 */
 
 func (gph *Graph) transposeGraph() *Graph {
@@ -661,6 +797,7 @@ Vertex 1 is connected to : 0(cost:1)
 Vertex 2 is connected to : 1(cost:1) 0(cost:1)
 Vertex 3 is connected to : 2(cost:1)
 */
+
 func (gph *Graph) isConnectedUndirected() bool {
 	count := gph.count
 	visited := make([]bool, count)
@@ -749,9 +886,9 @@ func main12() {
 }
 
 /*
-0 2 1
-3 5 4
-6
+[1 2 0]
+[4 5 3]
+[6]
 */
 
 func (gph *Graph) IsConnected() bool {
@@ -832,6 +969,11 @@ func main13() {
 	fmt.Println(heightTreeParentArr2(parentArray))
 }
 
+/*
+4
+4
+*/
+
 func (gph *Graph) isConnected() bool {
 	count := gph.count
 	visited := make([]bool, count)
@@ -856,11 +998,6 @@ func (gph *Graph) isConnected() bool {
 	return true
 }
 
-/*
-* The function returns one of the following values Return 0 if graph is not
-* Eulerian Return 1 if graph has an Euler path (Semi-Eulerian) Return 2 if
-* graph has an Euler Circuit (Eulerian)
- */
 func (gph *Graph) isEulerian() int {
 	count := gph.count
 	var odd int
@@ -1083,18 +1220,18 @@ func (gph *Graph) Dijkstra(source int) {
 	dist[source] = 0
 	previous[source] = source
 
-	type Item struct {
-		index    int
-		priority int
+	type Edge struct {
+		dest int
+		cost int
 	}
 	cmp := func(a, b interface{}) bool { // Less function
-		return a.(Item).priority < b.(Item).priority
+		return a.(Edge).cost < b.(Edge).cost
 	}
 	hp := NewHeap(cmp)
-	heap.Push(hp, Item{source, 0})
+	heap.Push(hp, Edge{source, 0})
 
 	for hp.Len() != 0 {
-		curr := heap.Pop(hp).(Item).index // Pop from PQ
+		curr := heap.Pop(hp).(Edge).dest // Pop from PQ
 		if visited[curr] == true {
 			continue
 		}
@@ -1104,7 +1241,7 @@ func (gph *Graph) Dijkstra(source int) {
 		for head != nil {
 			alt := head.cost + dist[curr]
 			if alt < dist[head.dest] && (visited[head.dest] == false) {
-				heap.Push(hp, Item{head.dest, alt})
+				heap.Push(hp, Edge{head.dest, alt})
 				dist[head.dest] = alt
 				previous[head.dest] = curr
 			}
@@ -1196,20 +1333,19 @@ func (gph *Graph) PrimsMST() {
 	dist[source] = 0
 	previous[source] = source
 	
-	type Item struct {
-		index    int
-		priority int
+	type Edge struct {
+		dest int
+		cost int
 	}
 
 	cmp := func(a, b interface{}) bool { // Less function
-		return a.(Item).priority < b.(Item).priority
+		return a.(Edge).cost < b.(Edge).cost
 	}
-
 	hp := NewHeap(cmp) 
-	heap.Push(hp, Item{source, 0})
+	heap.Push(hp, Edge{source, 0})
 
 	for hp.Len() != 0 {
-		curr := heap.Pop(hp).(Item).index // Pop from PQ
+		curr := heap.Pop(hp).(Edge).dest // Pop from PQ
 
 		if visited[curr] == true {
 			continue
@@ -1220,7 +1356,7 @@ func (gph *Graph) PrimsMST() {
 		for head != nil {
 			alt := head.cost
 			if alt < dist[head.dest] && (visited[head.dest] == false) {
-				heap.Push(hp, Item{head.dest, alt})
+				heap.Push(hp, Edge{head.dest, alt})
 				dist[head.dest] = alt
 				previous[head.dest] = curr
 			}
@@ -1242,39 +1378,6 @@ func (gph *Graph) PrimsMST() {
     fmt.Println("Total MST cost :", total)
 }
 
-type Sets struct {
-	parent int
-	rank int
-}
-
-func NewSet(p int, r int) (st *Sets) {	
-	st = new(Sets)
-	st.parent = p
-	st.rank = r
-	return st
-}
-
-// root element of set
-func find(sets []Sets, index int) int {
-	p := sets[index].parent;
-	for p != index {
-		index = p;
-		p = sets[index].parent;
-	}
-	return index;
-}
-
-// consider x and y are roots of sets.
-func union(sets []Sets, x int, y int) {
-	if sets[x].rank < sets[y].rank{
-		sets[x].parent = y;
-	} else if (sets[y].rank < sets[x].rank) {
-		sets[y].parent = x;
-	} else {
-		sets[x].parent = y;
-		sets[y].rank++;
-	}
-}
 
 func (gph *Graph) kruskalMST() {
 	count := gph.count
@@ -1430,6 +1533,10 @@ func main20() {
     gph.AddDirectedEdge(2, 3, 1);
 	gph.FloydWarshall()
 }
+
+/*
+Shortest Paths : (0->1 @ 5) (0->1->2 @ 8) (0->1->2->3 @ 9) (1->2 @ 3) (1->2->3 @ 4) (2->3 @ 1) 
+*/
 
 func main() {
 	main1()

@@ -87,15 +87,15 @@ func StockBuySellMaxProfitTC2(arr []int, t int) int {
 
 func main() {
 	arr := []int{10, 12, 9, 23, 25, 55, 49, 70}
-	fmt.Println("Total profit: ", StockBuySellMaxProfit(arr))
-	fmt.Println("Total profit: ", StockBuySellMaxProfit2(arr))
-	fmt.Println("Total profit: ", StockBuySellMaxProfitTC(arr, 2))
-	fmt.Println("Total profit: ", StockBuySellMaxProfitTC2(arr, 2))
+	fmt.Println("Total profit :", StockBuySellMaxProfit(arr))
+	fmt.Println("Total profit :", StockBuySellMaxProfit2(arr))
+	fmt.Println("Total profit :", StockBuySellMaxProfitTC(arr, 2))
+	fmt.Println("Total profit :", StockBuySellMaxProfitTC2(arr, 2))
 }
 
 /*
-Total profit:  69
-Total profit:  69
-Total profit:  63
-Total profit:  63
+Total profit : 69
+Total profit : 69
+Total profit : 63
+Total profit : 63
 */

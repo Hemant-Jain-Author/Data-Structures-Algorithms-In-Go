@@ -2,13 +2,25 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/golang-collections/collections/set"
 )
 
+type Set map[interface{}]bool
+
+func (s *Set) Insert(key interface{}) {
+    (*s)[key] = true
+}
+
+func (s *Set) Remove(key interface{}) {
+    delete((*s), key)
+}
+
+func (s *Set) Has(key interface{}) bool {
+    return (*s)[key]
+}
+
 func main() {
-    st := set.New()
-    st.Insert("Banana")
+    st := make(Set)
+	st.Insert("Banana")
 	st.Insert("Apple")
     st.Insert("Mango")
 

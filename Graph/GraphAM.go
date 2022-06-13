@@ -74,19 +74,19 @@ func (gph *Graph) Dijkstra(source int) {
 	dist[source] = 0
 	previous[source] = source
 
-	type Item struct {
+	type Edge struct {
 		index    int
 		priority int
 	}
 
 	cmp := func(a, b interface{}) bool { // Less function
-		return a.(Item).priority < b.(Item).priority
+		return a.(Edge).priority < b.(Edge).priority
 	}
 	hp := NewHeap(cmp)
-	heap.Push(hp, Item{source, 0})
+	heap.Push(hp, Edge{source, 0})
 
 	for hp.Len() != 0 {
-		curr := heap.Pop(hp).(Item).index
+		curr := heap.Pop(hp).(Edge).index
 
 		if visited[curr] == true {
 			continue
@@ -100,7 +100,7 @@ func (gph *Graph) Dijkstra(source int) {
 				if dist[dest] > alt && visited[dest] == false {
 					dist[dest] = alt
 					previous[dest] = curr
-					heap.Push(hp, Item{dest, alt})
+					heap.Push(hp, Edge{dest, alt})
 				}
 			}
 		}
@@ -151,19 +151,19 @@ func (gph *Graph) PrimsMST() {
 	dist[source] = 0
 	previous[source] = source
 
-	type Item struct {
+	type Edge struct {
 		index    int
 		priority int
 	}
 
 	cmp := func(a, b interface{}) bool {
-		return a.(Item).priority < b.(Item).priority
+		return a.(Edge).priority < b.(Edge).priority
 	}
 
 	hp := NewHeap(cmp)
-	heap.Push(hp, Item{source, 0})
+	heap.Push(hp, Edge{source, 0})
 	for hp.Len() != 0 {
-		source := heap.Pop(hp).(Item).index
+		source := heap.Pop(hp).(Edge).index
 
 		if visited[source] == true {
 			continue
@@ -176,7 +176,7 @@ func (gph *Graph) PrimsMST() {
 				if dist[dest] > cost && visited[dest] == false {
 					dist[dest] = cost
 					previous[dest] = source
-					heap.Push(hp, Item{dest, cost})
+					heap.Push(hp, Edge{dest, cost})
 				}
 			}
 		}

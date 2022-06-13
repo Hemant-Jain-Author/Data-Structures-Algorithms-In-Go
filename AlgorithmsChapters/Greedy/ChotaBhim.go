@@ -41,6 +41,7 @@ func ChotaBhim2(cups []int) int {
 		return a.(int) > b.(int) 
 	}
 	pq := NewHeap(cmp)
+	
 	for i := 0; i < size; i++ {
 		heap.Push(pq, cups[i])
 	}

@@ -34,8 +34,8 @@ func JoinRopes2(ropes []int, size int) int {
 		return a.(int) < b.(int) 
 	}
 	pq := NewHeap(cmp)
-	i := 0
-	for i = 0; i < size; i++ {
+	
+	for i := 0; i < size; i++ {
 		heap.Push(pq, ropes[i])
 	}
 	total := 0
