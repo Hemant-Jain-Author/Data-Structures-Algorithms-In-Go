@@ -88,7 +88,7 @@ func (gph *Graph) DFSStack(source int, target int) bool {
 		path = append(path, curr)
 		head := gph.Edges[curr]
 		for head != nil {
-			if visited[head.dest] == false {
+			if !visited[head.dest] {
 				visited[head.dest] = true
 				stk.Push(head.dest)
 			}
@@ -114,7 +114,7 @@ func (gph *Graph) DFSUtil(curr int, visited []bool) {
 	head := gph.Edges[curr]
 	//fmt.Print(curr, " ")
 	for head != nil {
-		if visited[head.dest] == false {
+		if !visited[head.dest] {
 			gph.DFSUtil(head.dest, visited)
 		}
 		head = head.next
@@ -126,7 +126,7 @@ func (gph *Graph) DFSUtil2(curr int, visited []bool, stk *Stack) {
 	head := gph.Edges[curr]
 
 	for head != nil {
-		if visited[head.dest] == false {
+		if !visited[head.dest] {
 			gph.DFSUtil2(head.dest, visited, stk)
 		}
 		head = head.next
@@ -148,7 +148,7 @@ func (gph *Graph) BFS(source int, target int) bool {
 
 		head := gph.Edges[curr]
 		for head != nil {
-			if visited[head.dest] == false {
+			if !visited[head.dest] {
 				visited[head.dest] = true
 				que.Add(head.dest)
 			}
@@ -209,7 +209,7 @@ func (gph *Graph) TopologicalSort() {
 func (gph *Graph) TopologicalSortDFS(index int, visited []bool, stk *Stack) {
 	head := gph.Edges[index]
 	for head != nil {
-		if visited[head.dest] == false {
+		if !visited[head.dest] {
 			visited[head.dest] = true
 			gph.TopologicalSortDFS(head.dest, visited, stk)
 		}
@@ -252,7 +252,7 @@ func (gph *Graph) countAllPathDFS(visited []bool, source int, dest int) int {
 	head := gph.Edges[source]
 
 	for head != nil {
-		if visited[head.dest] == false {
+		if !visited[head.dest] {
 			count += gph.countAllPathDFS(visited, head.dest, dest)
 		}
 		visited[head.dest] = false
@@ -284,7 +284,7 @@ func (gph *Graph) printAllPathUtil(source int, dest int, visited []bool, path *S
 	visited[source] = true
 	head := gph.Edges[source]
 	for head != nil {
-		if visited[head.dest] == false {
+		if !visited[head.dest] {
 			gph.printAllPathUtil(head.dest, dest, visited, path)
 		}
 		head = head.next
@@ -411,7 +411,7 @@ func (gph *Graph) bfsLevelNode(source int) {
 		head := gph.Edges[curr]
 		fmt.Println(curr, " - ", depth)
 		for head != nil {
-			if visited[head.dest] == false {
+			if !visited[head.dest] {
 				visited[head.dest] = true
 				que.Add(head.dest)
 				level[head.dest] = depth + 1
@@ -438,7 +438,7 @@ func (gph *Graph) bfsDistance(source int, dest int) int {
 			if head.dest == dest {
 				return depth + 1
 			}
-			if visited[head.dest] == false {
+			if !visited[head.dest] {
 				visited[head.dest] = true
 				que.Add(head.dest)
 				level[head.dest] = depth + 1
@@ -482,7 +482,7 @@ func (gph *Graph) isCyclePresentUndirectedDFS(index int, parentIndex int, visite
 	head := gph.Edges[index]
 	for head != nil {
 		dest = head.dest
-		if visited[dest] == false {
+		if !visited[dest] {
 			if gph.isCyclePresentUndirectedDFS(dest, index, visited) {
 				return true
 			}
@@ -931,7 +931,7 @@ func heightTreeParentArr(arr []int) int {
 		}
 		head := gph.Edges[curr]
 		for head != nil {
-			if visited[head.dest] == false {
+			if !visited[head.dest] {
 				visited[head.dest] = true
 				que.Add(head.dest)
 				heightArr[head.dest] = height + 1
@@ -1232,7 +1232,7 @@ func (gph *Graph) Dijkstra(source int) {
 
 	for hp.Len() != 0 {
 		curr := heap.Pop(hp).(Edge).dest // Pop from PQ
-		if visited[curr] == true {
+		if visited[curr] {
 			continue
 		}
 		visited[curr] = true
@@ -1240,7 +1240,7 @@ func (gph *Graph) Dijkstra(source int) {
 		head := gph.Edges[curr]
 		for head != nil {
 			alt := head.cost + dist[curr]
-			if alt < dist[head.dest] && (visited[head.dest] == false) {
+			if alt < dist[head.dest] && (!visited[head.dest]) {
 				heap.Push(hp, Edge{head.dest, alt})
 				dist[head.dest] = alt
 				previous[head.dest] = curr
@@ -1347,7 +1347,7 @@ func (gph *Graph) PrimsMST() {
 	for hp.Len() != 0 {
 		curr := heap.Pop(hp).(Edge).dest // Pop from PQ
 
-		if visited[curr] == true {
+		if visited[curr] {
 			continue
 		}
 		visited[curr] = true
@@ -1355,7 +1355,7 @@ func (gph *Graph) PrimsMST() {
 		head := gph.Edges[curr]
 		for head != nil {
 			alt := head.cost
-			if alt < dist[head.dest] && (visited[head.dest] == false) {
+			if alt < dist[head.dest] && (!visited[head.dest]) {
 				heap.Push(hp, Edge{head.dest, alt})
 				dist[head.dest] = alt
 				previous[head.dest] = curr

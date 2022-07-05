@@ -13,14 +13,11 @@ func main() {
 	SelectionSort2(data2)
 	fmt.Println(data2)
 }
-/*
-func less(value1 int, value2 int) bool {
-	return value1 < value2
-}
 
-func more(value1 int, value2 int) bool {
-	return value1 > value2
-}
+/*
+[1 2 3 4 5 6 7 8 9]
+[1 2 3 4 5 6 7 8 9]
+
 */
 
 func SelectionSort(arr []int) {
@@ -50,3 +47,4 @@ func SelectionSort2(arr []int) {
 		arr[i], arr[min] = arr[min], arr[i]
 	}
 }
+

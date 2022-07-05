@@ -6,7 +6,7 @@ func AndEx(a int, b int) int {
 	return a & b
 }
 func BitReversalEx(a int) int {
-	return ^a
+	return -a - 1
 }
 func CountBits(a int) int {
 	count := 0

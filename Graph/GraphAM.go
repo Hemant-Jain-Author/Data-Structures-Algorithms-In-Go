@@ -88,7 +88,7 @@ func (gph *Graph) Dijkstra(source int) {
 	for hp.Len() != 0 {
 		curr := heap.Pop(hp).(Edge).index
 
-		if visited[curr] == true {
+		if visited[curr]  {
 			continue
 		}
 		visited[curr] = true
@@ -97,7 +97,7 @@ func (gph *Graph) Dijkstra(source int) {
 			cost := gph.adj[curr][dest]
 			if cost != 0 {
 				alt := cost + dist[curr]
-				if dist[dest] > alt && visited[dest] == false {
+				if dist[dest] > alt && !visited[dest] {
 					dist[dest] = alt
 					previous[dest] = curr
 					heap.Push(hp, Edge{dest, alt})
@@ -165,7 +165,7 @@ func (gph *Graph) PrimsMST() {
 	for hp.Len() != 0 {
 		source := heap.Pop(hp).(Edge).index
 
-		if visited[source] == true {
+		if visited[source]  {
 			continue
 		}
 		visited[source] = true
@@ -173,7 +173,7 @@ func (gph *Graph) PrimsMST() {
 		for dest := 0; dest < gph.count; dest++ {
 			cost := gph.adj[source][dest]
 			if cost != 0 {
-				if dist[dest] > cost && visited[dest] == false {
+				if dist[dest] > cost && !visited[dest] {
 					dist[dest] = cost
 					previous[dest] = source
 					heap.Push(hp, Edge{dest, cost})

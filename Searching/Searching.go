@@ -160,14 +160,14 @@ func FirstRepeated2(arr []int) int {
 }
 
 func main2() {
-	first := []int{34, 56, 77, 1, 5, 6, 6, 6, 6, 6, 6, 7, 8, 10, 34, 20, 30}
+	first := []int{1, 3, 5, 3, 9, 1, 30}
 	fmt.Println("FirstRepeated :", FirstRepeated(first))
 	fmt.Println("FirstRepeated :", FirstRepeated2(first))
 }
 
 /*
-FirstRepeated : 34
-FirstRepeated : 34
+FirstRepeated : 1
+FirstRepeated : 1
 */
 
 func printRepeating(data []int) {
@@ -467,10 +467,11 @@ func MissingValues2(arr []int) {
 			value += 1
 			i += 1
 		} else {
-			fmt.Println(value)
+			fmt.Print(value, " ")
 			value += 1
 		}
 	}
+	fmt.Println()
 }
 
 func MissingValues3(arr []int) {
@@ -490,22 +491,23 @@ func MissingValues3(arr []int) {
 	}
 	for i = minVal; i < maxVal+1; i++ {
 		if ht.Find(i) == false {
-			fmt.Println(i)
+			fmt.Print(i, " ")
 		}
 	}
+	fmt.Println()
 }
 
 func main6() {
-	arr := []int{1, 9, 2, 8, 3, 7, 4, 6}
+	arr := []int{11, 14, 13, 17, 21, 18, 19, 23, 24}
 	MissingValues(arr)
 	MissingValues2(arr)
 	MissingValues3(arr)
 }
 
 /*
-5
-5
-5
+12 15 16 20 22 
+12 15 16 20 22 
+12 15 16 20 22 
 */
 
 func OddCount(arr []int) {
@@ -2797,12 +2799,12 @@ func Main50() {
 }
 
 func main() {
-	// main1()
-	// main2()
-	// main3()
-	// main4()
-	main5()
-	// main6()
+	//main1()
+	//main2()
+	//main3()
+	//main4()
+	//main5()
+	main6()
 	// main7()
 	// main8()
 	// main9()
@@ -2839,9 +2841,9 @@ func main() {
 	// main38()
 	//main39()
 
-	main40()
-	main41()
-	main42()
+	///main40()
+	//main41()
+	//main42()
 
 	//main43()
 

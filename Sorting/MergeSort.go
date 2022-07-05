@@ -4,16 +4,20 @@ import (
 	"fmt"
 )
 
-func main() {
-	data := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
-	MergeSort(data)
-	fmt.Println(data)
-}
-
 func MergeSort(arr []int) {
 	size := len(arr)
 	tempArray := make([]int, size)
 	mergeSrt(arr, tempArray, 0, size-1)
+}
+
+func mergeSrt(arr []int, tempArray []int, lowerIndex int, upperIndex int) {
+	if lowerIndex >= upperIndex {
+		return
+	}
+	middleIndex := (lowerIndex + upperIndex) / 2
+	mergeSrt(arr, tempArray, lowerIndex, middleIndex)
+	mergeSrt(arr, tempArray, middleIndex+1, upperIndex)
+	merge(arr, tempArray, lowerIndex, middleIndex, upperIndex)
 }
 
 func merge(arr []int, tempArray []int, lowerIndex int, middleIndex int, upperIndex int) {
@@ -47,12 +51,12 @@ func merge(arr []int, tempArray []int, lowerIndex int, middleIndex int, upperInd
 	}
 }
 
-func mergeSrt(arr []int, tempArray []int, lowerIndex int, upperIndex int) {
-	if lowerIndex >= upperIndex {
-		return
-	}
-	middleIndex := (lowerIndex + upperIndex) / 2
-	mergeSrt(arr, tempArray, lowerIndex, middleIndex)
-	mergeSrt(arr, tempArray, middleIndex+1, upperIndex)
-	merge(arr, tempArray, lowerIndex, middleIndex, upperIndex)
+func main() {
+	data := []int{3, 4, 2, 1, 6, 5, 7, 8}
+	MergeSort(data)
+	fmt.Println(data)
 }
+
+/*
+[1 2 3 4 5 6 7 8]
+*/

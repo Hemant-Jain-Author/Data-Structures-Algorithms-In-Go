@@ -6,14 +6,6 @@ import (
 	"sort"
 )
 
-func main() {
-	array := []int{1, 34, 7, 99, 5, 23, 45, 88, 77, 19, 91, 100}
-	maxValue := 100
-	numBucket := 5
-	BucketSort(array, maxValue, numBucket)
-	fmt.Print(array)
-}
-
 func BucketSort(arr []int, maxValue int, numBucket int) {
 	length := len(arr)
 	if length == 0 {
@@ -49,3 +41,14 @@ func BucketSort(arr []int, maxValue int, numBucket int) {
 		}
 	}
 }
+
+// Testing code.
+func main() {
+	array := []int{1, 34, 7, 99, 5, 23, 45, 88, 77, 19, 91, 100}
+	maxValue := 100
+	numBucket := 5
+	BucketSort(array, maxValue, numBucket)
+	fmt.Print(array)
+}
+
+// [1 5 7 19 23 34 45 77 88 91 99 100]

@@ -8,7 +8,7 @@ func less(value1 int, value2 int) bool {
 	return value1 < value2
 }
 
-func more(value1 int, value2 int) bool {
+func greater(value1 int, value2 int) bool {
 	return value1 > value2
 }
 
@@ -42,7 +42,7 @@ func BubbleSort2(arr []int, comp func(int, int) bool) {
 
 func main() {
 	data := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
-	BubbleSort(data, more)
+	BubbleSort(data, greater)
 	fmt.Println(data)
 
 	data3 := []int{9, 1, 8, 2, 7, 3, 6, 4, 5}
@@ -53,3 +53,9 @@ func main() {
 	BubbleSort2(data2, less)
 	fmt.Println(data2)
 }
+
+/*
+[1 2 3 4 5 6 7 8 9]
+[9 8 7 6 5 4 3 2 1]
+[9 8 7 6 5 4 3 2 1]
+*/

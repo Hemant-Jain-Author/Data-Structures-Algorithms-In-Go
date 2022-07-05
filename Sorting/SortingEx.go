@@ -94,7 +94,7 @@ func main1() {
 	Partition01(arr, len(arr))
 	fmt.Println(arr)
 	arr = []int{ 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 }
-	Partition012(arr, len(arr))
+	Partition012_(arr, len(arr))
 	fmt.Println(arr)
 	arr = []int{ 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 }
 	Partition012(arr, len(arr))
@@ -195,14 +195,14 @@ func main4(){
 	fmt.Println(arr)
 }
 
-func absMore(value1 int, value2 int, reference int)  bool{
+func absGreater(value1 int, value2 int, reference int)  bool{
 	return (math.Abs(float64(value1 - reference)) > math.Abs(float64(value2 - reference)))
 }
 
 func absBubbleSort(arr []int, size int, reference int) {
 	for i := 0; i < (size - 1); i++ {
 		for j := 0; j < (size - i - 1); j++ {
-			if (absMore(arr[j], arr[j + 1], reference)) {
+			if (absGreater(arr[j], arr[j + 1], reference)) {
 				swap(arr, j, j + 1)
 			}
 		}
@@ -217,7 +217,7 @@ func main5() {
 	fmt.Println(array)
 }
 
-func EqMore(value1 int, value2 int, A int) bool {
+func EqGreater(value1 int, value2 int, A int) bool {
 	value1 = A * value1 * value1
 	value2 = A * value2 * value2
 	return value1 > value2

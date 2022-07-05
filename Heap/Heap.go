@@ -29,7 +29,7 @@ func CreateHeap(isMin bool, args ...[]int) *Heap {
 }
 
 func (h *Heap) comp(i, j int) bool { // always i < j in use
-	if h.isMin == true {
+	if h.isMin {
 		return h.arr[i] > h.arr[j] // swaps for min heap
 	}
 	return h.arr[i] < h.arr[j] // swap for max heap.
@@ -114,53 +114,40 @@ func main1() {
     hp.Add(6)
     hp.Add(7)
     hp.Print()
-    for  hp.IsEmpty() == false {
-        fmt.Println(hp.Remove())
+    for  !hp.IsEmpty() {
+        fmt.Print(hp.Remove(), " ")
     }
 }
 /*
 Printing Heap size :0 :: 
 Printing Heap size :4 ::  1 7 6 9
-1
-6
-7
-9
+1 6 7 9 
 */
 
 func main2() {
     a := []int{1, 0, 2, 4, 5, 3}
     hp := CreateHeap(true, a)// Min Heap
     hp.Print()
-    for hp.IsEmpty() == false {
-        fmt.Println(hp.Remove())
+    for !hp.IsEmpty() {
+        fmt.Print(hp.Remove(), " ")
     }
 }
 /*
 Printing Heap size :6 ::  0 1 2 4 5 3
-0
-1
-2
-3
-4
-5
+0 1 2 3 4 5
 */
 
 func main3() {
     a := []int{1, 0, 2, 4, 5, 3}
     hp := CreateHeap(false, a)// Max Heap
     hp.Print()
-    for hp.IsEmpty() == false {
-        fmt.Println(hp.Remove())
+    for !hp.IsEmpty() {
+        fmt.Print(hp.Remove(), " ")
     }
 }
 /*
 Printing Heap size :6 ::  5 4 3 1 0 2
-5
-4
-3
-2
-1
-0
+5 4 3 2 1 0
 */
 
 func HeapSort(arrInput []int) {

@@ -2,12 +2,6 @@ package main
 
 import "fmt"
 
-func main() {
-	array := []int{23, 24, 22, 21, 26, 25, 27, 28, 21, 21}
-	CountSort(array, 20, 30)
-	fmt.Print(array)
-}
-
 func CountSort(arr []int, lowerRange int, upperRange int) {
 	var i int
 	var j int
@@ -25,3 +19,11 @@ func CountSort(arr []int, lowerRange int, upperRange int) {
 		}
 	}
 }
+
+func main() {
+	array := []int{23, 24, 22, 21, 26, 25, 27, 28, 21, 21}
+	CountSort(array, 20, 30)
+	fmt.Print(array)
+}
+
+// [21 21 21 22 23 24 25 26 27 28]

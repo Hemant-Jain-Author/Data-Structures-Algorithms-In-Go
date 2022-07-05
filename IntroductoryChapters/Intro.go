@@ -543,7 +543,7 @@ func printInt(number int) {
 	fmt.Print(string(conversion[digit]))
 }
 func main15() {
-	printInt(95)
+	printInt(500)
 }
 
 func towerOfHanoi(num int, src byte, dst byte, temp byte) {
@@ -573,7 +573,7 @@ func GCD(m int, n int) int {
 }
 
 func main17() {
-	fmt.Println("GCD is :", GCD(24, 18))
+	fmt.Println("GCD is :", GCD(5, 2))
 }
 
 func fibonacci(n int) int {
@@ -638,24 +638,92 @@ func main20() {
 BinarySearchRecursive: false */
 
 func main() {
-//	main1()
-//	main2()
-//	main3()
-//	main4()
-//	main5()
-//	main6()
-//	main7()
-//	main8()
-//	main9()
-//	main10()
-//  main11()
-//  main12()
-//  main13()
-//  main14()
-//  main15()
-//  main16()
-// main17()
-// main18()
-// main19()
- main20()
+	/*main1()
+	main2()
+	main3()
+	main4()
+	main5()
+	main6()
+	main7()
+	main8()
+	main9()
+	main10()
+	main11()
+	main12()
+	main13()
+	main14()
+	*/
+	main15()
+	main16()
+	main17()
+	main18()
+	main19()
+ 	main20()
 }
+
+/*
+Sum of all the values in array: 45
+
+main line 1
+fun1 line 1
+fun2 line 1
+fun1 line 2
+main line 2
+
+SequentialSearch: true
+SequentialSearch: false
+BinarySearch: true
+BinarySearch: false
+
+Input array : [1 2 3 4 5 6]
+Rotated array : [3 4 5 6 1 2]
+
+Max sub array sum : 9
+
+[8 1 3 2 5 4 6 2 4]
+[2 1 3 2 4 4 6 5 8]
+[-1 1 2 3 4 -1 6 7 8 9]
+[-1 1 2 3 4 -1 6 7 8 9]
+[1 2 3 4 5 6 7 8 9 10]
+[1 2 3 4 5 6 7 8 9 10]
+
+Missing Number : 3
+Missing Number : 3
+Missing Number : 3
+Missing Number : 3
+
+[7 1 6 2 5 3 4]
+[7 1 6 2 5 3 4]
+
+MaxCirculrSum:  290
+ArrayIndexMaxDiff :  6
+ArrayIndexMaxDiff :  6
+
+Max Path Sum ::  201
+
+factorial 5 is ::  120
+1F4
+
+The sequence of moves involved in the Tower of Hanoi are :
+Move 1 disk from peg A to peg C 
+Move 2 disk from peg A to peg B 
+Move 1 disk from peg C to peg B 
+Move 3 disk from peg A to peg C 
+Move 1 disk from peg B to peg A 
+Move 2 disk from peg B to peg C 
+Move 1 disk from peg A to peg C 
+
+GCD is : 1
+
+10th number in fibonacci series : 55
+
+[0 1 2]
+[0 2 1]
+[1 0 2]
+[1 2 0]
+[2 1 0]
+[2 0 1]
+
+BinarySearchRecursive: true
+BinarySearchRecursive: false
+*/

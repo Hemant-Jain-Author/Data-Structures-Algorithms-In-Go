@@ -29,7 +29,7 @@ func graphColouringUtil(graph [][]bool, V int, m int, colour []int, i int) bool 
 // Check if the whole graph is coloured properly.
 func isSafe(graph [][]bool, V int, colour []int, v int, c int) bool {
 	for i := 0; i < V; i++ {
-		if graph[v][i] == true && c == colour[i] {
+		if graph[v][i] && c == colour[i] {
 			return false
 		}
 	}

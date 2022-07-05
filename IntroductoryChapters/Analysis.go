@@ -165,15 +165,16 @@ func main() {
 /*
 N = 100, Number of instructions O(n) :: 100
 N = 100, Number of instructions O(n^2) :: 10000
-N = 100, Number of instructions O(n^2) :: 4950
-N = 100, Number of instructions O(log(n)) :: 7
-N = 100, Number of instructions O(log(n)) :: 7
 N = 100, Number of instructions O(n^3) :: 1000000
+N = 100, Number of instructions O(n^3) :: 166650
+N = 100, Number of instructions O(n^2) :: 4950
+N = 100, Number of instructions O(n^2) :: 4950
+N = 100, Number of instructions O(n) :: 197
+N = 100, Number of instructions O(n) :: 134
+N = 100, Number of instructions O(log(n)) :: 7
+N = 100, Number of instructions O(log(n)) :: 7
 N = 100, Number of instructions O(n^2) :: 20000
 N = 100, Number of instructions O(n^(3/2)) :: 1000
-N = 100, Number of instructions O(n) :: 197
-N = 100, Number of instructions O(n^2) :: 4950
-N = 100, Number of instructions O(n^3) :: 166650
 N = 100, Number of instructions O(n) :: 100
-N = 100, Number of instructions O(n) :: 134
+
 */
