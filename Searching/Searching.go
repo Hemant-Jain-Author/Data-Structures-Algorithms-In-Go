@@ -575,7 +575,7 @@ func OddCountElements(arr []int) {
 }
 
 func main7() {
-	arr := []int{1, 9, 6, 2, 8, 1, 4, 7, 8, 4, 9, 7, 6}
+	arr := []int{10, 25, 30, 10, 15, 25, 15}
 	OddCount(arr)
 	OddCount2(arr)
 	arr = []int{10, 25, 30, 10, 15, 25, 15, 40}
@@ -583,7 +583,7 @@ func main7() {
 }
 
 /*
-Odd values:  2
+Odd values:  30
 Odd count is ::  1
 Odd count Elements are ::  30 & 40
 */
@@ -1180,7 +1180,8 @@ func AbcTriplet(arr []int) {
 		for j := i + 1; j < size; j++ {
 			for k := 0; k < size; k++ {
 				if k != i && k != j && arr[i]+arr[j] == arr[k] {
-					fmt.Println("AbcTriplet:: ", arr[i], " ", arr[j], " ", arr[k])
+					fmt.Println("AbcTriplet ::", arr[i], arr[j], arr[k])
+					return
 				}
 			}
 		}
@@ -1196,7 +1197,7 @@ func AbcTriplet2(arr []int) {
 		stop = size - 1
 		for start < stop {
 			if arr[i] == arr[start]+arr[stop] {
-				fmt.Println("AbcTriplet:: ", arr[i], " ", arr[start], " ", arr[stop])
+				fmt.Println("AbcTriplet ::", arr[i], arr[start], arr[stop])
 				return
 			} else if arr[i] < arr[start]+arr[stop] {
 				stop -= 1
@@ -2406,24 +2407,17 @@ func FrequencyCounts(arr []int) {
 
 func FrequencyCounts2(arr []int) {
 	size := len(arr)
-	var index int
-	for i := 0; i < size; i++ {
-		for arr[i] > 0 {
-			index = arr[i] - 1
-			if arr[index] > 0 {
-				arr[i] = arr[index]
-				arr[index] = -1
-			} else {
-				arr[index] -= 1
-				arr[i] = 0
-			}
-		}
+	sort.Ints(arr)
+	count := 1
+	for i := 1; i < size; i++ {
+		if (arr[i] == arr[i - 1]) {
+            count++
+		} else {
+            fmt.Print("(", arr[i - 1], " : ", count, ") ")
+            count = 1
+        }
 	}
-	for i := 0; i < size; i++ {
-		if abs(arr[i]) != 0 {
-			fmt.Print("(", (i + 1), " : ", abs(arr[i]), ") ")
-		}
-	}
+    fmt.Print("(", arr[size - 1], " : ", count, ")")
 }
 
 func FrequencyCounts3(arr []int) {
@@ -2549,7 +2543,7 @@ KLargestElements are ::3 4 2 2 5 9 3
 KLargestElements are ::3 4 2 2 5 9 3
 */
 
-/* linear search method */
+
 func FixPoint(arr []int, size int) int {
 	for i := 0; i < size; i++ {
 		if arr[i] == i {
@@ -2559,7 +2553,6 @@ func FixPoint(arr []int, size int) int {
 	return -1
 }
 
-/* Binary search method */
 func FixPoint2(arr []int, size int) int {
 	low := 0
 	high := size - 1
@@ -2589,37 +2582,33 @@ func main39() {
 2
 */
 
-func subArraySums(arr []int, size int, value int) bool {
-	first := 0
-	second := 0
-	sum := arr[first]
-	for second < size && first < size {
-		if sum == value {
-			fmt.Println("values between index :", first, " & ", second)
-			return true
-		}
+func subArraySums(arr []int, size int, value int) {
+	start := 0
+	end := 0
+	sum := 0
 
-		if sum < value {
-			second += 1
-			if second < size {
-				sum += arr[second]
-			}
-		} else {
-			sum -= arr[first]
-			first += 1
-		}
-	}
-	return false
+	for (start < size && end < size) {
+        if (sum < value) {
+            sum += arr[end]
+            end += 1
+        } else {
+            sum -= arr[start]
+            start += 1;
+        }
+
+        if (sum == value) {
+            fmt.Print("(", start, " to ", (end - 1), ") ")
+        }
+    }
 }
 
 func main40() {
-	arr := []int{1, 3, 4, 4, 6, 7, 7, 8, 8}
-	fmt.Println(subArraySums(arr, len(arr), 17))
+	arr := []int{15, 5, 5, 20, 10, 5, 5, 20, 10, 10}
+	subArraySums(arr, len(arr), 20)
 }
 
 /*
-values between index : 1  &  4
-true
+(0 to 1) (3 to 3) (4 to 6) (7 to 7) (8 to 9) 
 */
 
 func MaxConSub(arr []int, size int) int {
@@ -2799,12 +2788,12 @@ func Main50() {
 }
 
 func main() {
-	//main1()
-	//main2()
-	//main3()
-	//main4()
-	//main5()
-	main6()
+	// main1()
+	// main2()
+	// main3()
+	// main4()
+	// main5()
+	// main6()
 	// main7()
 	// main8()
 	// main9()
@@ -2824,7 +2813,7 @@ func main() {
 	// main22()
 	// main23()
 	// main24()
-	//main25()
+	// main25()
 	// main26()
 	// main27()
 	// main28()
@@ -2837,16 +2826,13 @@ func main() {
 	// main34()
 	// main35()
 	// main36()
-	//main37()
+	// main37()
 	// main38()
-	//main39()
-
-	///main40()
-	//main41()
-	//main42()
-
-	//main43()
-
+	// main39()
+	main40()
+	// main41()
+	// main42()
+	// main43()
 }
 
 func min(a int, b int) int {

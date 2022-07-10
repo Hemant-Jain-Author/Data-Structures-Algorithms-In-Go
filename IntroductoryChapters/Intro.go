@@ -129,7 +129,7 @@ func MaxSubArraySum(data []int) int {
 }
 
 func main5() {
-	data := []int{1, -2, 3, 4, -4, 6, -14, 6, 2}
+	data := []int{1, -2, 3, 4, -4, 6, -4, 3, 2}
 	fmt.Println("Max sub array sum :", MaxSubArraySum(data))
 }
 
@@ -399,8 +399,8 @@ func ArrayIndexMaxDiff(arr []int, size int) int {
 	j := 0
 	for i := 0; i < size; i++ {
 		j = size - 1
-		for j > i {
-			if arr[j] > arr[i] {
+		for i < j {
+			if arr[i] <= arr[j] {
 				if maxDiff < (j - i) {
 					maxDiff = (j - i)
 				}
@@ -413,31 +413,19 @@ func ArrayIndexMaxDiff(arr []int, size int) int {
 }
 
 func ArrayIndexMaxDiff2(arr []int, size int) int {
-	leftMin := make([]int, size)
 	rightMax := make([]int, size)
-	leftMin[0] = arr[0]
-	i, j := 0, 0
-	var maxDiff = 0
-	for i = 1; i < size; i++ {
-		if leftMin[i-1] < arr[i] {
-			leftMin[i] = leftMin[i-1]
-		} else {
-			leftMin[i] = arr[i]
-		}
-	}
 	rightMax[size-1] = arr[size-1]
-	for i = size - 2; i >= 0; i-- {
+	
+	for i := size - 2; i >= 0; i-- {
 		if rightMax[i+1] > arr[i] {
 			rightMax[i] = rightMax[i+1]
 		} else {
 			rightMax[i] = arr[i]
 		}
 	}
-	i = 0
-	j = 0
-	maxDiff = -1
-	for j < size && i < size {
-		if leftMin[i] < rightMax[j] {
+	var maxDiff = -1
+	for i, j := 0, 1; j < size && i < size; {
+		if arr[i] <= rightMax[j] {
 			if maxDiff < j-i {
 				maxDiff = j - i
 			}
@@ -642,23 +630,26 @@ func main() {
 	main2()
 	main3()
 	main4()
+	*/
 	main5()
-	main6()
+	/*main6()
 	main7()
 	main8()
 	main9()
 	main10()
 	main11()
+	
 	main12()
+	*/
 	main13()
 	main14()
-	*/
+	/*
 	main15()
 	main16()
 	main17()
 	main18()
 	main19()
- 	main20()
+ 	main20()*/
 }
 
 /*

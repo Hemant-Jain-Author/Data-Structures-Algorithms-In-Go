@@ -421,7 +421,9 @@ func (list *List) LoopPointDetect() *ListNode {
 	return nil
 }
 
-func (list *List) FindIntersection(head *ListNode, head2 *ListNode) *ListNode {
+func (list *List) FindIntersection(list2 List) *ListNode {
+	head := list.head
+	head2 := list2.head
 	l1 := 0
 	l2 := 0
 	tempHead := head
@@ -453,23 +455,174 @@ func (list *List) FindIntersection(head *ListNode, head2 *ListNode) *ListNode {
 	return head
 }
 
+func main1() {
+	ll := new(List) // or ll := List{}
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+	fmt.Println("Size :", ll.Size())
+	fmt.Println("IsEmpty :", ll.IsEmpty())
+	fmt.Println(ll.Peek())
+}
+
+/*
+3 2 1 
+Size : 3
+IsEmpty : false
+3 true
+*/
+
+func main2() {
+	ll := List{}
+	ll.SortedInsert(1)
+	ll.SortedInsert(2)
+	ll.SortedInsert(3)
+	ll.SortedInsert(1)
+	ll.SortedInsert(2)
+	ll.SortedInsert(3)
+	ll.Print()
+	
+}
+
+/*
+1 1 2 2 3 3 
+*/
+
+func main3() {
+	ll := new(List) // or ll := List{}
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(1)
+	ll.AddHead(3)
+	ll.Print()
+	ll.DeleteNode(2)
+	ll.Print()
+	ll.DeleteNodes(1)
+	ll.Print()
+}
+
+/*
+3 1 2 1 2 1 
+3 1 1 2 1 
+*/
+
+func main4() {
+	ll := new(List) // or ll := List{}
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+	ll.Reverse()
+	ll.Print()
+}
+
+/*
+3 2 1 
+1 2 3 
+*/
+
+func main5() {
+	ll := List{}
+	ll.SortedInsert(1)
+	ll.SortedInsert(2)
+	ll.SortedInsert(3)
+	ll.SortedInsert(1)
+	ll.SortedInsert(2)
+	ll.SortedInsert(3)
+	ll.Print()
+	ll.RemoveDuplicate()
+	ll.Print()
+}
+
+/*
+1 1 2 2 3 3 
+1 2 3 
+*/
+
+func main6() {
+	ll := List{}
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+
+	ll2 := ll.CopyList()
+	ll2.Print()
+	fmt.Println(ll.CompareList(ll2))
+
+	ll3 := ll.CopyListReversed()
+	ll3.Print()
+}
+
+/*
+3 2 1 
+3 2 1 
+true
+1 2 3 
+*/
+
+func main7() {
+	ll := List{}
+	ll.AddHead(1);
+	ll.AddHead(2);
+	ll.AddHead(3);
+	ll.Print()
+	ll.MakeLoop()
+	ll.LoopDetect()
+	ll.ReverseListLoopDetect()
+	ll.LoopTypeDetect()
+	ll.RemoveLoop()
+	ll.LoopDetect()
+}
+
+/*
+3 2 1 
+loop found
+loop found
+circular list loop found
+loop not found
+*/
 
 func main() {
-/*	lst := new(List)
-	//lst := List{}
-	lst.AddHead(1)
-	lst.AddHead(2)
-	lst.AddHead(3)
-	lst.Print()
+	ll := List{}
+	ll.AddHead(1);
+	ll.AddHead(2);
+	ll2 := List{}
+	ll2.AddHead(3);
+	ll2.head.next = ll.head;
+	ll.AddHead(4);
+    ll2.AddHead(5);
+    ll.Print();
+    ll2.Print();
+	nd := ll.FindIntersection(ll2)
+	fmt.Print("Intersection :: ", nd.value)
+}
 
-	lst2 := lst.CopyList()
-	lst2.Print()
-	fmt.Println(lst.CompareList(lst2))
+/*
+4 2 1 
+5 3 2 1 
+Intersection :: 2
+*/
 
-	lst3 := lst.CopyListReversed()
-	lst3.Print()
-	fmt.Println(lst.Find(7))
-	fmt.Println(lst.Find(2))
+func main233() {
+/*	ll := new(List)
+	//ll := List{}
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+
+	ll2 := ll.CopyList()
+	ll2.Print()
+	fmt.Println(ll.CompareList(ll2))
+
+	ll3 := ll.CopyListReversed()
+	ll3.Print()
+	fmt.Println(ll.Find(7))
+	fmt.Println(ll.Find(2))
 
 	ll := List{}
 	for i := 0; i < 5; i++ {
@@ -509,23 +662,18 @@ func main() {
 	ll := List{}
 	ll.SortedInsert(1)
 	ll.SortedInsert(2)
-	ll.SortedInsert(2)
 	ll.SortedInsert(3)
-	ll.SortedInsert(4)
 	ll.SortedInsert(1)
 	ll.SortedInsert(2)
-	ll.SortedInsert(4)
+	ll.SortedInsert(3)
 	ll.Print()
 	ll.RemoveDuplicate()
 	ll.Print()
 
-	ll.MakeLoop()
-	fmt.Println(ll.LoopDetect())
-	fmt.Println(ll.ReverseListLoopDetect())
-	fmt.Println(ll.LoopTypeDetect())
-	ll.RemoveLoop()
-	ll.Print()
+
+	
 */
+
 
 	ll := List{}
 	ll.AddHead(1);
