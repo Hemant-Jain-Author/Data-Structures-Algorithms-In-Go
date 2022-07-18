@@ -147,7 +147,6 @@ func (list *DoublyLinkedList) ReverseList() {
 		}
 		curr = curr.prev
 	}
-	return
 }
 
 func (list *DoublyLinkedList) CopyListReversed( ) *DoublyLinkedList {
@@ -182,14 +181,14 @@ func (list *DoublyLinkedList) SortedInsert(value int) {
 		return
 	}
 
-	if list.head.value <= value { // at the begining
+	if list.head.value > value { // at the begining
 		temp.next = list.head
 		list.head.prev = temp
 		list.head = temp
 		return 
 	}
 
-	for curr.next != nil && curr.next.value > value { // treversal
+	for curr.next != nil && curr.next.value < value { // treversal
 		curr = curr.next
 	}
 
@@ -207,13 +206,12 @@ func (list *DoublyLinkedList) SortedInsert(value int) {
 
 func (list *DoublyLinkedList) RemoveDuplicate() {
 	curr := list.head
-	var deleteMe *DLLNode
 	for curr != nil {
 		if (curr.next != nil) && curr.value == curr.next.value {
-			deleteMe = curr.next
-			curr.next = deleteMe.next
-			curr.next.prev = curr
-			if deleteMe == list.tail {
+			curr.next = curr.next.next
+			if curr.next != nil {
+				curr.next.prev = curr
+			} else {
 				list.tail = curr
 			}
 		} else {
@@ -222,7 +220,78 @@ func (list *DoublyLinkedList) RemoveDuplicate() {
 	}
 }
 
-func main() {
+func main1() {
+	ll := new(DoublyLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+	fmt.Println("Size : ", ll.Size());
+    fmt.Println("IsEmpty : ", ll.IsEmpty());
+}
+
+func main2() {
+	ll := new(DoublyLinkedList)
+	ll.SortedInsert(1)
+	ll.SortedInsert(2)
+	ll.SortedInsert(3)
+	ll.Print()
+}
+func main3() {
+	ll := new(DoublyLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+	ll.RemoveHead()
+	ll.Print()
+}
+func main4() {
+	ll := new(DoublyLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+	ll.RemoveNode(2)
+	ll.Print()
+}
+func main5() {
+	ll := new(DoublyLinkedList)
+	ll.SortedInsert(1)
+	ll.SortedInsert(2)
+	ll.SortedInsert(3)
+	ll.SortedInsert(1)
+	ll.SortedInsert(2)
+	ll.SortedInsert(3)
+	ll.Print()
+	ll.RemoveDuplicate()
+	ll.Print()
+}
+
+func main6() {
+	ll := new(DoublyLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+	ll.ReverseList()
+	ll.Print()
+}
+
+func main(){
+	ll := new(DoublyLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+	ll2 := ll.CopyList()
+	ll2.Print()
+	ll2 = ll.CopyListReversed()
+	ll2.Print()
+}
+
+
+func main222() {
 	ll := new(DoublyLinkedList)
 	ll.AddHead(1)
 	ll.AddHead(2)

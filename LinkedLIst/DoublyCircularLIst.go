@@ -24,7 +24,7 @@ func (list *DoublyCircularLinkedList) IsEmpty() bool {
 	return list.count == 0
 }
 
-func (list *DoublyCircularLinkedList) peekHead() int {
+func (list *DoublyCircularLinkedList) PeekHead() int {
 	if list.IsEmpty() {
 		fmt.Println("EmptyListException")
 	}
@@ -59,8 +59,6 @@ func (list *DoublyCircularLinkedList) Print() {
 	if list.IsEmpty() {
 		return
 	}
-	fmt.Println("List size is ::", list.count)
-	fmt.Print("List content :: ")
 	temp := list.head
 	for true {
 		fmt.Print(temp.value, " ")
@@ -151,13 +149,69 @@ func (list *DoublyCircularLinkedList) RemoveTail() (int, bool) {
 	return value, true
 }
 
-func main() {
+func main1() {
 	ll := new(DoublyCircularLinkedList)
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
+	ll.Print()
+}
+
+/*
+3 2 1
+
+*/
+
+
+func main2() {
+	ll := new(DoublyCircularLinkedList)
+	ll.AddTail(1)
+	ll.AddTail(2)
+	ll.AddTail(3)
+	ll.Print()
+}
+
+/*
+1 2 3
+
+*/
+
+
+func main3() {
+	ll := new(DoublyCircularLinkedList)
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
 	ll.Print()
+	fmt.Println("IsPresent:", ll.IsPresent(3))
+}
+
+
+/*
+3 2 1
+IsPresent: true
+*/
+
+
+func main4() {
+	ll := new(DoublyCircularLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+
+	ll.RemoveHead()
+	ll.Print()
+}
+
+/*
+3 2 1
+2 1
+*/
+
+func main() {
+	main1()
+	main2()
+	main3()
+	main4()
 }

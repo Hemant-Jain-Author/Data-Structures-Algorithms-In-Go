@@ -169,24 +169,123 @@ func (list *CircularLinkedList) CopyList() *CircularLinkedList {
 	return cl
 }
 
-func main() {
+func main1() {
 	ll := new(CircularLinkedList)
-
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
+	ll.Print()
+}
+
+/*
+3 2 1
+
+*/
+
+
+func main2() {
+	ll := new(CircularLinkedList)
+	ll.AddTail(1)
+	ll.AddTail(2)
+	ll.AddTail(3)
+	ll.Print()
+}
+
+/*
+1 2 3
+
+*/
+
+
+func main3() {
+	ll := new(CircularLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+	fmt.Println("IsPresent:", ll.IsPresent(3))
+}
+
+
+/*
+3 2 1
+IsPresent: true
+*/
+
+
+func main4() {
+	ll := new(CircularLinkedList)
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
 	ll.Print()
 
-	ll.RemoveNode(3)
-	ll.Print()
 	ll.RemoveHead()
 	ll.Print()
+}
 
-	ll2 := ll.CopyList()
-	ll2.Print()
+/*
+3 2 1
+2 1
+*/
+
+
+func main5() {
+	ll := new(CircularLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+	ll.RemoveNode(2)
+	ll.Print()
+}
+
+/*
+3 2 1
+3 1
+*/
+
+
+func main6() {
+	ll := new(CircularLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
 	ll3 := ll.CopyListReversed()
 	ll3.Print()
 }
+
+/*
+3 2 1
+1 2 3
+*/
+
+
+func main7() {
+	ll := new(CircularLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()	
+	ll2 := ll.CopyList()
+	ll2.Print()
+}
+
+/*
+3 2 1
+3 2 1
+*/
+
+func main() {
+	main1()
+	main2()
+	main3()
+	main4()
+	main5()
+	main6()
+	main7()
+}
+
+
+
