@@ -27,21 +27,21 @@ func NewTree() (self *Tree) {
 	return
 }
 
-func LevelOrderBinaryTree(arr []int) (*Tree) {
+func CreateCompleteBinaryTree(arr []int) (*Tree) {
 	tree := NewTree()
-	tree.root = levelOrderBinaryTree(arr, 0, len(arr))
+	tree.root = createCompleteBinaryTree(arr, 0, len(arr))
 	return tree
 }
 
-func levelOrderBinaryTree(arr []int, start int, size int) *Node {
+func createCompleteBinaryTree(arr []int, start int, size int) *Node {
 	curr := NewNode(arr[start], nil, nil)
 	left := 2*start + 1
 	right := 2*start + 2
 	if left < size {
-		curr.left = levelOrderBinaryTree(arr, left, size)
+		curr.left = createCompleteBinaryTree(arr, left, size)
 	}
 	if right < size {
-		curr.right = levelOrderBinaryTree(arr, right, size)
+		curr.right = createCompleteBinaryTree(arr, right, size)
 	}
 	return curr
 }
@@ -1049,7 +1049,7 @@ func appendValues(values []int, t *Node) []int {
 /* Testing Code */
 func main() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	t := LevelOrderBinaryTree(arr)
+	t := CreateCompleteBinaryTree(arr)
 	t.PrintPreOrder()
 	t.PrintPostOrder()
 	t.PrintInOrder()

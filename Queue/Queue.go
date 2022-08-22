@@ -47,13 +47,20 @@ func (q Queue) Print() {
 
 
 func main() {
-	q := new(Queue)
-	for i := 0; i < 20; i++ {
-		q.Add(i)
-	}
+	que := new(Queue)
+	que.Add(1)
+	que.Add(2)
+	que.Add(3)
+	fmt.Println("IsEmpty :", que.IsEmpty());
+    fmt.Println("Size :", que.Len());
+    fmt.Println("Queue remove :", que.Remove());
+    fmt.Println("Queue remove :", que.Remove());
 
-	for i := 0; i < 10; i++ {
-		val := q.Remove().(int)
-		fmt.Print(val, " ")
-	}
 }
+
+/*
+IsEmpty : false
+Size : 3
+Queue remove : 1
+Queue remove : 2
+*/

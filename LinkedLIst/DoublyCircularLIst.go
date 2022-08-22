@@ -155,11 +155,14 @@ func main1() {
 	ll.AddHead(2)
 	ll.AddHead(3)
 	ll.Print()
+	fmt.Println("Size :", ll.Size());
+    fmt.Println("IsEmpty :", ll.IsEmpty());
 }
 
 /*
-3 2 1
-
+3 2 1 
+Size : 3
+IsEmpty : false
 */
 
 
@@ -169,6 +172,7 @@ func main2() {
 	ll.AddTail(2)
 	ll.AddTail(3)
 	ll.Print()
+
 }
 
 /*
@@ -199,7 +203,6 @@ func main4() {
 	ll.AddHead(2)
 	ll.AddHead(3)
 	ll.Print()
-
 	ll.RemoveHead()
 	ll.Print()
 }
@@ -209,9 +212,20 @@ func main4() {
 2 1
 */
 
+func main5() {
+	ll := new(DoublyCircularLinkedList)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.Print()
+	ll.RemoveTail()
+	ll.Print()
+}
+
 func main() {
 	main1()
 	main2()
 	main3()
 	main4()
+	main5()
 }

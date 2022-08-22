@@ -36,15 +36,15 @@ func (s Stack) Print() {
 
 func main() {
 	stk := &Stack{}
-	for i := 0; i < 5; i++ {
-		stk.Push(i)
-	}
+	stk.Push(1)
+	stk.Push(2)
+	stk.Push(3)
 	stk.Print()
-	for stk.IsEmpty() == false {
-		fmt.Print(stk.Pop(), " ")
-	}
+	fmt.Print(stk.Pop(), " ")
+	fmt.Print(stk.Pop(), " ")
 }
 
 /*
-4 3 2 1 0
+[1 2 3]
+3 2 
 */

@@ -23,6 +23,14 @@ func main0() {
 	fmt.Println("main line 2")
 }
 
+/*
+main line 1
+fun1 line 1
+fun2 line 1
+fun1 line 2
+main line 2
+*/
+
 func sortedInsert(stk *Stack, element int) {
 	var temp int
 	if stk.Len() == 0 || element > stk.Top().(int) {
@@ -34,6 +42,7 @@ func sortedInsert(stk *Stack, element int) {
 	}
 }
 
+// Testing code.
 func main1() {
 	stk := new(Stack)
 	stk.Push(1)
@@ -42,6 +51,9 @@ func main1() {
 	sortedInsert(stk, 3)
 	stk.Print()
 }
+/*
+[1 2 3 4]
+*/
 
 func sortStack(stk *Stack) {
 	var temp int
@@ -67,15 +79,21 @@ func sortStack2(stk *Stack) {
 	}
 }
 
+// Testing code.
 func main2() {
 	stk := new(Stack)
 	stk.Push(1)
 	stk.Push(4)
 	stk.Push(3)
 	stk.Push(2)
-	sortStack(stk)
+	//sortStack(stk)
+	sortStack2(stk)
 	stk.Print()
 }
+
+/*
+[1 2 3 4]
+*/
 
 func insertAtBottom(stk *Stack, value interface{}) {
 	if stk.IsEmpty() {
@@ -87,25 +105,19 @@ func insertAtBottom(stk *Stack, value interface{}) {
 	}
 }
 
-func bottomInsert(stk *Stack, element int) {
-	var temp int
-	if stk.Len() == 0 {
-		stk.Push(element)
-	} else {
-		temp = stk.Pop().(int)
-		bottomInsert(stk, element)
-		stk.Push(temp)
-	}
-}
-
+// Testing code.
 func main3() {
 	stk := new(Stack)
 	stk.Push(1)
 	stk.Push(2)
 	stk.Push(3)
-	insertAtBottom(stk, 5)
+	insertAtBottom(stk, 4)
 	stk.Print()
 }
+
+/*
+[4 1 2 3]
+*/
 
 func reverseStack(stk *Stack) {
 	if stk.IsEmpty() {
@@ -127,6 +139,7 @@ func reverseStack2(stk *Stack) {
 	}
 }
 
+// Testing code.
 func main4() {
 	stk := new(Stack)
 	stk.Push(1)
@@ -137,7 +150,23 @@ func main4() {
 	reverseStack(stk)
 	fmt.Print("Stack after reversal : ")
 	stk.Print()
+
+	stk2 := new(Stack)
+	stk2.Push(1)
+	stk2.Push(2)
+	stk2.Push(3)
+	fmt.Print("Stack before reversal : ")
+	stk2.Print()
+	reverseStack(stk2)
+	fmt.Print("Stack after reversal : ")
+	stk2.Print()
+
 }
+
+/*
+Stack before reversal : [1 2 3]
+Stack after reversal : [3 2 1]
+*/
 
 func reverseKElementInStack(stk *Stack, k int) {
 	que := new(Queue)
@@ -151,6 +180,7 @@ func reverseKElementInStack(stk *Stack, k int) {
 	}
 }
 
+// Testing code.
 func main5() {
 	stk := new(Stack)
 	stk.Push(1)
@@ -161,7 +191,10 @@ func main5() {
 	reverseKElementInStack(stk, 2)
 	stk.Print()
 }
-
+/*
+[1 2 3 4]
+[1 2 4 3]
+*/
 func reverseQueue(que *Queue) {
 	stk := new(Stack)
 	for que.Len() != 0 {
@@ -173,6 +206,7 @@ func reverseQueue(que *Queue) {
 	}
 }
 
+// Testing code.
 func main6() {
 	que := new(Queue)
 	que.Add(1)
@@ -183,7 +217,10 @@ func main6() {
 	reverseQueue(que)
 	que.Print()
 }
-
+/*
+[1 2 3 4]
+[4 3 2 1]
+*/
 func reverseKElementInQueue(que *Queue, k int) {
 	stk := new(Stack)
 	i := 0
@@ -203,6 +240,7 @@ func reverseKElementInQueue(que *Queue, k int) {
 	}
 }
 
+// Testing code.
 func main7() {
 	que := new(Queue)
 	que.Add(1)
@@ -213,7 +251,10 @@ func main7() {
 	reverseKElementInQueue(que, 2)
 	que.Print()
 }
-
+/*
+[1 2 3 4]
+[2 1 3 4]
+*/
 func IsBalancedParenthesis(expn string) bool {
 	stk := new(Stack)
 	for _, ch := range expn {
@@ -240,12 +281,15 @@ func IsBalancedParenthesis(expn string) bool {
 	return stk.IsEmpty()
 }
 
+// Testing code.
 func main8() {
 	expn := "{()}[]"
 	value := IsBalancedParenthesis(expn)
-	fmt.Println("Given Expn :", expn)
 	fmt.Println("IsBalancedParenthesis :", value)
 }
+/*
+IsBalancedParenthesis : true
+*/
 
 func maxDepthParenthesis(expn string, size int) int {
 	stk := new(Stack)
@@ -289,18 +333,20 @@ func maxDepthParenthesis2(expn string, size int) int {
 	return maxDepth
 }
 
+// Testing code.
 func main9() {
 	expn := "((((A)))((((BBB()))))()()()())"
 	size := len(expn)
 	value := maxDepthParenthesis(expn, size)
-
-	fmt.Println("Given expn ", expn)
-	fmt.Println("Max depth parenthesis is ", value)
+	fmt.Println("Max depth parenthesis is", value)
 
 	value2 := maxDepthParenthesis2(expn, size)
-	fmt.Println("Max depth parenthesis is ", value2)
+	fmt.Println("Max depth parenthesis is", value2)
 }
-
+/*
+Max depth parenthesis is 6
+Max depth parenthesis is 6
+*/
 func longestContBalParen(str string, size int) int {
 	stk := new(Stack)
 	stk.Push(-1)
@@ -325,12 +371,17 @@ func longestContBalParen(str string, size int) int {
 	return length
 }
 
+// Testing code.
 func main10() {
 	expn := "())((()))(())()(()"
 	size := len(expn)
 	value := longestContBalParen(expn, size)
-	fmt.Println("longestContBalParen ", value)
+	fmt.Println("longestContBalParen", value)
 }
+
+/*
+longestContBalParen 12
+*/
 
 func reverseParenthesis(expn string, size int) int {
 	stk := new(Stack)
@@ -367,13 +418,17 @@ func reverseParenthesis(expn string, size int) int {
 	return reversal
 }
 
+// Testing code.
 func main11() {
 	expn2 := ")(())((("
 	size := len(expn2)
 	value := reverseParenthesis(expn2, size)
-	fmt.Println("Given expn : ", expn2)
-	fmt.Println("reverse Parenthesis is : ", value)
+	fmt.Println("reverse Parenthesis is :", value)
 }
+
+/*
+reverse Parenthesis is : 3
+*/
 
 func findDuplicateParenthesis(expn string, size int) bool {
 	stk := new(Stack)
@@ -398,13 +453,16 @@ func findDuplicateParenthesis(expn string, size int) bool {
 	return false
 }
 
+// Testing code.
 func main12() {
 	expn := "(((a+b))+c)"
-	fmt.Println("Given expn : ", expn)
 	size := len(expn)
 	value := findDuplicateParenthesis(expn, size)
-	fmt.Println("Duplicate Parenthesis Found : ", value)
+	fmt.Println("Duplicate Parenthesis Found :", value)
 }
+/*
+Duplicate Parenthesis Found : true
+*/
 
 func printParenthesisNumber(expn string, size int) {
 	var ch byte
@@ -421,20 +479,18 @@ func printParenthesisNumber(expn string, size int) {
 			output += fmt.Sprintf("%v", stk.Pop().(int))
 		}
 	}
-	fmt.Println("Parenthesis Count : ", output)
+	fmt.Println("Parenthesis Count :", output)
 }
 
+// Testing code.
 func main13() {
 	expn1 := "(((a+(b))+(c+d)))"
 	size := len(expn1)
-	fmt.Println("Given expn ", expn1)
 	printParenthesisNumber(expn1, size)
-
-	expn2 := "(((a+b))+c)((("
-	size = len(expn2)
-	fmt.Println("Given expn ", expn2)
-	printParenthesisNumber(expn2, size)
 }
+/*
+Parenthesis Count : 1234435521
+*/
 
 func precedence(x rune) int {
 	if x == '(' {
@@ -489,12 +545,17 @@ func InfixToPostfix(expn string) string {
 	return output
 }
 
+// Testing code.
 func main14() {
 	expn := "10+((3))*5/(16-4)"
 	value := InfixToPostfix(expn)
-	fmt.Println("Infix Expn: ", expn)
-	fmt.Println("Postfix Expn: ", value)
+	fmt.Println("Infix Expn:", expn)
+	fmt.Println("Postfix Expn:", value)
 }
+/*
+Infix Expn: 10+((3))*5/(16-4)
+Postfix Expn: 10 3 5 * 16 4 - / + 
+*/
 
 func InfixToPrefix(expn string) string {
 	expn = reverseString(expn)
@@ -530,12 +591,17 @@ func replaceParanthesis(str string) string {
 	return string(a)
 }
 
+// Testing code.
 func main15() {
 	expn := "10+((3))*5/(16-4)"
 	value := InfixToPrefix(expn)
-	fmt.Println("Infix Expn: ", expn)
-	fmt.Println("Prefix Expn: ", value)
+	fmt.Println("Infix Expn:", expn)
+	fmt.Println("Prefix Expn:", value)
 }
+/*
+Infix Expn: 10+((3))*5/(16-4)
+Prefix Expn:  +10 * 3 / 5  - 16 4
+*/
 
 func postfixEvaluate(expn string) int {
 	stk := new(Stack)
@@ -563,12 +629,16 @@ func postfixEvaluate(expn string) int {
 	return stk.Pop().(int)
 }
 
+// Testing code.
 func main16() {
 	expn := "6 5 2 3 + 8 * + 3 + *"
 	value := postfixEvaluate(expn)
-	fmt.Println("Given Postfix Expn: ", expn)
-	fmt.Println("Result after Evaluation: ", value)
+	fmt.Println("Result after Evaluation:", value)
 }
+
+/*
+Result after Evaluation: 288
+*/
 
 func StockSpanRange(arr []int) []int {
 	n := len(arr)
@@ -604,11 +674,16 @@ func StockSpanRange2(arr []int) []int {
 	return SR
 }
 
+// Testing code.
 func main17() {
 	stock := []int{6, 5, 4, 3, 2, 4, 5, 7, 9}
 	fmt.Println(StockSpanRange(stock))
 	fmt.Println(StockSpanRange2(stock))
 }
+/*
+[1 1 1 1 1 4 6 8 9]
+[1 1 1 1 1 4 6 8 9]
+*/
 
 func GetMaxArea(arr []int) int {
 	size := len(arr)
@@ -659,6 +734,7 @@ func GetMaxArea2(arr []int) int {
 	return maxArea
 }
 
+// Testing code.
 func main18() {
 	arr := []int{7, 6, 5, 4, 4, 1, 6, 3, 1}
 	value := GetMaxArea(arr)
@@ -667,6 +743,31 @@ func main18() {
 	value = GetMaxArea2(arr)
 	fmt.Println("GetMaxArea ::", value)
 }
+/*
+GetMaxArea :: 20
+GetMaxArea :: 20
+*/
+
+func StockAnalystAdd(stk *Stack, value int) {
+    for (stk.Len() > 0 && stk.Top().(int) <= value) {
+        stk.Pop();
+	}
+    stk.Push(value);
+}
+
+// Testing code.
+func main18A()  {
+    arr := []int{ 20, 19, 10, 21, 40, 35, 39, 50, 45, 42 };
+    stk := new(Stack)
+    for i := len(arr) - 1; i >= 0; i-- {
+        StockAnalystAdd(stk, arr[i]);
+	}
+    stk.Print()
+}
+
+/*
+[50 40 21 20]
+*/
 
 func nextLargerElement(arr []int, size int) {
 	output := make([]int, size)
@@ -717,7 +818,23 @@ func nextLargerElement2(arr []int, size int) {
 	fmt.Println()
 }
 
-func nextSmallerElement(arr []int, size int) {
+func nextSmallerElement(arr[] int, size int) {
+    output := make([]int, size)
+    for i := 0; i < size; i++ {
+		output[i] = -1
+	}
+	for i := 0; i < size; i++ {
+		for j := i+1; j < size; j++ {
+			if (arr[j] < arr[i]) {
+                output[i] = arr[j];
+                break;
+            }
+		}
+	}
+    fmt.Println(output)
+}
+
+func nextSmallerElement2(arr []int, size int) {
 	stk := new(Stack)
 	output := make([]int, size)
 	var curr, index int
@@ -741,15 +858,43 @@ func nextSmallerElement(arr []int, size int) {
 	fmt.Println()
 }
 
+// Testing code.
 func main19() {
 	arr := []int{13, 21, 3, 6, 20, 3}
 	size := len(arr)
 	nextLargerElement(arr, size)
 	nextLargerElement2(arr, size)
 	nextSmallerElement(arr, size)
+	nextSmallerElement2(arr, size)
 }
+/*
+21 -1 6 20 -1 -1 
+21 -1 6 20 -1 -1 
+3 3 -1 3 3 -1 
+*/
 
 func nextLargerElementCircular(arr []int, size int) {
+	output := make([]int, size)
+	for i := 0; i < size; i++ {
+		output[i] = -1
+	}
+
+	for i := 0; i < size; i++ {
+		for j := 1; j < size; j++ {
+			if arr[i] < arr[(i + j) % size] {
+                output[i] = arr[(i + j) % size]
+                break
+            }
+		}
+	}
+
+	for _, v := range output {
+		fmt.Print(v, " ")
+	}
+	fmt.Println()
+}
+
+func nextLargerElementCircular2(arr []int, size int) {
 	stk := new(Stack)
 	var curr, index int
 	output := make([]int, size)
@@ -773,222 +918,23 @@ func nextLargerElementCircular(arr []int, size int) {
 	fmt.Println()
 }
 
+// Testing code.
 func main20() {
 	arr := []int{6, 3, 9, 8, 10, 2, 1, 15, 7}
 	size := len(arr)
 	nextLargerElementCircular(arr, size)
+	
+	arr2 := []int{6, 3, 9, 8, 10, 2, 1, 15, 7}
+	size2 := len(arr2)
+	nextLargerElementCircular2(arr2, size2)
 }
+/*
+9 9 10 10 15 15 15 -1 9 
+9 9 10 10 15 15 15 -1 9 
+*/
 
-func RottenFruitUtil(arr [][]int, maxCol int, maxRow int, currCol int, currRow int, traversed [][]int, day int) { // Range check
-	if currCol < 0 || currCol >= maxCol || currRow < 0 || currRow >= maxRow {
-		return
-	}
-	// Traversable and rot if not already rotten.
-	if traversed[currCol][currRow] <= day || arr[currCol][currRow] == 0 {
-		return
-	}
-	// Update rot time.
-	traversed[currCol][currRow] = day
-	// each line corresponding to 4 direction.
-	RottenFruitUtil(arr, maxCol, maxRow, currCol-1, currRow, traversed, day+1)
-	RottenFruitUtil(arr, maxCol, maxRow, currCol+1, currRow, traversed, day+1)
-	RottenFruitUtil(arr, maxCol, maxRow, currCol, currRow+1, traversed, day+1)
-	RottenFruitUtil(arr, maxCol, maxRow, currCol, currRow-1, traversed, day+1)
-}
 
-func RottenFruit(arr [][]int, maxCol int, maxRow int) int {
-	traversed := make([][]int, maxRow)
-	for i := range traversed {
-		traversed[i] = make([]int, maxCol)
-	}
 
-	for i := 0; i < maxCol; i++ {
-		for j := 0; j < maxRow; j++ {
-			traversed[i][j] = 999999
-		}
-	}
-
-	for i := 0; i < maxCol-1; i++ {
-		for j := 0; j < maxRow-1; j++ {
-			if arr[i][j] == 2 {
-				RottenFruitUtil(arr, maxCol, maxRow, i, j, traversed, 0)
-			}
-		}
-	}
-
-	maxDay := 0
-	for i := 0; i < maxCol-1; i++ {
-		for j := 0; j < maxRow-1; j++ {
-			if arr[i][j] == 1 {
-				if traversed[i][j] == 999999 {
-					return -1
-				}
-				if maxDay < traversed[i][j] {
-					maxDay = traversed[i][j]
-				}
-			}
-		}
-	}
-	return maxDay
-}
-
-func main21() {
-	arr := make([][]int, 5)
-	arr[0] = []int{1, 0, 1, 1, 0}
-	arr[1] = []int{2, 1, 0, 1, 0}
-	arr[2] = []int{0, 0, 0, 2, 1}
-	arr[3] = []int{0, 2, 0, 0, 1}
-	arr[4] = []int{1, 1, 0, 0, 1}
-	fmt.Println(RottenFruit(arr, 5, 5))
-}
-
-func StepsOfKnightUtil(size int, currCol int, currRow int, traversed [][]int, dist int) {
-	// Range check
-	if currCol < 0 || currCol >= size || currRow < 0 || currRow >= size {
-		return
-	}
-
-	// Traversable and rot if not already rotten.
-	if traversed[currCol][currRow] <= dist {
-		return
-	}
-
-	// Update rot time.
-	traversed[currCol][currRow] = dist
-	// each line corresponding to 4 direction.
-	StepsOfKnightUtil(size, currCol-2, currRow-1, traversed, dist+1)
-	StepsOfKnightUtil(size, currCol-2, currRow+1, traversed, dist+1)
-	StepsOfKnightUtil(size, currCol+2, currRow-1, traversed, dist+1)
-	StepsOfKnightUtil(size, currCol+2, currRow+1, traversed, dist+1)
-	StepsOfKnightUtil(size, currCol-1, currRow-2, traversed, dist+1)
-	StepsOfKnightUtil(size, currCol+1, currRow-2, traversed, dist+1)
-	StepsOfKnightUtil(size, currCol-1, currRow+2, traversed, dist+1)
-	StepsOfKnightUtil(size, currCol+1, currRow+2, traversed, dist+1)
-}
-
-func StepsOfKnight(size int, srcX int, srcY int, dstX int, dstY int) int {
-	traversed := make([][]int, size)
-	for i := range traversed {
-		traversed[i] = make([]int, size)
-	}
-
-	for i := 0; i < size; i++ {
-		for j := 0; j < size; j++ {
-			traversed[i][j] = 999999
-		}
-	}
-
-	StepsOfKnightUtil(size, srcX-1, srcY-1, traversed, 0)
-	retval := traversed[dstX-1][dstY-1]
-	return retval
-}
-
-func main22() {
-	fmt.Println(StepsOfKnight(20, 10, 10, 20, 20))
-}
-
-func DistNearestFillUtil(arr [][]int, maxCol int, maxRow int, currCol int, currRow int, traversed [][]int, dist int) { // Range check
-	if currCol < 0 || currCol >= maxCol || currRow < 0 || currRow >= maxRow {
-		return
-	}
-	// Traversable if their is a better distance.
-	if traversed[currCol][currRow] <= dist {
-		return
-	}
-	// Update distance.
-	traversed[currCol][currRow] = dist
-	// each line corresponding to 4 direction.
-	DistNearestFillUtil(arr, maxCol, maxRow, currCol-1, currRow, traversed, dist+1)
-	DistNearestFillUtil(arr, maxCol, maxRow, currCol+1, currRow, traversed, dist+1)
-	DistNearestFillUtil(arr, maxCol, maxRow, currCol, currRow+1, traversed, dist+1)
-	DistNearestFillUtil(arr, maxCol, maxRow, currCol, currRow-1, traversed, dist+1)
-}
-
-func DistNearestFill(arr [][]int, maxCol int, maxRow int) {
-	traversed := make([][]int, maxRow)
-	for i := range traversed {
-		traversed[i] = make([]int, maxCol)
-	}
-	for i := 0; i < maxCol; i++ {
-		for j := 0; j < maxRow; j++ {
-			traversed[i][j] = 999999
-		}
-	}
-	for i := 0; i < maxCol; i++ {
-		for j := 0; j < maxRow; j++ {
-			if arr[i][j] == 1 {
-				DistNearestFillUtil(arr, maxCol, maxRow, i, j, traversed, 0)
-			}
-		}
-	}
-
-	for i := 0; i < maxCol; i++ {
-		for j := 0; j < maxRow; j++ {
-			fmt.Print(" ", traversed[i][j])
-		}
-		fmt.Println()
-	}
-}
-
-func main23() {
-	arr := make([][]int, 5)
-	arr[0] = []int{1, 0, 1, 1, 0}
-	arr[1] = []int{1, 1, 0, 1, 0}
-	arr[2] = []int{0, 0, 0, 0, 1}
-	arr[3] = []int{0, 0, 0, 0, 1}
-	arr[4] = []int{0, 0, 0, 0, 1}
-
-	DistNearestFill(arr, 5, 5)
-}
-
-func findLargestIslandUtil(arr [][]int, maxCol int, maxRow int, currCol int,
-	currRow int, value int, traversed [][]int) int {
-	if currCol < 0 || currCol >= maxCol || currRow < 0 || currRow >= maxRow {
-		return 0
-	}
-	if traversed[currCol][currRow] == 1 || arr[currCol][currRow] != value {
-		return 0
-	}
-	traversed[currCol][currRow] = 1
-	// each call corresponding to 8 direction.
-	return 1 + findLargestIslandUtil(arr, maxCol, maxRow, currCol-1, currRow-1, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol-1, currRow, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol-1, currRow+1, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol, currRow-1, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol, currRow+1, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol+1, currRow-1, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol+1, currRow, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol+1, currRow+1, value, traversed)
-}
-
-func findLargestIsland(arr [][]int, maxCol int, maxRow int) int {
-	maxVal := 0
-	currVal := 0
-
-	traversed := make([][]int, maxRow)
-	for i := range traversed {
-		traversed[i] = make([]int, maxCol)
-	}
-
-	for i := 0; i < maxCol; i++ {
-		for j := 0; j < maxRow; j++ {
-			traversed[i][j] = 999999
-		}
-	}
-	for i := 0; i < maxCol; i++ {
-		for j := 0; j < maxRow; j++ {
-			currVal = findLargestIslandUtil(arr, maxCol, maxRow, i, j, arr[i][j], traversed)
-			if currVal > maxVal {
-				maxVal = currVal
-			}
-		}
-	}
-	return maxVal
-}
-
-func main24() {
-	arr := make([][]int, 5)
-	arr[0] = []int{1, 0, 1, 1, 0}
-	arr[1] = []int{1, 0, 0, 1, 0}
-	arr[2] = []int{0, 1, 1, 1, 1}
-	arr[3] = []int{0, 1, 0, 0, 0}
-	arr[4] = []int{1, 1, 0, 0, 1}
-
-	fmt.Println("Largest Island : ", findLargestIsland(arr, 5, 5))
-}
 
 func isKnown(relation [][]int, a int, b int) bool {
 	if relation[a][b] == 1 {
@@ -997,7 +943,24 @@ func isKnown(relation [][]int, a int, b int) bool {
 	return false
 }
 
-func findCelebrity(relation [][]int, count int) int {
+func findCelebrity(relation [][]int,  count int) int {
+    cel := true
+    for i := 0; i < count; i++ {
+        cel = true
+        for j := 0; j < count; j++ {
+            if i != j && (!isKnown(relation, j, i) || isKnown(relation, i, j)) {
+                cel = false
+                break
+            }
+        }
+        if (cel == true){
+            return i
+		}
+    }
+    return -1;
+}
+
+func findCelebrity2(relation [][]int, count int) int {
 	stk := new(Stack)
 	first := 0
 	second := 0
@@ -1022,7 +985,7 @@ func findCelebrity(relation [][]int, count int) int {
 	return first
 }
 
-func findCelebrity2(relation [][]int, count int) int {
+func findCelebrity3(relation [][]int, count int) int {
 	first := 0
 	second := 1
 
@@ -1043,6 +1006,7 @@ func findCelebrity2(relation [][]int, count int) int {
 	return first
 }
 
+// Testing code.
 func main25() {
 	arr := make([][]int, 5)
 	arr[0] = []int{1, 0, 1, 1, 0}
@@ -1051,12 +1015,19 @@ func main25() {
 	arr[3] = []int{0, 0, 0, 0, 0}
 	arr[4] = []int{1, 1, 0, 1, 1}
 
-	fmt.Println("Celebrity : ", findCelebrity(arr, 5))
-	fmt.Println("Celebrity : ", findCelebrity2(arr, 5))
+	fmt.Println("Celebrity :", findCelebrity(arr, 5))
+	fmt.Println("Celebrity :", findCelebrity2(arr, 5))
+	fmt.Println("Celebrity :", findCelebrity3(arr, 5))
 }
 
+/*
+Celebrity : 3
+Celebrity : 3
+*/
+
 func main() {
-	main1()
+	main0()
+/*	main1()
 	main2()
 	main3()
 	main4()
@@ -1074,7 +1045,8 @@ func main() {
 	main16()
 	main17()
 	main18()
-	main19()
+*/	main18A()
+main19()
 	main20()
 	main21()
 	main22()

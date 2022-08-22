@@ -43,13 +43,20 @@ func main() {
 	que.Add(3)
 	fmt.Println(que.Length())
 	fmt.Println(que.IsEmpty())
-	
 	fmt.Println(que.Remove())
 	fmt.Println(que.Remove())
 	fmt.Println(que.Remove())
 	fmt.Println(que.IsEmpty())
-	
 }
+
+/*
+3
+false
+1
+2
+3
+true
+*/
 
 type Stack struct {
 	stk []interface{}
