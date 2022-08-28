@@ -93,6 +93,7 @@ func (h *HashTableSC) Print() {
 	fmt.Println()
 }
 
+// Testing code.
 func main() {
 	ht := NewHashTableSC()
 
@@ -109,7 +110,7 @@ func main() {
 }
 /*
 Hash Table contains :: (1=>10) (2=>20) (3=>30) 
-Find key 2 :  true
-Value at key 2 :  20
-Find key 2 :  false
+Find key 2 : true
+Value at key 2 : 20
+Find key 2 : false
 */

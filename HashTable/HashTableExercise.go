@@ -37,7 +37,7 @@ func RemoveDuplicate(str string) string {
 	hs := make(Set)
 	var output []rune
 	for _, ch := range input {
-		if hs.Find(ch) == false {
+		if hs.Has(ch) == false {
 			output = append(output, ch)
 			hs.Add(ch)
 		}
@@ -60,7 +60,7 @@ func FindMissing(arr []int, start int, end int) (int, bool) {
 		hs.Add(i)
 	}
 	for curr := start; curr <= end; curr++ {
-		if hs.Find(curr) == false {
+		if hs.Has(curr) == false {
 			return curr, true
 		}
 	}
@@ -81,7 +81,7 @@ func PrintRepeating(arr []int) {
 	hs := make(Set)
 	fmt.Print("Repeating elements are :: ")
 	for _, val := range arr {
-		if hs.Find(val) {
+		if hs.Has(val) {
 			fmt.Print(val, "  ")
 		} else {
 			hs.Add(val)
@@ -108,7 +108,7 @@ func PrintFirstRepeating(arr []int) {
 	}
 	for i := 0; i < size; i++ {
 		hs.Remove(arr[i])
-		if hs.Find(arr[i]) {
+		if hs.Has(arr[i]) {
 			fmt.Println("First Repeating number is : ", arr[i])
 			return
 		}
@@ -139,7 +139,91 @@ func main(){
 	main3()
 	main4()
 	main5()
+	main6()
+	main7()
+	main8()
 }
+
+func main6() {
+    // Create a hash set.
+    hs := make(Set)
+    // Add elements to the hash set.
+    hs.Add("Banana");
+    hs.Add("Apple");
+    hs.Add("Mango");
+    fmt.Println(hs);
+    fmt.Println("Apple present :", hs.Has("Apple"));
+    fmt.Println("Grapes present :", hs.Has("Grapes"));
+    hs.Remove("Apple");
+    fmt.Println(hs);
+    fmt.Println("Apple present :", hs.Has("Apple"));
+}
+
+/*
+map[Apple:true Banana:true Mango:true]
+Apple present : true
+Grapes present : false
+map[Banana:true Mango:true]
+Apple present : false
+*/
+
+func main7() {
+	m := make(map[string]int)
+	m["Apple"] = 40
+	m["Banana"] = 30
+	m["Mango"] = 50
+
+	for key, val := range m {
+		fmt.Print("[ ", key, " @ ", val, " ]")
+	}
+	fmt.Println()
+
+	v, ok := m["Apple"]
+	if ok {
+		fmt.Println("Apple available at price :", v)
+	} else {
+		fmt.Println("Apple unavailable.")
+	}
+
+	delete(m, "Apple")
+
+	v, ok = m["Apple"]
+	if ok {
+		fmt.Println("Apple available at price :", v)
+	} else {
+		fmt.Println("Apple unavailable.")
+	}
+}
+
+/*
+[ Apple @ 40 ][ Banana @ 30 ][ Mango @ 50 ]
+Apple available at price : 40
+Apple unavailable.
+*/
+
+func main8() {
+	mp := make(Counter)
+	mp.Add("a")
+	mp.Add("b")
+	mp.Add("a")
+
+	fmt.Println(mp.Has("a"))
+	fmt.Println(mp.Has("b"))
+	fmt.Println(mp.Has("c"))
+
+	fmt.Println(mp.Get("a"))
+	fmt.Println(mp.Get("b"))
+	fmt.Println(mp.Get("c"))
+}
+
+/*
+true
+true
+false
+2 true
+1 true
+0 false
+*/
 
 // ***********************
 type Counter map[interface{}]int
@@ -147,7 +231,7 @@ type Counter map[interface{}]int
 func (s *Counter) Add(key interface{}) {
 	(*s)[key]++
 }
-func (s *Counter) Find(key interface{}) bool {
+func (s *Counter) Has(key interface{}) bool {
 	_, ok := (*s)[key]
 	return ok
 }
@@ -179,7 +263,7 @@ func (s *Set) Remove(key interface{}) {
 	delete((*s), key)
 }
 
-func (s *Set) Find(key interface{}) bool {
+func (s *Set) Has(key interface{}) bool {
 	return (*s)[key]
 }
 //**************************************

@@ -4,7 +4,6 @@ import (
 	"fmt"
 )
 
-
 func matchExpUtil(exp string, str string, i int, j int) bool {
 	if i == len(exp) && j == len(str) {
 		return true
@@ -21,23 +20,25 @@ func matchExpUtil(exp string, str string, i int, j int) bool {
 	return false
 }
 
-func matchExp(exp string, str string) bool {
+func MatchExp(exp string, str string) bool {
 	return matchExpUtil(exp, str, 0, 0)
 }
 
 func main1() {
-    fmt.Println(matchExp("hello*", "helloworld"))
-    fmt.Println(matchExp("hello?d", "hellowd"))
-    fmt.Println(matchExp("hello*hemant", "helloworldfsdfsdfdsfhemant"))
-    fmt.Println(matchExp("*hemantj", "helloworldfsdfsdfdsfhemant"))
+    fmt.Println(MatchExp("hello*", "helloworld"))
+    fmt.Println(MatchExp("hello?d", "hellowd"))
+    fmt.Println(MatchExp("hello*hemant", "helloworldfsdfsdfdsfhemant"))
+    fmt.Println(MatchExp("*hemantj", "helloworldfsdfsdfdsfhemant"))
 }
+
 /*
 true
 true
 true
 false
 */
-func match(source string, pattern string) bool {
+
+func MatchPattern(source string, pattern string) bool {
 	iSource := 0
 	iPattern := 0
 	sourceLen := len(source)
@@ -54,21 +55,16 @@ func match(source string, pattern string) bool {
 }
 
 func main2() {
-    fmt.Println(match("hellofskdlfjsdlfjsldjflksdworld", "helloworld"))
-    fmt.Println(match("hellod", "hellowd"))
-    fmt.Println(match("hello*xxxxxxxxxxhemantxxxxxxxxxxxx", "hellnt"))
+    fmt.Println(MatchPattern("harrypottermustnotgotoschool", "potterschool"))
     fmt.Println()
 }
 
 /*
 true
-false
-true
 */
 
-func isPrime(n int) bool {
+func IsPrime(n int) bool {
 	answer := false
-
 	if n > 1 {
 		answer = true
 	}
@@ -85,7 +81,7 @@ func isPrime(n int) bool {
 func main3() {
     fmt.Print("Prime numbers under 10 :: ")
     for i := 0; i < 10; i++ {
-        if (isPrime(i)){
+        if (IsPrime(i)){
             fmt.Print(i, " ")
         }
     }
@@ -96,7 +92,7 @@ func main3() {
 Prime numbers under 10 :: 2 3 5 7 
 */
 
-func isUniqueChar(str string) bool {
+func IsUniqueChar(str string) bool {
 	mp := make(map[byte]int)
 	size := len(str)
 	for i := 0; i < size; i++ {
@@ -112,8 +108,8 @@ func isUniqueChar(str string) bool {
 }
 
 func main4() {
-    isUniqueChar("aple")
-    isUniqueChar("apple")
+    IsUniqueChar("aple")
+    IsUniqueChar("apple")
 }
 
 /*
@@ -121,7 +117,7 @@ No duplicate detected!
 Duplicate detected!
 */
 
-func isPermutation(s1 string, s2 string) bool {
+func IsPermutation(s1 string, s2 string) bool {
 	count := make(map[byte]int)
 	length := len(s1)
 	if len(s2) != length {
@@ -147,18 +143,18 @@ func isPermutation(s1 string, s2 string) bool {
 }
 
 func main5() {
-    fmt.Println("isPermutation :", isPermutation("apple", "plepa"))
-    fmt.Println("isPermutation :", isPermutation("appleb", "plepaa"))
+    fmt.Println("IsPermutation :", IsPermutation("apple", "plepa"))
+    fmt.Println("IsPermutation :", IsPermutation("appleb", "plepaa"))
 }
 
 /*
 apple & plepa are permutation
-isPermutation : true
+IsPermutation : true
 appleb & plepaa are not permutation
-isPermutation : false
+IsPermutation : false
 */
 
-func isPalindrome(str string) bool {
+func IsPalindrome(str string) bool {
 	i := 0
 	j := len(str) - 1
 	for i < j && str[i] == str[j] {
@@ -174,8 +170,8 @@ func isPalindrome(str string) bool {
 }
 
 func main6() {
-    isPalindrome("hello")
-    isPalindrome("eoloe")
+    IsPalindrome("hello")
+    IsPalindrome("eoloe")
 }
 
 /*
@@ -183,28 +179,28 @@ String is not a Palindrome
 String is a Palindrome
 */
 
-func pow(x int, n int) int {
+func Pow(x int, n int) int {
 	var value int
 	if n == 0 {
 		return 1
 	} else if n%2 == 0 {
-		value = pow(x, n/2)
+		value = Pow(x, n/2)
 		return (value * value)
 	} else {
-		value = pow(x, n/2)
+		value = Pow(x, n/2)
 		return x * value * value
 	}
 }
 
 func main7() {
-    fmt.Println(pow(5, 2))
+    fmt.Println(Pow(5, 2))
 }
 
 /*
 25
 */
 
-func strcmp(a string, b string) int {
+func Strcmp(a string, b string) int {
 	index := 0
 	len1 := len(a)
 	len2 := len(b)
@@ -228,14 +224,18 @@ func strcmp(a string, b string) int {
 }
 
 func main8() {
-    fmt.Println("StrCmp returns :", strcmp("aba", "aas"))
+    fmt.Println(Strcmp("apple", "appke"));
+    fmt.Println(Strcmp("apple", "apple"));
+    fmt.Println(Strcmp("apple", "appme"));
 }
 
 /*
-StrCmp returns : 1
+1
+0
+-1
 */
 
-func reverseString(a string) string {
+func ReverseString(a string) string {
 	chars := []rune(a)
 	reverseStringUtil(chars)
 	return string(chars)
@@ -259,7 +259,7 @@ func reverseStringRange(a []rune, lower int, upper int) {
 	}
 }
 
-func reverseWords(str string) string {
+func ReverseWords(str string) string {
 	length := len(str)
 	upper := -1
 	lower := 0
@@ -279,8 +279,8 @@ func reverseWords(str string) string {
 }
 
 func main9() {
-    fmt.Println(reverseString("apple"))
-    fmt.Println(reverseWords("hello world"))
+    fmt.Println(ReverseString("apple"))
+    fmt.Println(ReverseWords("hello world"))
 }
 
 /*
@@ -288,40 +288,37 @@ elppa
 world hello
 */
 
-func printAnagram(a string) {
-	n := len(a)
-	printAnagramUtil([]rune(a), n, n)
+func PrintAnagram(a string) {
+	printAnagramUtil([]rune(a), 0, len(a))
 }
 
-func printAnagramUtil(a []rune, max int, n int) {
-	if max == 1 {
+func printAnagramUtil(a []rune, i int, length int) {
+	if length == i {
 		fmt.Println(string(a))
+		return
 	}
-	for i := -1; i < max-1; i++ {
-		if i != -1 {
-			a[i], a[max-1] = a[max-1], a[i]
-		}
-		printAnagramUtil(a, max-1, n)
-		if i != -1 {
-			a[i], a[max-1] = a[max-1], a[i]
-		}
+	
+	for j := i; j < length; j++ {
+		a[i], a[j] = a[j], a[i]
+		printAnagramUtil(a, i+1, length)
+		a[i], a[j] = a[j], a[i]
 	}
 }
 
 func main10() {
-    printAnagram("123")
+    PrintAnagram("123")
 }
 
 /*
 123
-213
-321
-231
 132
+213
+231
+321
 312
 */
 
-func shuffle(arr string) string {
+func Shuffle(arr string) string {
 	ar := []rune(arr)
 	n := len(ar) / 2
 	count := 0
@@ -346,7 +343,7 @@ func shuffle(arr string) string {
 }
 
 func main11() {
-    fmt.Println(shuffle("ABCDE12345"))
+    fmt.Println(Shuffle("ABCDE12345"))
 }
 
 /*

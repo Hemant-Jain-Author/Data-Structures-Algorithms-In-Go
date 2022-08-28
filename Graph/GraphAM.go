@@ -1,7 +1,6 @@
 ﻿package main
 
 import (
-	"container/heap"
 	"fmt"
 	"math"
 	"strconv"
@@ -43,6 +42,7 @@ func (gph *Graph) Print() {
 	}
 }
 
+// Testing code.
 func main1() {
 	gph := NewGraph(4)
 	gph.AddUndirectedEdge(0, 1, 1)
@@ -76,17 +76,17 @@ func (gph *Graph) Dijkstra(source int) {
 
 	type Edge struct {
 		index    int
-		priority int
+		cost int
 	}
 
-	cmp := func(a, b interface{}) bool { // Less function
-		return a.(Edge).priority < b.(Edge).priority
+	cmp := func(a, b interface{}) bool { // Greater function
+		return a.(Edge).cost > b.(Edge).cost
 	}
-	hp := NewHeap(cmp)
-	heap.Push(hp, Edge{source, 0})
+	hp := CreateHeap(cmp)
+	hp.Add(Edge{source, 0})
 
-	for hp.Len() != 0 {
-		curr := heap.Pop(hp).(Edge).index
+	for hp.Size() != 0 {
+		curr := hp.Remove().(Edge).index
 
 		if visited[curr]  {
 			continue
@@ -100,7 +100,7 @@ func (gph *Graph) Dijkstra(source int) {
 				if dist[dest] > alt && !visited[dest] {
 					dist[dest] = alt
 					previous[dest] = curr
-					heap.Push(hp, Edge{dest, alt})
+					hp.Add(Edge{dest, alt})
 				}
 			}
 		}
@@ -153,17 +153,17 @@ func (gph *Graph) PrimsMST() {
 
 	type Edge struct {
 		index    int
-		priority int
+		cost int
 	}
 
 	cmp := func(a, b interface{}) bool {
-		return a.(Edge).priority < b.(Edge).priority
+		return a.(Edge).cost > b.(Edge).cost
 	}
 
-	hp := NewHeap(cmp)
-	heap.Push(hp, Edge{source, 0})
-	for hp.Len() != 0 {
-		source := heap.Pop(hp).(Edge).index
+	hp := CreateHeap(cmp)
+	hp.Add(Edge{source, 0})
+	for hp.Size() != 0 {
+		source := hp.Remove().(Edge).index
 
 		if visited[source]  {
 			continue
@@ -176,7 +176,7 @@ func (gph *Graph) PrimsMST() {
 				if dist[dest] > cost && !visited[dest] {
 					dist[dest] = cost
 					previous[dest] = source
-					heap.Push(hp, Edge{dest, cost})
+					hp.Add(Edge{dest, cost})
 				}
 			}
 		}
@@ -198,6 +198,7 @@ func (gph *Graph) PrimsMST() {
 
 }
 
+// Testing code.
 func main2() {
 	gph := NewGraph(9)
 	gph.AddUndirectedEdge(0, 1, 4)
@@ -264,6 +265,7 @@ func (gph *Graph) hamiltonianPathUtil(path []int, pSize int, added []int) bool {
 	return false
 }
 
+// Testing code.
 func main3() {
 	count := 5
 	gph := NewGraph(count)
@@ -356,6 +358,7 @@ func (gph *Graph) hamiltonianCycleUtil(path []int, pSize int, added []int) bool 
 	return false
 }
 
+// Testing code.
 func main4() {
 	count := 5
 	gph := NewGraph(count)
@@ -411,51 +414,109 @@ func main() {
 	main4()
 }
 
-// *********************
 type Heap struct {
-	heap []interface{}
+	size  int
+	arr   []interface{}
 	comp func(x interface{}, y interface{}) bool
 }
 
-func NewHeap(comp func(x interface{}, y interface{}) bool) *Heap {
-	hp := new(Heap)
-	hp.comp = comp
-	return hp
+func CreateHeap(comp func(x interface{}, y interface{}) bool) *Heap {
+	var arr []interface{}
+	h := &Heap{comp: comp, arr : arr, size : 0}
+	return h
 }
 
-func (hp Heap) Len() int {
-	return len(hp.heap)
+func (h *Heap) swap(i, j int) {
+	h.arr[i], h.arr[j] = h.arr[j], h.arr[i]
 }
 
-func (hp Heap) Less(i, j int) bool {
-	return hp.comp(hp.heap[i], hp.heap[j])
+func (h *Heap) percolateDown(parent int) {
+	lChild := 2 * parent + 1
+	rChild := lChild + 1
+	child := -1
+	if lChild < h.size {
+		child = lChild
+	}
+	if rChild < h.size && h.comp(h.arr[lChild], h.arr[rChild]) {
+		child = rChild
+	}
+	if child != -1 && h.comp(h.arr[parent], h.arr[child]) {
+		h.swap(parent, child)
+		h.percolateDown(child)
+	}
 }
 
-func (hp Heap) Swap(i, j int) {
-	hp.heap[i], hp.heap[j] = hp.heap[j], hp.heap[i]
+func (h *Heap) percolateUp(child int) {
+	parent := (child - 1) / 2
+	if parent >= 0 && h.comp(h.arr[parent], h.arr[child]) {
+		h.swap(child, parent)
+		h.percolateUp(parent)
+	}
 }
 
-func (hp *Heap) Push(x interface{}) {
-	hp.heap = append(hp.heap, x)
+func (h *Heap) Add(value interface{}) {
+	h.arr = append(h.arr, value)
+	h.size++
+	h.percolateUp(h.size-1)
 }
 
-func (hp *Heap) Pop() interface{} {
-	n := len(hp.heap)
-	value := hp.heap[n-1]
-	hp.heap = hp.heap[0 : n-1]
+func (h *Heap) Remove() interface{} {
+	if h.IsEmpty() {
+		fmt.Println("HeapEmptyException.")
+		return 0
+	}
+	value := h.arr[0]
+	h.arr[0] = h.arr[h.size - 1]
+	h.size--
+	h.percolateDown(0)
+	h.arr = h.arr[0 : h.size]
 	return value
 }
 
-func (hp Heap) Print() {
-	fmt.Println(hp.heap)
+
+func (h *Heap) Delete( value interface{}) bool {
+    for i := 0; i < h.size; i++ {
+        if (h.arr[i] == value) {
+            h.arr[i] = h.arr[h.size - 1]
+            h.size -= 1
+            h.percolateUp(i)
+            h.percolateDown(i)
+            return true
+        }
+    }
+    return false
 }
 
-func (hp Heap) Empty() bool {
-	return len(hp.heap) == 0
+
+func (h *Heap) IsEmpty() bool {
+	return (h.size == 0)
 }
 
-func (hp Heap) Peek() interface{} {
-	return hp.heap[0]
+func (h *Heap) Size() int {
+	return h.size
 }
 
-// ************************************
+func (h *Heap) Peek() interface{} {
+	if h.IsEmpty() {
+		fmt.Println("Heap empty exception.")
+		return 0
+	}
+	return h.arr[0]
+}
+
+func (h *Heap) Print() {
+	fmt.Println("Heap size :", h.size)
+	fmt.Print("Heap Array :")
+	for i := 0; i < h.size; i++ {
+		fmt.Print(" ", h.arr[i])
+	}
+	fmt.Println()
+}
+
+func minComp (i, j interface{}) bool { // always i < j in use
+	return i.(int) > j.(int) // swaps for min heap
+}
+
+func maxComp (i, j interface{}) bool { // always i < j in use
+	return i.(int) < j.(int) // swap for max heap.
+}

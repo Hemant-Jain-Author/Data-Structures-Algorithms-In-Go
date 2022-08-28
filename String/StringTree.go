@@ -95,6 +95,7 @@ func (t *StringTree) frequencyUtil(curr *TreeNode, value string) int {
 	return t.frequencyUtil(curr.rChild, value)
 }
 
+// Testing code.
 func main() {
 	t := new(StringTree)
 	t.Insert("banana")

@@ -129,5 +129,5 @@ func main() {
 Using BruteForceSearch pattern found at index :  7
 Using RobinKarp  pattern found at index :  7
 Using KMP  pattern found at index :  7
-Frequency of 'time' is  2
+Frequency of 'time' is 2
 */

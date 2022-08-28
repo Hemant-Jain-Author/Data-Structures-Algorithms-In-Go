@@ -53,23 +53,22 @@ func (t *TST) findUtil(curr *TSTNode, word string, wordIndex int) bool {
 
 func (t *TST) Find(word string) bool {
 	ret := t.findUtil(t.root, word, 0)
-	fmt.Print(word, " :: ")
-	if ret {
-		fmt.Println(" Found ")
-	} else {
-		fmt.Println("Not Found ")
-	}
 	return ret
 }
 
+// Testing code.
 func main() {
 	tt := new(TST)
 	tt.Insert("banana")
 	tt.Insert("apple")
 	tt.Insert("mango")
-	fmt.Println("Search results for apple, banana, grapes and mango :")
-	tt.Find("apple")
-	tt.Find("banana")
-	tt.Find("mango")
-	tt.Find("grapes")
+	fmt.Println("Apple Found :", tt.Find("apple"));
+    fmt.Println("Banana Found :", tt.Find("banana"));
+    fmt.Println("Grapes Found :", tt.Find("grapes"));
 }
+
+/*
+Apple Found : true
+Banana Found : true
+Grapes Found : false
+*/

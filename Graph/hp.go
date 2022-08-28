@@ -4,34 +4,6 @@ import (
 	"fmt"
 )
 
-func OptimalMergePattern(lists []int, size int) int {
-	cmp := func(a, b interface{}) bool { 
-		return a.(int) > b.(int) 
-	}
-	hp := CreateHeap(cmp)
-	
-	for i := 0; i < size; i++ {
-		hp.Add(lists[i])
-	}
-	total := 0
-	value := 0
-	for hp.Size() > 1 {
-		value = hp.Remove().(int)
-		value += hp.Remove().(int)
-		hp.Add(value)
-		total += value
-	}
-	return total
-}
-
-func main() {
-	lists := []int{4, 3, 2, 6}
-	fmt.Println("Total:", OptimalMergePattern(lists, len(lists)))
-}
-
-/*
-Total: 29
-*/
 
 type Heap struct {
 	size  int
@@ -39,20 +11,9 @@ type Heap struct {
 	comp func(x interface{}, y interface{}) bool
 }
 
-func CreateHeap(comp func(x interface{}, y interface{}) bool, args ...[]interface{}) *Heap {
+func CreateHeap(comp func(x interface{}, y interface{}) bool) *Heap {
 	var arr []interface{}
-	size := 0
-	if len(args) > 0 {
-		arrInput := args[0]
-		arr = append(arr, arrInput...)
-		size = len(arrInput)
-	}
-
-	h := &Heap{comp: comp, arr : arr, size : size}
-	for i := (size / 2); i >= 0; i-- {
-		h.percolateDown(i)
-	}
-
+	h := &Heap{comp: comp, arr : arr, size : 0}
 	return h
 }
 
@@ -117,7 +78,6 @@ func (h *Heap) Delete( value interface{}) bool {
     return false
 }
 
-
 func (h *Heap) IsEmpty() bool {
 	return (h.size == 0)
 }
@@ -142,3 +102,64 @@ func (h *Heap) Print() {
 	}
 	fmt.Println()
 }
+
+func minComp (i, j interface{}) bool { // always i < j in use
+	return i.(int) > j.(int) // swaps for min heap
+}
+
+func maxComp (i, j interface{}) bool { // always i < j in use
+	return i.(int) < j.(int) // swap for max heap.
+}
+
+//Testing Code 
+func main1() {
+    hp := CreateHeap(minComp)
+    hp.Add(1)
+    hp.Add(6)
+    hp.Add(5)
+    hp.Add(7)
+    hp.Add(3)
+    hp.Add(4)
+    hp.Add(2)
+    hp.Print()
+    for  !hp.IsEmpty() {
+        fmt.Print(hp.Remove(), " ")
+    }
+}
+
+/*
+Heap size : 7
+Heap Array : 1 3 2 7 6 5 4
+1 2 3 4 5 6 7
+*/
+
+//Testing Code 
+func main() {
+    hp := CreateHeap(maxComp)
+    hp.Add(1)
+    hp.Add(6)
+    hp.Add(5)
+    hp.Add(7)
+    hp.Add(3)
+    hp.Add(4)
+    hp.Add(2)
+    hp.Print()
+    for  !hp.IsEmpty() {
+        fmt.Print(hp.Remove(), " ")
+    }
+}
+
+/* Testing Code 
+func main2() {
+    a := []int{1, 2, 10, 8, 7, 3, 4, 6, 5, 9}
+    hp := CreateHeap(true, a)// Min Heap
+    hp.Print()
+    for !hp.IsEmpty() {
+        fmt.Print(hp.Remove(), " ")
+    }
+}
+/*
+Heap size : 10
+Heap Array : 1 2 3 5 7 10 4 6 8 9
+1 2 3 4 5 6 7 8 9 10
+*/

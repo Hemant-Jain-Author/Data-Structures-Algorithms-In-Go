@@ -239,6 +239,7 @@ func (self *SPLAYTree) Delete(data int) {
 	self.splay(parent) // Splaying for the parent of the node deleted.
 }
 
+// Testing code.
 func main() {
 	tree := NewSPLAYTree()
 	tree.Insert(5)

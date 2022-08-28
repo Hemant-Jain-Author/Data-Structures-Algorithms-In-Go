@@ -76,6 +76,7 @@ func (t *Trie) FindUtil(curr *TrieNode, str string, index int) bool {
 	return t.FindUtil(curr.child[str[index]-'a'], str, index+1)
 }
 
+// Testing code.
 func main() {
 	t := new(Trie)
 	t.Insert("banana")
