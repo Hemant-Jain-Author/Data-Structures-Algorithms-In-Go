@@ -17,7 +17,7 @@ func max(a, b int) int {
 }
 
 // days are must travel days, costs are cost of tickets.
-func VacationMinCost(days []int, costs []int) int {
+func MinCostTravel(days []int, costs []int) int {
 	n := len(days)
 	maxVal := days[n-1]
 	dp := make([]int, maxVal+1)
@@ -38,7 +38,7 @@ func VacationMinCost(days []int, costs []int) int {
 func main() {
 	days := []int{1, 3, 5, 7, 12, 20, 30}
 	costs := []int{2, 7, 20}
-	fmt.Println("Min cost is :", VacationMinCost(days, costs))
+	fmt.Println("Min cost is :", MinCostTravel(days, costs))
 }
 
 /*

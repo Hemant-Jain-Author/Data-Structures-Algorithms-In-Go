@@ -527,6 +527,7 @@ func DistNearestFill(arr [][]int, maxCol int, maxRow int) {
 		fmt.Println()
 	}
 }
+
 type Node2 struct{
     x, y, dist int;
 }
@@ -584,38 +585,45 @@ func main23() {
  */
 
 func findLargestIslandUtil(arr [][]int, maxCol int, maxRow int, currCol int,
-	currRow int, value int, traversed [][]int) int {
-	if currCol < 0 || currCol >= maxCol || currRow < 0 || currRow >= maxRow {
-		return 0
-	}
-	if traversed[currCol][currRow] == 1 || arr[currCol][currRow] != value {
-		return 0
-	}
-	traversed[currCol][currRow] = 1
-	// each call corresponding to 8 direction.
-	return 1 + findLargestIslandUtil(arr, maxCol, maxRow, currCol-1, currRow-1, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol-1, currRow, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol-1, currRow+1, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol, currRow-1, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol, currRow+1, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol+1, currRow-1, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol+1, currRow, value, traversed) + findLargestIslandUtil(arr, maxCol, maxRow, currCol+1, currRow+1, value, traversed)
+	currRow int, traversed [][]bool) int {
+    dir := [][]int {{ -1, -1 }, { -1, 0 }, { -1, 1 }, { 0, -1 }, { 0, 1 }, { 1, -1 }, { 1, 0 }, { 1, 1 } }
+    var x, y int
+    var sum = 1
+    for i := 0; i < 8; i++ {
+        x = currCol + dir[i][0]
+        y = currRow + dir[i][1]
+        if (x >= 0 && x < maxCol && y >= 0 && y < maxRow && traversed[x][y] == false && arr[x][y] == 1) {
+			traversed[x][y] = true
+			sum += findLargestIslandUtil(arr, maxCol, maxRow, x, y, traversed)
+		}
+    }
+	return sum
+
 }
 
 func findLargestIsland(arr [][]int, maxCol int, maxRow int) int {
 	maxVal := 0
 	currVal := 0
 
-	traversed := make([][]int, maxRow)
+	traversed := make([][]bool, maxRow)
 	for i := range traversed {
-		traversed[i] = make([]int, maxCol)
+		traversed[i] = make([]bool, maxCol)
+	}
+	for i := 0; i < maxCol; i++ {
+		for j := 0; j < maxRow; j++ {
+			traversed[i][j] = false
+		}
 	}
 
 	for i := 0; i < maxCol; i++ {
-		for j := 0; j < maxRow; j++ {
-			traversed[i][j] = 999999
-		}
-	}
-	for i := 0; i < maxCol; i++ {
-		for j := 0; j < maxRow; j++ {
-			currVal = findLargestIslandUtil(arr, maxCol, maxRow, i, j, arr[i][j], traversed)
-			if currVal > maxVal {
-				maxVal = currVal
-			}
+		for j := 0; j < maxRow; j++ {		
+            if (arr[i][j] == 1) {
+				traversed[i][j] = true
+				currVal = findLargestIslandUtil(arr, maxCol, maxRow, i, j, traversed)
+                if currVal > maxVal {
+                    maxVal = currVal
+                }
+            }
 		}
 	}
 	return maxVal
@@ -629,7 +637,7 @@ func main24() {
     {0, 1, 0, 0, 0},
     {1, 1, 0, 0, 1}}
 
-	fmt.Println("Largest Island : ", findLargestIsland(arr, 5, 5))
+	fmt.Println("Largest Island :", findLargestIsland(arr, 5, 5))
 }
 /*
 Largest Island :  12

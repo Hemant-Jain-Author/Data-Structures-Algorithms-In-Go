@@ -16,6 +16,7 @@ func tohUtil(num int, from string, to string, temp string) {
 	tohUtil(num-1, temp, to, from)
 }
 
+// Testing code.
 func main() {
 	TowerOfHanoi(3)
 }

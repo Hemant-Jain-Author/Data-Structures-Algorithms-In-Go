@@ -19,7 +19,7 @@ func max(a, b int) int {
 	return b
 }
 
-func MinCostBinaryTreeTD(arr []int) int {
+func MinCostBSTTD(arr []int) int {
 	n := len(arr)
 	dp := make([][]int, n)
 	max := make([][]int, n)
@@ -36,10 +36,10 @@ func MinCostBinaryTreeTD(arr []int) int {
 	for i := 0; i < n; i++ {
 		max[i][i] = arr[i]
 	}
-	return minCostBinaryTreeTDUtil(dp, max, 0, n-1, arr)
+	return minCostBSTTDUtil(dp, max, 0, n-1, arr)
 }
 
-func minCostBinaryTreeTDUtil(dp [][]int, maxVal [][]int, i int, j int, arr []int) int {
+func minCostBSTTDUtil(dp [][]int, maxVal [][]int, i int, j int, arr []int) int {
 	if j <= i {
 		return 0
 	}
@@ -48,8 +48,8 @@ func minCostBinaryTreeTDUtil(dp [][]int, maxVal [][]int, i int, j int, arr []int
 	}
 	for k := i; k < j; k++ {
 		dp[i][j] = min(dp[i][j],
-			minCostBinaryTreeTDUtil(dp, maxVal, i, k, arr)+
-				minCostBinaryTreeTDUtil(dp, maxVal, k+1, j, arr)+
+			minCostBSTTDUtil(dp, maxVal, i, k, arr)+
+				minCostBSTTDUtil(dp, maxVal, k+1, j, arr)+
 				findMaxVal(maxVal, i, k)*findMaxVal(maxVal, k+1, j))
 	}
 	return dp[i][j]
@@ -66,7 +66,7 @@ func findMaxVal(maxVal [][]int, i int, j int) int {
 	return maxVal[i][j]
 }
 
-func MinCostBinaryTreeBU(arr []int) int {
+func MinCostBSTBU(arr []int) int {
 	n := len(arr)
 	dp := make([][]int, n)
 	maxVal := make([][]int, n)
@@ -92,8 +92,8 @@ func MinCostBinaryTreeBU(arr []int) int {
 
 func main() {
 	arr := []int{6, 2, 4}
-	fmt.Println("Total cost:", MinCostBinaryTreeTD(arr))
-	fmt.Println("Total cost:", MinCostBinaryTreeBU(arr))
+	fmt.Println("Total cost:", MinCostBSTTD(arr))
+	fmt.Println("Total cost:", MinCostBSTBU(arr))
 }
 
 /*

@@ -73,6 +73,7 @@ func isSafe2(graph [][]bool, colour []int, V int) bool {
 	return true
 }
 
+// Testing code.
 func main() {
 	graph := [][]bool{
 		{false, true, false, false, true},

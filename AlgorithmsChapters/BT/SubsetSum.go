@@ -28,6 +28,7 @@ func printSubset(flags []bool, arr []int, size int) {
 		}
 	}
 	fmt.Println()
+	fmt.Print("fdsfds")
 }
 
 func main() {

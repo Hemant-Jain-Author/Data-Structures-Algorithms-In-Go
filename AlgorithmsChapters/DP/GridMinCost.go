@@ -47,10 +47,7 @@ func min(a, b, c int) int {
 }
 
 func main() {
-	cost := [][]int{
-		{1, 3, 4},
-		{4, 7, 5},
-		{1, 5, 3}}
+	cost := [][]int{{1, 3, 4}, {4, 7, 5}, {1, 5, 3}}
 	fmt.Println(MinCost(cost, 3, 3))
 	fmt.Println(MinCostBU(cost, 3, 3))
 }

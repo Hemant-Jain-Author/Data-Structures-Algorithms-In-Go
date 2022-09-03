@@ -148,10 +148,6 @@ func min(a, b int) int {
 func main() {
 	coins := []int{5, 6}
 	value := 16
-	/*
-		coins := []int{1, 5, 6, 9, 12}
-		value := 15
-	*/
 	n := len(coins)
 	fmt.Println("Count is :", MinCoins(coins, n, value))
 	fmt.Println("Count is :", MinCoins2(coins, n, value))

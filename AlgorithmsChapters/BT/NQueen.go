@@ -27,6 +27,7 @@ func feasible(Q []int, k int) bool {
 	return true
 }
 
+// Testing code.
 func main() {
 	Q := make([]int, 8)
 	NQueens(Q, 0, 8)

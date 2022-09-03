@@ -65,10 +65,7 @@ func isValid2(arr []int, i int) bool {
 }
 
 func main() {
-	arr := make([]int, 4)
-	for i := 0; i < 4; i++ {
-		arr[i] = i + 1
-	}
+	arr := []int{1, 2, 3, 4}
 	Permutation(arr, 0, 4)
 	fmt.Println()
 

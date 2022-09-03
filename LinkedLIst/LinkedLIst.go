@@ -586,7 +586,7 @@ circular list loop found
 loop not found
 */
 
-func main() {
+func main8() {
 	ll := List{}
 	ll.AddHead(1);
 	ll.AddHead(2);
@@ -606,6 +606,20 @@ func main() {
 5 3 2 1 
 Intersection :: 2
 */
+
+
+func main() {
+	ll := List{}
+	ll.AddHead(1);
+	ll.AddHead(2);
+	ll.AddHead(3);
+	ll.Print()
+	fmt.Println(ll.NthNodeFromBegining(2));
+	fmt.Println(ll.NthNodeFromEnd(2));
+	fmt.Println(ll.NthNodeFromEnd2(2));
+}
+
+
 
 func main233() {
 /*	ll := new(List)
