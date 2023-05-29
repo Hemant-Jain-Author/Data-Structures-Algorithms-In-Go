@@ -149,7 +149,7 @@ func (list *DoublyLinkedList) ReverseList() {
 	}
 }
 
-func (list *DoublyLinkedList) CopyListReversed( ) *DoublyLinkedList {
+func (list *DoublyLinkedList) CopyListReversed() *DoublyLinkedList {
 	dll := new(DoublyLinkedList)
 
 	curr := list.head
@@ -161,7 +161,7 @@ func (list *DoublyLinkedList) CopyListReversed( ) *DoublyLinkedList {
 	return dll
 }
 
-func (list *DoublyLinkedList) CopyList( ) *DoublyLinkedList {
+func (list *DoublyLinkedList) CopyList() *DoublyLinkedList {
 	dll := new(DoublyLinkedList)
 	curr := list.head
 	for curr != nil {
@@ -185,7 +185,7 @@ func (list *DoublyLinkedList) SortedInsert(value int) {
 		temp.next = list.head
 		list.head.prev = temp
 		list.head = temp
-		return 
+		return
 	}
 
 	for curr.next != nil && curr.next.value < value { // treversal
@@ -226,8 +226,8 @@ func main1() {
 	ll.AddHead(2)
 	ll.AddHead(3)
 	ll.Print()
-	fmt.Println("Size : ", ll.Size());
-    fmt.Println("IsEmpty : ", ll.IsEmpty());
+	fmt.Println("Size : ", ll.Size())
+	fmt.Println("IsEmpty : ", ll.IsEmpty())
 }
 
 func main2() {
@@ -278,7 +278,7 @@ func main6() {
 	ll.Print()
 }
 
-func main(){
+func main() {
 	ll := new(DoublyLinkedList)
 	ll.AddHead(1)
 	ll.AddHead(2)
@@ -289,7 +289,6 @@ func main(){
 	ll2 = ll.CopyListReversed()
 	ll2.Print()
 }
-
 
 func main222() {
 	ll := new(DoublyLinkedList)

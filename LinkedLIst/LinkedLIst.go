@@ -258,16 +258,16 @@ func (list *List) compareListUtil(head1 *ListNode, head2 *ListNode) bool {
 func (list *List) compareList2(head1 *ListNode, head2 *ListNode) bool {
 	for head1 != nil && head2 != nil {
 		if head1.value != head2.value {
-			return false;
+			return false
 		}
 		head1 = head1.next
-        head2 = head2.next
+		head2 = head2.next
 	}
 
 	if head1 == nil && head2 == nil {
 		return true
 	}
-    return false
+	return false
 }
 
 func (list *List) FindLength() int {
@@ -467,7 +467,7 @@ func main1() {
 }
 
 /*
-3 2 1 
+3 2 1
 Size : 3
 IsEmpty : false
 3 true
@@ -482,11 +482,11 @@ func main2() {
 	ll.SortedInsert(2)
 	ll.SortedInsert(3)
 	ll.Print()
-	
+
 }
 
 /*
-1 1 2 2 3 3 
+1 1 2 2 3 3
 */
 
 func main3() {
@@ -505,8 +505,8 @@ func main3() {
 }
 
 /*
-3 1 2 1 2 1 
-3 1 1 2 1 
+3 1 2 1 2 1
+3 1 1 2 1
 */
 
 func main4() {
@@ -520,8 +520,8 @@ func main4() {
 }
 
 /*
-3 2 1 
-1 2 3 
+3 2 1
+1 2 3
 */
 
 func main5() {
@@ -538,8 +538,8 @@ func main5() {
 }
 
 /*
-1 1 2 2 3 3 
-1 2 3 
+1 1 2 2 3 3
+1 2 3
 */
 
 func main6() {
@@ -558,17 +558,17 @@ func main6() {
 }
 
 /*
-3 2 1 
-3 2 1 
+3 2 1
+3 2 1
 true
-1 2 3 
+1 2 3
 */
 
 func main7() {
 	ll := List{}
-	ll.AddHead(1);
-	ll.AddHead(2);
-	ll.AddHead(3);
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
 	ll.Print()
 	ll.MakeLoop()
 	ll.LoopDetect()
@@ -579,7 +579,7 @@ func main7() {
 }
 
 /*
-3 2 1 
+3 2 1
 loop found
 loop found
 circular list loop found
@@ -588,124 +588,120 @@ loop not found
 
 func main8() {
 	ll := List{}
-	ll.AddHead(1);
-	ll.AddHead(2);
+	ll.AddHead(1)
+	ll.AddHead(2)
 	ll2 := List{}
-	ll2.AddHead(3);
-	ll2.head.next = ll.head;
-	ll.AddHead(4);
-    ll2.AddHead(5);
-    ll.Print();
-    ll2.Print();
+	ll2.AddHead(3)
+	ll2.head.next = ll.head
+	ll.AddHead(4)
+	ll2.AddHead(5)
+	ll.Print()
+	ll2.Print()
 	nd := ll.FindIntersection(ll2)
 	fmt.Print("Intersection :: ", nd.value)
 }
 
 /*
-4 2 1 
-5 3 2 1 
+4 2 1
+5 3 2 1
 Intersection :: 2
 */
 
-
 func main() {
 	ll := List{}
-	ll.AddHead(1);
-	ll.AddHead(2);
-	ll.AddHead(3);
-	ll.Print()
-	fmt.Println(ll.NthNodeFromBegining(2));
-	fmt.Println(ll.NthNodeFromEnd(2));
-	fmt.Println(ll.NthNodeFromEnd2(2));
-}
-
-
-
-func main233() {
-/*	ll := new(List)
-	//ll := List{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
 	ll.Print()
+	fmt.Println(ll.NthNodeFromBegining(2))
+	fmt.Println(ll.NthNodeFromEnd(2))
+	fmt.Println(ll.NthNodeFromEnd2(2))
+}
 
-	ll2 := ll.CopyList()
-	ll2.Print()
-	fmt.Println(ll.CompareList(ll2))
+func main233() {
+	/*	ll := new(List)
+		//ll := List{}
+		ll.AddHead(1)
+		ll.AddHead(2)
+		ll.AddHead(3)
+		ll.Print()
 
-	ll3 := ll.CopyListReversed()
-	ll3.Print()
-	fmt.Println(ll.Find(7))
-	fmt.Println(ll.Find(2))
+		ll2 := ll.CopyList()
+		ll2.Print()
+		fmt.Println(ll.CompareList(ll2))
+
+		ll3 := ll.CopyListReversed()
+		ll3.Print()
+		fmt.Println(ll.Find(7))
+		fmt.Println(ll.Find(2))
+
+		ll := List{}
+		for i := 0; i < 5; i++ {
+		    ll.AddHead(i)
+		}
+
+		for i := 0; i < 5; i++ {
+		    ll.AddTail(i)
+		}
+
+		ll.Print();
+
+	*/
+	/*	ll := List{}
+		for i := 0; i < 5; i++ {
+		    ll.AddHead(i)
+		}
+		fmt.Println(ll.Peek())
+		ll.RemoveHead()
+		ll.Print();
+		fmt.Println(ll.Find(3))
+		ll.DeleteNode(3)
+		fmt.Println(ll.Find(3))
+		ll.Reverse()
+		ll.Print();
+		ll.ReverseRecurse()
+		ll.Print();
+
+		fmt.Println(ll.NthNodeFromBegining(2));
+		fmt.Println(ll.NthNodeFromEnd(2));
+		fmt.Println(ll.NthNodeFromEnd2(2));
+		fmt.Println(ll.FindLength())
+		ll.FreeList()
+		fmt.Println(ll.FindLength())
+	*/
+	/*
+		ll := List{}
+		ll.SortedInsert(1)
+		ll.SortedInsert(2)
+		ll.SortedInsert(3)
+		ll.SortedInsert(1)
+		ll.SortedInsert(2)
+		ll.SortedInsert(3)
+		ll.Print()
+		ll.RemoveDuplicate()
+		ll.Print()
+
+
+
+	*/
 
 	ll := List{}
-	for i := 0; i < 5; i++ {
-	    ll.AddHead(i)
-	}
-
-	for i := 0; i < 5; i++ {
-	    ll.AddTail(i)
-	}
-
-	ll.Print();
-
-*/
-/*	ll := List{}
-	for i := 0; i < 5; i++ {
-	    ll.AddHead(i)
-	}
-	fmt.Println(ll.Peek())
-	ll.RemoveHead()
-	ll.Print();
-	fmt.Println(ll.Find(3))
-	ll.DeleteNode(3)
-	fmt.Println(ll.Find(3))
-	ll.Reverse()
-	ll.Print();
-	ll.ReverseRecurse()
-	ll.Print();
-
-	fmt.Println(ll.NthNodeFromBegining(2));
-	fmt.Println(ll.NthNodeFromEnd(2));
-	fmt.Println(ll.NthNodeFromEnd2(2));
-	fmt.Println(ll.FindLength())
-	ll.FreeList()
-	fmt.Println(ll.FindLength())
-*/
-/*
-	ll := List{}
-	ll.SortedInsert(1)
-	ll.SortedInsert(2)
-	ll.SortedInsert(3)
-	ll.SortedInsert(1)
-	ll.SortedInsert(2)
-	ll.SortedInsert(3)
+	ll.AddHead(1)
+	ll.AddHead(2)
+	ll.AddHead(3)
+	ll.AddTail(1)
+	ll.AddTail(2)
+	ll.AddTail(3)
 	ll.Print()
-	ll.RemoveDuplicate()
-	ll.Print()
-
-
-	
-*/
-
-
-	ll := List{}
-	ll.AddHead(1);
-	ll.AddHead(2);
-	ll.AddHead(3);
-	ll.AddTail(1);
-	ll.AddTail(2);
-	ll.AddTail(3);
-	ll.Print();
 	fmt.Println(ll.Size())
 	fmt.Println(ll.IsEmpty())
 	fmt.Println(ll.Peek())
 	ll.DeleteNodes(3)
 	ll.Print()
 	fmt.Println(ll.Find(3))
-	ll.RemoveHead();
+	ll.RemoveHead()
 	ll.Print()
 	ll.FreeList()
-	ll.Print();
+	ll.Print()
 
 }

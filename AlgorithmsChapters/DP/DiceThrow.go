@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func FindWays(n int, m int, V int) int {
+func FindWays(n, m, V int) int {
 	dp := make([][]int, n+1)
 	for i := range dp {
 		dp[i] = make([]int, V+1)
@@ -13,7 +13,7 @@ func FindWays(n int, m int, V int) int {
 		dp[1][j] = 1
 	}
 
-	// i is number of dice, j is Value, k value of dice.
+	// i is the number of dice, j is the value, k is the value of the dice.
 	for i := 2; i <= n; i++ {
 		for j := 1; j <= V; j++ {
 			for k := 1; k <= j && k <= m; k++ {

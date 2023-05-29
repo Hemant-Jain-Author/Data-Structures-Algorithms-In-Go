@@ -1,4 +1,3 @@
-
 package main
 
 import "fmt"
@@ -9,40 +8,40 @@ type StackUsingQueue struct {
 	size int
 }
 
-func (stk *StackUsingQueue) Push (value int ) {
-	stk.que1.Add(value);
-	stk.size += 1;
+func (stk *StackUsingQueue) Push(value int) {
+	stk.que1.Add(value)
+	stk.size += 1
 }
 
 func (stk *StackUsingQueue) Pop() int {
-	var value int;
+	var value int
 	s := stk.que1.Length()
-	for (s > 0) {
-		value = stk.que1.Remove().(int);
-		if (s > 1) {
-			stk.que2.Add(value);
+	for s > 0 {
+		value = stk.que1.Remove().(int)
+		if s > 1 {
+			stk.que2.Add(value)
 		}
-		s--;
+		s--
 	}
-	temp := stk.que1;
-	stk.que1 = stk.que2;
-	stk.que2 = temp;
-	stk.size -= 1;
-	return value;
+	temp := stk.que1
+	stk.que1 = stk.que2
+	stk.que2 = temp
+	stk.size -= 1
+	return value
 }
 
 func (stk *StackUsingQueue) Pop2() int {
-	var value int;
+	var value int
 	s := stk.que1.Length()
-	for (s > 0) {
-		value = stk.que1.Remove().(int);
-		if (s > 1) {
-			stk.que1.Add(value);
+	for s > 0 {
+		value = stk.que1.Remove().(int)
+		if s > 1 {
+			stk.que1.Add(value)
 		}
-		s--;
+		s--
 	}
-	stk.size -= 1;
-	return value;
+	stk.size -= 1
+	return value
 }
 
 func main1() {

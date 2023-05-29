@@ -16,6 +16,7 @@ func StairUniqueWaysBU(n int) int {
 	}
 	return temp
 }
+
 func StairUniqueWaysBU2(n int) int {
 	if n < 2 {
 		return n
@@ -28,12 +29,13 @@ func StairUniqueWaysBU2(n int) int {
 	}
 	return ways[n-1]
 }
+
 func main() {
-	fmt.Println("Unique way to reach top::", StairUniqueWaysBU(4))
-	fmt.Println("Unique way to reach top::", StairUniqueWaysBU2(4))
+	fmt.Println("Unique way to reach top:", StairUniqueWaysBU(4))
+	fmt.Println("Unique way to reach top:", StairUniqueWaysBU2(4))
 }
 
 /*
-Unique way to reach top:: 5
-Unique way to reach top:: 5
+Unique way to reach top: 5
+Unique way to reach top: 5
 */

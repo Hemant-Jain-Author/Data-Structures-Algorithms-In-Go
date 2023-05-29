@@ -155,16 +155,15 @@ func main1() {
 	ll.AddHead(2)
 	ll.AddHead(3)
 	ll.Print()
-	fmt.Println("Size :", ll.Size());
-    fmt.Println("IsEmpty :", ll.IsEmpty());
+	fmt.Println("Size :", ll.Size())
+	fmt.Println("IsEmpty :", ll.IsEmpty())
 }
 
 /*
-3 2 1 
+3 2 1
 Size : 3
 IsEmpty : false
 */
-
 
 func main2() {
 	ll := new(DoublyCircularLinkedList)
@@ -180,7 +179,6 @@ func main2() {
 
 */
 
-
 func main3() {
 	ll := new(DoublyCircularLinkedList)
 	ll.AddHead(1)
@@ -190,12 +188,10 @@ func main3() {
 	fmt.Println("IsPresent:", ll.IsPresent(3))
 }
 
-
 /*
 3 2 1
 IsPresent: true
 */
-
 
 func main4() {
 	ll := new(DoublyCircularLinkedList)

@@ -28,13 +28,12 @@ func (que *QueueUsingStack) Remove() int {
 }
 
 func (que *QueueUsingStack) Length() int {
-    return (que.stk1.Len() + que.stk2.Len());
+	return (que.stk1.Len() + que.stk2.Len())
 }
 
 func (que *QueueUsingStack) IsEmpty() bool {
-    return (que.stk1.Len() + que.stk2.Len()) == 0;
+	return (que.stk1.Len() + que.stk2.Len()) == 0
 }
-
 
 func main() {
 	que := new(QueueUsingStack)
@@ -69,7 +68,7 @@ func (s *Stack) Push(data interface{}) {
 func (s *Stack) Pop() interface{} {
 	n := len(s.stk)
 	value := s.stk[n-1]
-	s.stk = s.stk[: n-1]
+	s.stk = s.stk[:n-1]
 	return value
 }
 

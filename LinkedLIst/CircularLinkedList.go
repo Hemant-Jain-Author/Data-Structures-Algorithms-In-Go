@@ -151,7 +151,6 @@ func (list *CircularLinkedList) CopyListReversed() *CircularLinkedList {
 	return cl
 }
 
-
 func (list *CircularLinkedList) CopyList() *CircularLinkedList {
 	cl := new(CircularLinkedList)
 	curr := list.tail.next
@@ -182,7 +181,6 @@ func main1() {
 
 */
 
-
 func main2() {
 	ll := new(CircularLinkedList)
 	ll.AddTail(1)
@@ -196,7 +194,6 @@ func main2() {
 
 */
 
-
 func main3() {
 	ll := new(CircularLinkedList)
 	ll.AddHead(1)
@@ -206,12 +203,10 @@ func main3() {
 	fmt.Println("IsPresent:", ll.IsPresent(3))
 }
 
-
 /*
 3 2 1
 IsPresent: true
 */
-
 
 func main4() {
 	ll := new(CircularLinkedList)
@@ -229,7 +224,6 @@ func main4() {
 2 1
 */
 
-
 func main5() {
 	ll := new(CircularLinkedList)
 	ll.AddHead(1)
@@ -244,7 +238,6 @@ func main5() {
 3 2 1
 3 1
 */
-
 
 func main6() {
 	ll := new(CircularLinkedList)
@@ -261,13 +254,12 @@ func main6() {
 1 2 3
 */
 
-
 func main7() {
 	ll := new(CircularLinkedList)
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
-	ll.Print()	
+	ll.Print()
 	ll2 := ll.CopyList()
 	ll2.Print()
 }
@@ -286,6 +278,3 @@ func main() {
 	main6()
 	main7()
 }
-
-
-

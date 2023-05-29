@@ -27,7 +27,7 @@ func NewTree() (self *Tree) {
 	return
 }
 
-func CreateCompleteBinaryTree(arr []int) (*Tree) {
+func CreateCompleteBinaryTree(arr []int) *Tree {
 	tree := NewTree()
 	tree.root = createCompleteBinaryTree(arr, 0, len(arr))
 	return tree
@@ -1060,23 +1060,24 @@ func main1() {
 	t.NthInOrder(5)
 	t.PrintAllPath()
 }
+
 /*
-Pre Order:1 2 4 8 9 5 10 3 6 7 
-Post Order:8 9 4 10 5 2 6 7 3 1 
-In Order:8 4 9 2 10 5 1 6 3 7 
-Breadth First : 1 2 3 4 5 6 7 8 9 10 
-Depth First : 1 2 4 8 9 5 10 3 6 7 
+Pre Order:1 2 4 8 9 5 10 3 6 7
+Post Order:8 9 4 10 5 2 6 7 3 1
+In Order:8 4 9 2 10 5 1 6 3 7
+Breadth First : 1 2 3 4 5 6 7 8 9 10
+Depth First : 1 2 4 8 9 5 10 3 6 7
 
-1  
-2 3  
-4 5 6 7  
-8 9 10  
-1  
-2 3  
-4 5 6 7  
-8 9 10  
+1
+2 3
+4 5 6 7
+8 9 10
+1
+2 3
+4 5 6 7
+8 9 10
 
-1 2 3 7 6 5 4 8 9 10  
+1 2 3 7 6 5 4 8 9 10
 
 NthPreOrder at index : 5 is : 9
 NthPostOrder at index  5 is : 5
@@ -1087,7 +1088,6 @@ NthInOrder at index : 5 is : 10
 [1 2 4 9]
 [1 2 4 8]
 */
-
 
 func main2() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
@@ -1101,6 +1101,7 @@ func main2() {
 	fmt.Println(t.TreeDepth())
 	fmt.Println(t.MaxLengthPathBT())
 }
+
 /*
 10
 55
@@ -1126,10 +1127,11 @@ func main3() {
 	fmt.Println(t.IsHeap())
 	fmt.Println(t.IsHeap2())
 }
+
 /*
-In Order:8 4 9 2 10 5 1 6 3 7 
-In Order:8 4 9 2 10 5 1 6 3 7 
-In Order:7 3 6 1 5 10 2 9 4 8 
+In Order:8 4 9 2 10 5 1 6 3 7
+In Order:8 4 9 2 10 5 1 6 3 7
+In Order:7 3 6 1 5 10 2 9 4 8
 true
 true
 true
@@ -1145,28 +1147,30 @@ func main4() {
 	t3 := t.TreeToListRec()
 	t3.PrintDLL()
 }
+
 /*
-In Order:8 4 9 2 10 5 1 6 3 7 
+In Order:8 4 9 2 10 5 1 6 3 7
 DLL nodes are : 8 4 9 2 10 5 1 6 3 7
 */
 
 func main5() {
 	t := NewTree()
-	t.Add(6);
-    t.Add(4);
-    t.Add(2);
-    t.Add(5);
-    t.Add(1);
-    t.Add(3);
-    t.Add(8);
-    t.Add(7);
-    t.Add(9);
-    t.Add(10);
-	
+	t.Add(6)
+	t.Add(4)
+	t.Add(2)
+	t.Add(5)
+	t.Add(1)
+	t.Add(3)
+	t.Add(8)
+	t.Add(7)
+	t.Add(9)
+	t.Add(10)
+
 	t.PrintInOrder()
 }
+
 /*
-In Order:1 2 3 4 5 6 7 8 9 10 
+In Order:1 2 3 4 5 6 7 8 9 10
 
 */
 
@@ -1174,7 +1178,7 @@ func main6() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	t := CreateBinarySearchTree(arr)
 	t.PrintInOrder()
-	
+
 	fmt.Println(t.Find(6))
 	fmt.Println(t.FindMin())
 	fmt.Println(t.FindMax())
@@ -1182,8 +1186,9 @@ func main6() {
 	fmt.Println(t.IsBST2())
 	fmt.Println(t.IsBST3())
 }
+
 /*
-In Order:1 2 3 4 5 6 7 8 9 10 
+In Order:1 2 3 4 5 6 7 8 9 10
 true
 1 true
 10 true
@@ -1205,17 +1210,17 @@ func main7() {
 	t.PrintDataInRange(3, 9)
 	t.TrimOutsidedataRange(3, 9)
 	t.PrintInOrder()
-	
-	
+
 }
+
 /*
-In Order:1 2 3 4 5 6 7 8 9 10 
-In Order:1 2 3 4 5 6 7 9 10 
+In Order:1 2 3 4 5 6 7 8 9 10
+In Order:1 2 3 4 5 6 7 9 10
 3 true
 2 true
 5 true
-3 4 5 6 7 9 
-In Order:3 4 5 6 7 9 
+3 4 5 6 7 9
+In Order:3 4 5 6 7 9
 */
 
 func main8() {
@@ -1225,6 +1230,7 @@ func main8() {
 	arr2 := []int{5, 2, 6, 4, 7, 9, 10}
 	fmt.Println(isBSTArray(arr2, len(arr2)))
 }
+
 /*
 true
 false
@@ -1234,8 +1240,9 @@ func main9() {
 	arr := []int{1, 2, 3, 4, 6, 7, 8, 9, 10}
 	t := CreateBinarySearchTree(arr)
 	fmt.Println(t.CeilBST(5))
-	fmt.Println(t.FloorBST(5))	
+	fmt.Println(t.FloorBST(5))
 }
+
 /*
 6
 4

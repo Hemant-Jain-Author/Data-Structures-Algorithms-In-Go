@@ -12,7 +12,6 @@ func greater(value1 int, value2 int) bool {
 	return value1 > value2
 }
 
-
 func QuickSort(arr []int) {
 	size := len(arr)
 	quickSortUtil(arr, 0, size-1)
@@ -37,7 +36,7 @@ func quickSortUtil(arr []int, lower int, upper int) {
 			swap(arr, upper, lower)
 		}
 	}
-	swap(arr, upper, start) // upper is the pivot position
+	swap(arr, upper, start)            // upper is the pivot position
 	quickSortUtil(arr, start, upper-1) // pivot -1 is the upper for left sub array.
 	quickSortUtil(arr, upper+1, stop)  // pivot + 1 is the lower for right sub array.
 }

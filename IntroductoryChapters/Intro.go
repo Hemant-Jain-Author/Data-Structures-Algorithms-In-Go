@@ -106,9 +106,9 @@ func ReverseArray2(data []int) {
 
 func main4() {
 	arr := []int{1, 2, 3, 4, 5, 6}
-    fmt.Println("Input array :", arr)
+	fmt.Println("Input array :", arr)
 	RotateArray(arr, 2)
-    fmt.Println("Rotated array :", arr)
+	fmt.Println("Rotated array :", arr)
 }
 
 func MaxSubArraySum(data []int) int {
@@ -158,13 +158,12 @@ func WaveArray2(arr []int) {
 func main6() {
 	arr := []int{8, 1, 2, 3, 4, 5, 6, 4, 2}
 	WaveArray(arr)
-    fmt.Println(arr)
+	fmt.Println(arr)
 
 	arr2 := []int{8, 1, 2, 3, 4, 5, 6, 4, 2}
 	WaveArray2(arr2)
-    fmt.Println(arr2)
+	fmt.Println(arr2)
 }
-
 
 func indexArray(arr []int, size int) {
 	for i := 0; i < size; i++ {
@@ -203,11 +202,11 @@ func main7() {
 	arr := []int{8, -1, 6, 1, 9, 3, 2, 7, 4, -1}
 	size := len(arr)
 	indexArray2(arr, size)
-    fmt.Println(arr)
+	fmt.Println(arr)
 	arr2 := []int{8, -1, 6, 1, 9, 3, 2, 7, 4, -1}
 	size2 := len(arr2)
 	indexArray(arr2, size2)
-    fmt.Println(arr2)
+	fmt.Println(arr2)
 }
 
 func Sort1toN(arr []int, size int) {
@@ -240,14 +239,13 @@ func main8() {
 	arr := []int{8, 5, 6, 1, 9, 3, 2, 7, 4, 10}
 	size := len(arr)
 	Sort1toN2(arr, size)
-    fmt.Println(arr)
+	fmt.Println(arr)
 
 	arr2 := []int{8, 5, 6, 1, 9, 3, 2, 7, 4, 10}
 	size2 := len(arr2)
 	Sort1toN(arr2, size2)
-    fmt.Println(arr2)
+	fmt.Println(arr2)
 }
-
 
 func SmallestPositiveMissingNumber(arr []int, size int) int {
 	found := 0
@@ -362,12 +360,12 @@ func main10() {
 	arr := []int{1, 2, 3, 4, 5, 6, 7}
 	size := len(arr)
 	MaxMinArr(arr, size)
-    fmt.Println(arr)
+	fmt.Println(arr)
 
 	arr2 := []int{1, 2, 3, 4, 5, 6, 7}
 	size2 := len(arr2)
 	MaxMinArr2(arr2, size2)
-    fmt.Println(arr2)
+	fmt.Println(arr2)
 }
 
 func maxCircularSum(arr []int, size int) int {
@@ -415,7 +413,7 @@ func ArrayIndexMaxDiff(arr []int, size int) int {
 func ArrayIndexMaxDiff2(arr []int, size int) int {
 	rightMax := make([]int, size)
 	rightMax[size-1] = arr[size-1]
-	
+
 	for i := size - 2; i >= 0; i-- {
 		if rightMax[i+1] > arr[i] {
 			rightMax[i] = rightMax[i+1]
@@ -523,11 +521,11 @@ func printInt(number int) {
 	base := 16
 	digit := number % base
 	number = number / base
-	
+
 	if number != 0 {
 		printInt(number)
 	}
-	
+
 	fmt.Print(string(conversion[digit]))
 }
 func main15() {
@@ -596,18 +594,16 @@ func main19() {
 	Permutation(data[:], 0, 3)
 }
 
-
-
 func BinarySearchRecursive(data []int, value int) bool {
 	size := len(data)
-	return BinarySearchRecursiveUtil(data, 0, size - 1, value)
+	return BinarySearchRecursiveUtil(data, 0, size-1, value)
 }
 
 func BinarySearchRecursiveUtil(data []int, low int, high int, value int) bool {
 	if low > high {
 		return false
 	}
-	mid := (low + high)/2
+	mid := (low + high) / 2
 	if data[mid] == value {
 		return true
 	} else if data[mid] < value {
@@ -622,6 +618,7 @@ func main20() {
 	fmt.Println("BinarySearchRecursive:", BinarySearchRecursive(arr, 7))
 	fmt.Println("BinarySearchRecursive:", BinarySearchRecursive(arr, 8))
 }
+
 /* BinarySearchRecursive: true
 BinarySearchRecursive: false */
 
@@ -638,18 +635,18 @@ func main() {
 	main9()
 	main10()
 	main11()
-	
+
 	main12()
 	*/
 	main13()
 	main14()
 	/*
-	main15()
-	main16()
-	main17()
-	main18()
-	main19()
- 	main20()*/
+		main15()
+		main16()
+		main17()
+		main18()
+		main19()
+	 	main20()*/
 }
 
 /*
@@ -696,13 +693,13 @@ factorial 5 is ::  120
 1F4
 
 The sequence of moves involved in the Tower of Hanoi are :
-Move 1 disk from peg A to peg C 
-Move 2 disk from peg A to peg B 
-Move 1 disk from peg C to peg B 
-Move 3 disk from peg A to peg C 
-Move 1 disk from peg B to peg A 
-Move 2 disk from peg B to peg C 
-Move 1 disk from peg A to peg C 
+Move 1 disk from peg A to peg C
+Move 2 disk from peg A to peg B
+Move 1 disk from peg C to peg B
+Move 3 disk from peg A to peg C
+Move 1 disk from peg B to peg A
+Move 2 disk from peg B to peg C
+Move 1 disk from peg A to peg C
 
 GCD is : 1
 

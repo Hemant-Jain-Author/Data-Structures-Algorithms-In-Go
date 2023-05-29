@@ -82,7 +82,7 @@ func MinCoinsBU2(coins []int, n int, val int) int {
 			if coins[j] <= i {
 				if count[i-coins[j]] != math.MaxInt32 {
 					count[i] = min(count[i], count[i-coins[j]]+1)
-					cvalue[i] = coins[j];
+					cvalue[i] = coins[j]
 				}
 			}
 		}
@@ -90,22 +90,22 @@ func MinCoinsBU2(coins []int, n int, val int) int {
 	if count[val] == math.MaxInt32 {
 		return -1
 	}
-	
+
 	printCoins(cvalue, val)
 	return count[val]
 }
 
 func printCoinsUtil(cvalue []int, val int) string {
-	if (val > 0) {
-		ret := printCoinsUtil(cvalue, val - cvalue[val]);
-		return ret + strconv.Itoa(cvalue[val]) + " ";
+	if val > 0 {
+		ret := printCoinsUtil(cvalue, val-cvalue[val])
+		return ret + strconv.Itoa(cvalue[val]) + " "
 	}
-	return "";
+	return ""
 }
 
 func printCoins(cvalue []int, val int) {
-	ret := printCoinsUtil(cvalue, val);
-	fmt.Println("Coins are :", ret);
+	ret := printCoinsUtil(cvalue, val)
+	fmt.Println("Coins are:", ret)
 }
 
 func MinCoinsTD(coins []int, n int, val int) int {
@@ -149,18 +149,18 @@ func main() {
 	coins := []int{5, 6}
 	value := 16
 	n := len(coins)
-	fmt.Println("Count is :", MinCoins(coins, n, value))
-	fmt.Println("Count is :", MinCoins2(coins, n, value))
-	fmt.Println("Count is :", MinCoinsBU(coins, n, value))
-	fmt.Println("Count is :", MinCoinsBU2(coins, n, value))
-	fmt.Println("Count is :", MinCoinsTD(coins, n, value))
+	fmt.Println("Count is:", MinCoins(coins, n, value))
+	fmt.Println("Count is:", MinCoins2(coins, n, value))
+	fmt.Println("Count is:", MinCoinsBU(coins, n, value))
+	fmt.Println("Count is:", MinCoinsBU2(coins, n, value))
+	fmt.Println("Count is:", MinCoinsTD(coins, n, value))
 }
 
 /*
-Count is : -1
-Count is : 3
-Count is : 3
-Coins are : 5 5 6 
-Count is : 3
-Count is : 3
+Count is: -1
+Count is: 3
+Count is: 3
+Coins are: 5 5 6
+Count is: 3
+Count is: 3
 */

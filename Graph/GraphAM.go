@@ -11,34 +11,35 @@ type Graph struct {
 	adj   [][]int
 }
 
-func NewGraph(count int) (gph *Graph) {
-	gph = new(Graph)
-	gph.count = count
-	gph.adj = make([][]int, count)
+func NewGraph(count int) *Graph {
+	gph := &Graph{
+		count: count,
+		adj:   make([][]int, count),
+	}
 	for i := range gph.adj {
 		gph.adj[i] = make([]int, count)
 	}
-	return
+	return gph
 }
 
-func (gph *Graph) AddDirectedEdge(src int, dst int, cost int) {
+func (gph *Graph) AddDirectedEdge(src, dst, cost int) {
 	gph.adj[src][dst] = cost
 }
 
-func (gph *Graph) AddUndirectedEdge(src int, dst int, cost int) {
+func (gph *Graph) AddUndirectedEdge(src, dst, cost int) {
 	gph.AddDirectedEdge(src, dst, cost)
 	gph.AddDirectedEdge(dst, src, cost)
 }
 
 func (gph *Graph) Print() {
 	for i := 0; i < gph.count; i++ {
-		fmt.Print("Node index ", i, " is connected to : ")
+		fmt.Printf("Node index %d is connected to:", i)
 		for j := 0; j < gph.count; j++ {
 			if gph.adj[i][j] != 0 {
-				fmt.Print(j, "(cost:", gph.adj[i][j], ") ")
+				fmt.Printf(" %d (cost:%d)", j, gph.adj[i][j])
 			}
 		}
-		fmt.Println("")
+		fmt.Println()
 	}
 }
 
@@ -75,8 +76,8 @@ func (gph *Graph) Dijkstra(source int) {
 	previous[source] = source
 
 	type Edge struct {
-		index    int
-		cost int
+		index int
+		cost  int
 	}
 
 	cmp := func(a, b interface{}) bool { // Greater function
@@ -88,7 +89,7 @@ func (gph *Graph) Dijkstra(source int) {
 	for hp.Size() != 0 {
 		curr := hp.Remove().(Edge).index
 
-		if visited[curr]  {
+		if visited[curr] {
 			continue
 		}
 		visited[curr] = true
@@ -106,33 +107,32 @@ func (gph *Graph) Dijkstra(source int) {
 		}
 	}
 
-	// Printing result.
 	gph.printPath(previous, dist, count, source)
 }
 
 func (gph *Graph) printPathUtil(previous []int, source int, dest int) string {
-	var path = "";
-	if (dest == source){
-		path += strconv.Itoa(source);
+	var path string
+	if dest == source {
+		path += strconv.Itoa(source)
 	} else {
-		path += gph.printPathUtil(previous, source, previous[dest]);
-		path += ("->" + strconv.Itoa(dest));
+		path += gph.printPathUtil(previous, source, previous[dest])
+		path += "->" + strconv.Itoa(dest)
 	}
-	return path;
+	return path
 }
 
-func (gph *Graph) printPath(previous []int, dist []int, count int, source int) {
-	output := "Shortest Paths: ";
+func (gph *Graph) printPath(previous []int, dist []int, count, source int) {
 	for i := 0; i < count; i++ {
-		if (dist[i] == 99999) {
-			output += ("(" + strconv.Itoa(source) + "->" + strconv.Itoa(i) + " @ Unreachable) ");
-		} else if (i != previous[i]) {
-			output += "(";
-			output += gph.printPathUtil(previous, source, i);
-			output += (" @ " + strconv.Itoa(dist[i]) + ") ");
+		if i != source {
+			fmt.Printf("Shortest path from %d to %d: ", source, i)
+			if dist[i] != math.MaxInt32 {
+				path := gph.printPathUtil(previous, source, i)
+				fmt.Printf("%s (cost:%d)\n", path, dist[i])
+			} else {
+				fmt.Println("No path found")
+			}
 		}
 	}
-	fmt.Println(output);
 }
 
 func (gph *Graph) PrimsMST() {
@@ -152,8 +152,8 @@ func (gph *Graph) PrimsMST() {
 	previous[source] = source
 
 	type Edge struct {
-		index    int
-		cost int
+		index int
+		cost  int
 	}
 
 	cmp := func(a, b interface{}) bool {
@@ -165,7 +165,7 @@ func (gph *Graph) PrimsMST() {
 	for hp.Size() != 0 {
 		source := hp.Remove().(Edge).index
 
-		if visited[source]  {
+		if visited[source] {
 			continue
 		}
 		visited[source] = true
@@ -188,13 +188,13 @@ func (gph *Graph) PrimsMST() {
 	for i := 0; i < count; i++ {
 		if dist[i] == math.MaxInt32 {
 			output += "( " + strconv.Itoa(i) + ",  Unreachable)"
-		} else if (previous[i] != i) {
-			output += "( " + strconv.Itoa(previous[i]) + "->" + strconv.Itoa(i) + " @ " + strconv.Itoa(dist[i]) + ") " 
+		} else if previous[i] != i {
+			output += "( " + strconv.Itoa(previous[i]) + "->" + strconv.Itoa(i) + " @ " + strconv.Itoa(dist[i]) + ") "
 			total += dist[i]
-		}   
+		}
 	}
 	fmt.Println(output)
-    fmt.Println("Total MST cost :", total)
+	fmt.Println("Total MST cost :", total)
 
 }
 
@@ -220,9 +220,9 @@ func main2() {
 }
 
 /*
-Shortest Paths: (1->0 @ 4) (1->2 @ 8) (1->2->3 @ 15) (1->2->5->4 @ 22) (1->2->5 @ 12) (1->7->6 @ 12) (1->7 @ 11) (1->2->8 @ 10) 
+Shortest Paths: (1->0 @ 4) (1->2 @ 8) (1->2->3 @ 15) (1->2->5->4 @ 22) (1->2->5 @ 12) (1->7->6 @ 12) (1->7 @ 11) (1->2->8 @ 10)
 
-Edges are : ( 0->1 @ 4) ( 5->2 @ 4) ( 2->3 @ 7) ( 3->4 @ 9) ( 6->5 @ 2) ( 7->6 @ 1) ( 0->7 @ 8) ( 2->8 @ 2) 
+Edges are : ( 0->1 @ 4) ( 5->2 @ 4) ( 2->3 @ 7) ( 3->4 @ 9) ( 6->5 @ 2) ( 7->6 @ 1) ( 0->7 @ 8) ( 2->8 @ 2)
 Total MST cost : 37
 */
 
@@ -243,13 +243,13 @@ func (gph *Graph) hamiltonianPath() bool {
 }
 
 func (gph *Graph) hamiltonianPathUtil(path []int, pSize int, added []int) bool {
-	// Base case full length path is found
+	// Base case: Full length path is found
 	if pSize == gph.count {
 		return true
 	}
 	for vertex := 0; vertex < gph.count; vertex++ {
-		// there is a path from last element and next vertex
-		// and next vertex is not already included in path.
+		// There is a path from the last element to the next vertex
+		// and the next vertex is not already included in the path.
 		if pSize == 0 || (gph.adj[path[pSize-1]][vertex] == 1 && added[vertex] == 0) {
 			path[pSize] = vertex
 			pSize++
@@ -257,7 +257,7 @@ func (gph *Graph) hamiltonianPathUtil(path []int, pSize int, added []int) bool {
 			if gph.hamiltonianPathUtil(path, pSize, added) {
 				return true
 			}
-			// backtracking
+			// Backtracking
 			pSize--
 			added[vertex] = 0
 		}
@@ -321,7 +321,7 @@ func (gph *Graph) hamiltonianCycle() bool {
 
 	if gph.hamiltonianCycleUtil(path, 0, added) {
 		fmt.Print("Hamiltonian Cycle found :: ")
-		for i := 0; i <= gph.count; i++ {
+		for i := 0; i <= count; i++ {
 			fmt.Print(" ", path[i])
 		}
 		return true
@@ -331,9 +331,8 @@ func (gph *Graph) hamiltonianCycle() bool {
 }
 
 func (gph *Graph) hamiltonianCycleUtil(path []int, pSize int, added []int) bool {
-	// Base case full length path is found this last check can be modified to make it a path.
-	count := gph.count
-	if pSize == count {
+	// Base case: Full length path is found
+	if pSize == gph.count {
 		if gph.adj[path[pSize-1]][path[0]] == 1 {
 			path[pSize] = path[0]
 			return true
@@ -342,7 +341,7 @@ func (gph *Graph) hamiltonianCycleUtil(path []int, pSize int, added []int) bool 
 		}
 	}
 	for vertex := 0; vertex < gph.count; vertex++ {
-		// there is a path from last element and next vertex
+		// There is a path from the last element to the next vertex
 		if pSize == 0 || (gph.adj[path[pSize-1]][vertex] == 1 && added[vertex] == 0) {
 			path[pSize] = vertex
 			pSize++
@@ -350,7 +349,7 @@ func (gph *Graph) hamiltonianCycleUtil(path []int, pSize int, added []int) bool 
 			if gph.hamiltonianCycleUtil(path, pSize, added) {
 				return true
 			}
-			// backtracking
+			// Backtracking
 			pSize--
 			added[vertex] = 0
 		}
@@ -361,34 +360,14 @@ func (gph *Graph) hamiltonianCycleUtil(path []int, pSize int, added []int) bool 
 // Testing code.
 func main4() {
 	count := 5
-	gph := NewGraph(count)
-
-	adj := [][]int{
-		{0, 1, 0, 1, 0},
-		{1, 0, 1, 1, 0},
-		{0, 1, 0, 0, 1},
-		{1, 1, 0, 0, 1},
-		{0, 1, 1, 1, 0}}
-
-	for i := 0; i < count; i++ {
-		for j := 0; j < count; j++ {
-			if adj[i][j] == 1 {
-				gph.AddDirectedEdge(i, j, 1)
-			}
-		}
-	}
-
-	fmt.Println("\nhamiltonianCycle : ", gph.hamiltonianCycle())
-
 	gph2 := NewGraph(count)
-
 	adj2 := [][]int{
 		{0, 1, 0, 1, 0},
 		{1, 0, 1, 1, 0},
 		{0, 1, 0, 0, 1},
-		{1, 1, 0, 0, 0},
-		{0, 1, 1, 0, 0}}
-
+		{1, 1, 0, 0, 1},
+		{0, 1, 1, 1, 0},
+	}
 	for i := 0; i < count; i++ {
 		for j := 0; j < count; j++ {
 			if adj2[i][j] == 1 {
@@ -396,8 +375,24 @@ func main4() {
 			}
 		}
 	}
+	fmt.Println("\nhamiltonianPath:", gph2.hamiltonianPath())
 
-	fmt.Println("\nhamiltonianCycle :  ", gph2.hamiltonianCycle())
+	gph3 := NewGraph(count)
+	adj3 := [][]int{
+		{0, 1, 0, 1, 0},
+		{1, 0, 1, 1, 0},
+		{0, 1, 0, 0, 1},
+		{1, 1, 0, 0, 0},
+		{0, 1, 1, 0, 0},
+	}
+	for i := 0; i < count; i++ {
+		for j := 0; j < count; j++ {
+			if adj3[i][j] == 1 {
+				gph3.AddDirectedEdge(i, j, 1)
+			}
+		}
+	}
+	fmt.Println("\nhamiltonianCycle:", gph3.hamiltonianCycle())
 }
 
 /*
@@ -415,14 +410,14 @@ func main() {
 }
 
 type Heap struct {
-	size  int
-	arr   []interface{}
+	size int
+	arr  []interface{}
 	comp func(x interface{}, y interface{}) bool
 }
 
 func CreateHeap(comp func(x interface{}, y interface{}) bool) *Heap {
 	var arr []interface{}
-	h := &Heap{comp: comp, arr : arr, size : 0}
+	h := &Heap{comp: comp, arr: arr, size: 0}
 	return h
 }
 
@@ -431,7 +426,7 @@ func (h *Heap) swap(i, j int) {
 }
 
 func (h *Heap) percolateDown(parent int) {
-	lChild := 2 * parent + 1
+	lChild := 2*parent + 1
 	rChild := lChild + 1
 	child := -1
 	if lChild < h.size {
@@ -457,7 +452,7 @@ func (h *Heap) percolateUp(child int) {
 func (h *Heap) Add(value interface{}) {
 	h.arr = append(h.arr, value)
 	h.size++
-	h.percolateUp(h.size-1)
+	h.percolateUp(h.size - 1)
 }
 
 func (h *Heap) Remove() interface{} {
@@ -466,27 +461,25 @@ func (h *Heap) Remove() interface{} {
 		return 0
 	}
 	value := h.arr[0]
-	h.arr[0] = h.arr[h.size - 1]
+	h.arr[0] = h.arr[h.size-1]
 	h.size--
 	h.percolateDown(0)
-	h.arr = h.arr[0 : h.size]
+	h.arr = h.arr[0:h.size]
 	return value
 }
 
-
-func (h *Heap) Delete( value interface{}) bool {
-    for i := 0; i < h.size; i++ {
-        if (h.arr[i] == value) {
-            h.arr[i] = h.arr[h.size - 1]
-            h.size -= 1
-            h.percolateUp(i)
-            h.percolateDown(i)
-            return true
-        }
-    }
-    return false
+func (h *Heap) Delete(value interface{}) bool {
+	for i := 0; i < h.size; i++ {
+		if h.arr[i] == value {
+			h.arr[i] = h.arr[h.size-1]
+			h.size -= 1
+			h.percolateUp(i)
+			h.percolateDown(i)
+			return true
+		}
+	}
+	return false
 }
-
 
 func (h *Heap) IsEmpty() bool {
 	return (h.size == 0)
@@ -513,10 +506,10 @@ func (h *Heap) Print() {
 	fmt.Println()
 }
 
-func minComp (i, j interface{}) bool { // always i < j in use
+func minComp(i, j interface{}) bool { // always i < j in use
 	return i.(int) > j.(int) // swaps for min heap
 }
 
-func maxComp (i, j interface{}) bool { // always i < j in use
+func maxComp(i, j interface{}) bool { // always i < j in use
 	return i.(int) < j.(int) // swap for max heap.
 }

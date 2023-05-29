@@ -5,16 +5,18 @@ import "fmt"
 func GraphColouring(graph [][]bool, V int, m int) bool {
 	colour := make([]int, V)
 	if graphColouringUtil(graph, V, m, colour, 0) {
+		fmt.Println("Assigned colours are:", colour)
 		return true
 	}
+	fmt.Println("Solution does not exist")
 	return false
 }
 
 func graphColouringUtil(graph [][]bool, V int, m int, colour []int, i int) bool {
 	if i == V {
-		fmt.Println("Assigned colours are ::", colour)
 		return true
 	}
+
 	for j := 1; j <= m; j++ {
 		if isSafe(graph, V, colour, i, j) {
 			colour[i] = j
@@ -23,6 +25,7 @@ func graphColouringUtil(graph [][]bool, V int, m int, colour []int, i int) bool 
 			}
 		}
 	}
+
 	return false
 }
 
@@ -39,15 +42,16 @@ func isSafe(graph [][]bool, V int, colour []int, v int, c int) bool {
 func GraphColouring2(graph [][]bool, V int, m int) bool {
 	colour := make([]int, V)
 	if graphColouringUtil2(graph, V, m, colour, 0) {
+		fmt.Println("Assigned colours are:", colour)
 		return true
 	}
+	fmt.Println("Solution does not exist")
 	return false
 }
 
 func graphColouringUtil2(graph [][]bool, V int, m int, colour []int, i int) bool {
 	if i == V {
 		if isSafe2(graph, colour, V) {
-			fmt.Println("Assigned colours are ::", colour)
 			return true
 		}
 		return false
@@ -80,17 +84,13 @@ func main() {
 		{true, false, true, false, true},
 		{false, true, false, true, true},
 		{false, false, true, false, true},
-		{true, true, true, true, false}}
+		{true, true, true, true, false},
+	}
 	V := 5
 	m := 4
 
-	if !GraphColouring2(graph, V, m) {
-		fmt.Println("Solution does not exist")
-	}
-	
-	if !GraphColouring(graph, V, m) {
-		fmt.Println("Solution does not exist")
-	}
+	GraphColouring(graph, V, m)
+	GraphColouring2(graph, V, m)
 }
 
 /*

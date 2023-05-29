@@ -6,10 +6,10 @@ func LongestCommonSubseq(X string, Y string) int {
 	m := len(X)
 	n := len(Y)
 	dp := make([][]int, m+1) // Dynamic programming array.
-	p := make([][]int, m+1) // For printing the substring.
+	p := make([][]int, m+1)  // For printing the substring.
 
 	for i := range dp {
-		dp[i] = make([]int, n+1) 
+		dp[i] = make([]int, n+1)
 		p[i] = make([]int, n+1)
 	}
 
@@ -36,7 +36,7 @@ func LongestCommonSubseq(X string, Y string) int {
 
 func printLCS(p [][]int, X string, i int, j int) {
 	fmt.Print("LongestCommonSubseq: ")
-	printLCSUtil(p,X, i, j)
+	printLCSUtil(p, X, i, j)
 	fmt.Println()
 }
 
@@ -58,10 +58,10 @@ func main() {
 	X := "carpenter"
 	Y := "sharpener"
 	result := LongestCommonSubseq(X, Y)
-	fmt.Println("LongestCommonSubseq length", result)
+	fmt.Println("LongestCommonSubseq length:", result)
 }
 
 /*
 LongestCommonSubseq: arpener
-LongestCommonSubseq length 7
+LongestCommonSubseq length: 7
 */

@@ -26,11 +26,11 @@ func MaxActivities(s []int, f []int, n int) {
 	sort.Slice(act, func(i, j int) bool {
 		return act[i].stop < act[j].stop
 	})
-	i := 0 // The first activity at index 0 is always gets selected.
-	fmt.Print("Activities are : (", act[i].start, ",", act[i].stop, ")")
+	i := 0 // The first activity at index 0 is always selected.
+	fmt.Print("Activities are: (", act[i].start, ",", act[i].stop, ")")
 	for j := 1; j < n; j++ {
-		// Find next activity whose start time is greater than or equal
-		// to the finish time of previous activity.
+		// Find the next activity whose start time is greater than or equal
+		// to the finish time of the previous activity.
 		if act[j].start >= act[i].stop {
 			fmt.Print(", (", act[j].start, ",", act[j].stop, ")")
 			i = j
@@ -46,5 +46,5 @@ func main() {
 }
 
 /*
-Activities are : (1,2), (3,4), (5,6), (6,7), (8,9)
+Activities are: (1,2), (3,4), (5,6), (6,7), (8,9)
 */

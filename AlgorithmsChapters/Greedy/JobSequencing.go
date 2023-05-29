@@ -25,9 +25,8 @@ type JobSequencing struct {
 	maxDL int
 }
 
-func NewJobSequencing(ids []rune, deadlines []int,
-	profits []int, n int) (jobSeq *JobSequencing) {
-	jobSeq = &JobSequencing{}
+func NewJobSequencing(ids []rune, deadlines []int, profits []int, n int) *JobSequencing {
+	jobSeq := &JobSequencing{}
 	jobSeq.jobs = make([]*Job, n)
 	jobSeq.n = n
 
@@ -37,23 +36,30 @@ func NewJobSequencing(ids []rune, deadlines []int,
 			jobSeq.maxDL = deadlines[i]
 		}
 	}
-	
+
 	for i := 0; i < n; i++ {
 		jobSeq.jobs[i] = NewJob(ids[i], deadlines[i], profits[i])
 	}
-	return
+	return jobSeq
 }
 
 func (jobSeq *JobSequencing) Print() {
-	sort.Slice(jobSeq.jobs,func(i, j int) bool {
+	// Sort jobs based on profit in descending order
+	sort.Slice(jobSeq.jobs, func(i, j int) bool {
 		return jobSeq.jobs[i].profit > jobSeq.jobs[j].profit
 	})
+
+	// Initialize result array to track job scheduling
 	result := make([]bool, jobSeq.maxDL)
+	// Initialize job array to store selected jobs
 	job := make([]rune, jobSeq.maxDL)
 	profit := 0
 
+	// Iterate over the jobs and assign them to the time slots
 	for i := 0; i < jobSeq.n; i++ {
+		// Find a time slot for the current job starting from its deadline
 		for j := jobSeq.jobs[i].deadline - 1; j >= 0; j-- {
+			// If the time slot is available, assign the job to it
 			if result[j] == false {
 				result[j] = true
 				job[j] = jobSeq.jobs[i].id
@@ -63,8 +69,8 @@ func (jobSeq *JobSequencing) Print() {
 		}
 	}
 
-	fmt.Println("Profit is::", profit)
-	fmt.Print("Jobs selected are :: ")
+	fmt.Println("Profit is:", profit)
+	fmt.Print("Jobs selected are: ")
 	for i := 0; i < jobSeq.maxDL; i++ {
 		if job[i] != '0' {
 			fmt.Print(string(job[i]), " ")
@@ -81,6 +87,6 @@ func main() {
 }
 
 /*
-Profit is:: 151
-Jobs selected are :: b e a d 
+Profit is: 151
+Jobs selected are: b e a d
 */

@@ -62,9 +62,9 @@ func main() {
 	tt.Insert("banana")
 	tt.Insert("apple")
 	tt.Insert("mango")
-	fmt.Println("Apple Found :", tt.Find("apple"));
-    fmt.Println("Banana Found :", tt.Find("banana"));
-    fmt.Println("Grapes Found :", tt.Find("grapes"));
+	fmt.Println("Apple Found :", tt.Find("apple"))
+	fmt.Println("Banana Found :", tt.Find("banana"))
+	fmt.Println("Grapes Found :", tt.Find("grapes"))
 }
 
 /*

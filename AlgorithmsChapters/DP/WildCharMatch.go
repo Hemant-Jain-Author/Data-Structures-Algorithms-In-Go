@@ -62,7 +62,7 @@ func wildCharMatchExpUtilDP(exp string, str string, m int, n int) bool {
 				lookup[i][j] = lookup[i-1][j] || lookup[i][j-1]
 			} else if exp[i-1] == '?' || str[j-1] == exp[i-1] {
 				// Condition when both the pattern and input string
-				// have same character. Also '?' match with all the
+				// have the same character. Also, '?' matches with all the
 				// characters.
 				lookup[i][j] = lookup[i-1][j-1]
 			} else {

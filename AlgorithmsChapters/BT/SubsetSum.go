@@ -8,7 +8,7 @@ func SubsetSum(arr []int, n int, target int) {
 }
 
 func subsetSumUtil(arr []int, n int, flags []bool, sum int, curr int, target int) {
-	if target == sum {
+	if sum == target {
 		printSubset(flags, arr, n)
 		return
 	}
@@ -28,7 +28,6 @@ func printSubset(flags []bool, arr []int, size int) {
 		}
 	}
 	fmt.Println()
-	fmt.Print("fdsfds")
 }
 
 func main() {
@@ -39,7 +38,7 @@ func main() {
 }
 
 /*
-15 22 16 
-15 14 16 8 
-22 14 9 8 
+15 22 16
+15 14 16 8
+22 14 9 8
 */

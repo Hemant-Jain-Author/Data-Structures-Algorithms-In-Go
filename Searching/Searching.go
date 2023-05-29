@@ -505,9 +505,9 @@ func main6() {
 }
 
 /*
-12 15 16 20 22 
-12 15 16 20 22 
-12 15 16 20 22 
+12 15 16 20 22
+12 15 16 20 22
+12 15 16 20 22
 */
 
 func OddCount(arr []int) {
@@ -2410,14 +2410,14 @@ func FrequencyCounts2(arr []int) {
 	sort.Ints(arr)
 	count := 1
 	for i := 1; i < size; i++ {
-		if (arr[i] == arr[i - 1]) {
-            count++
+		if arr[i] == arr[i-1] {
+			count++
 		} else {
-            fmt.Print("(", arr[i - 1], " : ", count, ") ")
-            count = 1
-        }
+			fmt.Print("(", arr[i-1], " : ", count, ") ")
+			count = 1
+		}
 	}
-    fmt.Print("(", arr[size - 1], " : ", count, ")")
+	fmt.Print("(", arr[size-1], " : ", count, ")")
 }
 
 func FrequencyCounts3(arr []int) {
@@ -2543,7 +2543,6 @@ KLargestElements are ::3 4 2 2 5 9 3
 KLargestElements are ::3 4 2 2 5 9 3
 */
 
-
 func FixPoint(arr []int, size int) int {
 	for i := 0; i < size; i++ {
 		if arr[i] == i {
@@ -2587,19 +2586,19 @@ func subArraySums(arr []int, size int, value int) {
 	end := 0
 	sum := 0
 
-	for (start < size && end < size) {
-        if (sum < value) {
-            sum += arr[end]
-            end += 1
-        } else {
-            sum -= arr[start]
-            start += 1;
-        }
+	for start < size && end < size {
+		if sum < value {
+			sum += arr[end]
+			end += 1
+		} else {
+			sum -= arr[start]
+			start += 1
+		}
 
-        if (sum == value) {
-            fmt.Print("(", start, " to ", (end - 1), ") ")
-        }
-    }
+		if sum == value {
+			fmt.Print("(", start, " to ", (end - 1), ") ")
+		}
+	}
 }
 
 func main40() {
@@ -2608,7 +2607,7 @@ func main40() {
 }
 
 /*
-(0 to 1) (3 to 3) (4 to 6) (7 to 7) (8 to 9) 
+(0 to 1) (3 to 3) (4 to 6) (7 to 7) (8 to 9)
 */
 
 func MaxConSub(arr []int, size int) int {

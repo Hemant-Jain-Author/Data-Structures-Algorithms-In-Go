@@ -7,10 +7,9 @@ import (
 
 var INF = math.MaxInt32
 
-// Returns shortest distance from 0 to N-1.
+// GraphShortestDist returns the shortest distance from 0 to N-1.
 func GraphShortestDist(graph [][]int, n int) int {
-	// dist[i] is going to store shortest
-	// distance from node i to node n-1.
+	// dist[i] is going to store shortest distance from node i to node n-1.
 	dist := make([]int, n)
 	for i := range dist {
 		dist[i] = INF
@@ -54,7 +53,8 @@ func main() {
 		{INF, INF, INF, INF, INF, INF, INF, 18},
 		{INF, INF, INF, INF, INF, INF, INF, 13},
 		{INF, INF, INF, INF, INF, INF, INF, 2},
-		{INF, INF, INF, INF, INF, INF, INF, INF}}
+		{INF, INF, INF, INF, INF, INF, INF, INF},
+	}
 
 	fmt.Println("Total Cost:", GraphShortestDist(graph, 8))
 }

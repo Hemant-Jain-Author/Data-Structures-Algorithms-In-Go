@@ -6,24 +6,18 @@ type AVLTree struct {
 	root *Node
 }
 
-func NewAVLTree() (avlTree *AVLTree) {
-	avlTree = &AVLTree{}
-	avlTree.root = nil
-	return
-}
-
 type Node struct {
 	data, height int
 	left, right  *Node
 }
 
-func NewNode(d int, l, r *Node) (nd *Node) {
-	nd = &Node{}
-	nd.data = d
-	nd.left = l
-	nd.right = r
-	nd.height = 0
-	return
+func NewNode(d int, l, r *Node) *Node {
+	return &Node{
+		data:   d,
+		left:   l,
+		right:  r,
+		height: 0,
+	}
 }
 
 func (avlTree *AVLTree) height(n *Node) int {
@@ -88,7 +82,7 @@ func (avlTree *AVLTree) rightRotate(x *Node) *Node {
 	// Update heights
 	x.height = avlTree.max(avlTree.height(x.left), avlTree.height(x.right)) + 1
 	y.height = avlTree.max(avlTree.height(y.left), avlTree.height(y.right)) + 1
-	
+
 	// Return new root
 	return y
 }
@@ -105,7 +99,7 @@ func (avlTree *AVLTree) leftRotate(x *Node) *Node {
 	// Update heights
 	x.height = avlTree.max(avlTree.height(x.left), avlTree.height(x.right)) + 1
 	y.height = avlTree.max(avlTree.height(y.left), avlTree.height(y.right)) + 1
-	
+
 	// Return new root
 	return y
 }
@@ -153,7 +147,7 @@ func (avlTree *AVLTree) deleteUtil(node *Node, data int) *Node {
 	balance := avlTree.getBalance(node)
 
 	if balance > 1 {
-		if data >= node.left.data { // Left Left Case 
+		if data >= node.left.data { // Left Left Case
 			return avlTree.rightRotate(node)
 		}
 		if data < node.left.data { // Left Right Case
@@ -161,7 +155,7 @@ func (avlTree *AVLTree) deleteUtil(node *Node, data int) *Node {
 		}
 	}
 	if balance < -1 {
-		if data <= node.right.data { // Right Right Case 
+		if data <= node.right.data { // Right Right Case
 			return avlTree.leftRotate(node)
 		}
 		if data > node.right.data { // Right Left Case
@@ -182,7 +176,7 @@ func (avlTree *AVLTree) FindMin(curr *Node) *Node {
 	return node
 }
 
-func (avlTree *AVLTree) max(a int, b int) int {
+func (avlTree *AVLTree) max(a, b int) int {
 	if a > b {
 		return a
 	}
@@ -211,7 +205,7 @@ func (avlTree *AVLTree) printTreeUtil(node *Node, indent string, isLeft bool) {
 }
 
 func main() {
-	t := NewAVLTree()
+	t := AVLTree{}
 	t.Insert(1)
 	t.Insert(2)
 	t.Insert(3)

@@ -25,10 +25,10 @@ func MatchExp(exp string, str string) bool {
 }
 
 func main1() {
-    fmt.Println(MatchExp("hello*", "helloworld"))
-    fmt.Println(MatchExp("hello?d", "hellowd"))
-    fmt.Println(MatchExp("hello*hemant", "helloworldfsdfsdfdsfhemant"))
-    fmt.Println(MatchExp("*hemantj", "helloworldfsdfsdfdsfhemant"))
+	fmt.Println(MatchExp("hello*", "helloworld"))
+	fmt.Println(MatchExp("hello?d", "hellowd"))
+	fmt.Println(MatchExp("hello*hemant", "helloworldfsdfsdfdsfhemant"))
+	fmt.Println(MatchExp("*hemantj", "helloworldfsdfsdfdsfhemant"))
 }
 
 /*
@@ -55,8 +55,8 @@ func MatchPattern(source string, pattern string) bool {
 }
 
 func main2() {
-    fmt.Println(MatchPattern("harrypottermustnotgotoschool", "potterschool"))
-    fmt.Println()
+	fmt.Println(MatchPattern("harrypottermustnotgotoschool", "potterschool"))
+	fmt.Println()
 }
 
 /*
@@ -79,17 +79,17 @@ func IsPrime(n int) bool {
 }
 
 func main3() {
-    fmt.Print("Prime numbers under 10 :: ")
-    for i := 0; i < 10; i++ {
-        if (IsPrime(i)){
-            fmt.Print(i, " ")
-        }
-    }
-    fmt.Println()
+	fmt.Print("Prime numbers under 10 :: ")
+	for i := 0; i < 10; i++ {
+		if IsPrime(i) {
+			fmt.Print(i, " ")
+		}
+	}
+	fmt.Println()
 }
 
 /*
-Prime numbers under 10 :: 2 3 5 7 
+Prime numbers under 10 :: 2 3 5 7
 */
 
 func IsUniqueChar(str string) bool {
@@ -108,8 +108,8 @@ func IsUniqueChar(str string) bool {
 }
 
 func main4() {
-    IsUniqueChar("aple")
-    IsUniqueChar("apple")
+	IsUniqueChar("aple")
+	IsUniqueChar("apple")
 }
 
 /*
@@ -143,8 +143,8 @@ func IsPermutation(s1 string, s2 string) bool {
 }
 
 func main5() {
-    fmt.Println("IsPermutation :", IsPermutation("apple", "plepa"))
-    fmt.Println("IsPermutation :", IsPermutation("appleb", "plepaa"))
+	fmt.Println("IsPermutation :", IsPermutation("apple", "plepa"))
+	fmt.Println("IsPermutation :", IsPermutation("appleb", "plepaa"))
 }
 
 /*
@@ -170,8 +170,8 @@ func IsPalindrome(str string) bool {
 }
 
 func main6() {
-    IsPalindrome("hello")
-    IsPalindrome("eoloe")
+	IsPalindrome("hello")
+	IsPalindrome("eoloe")
 }
 
 /*
@@ -193,7 +193,7 @@ func Pow(x int, n int) int {
 }
 
 func main7() {
-    fmt.Println(Pow(5, 2))
+	fmt.Println(Pow(5, 2))
 }
 
 /*
@@ -224,9 +224,9 @@ func Strcmp(a string, b string) int {
 }
 
 func main8() {
-    fmt.Println(Strcmp("apple", "appke"));
-    fmt.Println(Strcmp("apple", "apple"));
-    fmt.Println(Strcmp("apple", "appme"));
+	fmt.Println(Strcmp("apple", "appke"))
+	fmt.Println(Strcmp("apple", "apple"))
+	fmt.Println(Strcmp("apple", "appme"))
 }
 
 /*
@@ -279,8 +279,8 @@ func ReverseWords(str string) string {
 }
 
 func main9() {
-    fmt.Println(ReverseString("apple"))
-    fmt.Println(ReverseWords("hello world"))
+	fmt.Println(ReverseString("apple"))
+	fmt.Println(ReverseWords("hello world"))
 }
 
 /*
@@ -297,7 +297,7 @@ func printAnagramUtil(a []rune, i int, length int) {
 		fmt.Println(string(a))
 		return
 	}
-	
+
 	for j := i; j < length; j++ {
 		a[i], a[j] = a[j], a[i]
 		printAnagramUtil(a, i+1, length)
@@ -306,7 +306,7 @@ func printAnagramUtil(a []rune, i int, length int) {
 }
 
 func main10() {
-    PrintAnagram("123")
+	PrintAnagram("123")
 }
 
 /*
@@ -343,7 +343,7 @@ func Shuffle(arr string) string {
 }
 
 func main11() {
-    fmt.Println(Shuffle("ABCDE12345"))
+	fmt.Println(Shuffle("ABCDE12345"))
 }
 
 /*

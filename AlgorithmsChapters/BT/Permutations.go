@@ -15,7 +15,6 @@ func Permutation(arr []int, i int, length int) {
 		Permutation(arr, i+1, length)
 		arr[i], arr[j] = arr[j], arr[i]
 	}
-	return
 }
 
 func Permutation2(arr []int, i int, length int) {
@@ -30,7 +29,6 @@ func Permutation2(arr []int, i int, length int) {
 		Permutation2(arr, i+1, length)
 		arr[i], arr[j] = arr[j], arr[i]
 	}
-	return
 }
 
 func isValid(arr []int, n int) bool {
@@ -54,7 +52,6 @@ func Permutation3(arr []int, i int, length int) {
 		}
 		arr[i], arr[j] = arr[j], arr[i]
 	}
-	return
 }
 
 func isValid2(arr []int, i int) bool {
@@ -66,13 +63,17 @@ func isValid2(arr []int, i int) bool {
 
 func main() {
 	arr := []int{1, 2, 3, 4}
-	Permutation(arr, 0, 4)
+
+	fmt.Println("Permutation:")
+	Permutation(arr, 0, len(arr))
 	fmt.Println()
 
-	Permutation2(arr, 0, 4)
+	fmt.Println("Valid Permutation:")
+	Permutation2(arr, 0, len(arr))
 	fmt.Println()
-	
-	Permutation3(arr, 0, 4)
+
+	fmt.Println("Valid Adjacent Permutation:")
+	Permutation3(arr, 0, len(arr))
 }
 
 /*

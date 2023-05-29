@@ -4,7 +4,7 @@ import "fmt"
 
 func StockBuySellMaxProfit(arr []int) int {
 	buyProfit := -arr[0] // Buy stock profit
-	sellProfit := 0  // Sell stock profit
+	sellProfit := 0      // Sell stock profit
 	n := len(arr)
 	for i := 1; i < n; i++ {
 		newBuyProfit := buyProfit
@@ -21,6 +21,7 @@ func StockBuySellMaxProfit(arr []int) int {
 	}
 	return sellProfit
 }
+
 func StockBuySellMaxProfit2(arr []int) int {
 	n := len(arr)
 	dp := make([][]int, n)
@@ -44,8 +45,8 @@ func StockBuySellMaxProfit2(arr []int) int {
 }
 
 func StockBuySellMaxProfitTC(arr []int, t int) int {
-	buyProfit := -arr[0]  // Buy stock profit
-	sellProfit := 0 // Sell stock profit
+	buyProfit := -arr[0] // Buy stock profit
+	sellProfit := 0      // Sell stock profit
 	n := len(arr)
 	for i := 1; i < n; i++ {
 		newBuyProfit := buyProfit
@@ -58,7 +59,6 @@ func StockBuySellMaxProfitTC(arr []int, t int) int {
 		}
 		buyProfit = newBuyProfit
 		sellProfit = newSellProfit
-
 	}
 	return sellProfit
 }
@@ -87,15 +87,15 @@ func StockBuySellMaxProfitTC2(arr []int, t int) int {
 
 func main() {
 	arr := []int{10, 12, 9, 23, 25, 55, 49, 70}
-	fmt.Println("Total profit :", StockBuySellMaxProfit(arr))
-	fmt.Println("Total profit :", StockBuySellMaxProfit2(arr))
-	fmt.Println("Total profit :", StockBuySellMaxProfitTC(arr, 2))
-	fmt.Println("Total profit :", StockBuySellMaxProfitTC2(arr, 2))
+	fmt.Println("Total profit:", StockBuySellMaxProfit(arr))
+	fmt.Println("Total profit:", StockBuySellMaxProfit2(arr))
+	fmt.Println("Total profit:", StockBuySellMaxProfitTC(arr, 2))
+	fmt.Println("Total profit:", StockBuySellMaxProfitTC2(arr, 2))
 }
 
 /*
-Total profit : 69
-Total profit : 69
-Total profit : 63
-Total profit : 63
+Total profit: 69
+Total profit: 69
+Total profit: 63
+Total profit: 63
 */

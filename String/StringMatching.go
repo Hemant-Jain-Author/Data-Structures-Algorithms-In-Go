@@ -121,10 +121,11 @@ func main() {
 	fmt.Println("Using BruteForceSearch pattern found at index : ", BruteForceSearch(st1, st2))
 	fmt.Println("Using RobinKarp  pattern found at index : ", RobinKarp(st1, st2))
 	fmt.Println("Using KMP  pattern found at index : ", KMP(st1, st2))
-	
+
 	str3 := "Only time will tell if we stand the test of time"
 	fmt.Println("Frequency of 'time' is ", KMPFindCount(str3, "time"))
 }
+
 /*
 Using BruteForceSearch pattern found at index :  7
 Using RobinKarp  pattern found at index :  7

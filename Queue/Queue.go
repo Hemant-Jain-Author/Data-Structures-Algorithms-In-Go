@@ -45,16 +45,15 @@ func (q Queue) Print() {
 	fmt.Println(q.que)
 }
 
-
 func main() {
 	que := new(Queue)
 	que.Add(1)
 	que.Add(2)
 	que.Add(3)
-	fmt.Println("IsEmpty :", que.IsEmpty());
-    fmt.Println("Size :", que.Len());
-    fmt.Println("Queue remove :", que.Remove());
-    fmt.Println("Queue remove :", que.Remove());
+	fmt.Println("IsEmpty :", que.IsEmpty())
+	fmt.Println("Size :", que.Len())
+	fmt.Println("Queue remove :", que.Remove())
+	fmt.Println("Queue remove :", que.Remove())
 
 }
 

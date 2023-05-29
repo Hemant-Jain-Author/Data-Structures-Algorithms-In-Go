@@ -93,11 +93,11 @@ func (self *rangeMaxST) updateUtil(segStart int, segEnd int, ind int, val int, i
 		}
 	}
 	mid := (segStart + segEnd) / 2
-	// Current node value is updated with min. 
-    self.segArr[index] = self.max(self.updateUtil(segStart, mid, ind, val, 2*index+1), 
-					self.updateUtil(mid+1, segEnd, ind, val, 2*index+2))
+	// Current node value is updated with min.
+	self.segArr[index] = self.max(self.updateUtil(segStart, mid, ind, val, 2*index+1),
+		self.updateUtil(mid+1, segEnd, ind, val, 2*index+2))
 	// Value of diff is propagated to the parent node.
-    return self.segArr[index]
+	return self.segArr[index]
 }
 
 func main() {

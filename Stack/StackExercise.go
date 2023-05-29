@@ -51,6 +51,7 @@ func main1() {
 	sortedInsert(stk, 3)
 	stk.Print()
 }
+
 /*
 [1 2 3 4]
 */
@@ -191,6 +192,7 @@ func main5() {
 	reverseKElementInStack(stk, 2)
 	stk.Print()
 }
+
 /*
 [1 2 3 4]
 [1 2 4 3]
@@ -217,6 +219,7 @@ func main6() {
 	reverseQueue(que)
 	que.Print()
 }
+
 /*
 [1 2 3 4]
 [4 3 2 1]
@@ -251,6 +254,7 @@ func main7() {
 	reverseKElementInQueue(que, 2)
 	que.Print()
 }
+
 /*
 [1 2 3 4]
 [2 1 3 4]
@@ -287,6 +291,7 @@ func main8() {
 	value := IsBalancedParenthesis(expn)
 	fmt.Println("IsBalancedParenthesis :", value)
 }
+
 /*
 IsBalancedParenthesis : true
 */
@@ -343,6 +348,7 @@ func main9() {
 	value2 := maxDepthParenthesis2(expn, size)
 	fmt.Println("Max depth parenthesis is", value2)
 }
+
 /*
 Max depth parenthesis is 6
 Max depth parenthesis is 6
@@ -460,6 +466,7 @@ func main12() {
 	value := findDuplicateParenthesis(expn, size)
 	fmt.Println("Duplicate Parenthesis Found :", value)
 }
+
 /*
 Duplicate Parenthesis Found : true
 */
@@ -488,6 +495,7 @@ func main13() {
 	size := len(expn1)
 	printParenthesisNumber(expn1, size)
 }
+
 /*
 Parenthesis Count : 1234435521
 */
@@ -552,9 +560,10 @@ func main14() {
 	fmt.Println("Infix Expn:", expn)
 	fmt.Println("Postfix Expn:", value)
 }
+
 /*
 Infix Expn: 10+((3))*5/(16-4)
-Postfix Expn: 10 3 5 * 16 4 - / + 
+Postfix Expn: 10 3 5 * 16 4 - / +
 */
 
 func InfixToPrefix(expn string) string {
@@ -598,6 +607,7 @@ func main15() {
 	fmt.Println("Infix Expn:", expn)
 	fmt.Println("Prefix Expn:", value)
 }
+
 /*
 Infix Expn: 10+((3))*5/(16-4)
 Prefix Expn:  +10 * 3 / 5  - 16 4
@@ -680,6 +690,7 @@ func main17() {
 	fmt.Println(StockSpanRange(stock))
 	fmt.Println(StockSpanRange2(stock))
 }
+
 /*
 [1 1 1 1 1 4 6 8 9]
 [1 1 1 1 1 4 6 8 9]
@@ -743,26 +754,27 @@ func main18() {
 	value = GetMaxArea2(arr)
 	fmt.Println("GetMaxArea ::", value)
 }
+
 /*
 GetMaxArea :: 20
 GetMaxArea :: 20
 */
 
 func StockAnalystAdd(stk *Stack, value int) {
-    for (stk.Len() > 0 && stk.Top().(int) <= value) {
-        stk.Pop();
+	for stk.Len() > 0 && stk.Top().(int) <= value {
+		stk.Pop()
 	}
-    stk.Push(value);
+	stk.Push(value)
 }
 
 // Testing code.
-func main18A()  {
-    arr := []int{ 20, 19, 10, 21, 40, 35, 39, 50, 45, 42 };
-    stk := new(Stack)
-    for i := len(arr) - 1; i >= 0; i-- {
-        StockAnalystAdd(stk, arr[i]);
+func main18A() {
+	arr := []int{20, 19, 10, 21, 40, 35, 39, 50, 45, 42}
+	stk := new(Stack)
+	for i := len(arr) - 1; i >= 0; i-- {
+		StockAnalystAdd(stk, arr[i])
 	}
-    stk.Print()
+	stk.Print()
 }
 
 /*
@@ -818,20 +830,20 @@ func nextLargerElement2(arr []int, size int) {
 	fmt.Println()
 }
 
-func nextSmallerElement(arr[] int, size int) {
-    output := make([]int, size)
-    for i := 0; i < size; i++ {
+func nextSmallerElement(arr []int, size int) {
+	output := make([]int, size)
+	for i := 0; i < size; i++ {
 		output[i] = -1
 	}
 	for i := 0; i < size; i++ {
-		for j := i+1; j < size; j++ {
-			if (arr[j] < arr[i]) {
-                output[i] = arr[j];
-                break;
-            }
+		for j := i + 1; j < size; j++ {
+			if arr[j] < arr[i] {
+				output[i] = arr[j]
+				break
+			}
 		}
 	}
-    fmt.Println(output)
+	fmt.Println(output)
 }
 
 func nextSmallerElement2(arr []int, size int) {
@@ -867,10 +879,11 @@ func main19() {
 	nextSmallerElement(arr, size)
 	nextSmallerElement2(arr, size)
 }
+
 /*
-21 -1 6 20 -1 -1 
-21 -1 6 20 -1 -1 
-3 3 -1 3 3 -1 
+21 -1 6 20 -1 -1
+21 -1 6 20 -1 -1
+3 3 -1 3 3 -1
 */
 
 func nextLargerElementCircular(arr []int, size int) {
@@ -881,10 +894,10 @@ func nextLargerElementCircular(arr []int, size int) {
 
 	for i := 0; i < size; i++ {
 		for j := 1; j < size; j++ {
-			if arr[i] < arr[(i + j) % size] {
-                output[i] = arr[(i + j) % size]
-                break
-            }
+			if arr[i] < arr[(i+j)%size] {
+				output[i] = arr[(i+j)%size]
+				break
+			}
 		}
 	}
 
@@ -923,18 +936,16 @@ func main20() {
 	arr := []int{6, 3, 9, 8, 10, 2, 1, 15, 7}
 	size := len(arr)
 	nextLargerElementCircular(arr, size)
-	
+
 	arr2 := []int{6, 3, 9, 8, 10, 2, 1, 15, 7}
 	size2 := len(arr2)
 	nextLargerElementCircular2(arr2, size2)
 }
+
 /*
-9 9 10 10 15 15 15 -1 9 
-9 9 10 10 15 15 15 -1 9 
+9 9 10 10 15 15 15 -1 9
+9 9 10 10 15 15 15 -1 9
 */
-
-
-
 
 func isKnown(relation [][]int, a int, b int) bool {
 	if relation[a][b] == 1 {
@@ -943,21 +954,21 @@ func isKnown(relation [][]int, a int, b int) bool {
 	return false
 }
 
-func findCelebrity(relation [][]int,  count int) int {
-    cel := true
-    for i := 0; i < count; i++ {
-        cel = true
-        for j := 0; j < count; j++ {
-            if i != j && (!isKnown(relation, j, i) || isKnown(relation, i, j)) {
-                cel = false
-                break
-            }
-        }
-        if (cel == true){
-            return i
+func findCelebrity(relation [][]int, count int) int {
+	cel := true
+	for i := 0; i < count; i++ {
+		cel = true
+		for j := 0; j < count; j++ {
+			if i != j && (!isKnown(relation, j, i) || isKnown(relation, i, j)) {
+				cel = false
+				break
+			}
 		}
-    }
-    return -1;
+		if cel == true {
+			return i
+		}
+	}
+	return -1
 }
 
 func findCelebrity2(relation [][]int, count int) int {
@@ -1027,31 +1038,31 @@ Celebrity : 3
 
 func main() {
 	main0()
-/*	main1()
-	main2()
-	main3()
-	main4()
-	main5()
-	main6()
-	main7()
-	main8()
-	main9()
-	main10()
-	main11()
-	main12()
-	main13()
-	main14()
-	main15()
-	main16()
-	main17()
-	main18()
-*/	main18A()
-main19()
+	/*	main1()
+		main2()
+		main3()
+		main4()
+		main5()
+		main6()
+		main7()
+		main8()
+		main9()
+		main10()
+		main11()
+		main12()
+		main13()
+		main14()
+		main15()
+		main16()
+		main17()
+		main18()
+	*/main18A()
+	main19()
 	main20()
-	main21()
+	/* main21()
 	main22()
 	main23()
-	main24()
+	main24() */
 	main25()
 }
 

@@ -47,4 +47,3 @@ func SelectionSort2(arr []int) {
 		arr[i], arr[min] = arr[min], arr[i]
 	}
 }
-

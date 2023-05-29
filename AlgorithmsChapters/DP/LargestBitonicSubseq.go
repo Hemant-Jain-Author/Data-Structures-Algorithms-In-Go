@@ -13,12 +13,15 @@ func LargestBitonicSubseq(arr []int) int {
 	n := len(arr)
 	lis := make([]int, n)
 	// Initialize LIS values for all indexes as 1.
-	for i := range lis {lis[i] = 1}
+	for i := range lis {
+		lis[i] = 1
+	}
 
 	lds := make([]int, n)
 	// Initialize LDS values for all indexes as 1.
-	for i := range lds {lds[i] = 1}
-
+	for i := range lds {
+		lds[i] = 1
+	}
 	// Populating LIS values in bottom up manner.
 	for i := 0; i < n; i++ {
 		for j := 0; j < i; j++ {
@@ -40,7 +43,7 @@ func LargestBitonicSubseq(arr []int) int {
 	maxVal := 0
 	for i := 0; i < n; i++ {
 		if maxVal < lis[i]+lds[i]-1 {
-			maxVal = lis[i]+lds[i]-1
+			maxVal = lis[i] + lds[i] - 1
 		}
 	}
 	return maxVal
@@ -48,7 +51,7 @@ func LargestBitonicSubseq(arr []int) int {
 
 func main() {
 	arr := []int{1, 6, 3, 11, 1, 9, 5, 12, 3, 14, 6, 17, 3, 19, 2, 19}
-	fmt.Println("Length of LBS is ", LargestBitonicSubseq(arr))
+	fmt.Println("Length of LBS is", LargestBitonicSubseq(arr))
 }
 
 /*
