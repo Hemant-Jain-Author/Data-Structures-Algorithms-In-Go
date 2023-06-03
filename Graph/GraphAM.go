@@ -194,8 +194,7 @@ func (gph *Graph) PrimsMST() {
 		}
 	}
 	fmt.Println(output)
-	fmt.Println("Total MST cost :", total)
-
+	fmt.Println("Total MST cost:", total)
 }
 
 // Testing code.

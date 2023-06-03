@@ -4,6 +4,10 @@ import (
 	"fmt"
 )
 
+func MatchExp(exp string, str string) bool {
+	return matchExpUtil(exp, str, 0, 0)
+}
+
 func matchExpUtil(exp string, str string, i int, j int) bool {
 	if i == len(exp) && j == len(str) {
 		return true
@@ -18,10 +22,6 @@ func matchExpUtil(exp string, str string, i int, j int) bool {
 		return matchExpUtil(exp, str, i+1, j) || matchExpUtil(exp, str, i, j+1) || matchExpUtil(exp, str, i+1, j+1)
 	}
 	return false
-}
-
-func MatchExp(exp string, str string) bool {
-	return matchExpUtil(exp, str, 0, 0)
 }
 
 func main1() {
@@ -64,18 +64,16 @@ true
 */
 
 func IsPrime(n int) bool {
-	answer := false
-	if n > 1 {
-		answer = true
+	if n <= 1 {
+		return false
 	}
 
 	for i := 2; i*i <= n; i++ {
 		if n%i == 0 {
-			answer = false
-			break
+			return false
 		}
 	}
-	return answer
+	return true
 }
 
 func main3() {
@@ -143,15 +141,15 @@ func IsPermutation(s1 string, s2 string) bool {
 }
 
 func main5() {
-	fmt.Println("IsPermutation :", IsPermutation("apple", "plepa"))
-	fmt.Println("IsPermutation :", IsPermutation("appleb", "plepaa"))
+	fmt.Println("IsPermutation:", IsPermutation("apple", "plepa"))
+	fmt.Println("IsPermutation:", IsPermutation("appleb", "plepaa"))
 }
 
 /*
 apple & plepa are permutation
-IsPermutation : true
+IsPermutation: true
 appleb & plepaa are not permutation
-IsPermutation : false
+IsPermutation: false
 */
 
 func IsPalindrome(str string) bool {
@@ -180,14 +178,13 @@ String is a Palindrome
 */
 
 func Pow(x int, n int) int {
-	var value int
 	if n == 0 {
 		return 1
 	} else if n%2 == 0 {
-		value = Pow(x, n/2)
-		return (value * value)
+		value := Pow(x, n/2)
+		return value * value
 	} else {
-		value = Pow(x, n/2)
+		value := Pow(x, n/2)
 		return x * value * value
 	}
 }
@@ -220,7 +217,7 @@ func Strcmp(a string, b string) int {
 	} else if len2 == index {
 		return 1
 	}
-	return (int)(a[index]) - (int)(b[index])
+	return int(a[index]) - int(b[index])
 }
 
 func main8() {

@@ -55,7 +55,7 @@ func BinarySearch(data []int, value int) bool {
 	low := 0
 	high := size - 1
 	for low <= high {
-		mid = low + (high-low)/2 // To afunc the overflow
+		mid = (low + high) / 2
 		if data[mid] == value {
 			return true
 		} else {
@@ -106,9 +106,9 @@ func ReverseArray2(data []int) {
 
 func main4() {
 	arr := []int{1, 2, 3, 4, 5, 6}
-	fmt.Println("Input array :", arr)
+	fmt.Println("Input array:", arr)
 	RotateArray(arr, 2)
-	fmt.Println("Rotated array :", arr)
+	fmt.Println("Rotated array:", arr)
 }
 
 func MaxSubArraySum(data []int) int {
@@ -125,12 +125,13 @@ func MaxSubArraySum(data []int) int {
 			maxSoFar = maxEndingHere
 		}
 	}
+
 	return maxSoFar
 }
 
 func main5() {
 	data := []int{1, -2, 3, 4, -4, 6, -4, 3, 2}
-	fmt.Println("Max sub array sum :", MaxSubArraySum(data))
+	fmt.Println("Max sub array sum:", MaxSubArraySum(data))
 }
 
 func WaveArray(arr []int) {
@@ -203,6 +204,7 @@ func main7() {
 	size := len(arr)
 	indexArray2(arr, size)
 	fmt.Println(arr)
+
 	arr2 := []int{8, -1, 6, 1, 9, 3, 2, 7, 4, -1}
 	size2 := len(arr2)
 	indexArray(arr2, size2)
@@ -281,7 +283,7 @@ func SmallestPositiveMissingNumber2(arr []int, size int) int {
 func SmallestPositiveMissingNumber3(arr []int, size int) int {
 	aux := make([]int, size)
 
-	for index, _ := range aux {
+	for index := range aux {
 		aux[index] = -1
 	}
 
@@ -319,10 +321,10 @@ func main9() {
 	arr := []int{8, 5, 6, 1, 9, 11, 2, 7, 4, 10}
 	size := len(arr)
 
-	fmt.Println("Missing Number :", SmallestPositiveMissingNumber(arr, size))
-	fmt.Println("Missing Number :", SmallestPositiveMissingNumber2(arr, size))
-	fmt.Println("Missing Number :", SmallestPositiveMissingNumber3(arr, size))
-	fmt.Println("Missing Number :", SmallestPositiveMissingNumber4(arr, size))
+	fmt.Println("Missing Number:", SmallestPositiveMissingNumber(arr, size))
+	fmt.Println("Missing Number:", SmallestPositiveMissingNumber2(arr, size))
+	fmt.Println("Missing Number:", SmallestPositiveMissingNumber3(arr, size))
+	fmt.Println("Missing Number:", SmallestPositiveMissingNumber4(arr, size))
 }
 
 func MaxMinArr(arr []int, size int) {
@@ -528,6 +530,7 @@ func printInt(number int) {
 
 	fmt.Print(string(conversion[digit]))
 }
+
 func main15() {
 	printInt(500)
 }
@@ -623,30 +626,26 @@ func main20() {
 BinarySearchRecursive: false */
 
 func main() {
-	/*main1()
+	main1()
 	main2()
 	main3()
 	main4()
-	*/
 	main5()
-	/*main6()
+	main6()
 	main7()
 	main8()
 	main9()
 	main10()
 	main11()
-
 	main12()
-	*/
 	main13()
 	main14()
-	/*
-		main15()
-		main16()
-		main17()
-		main18()
-		main19()
-	 	main20()*/
+	main15()
+	main16()
+	main17()
+	main18()
+	main19()
+	main20()
 }
 
 /*
@@ -663,10 +662,10 @@ SequentialSearch: false
 BinarySearch: true
 BinarySearch: false
 
-Input array : [1 2 3 4 5 6]
-Rotated array : [3 4 5 6 1 2]
+Input array: [1 2 3 4 5 6]
+Rotated array: [3 4 5 6 1 2]
 
-Max sub array sum : 9
+Max sub array sum: 10
 
 [8 1 3 2 5 4 6 2 4]
 [2 1 3 2 4 4 6 5 8]
@@ -675,18 +674,17 @@ Max sub array sum : 9
 [1 2 3 4 5 6 7 8 9 10]
 [1 2 3 4 5 6 7 8 9 10]
 
-Missing Number : 3
-Missing Number : 3
-Missing Number : 3
-Missing Number : 3
+Missing Number: 3
+Missing Number: 3
+Missing Number: 3
+Missing Number: 3
 
 [7 1 6 2 5 3 4]
 [7 1 6 2 5 3 4]
 
 MaxCirculrSum:  290
-ArrayIndexMaxDiff :  6
-ArrayIndexMaxDiff :  6
-
+ArrayIndexMaxDiff :  7
+ArrayIndexMaxDiff :  7
 Max Path Sum ::  201
 
 factorial 5 is ::  120

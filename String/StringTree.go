@@ -22,8 +22,8 @@ func (t *StringTree) print() {
 
 func (t *StringTree) printUtil(curr *TreeNode) {
 	if curr != nil {
-		fmt.Println(" value is ::", curr.value)
-		fmt.Println(" count is :: ", curr.count)
+		fmt.Println("value is:", curr.value)
+		fmt.Println("count is:", curr.count)
 		t.printUtil(curr.lChild)
 		t.printUtil(curr.rChild)
 	}
@@ -34,20 +34,22 @@ func (t *StringTree) Insert(value string) {
 }
 
 func (t *StringTree) insertUtil(value string, curr *TreeNode) *TreeNode {
-	var compare int
 	if curr == nil {
-		curr = new(TreeNode)
-		curr.value = value
-	} else {
-		compare = strings.Compare(curr.value, value)
-		if compare == 0 {
-			curr.count++
-		} else if compare == 1 {
-			curr.lChild = t.insertUtil(value, curr.lChild)
-		} else {
-			curr.rChild = t.insertUtil(value, curr.rChild)
+		return &TreeNode{
+			value: value,
+			count: 1,
 		}
 	}
+
+	compare := strings.Compare(curr.value, value)
+	if compare == 0 {
+		curr.count++
+	} else if compare == 1 {
+		curr.lChild = t.insertUtil(value, curr.lChild)
+	} else {
+		curr.rChild = t.insertUtil(value, curr.rChild)
+	}
+
 	return curr
 }
 
@@ -60,19 +62,18 @@ func (t *StringTree) Find(value string) bool {
 }
 
 func (t *StringTree) findUtil(curr *TreeNode, value string) bool {
-	var compare int
 	if curr == nil {
 		return false
 	}
-	compare = strings.Compare(curr.value, value)
+
+	compare := strings.Compare(curr.value, value)
 	if compare == 0 {
 		return true
-	}
-
-	if compare == 1 {
+	} else if compare == 1 {
 		return t.findUtil(curr.lChild, value)
+	} else {
+		return t.findUtil(curr.rChild, value)
 	}
-	return t.findUtil(curr.rChild, value)
 }
 
 func (t *StringTree) frequency(value string) int {
@@ -80,34 +81,27 @@ func (t *StringTree) frequency(value string) int {
 }
 
 func (t *StringTree) frequencyUtil(curr *TreeNode, value string) int {
-	var compare int
 	if curr == nil {
 		return 0
 	}
-	compare = strings.Compare(curr.value, value)
 
+	compare := strings.Compare(curr.value, value)
 	if compare == 0 {
 		return curr.count
-	}
-	if compare > 0 {
+	} else if compare > 0 {
 		return t.frequencyUtil(curr.lChild, value)
+	} else {
+		return t.frequencyUtil(curr.rChild, value)
 	}
-	return t.frequencyUtil(curr.rChild, value)
 }
 
 // Testing code.
 func main() {
-	t := new(StringTree)
+	t := &StringTree{}
 	t.Insert("banana")
 	t.Insert("apple")
 	t.Insert("mango")
-	fmt.Println("Apple Found :", t.Find("apple"))
-	fmt.Println("Grapes Found :", t.Find("grapes"))
-	fmt.Println("Banana Found :", t.Find("banana"))
+	fmt.Println("Apple Found:", t.Find("apple"))
+	fmt.Println("Grapes Found:", t.Find("grapes"))
+	fmt.Println("Banana Found:", t.Find("banana"))
 }
-
-/*
-Apple Found : true
-Grapes Found : false
-Banana Found : true
-*/

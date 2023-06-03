@@ -10,31 +10,18 @@ type Node struct {
 	left, right *Node
 }
 
-func NewNode(value int, l, r *Node) (self *Node) {
-	self = &Node{}
-	self.value = value
-	self.left = l
-	self.right = r
-	return
-}
-
 type Tree struct {
 	root *Node
 }
 
-func NewTree() (self *Tree) {
-	self = &Tree{}
-	return
-}
-
 func CreateCompleteBinaryTree(arr []int) *Tree {
-	tree := NewTree()
+	tree := &Tree{}
 	tree.root = createCompleteBinaryTree(arr, 0, len(arr))
 	return tree
 }
 
 func createCompleteBinaryTree(arr []int, start int, size int) *Node {
-	curr := NewNode(arr[start], nil, nil)
+	curr := &Node{arr[start], nil, nil}
 	left := 2*start + 1
 	right := 2*start + 2
 	if left < size {
@@ -52,7 +39,7 @@ func (t *Tree) Add(value int) {
 
 func (t *Tree) addUtil(n *Node, value int) *Node {
 	if n == nil {
-		return NewNode(value, nil, nil)
+		return &Node{value, nil, nil}
 	}
 	if value < n.value {
 		n.left = t.addUtil(n.left, value)
@@ -114,6 +101,7 @@ func (t *Tree) nthPreOrder(node *Node, index int, counter *int) {
 		(*counter)++
 		if *counter == index {
 			fmt.Println("NthPreOrder at index :", index, "is :", node.value)
+			return
 		}
 		t.nthPreOrder(node.left, index, counter)
 		t.nthPreOrder(node.right, index, counter)
@@ -132,6 +120,7 @@ func (t *Tree) nthPostOrder(node *Node, index int, counter *int) {
 		(*counter)++
 		if *counter == index {
 			fmt.Println("NthPostOrder at index ", index, "is :", node.value)
+			return
 		}
 	}
 }
@@ -147,6 +136,7 @@ func (t *Tree) nthInOrder(node *Node, index int, counter *int) {
 		*counter++
 		if *counter == index {
 			fmt.Println("NthInOrder at index :", index, "is :", node.value)
+			return
 		}
 		t.nthInOrder(node.right, index, counter)
 	}
@@ -478,7 +468,7 @@ func (t *Tree) ancestor(curr *Node, first int, second int) *Node {
 }
 
 func (t *Tree) CopyTree() *Tree {
-	Tree2 := NewTree()
+	Tree2 := &Tree{}
 	Tree2.root = t.copyTree(t.root)
 	return Tree2
 }
@@ -486,16 +476,16 @@ func (t *Tree) CopyTree() *Tree {
 func (t *Tree) copyTree(curr *Node) *Node {
 	var temp *Node
 	if curr != nil {
-		temp = NewNode(curr.value,
+		temp = &Node{curr.value,
 			t.copyTree(curr.left),
-			t.copyTree(curr.right))
+			t.copyTree(curr.right)}
 		return temp
 	}
 	return nil
 }
 
 func (t *Tree) CopyMirrorTree() *Tree {
-	tree := NewTree()
+	tree := &Tree{}
 	tree.root = t.copyMirrorTree(t.root)
 	return tree
 }
@@ -503,9 +493,9 @@ func (t *Tree) CopyMirrorTree() *Tree {
 func (t *Tree) copyMirrorTree(curr *Node) *Node {
 	var temp *Node
 	if curr != nil {
-		temp = NewNode(curr.value,
+		temp = &Node{curr.value,
 			t.copyMirrorTree(curr.right),
-			t.copyMirrorTree(curr.left))
+			t.copyMirrorTree(curr.left)}
 		return temp
 	}
 	return nil
@@ -519,7 +509,7 @@ func (t *Tree) numNodes(curr *Node) int {
 	if curr == nil {
 		return 0
 	}
-	return (1 + t.numNodes(curr.right) + t.numNodes(curr.left))
+	return 1 + t.numNodes(curr.right) + t.numNodes(curr.left)
 }
 
 func (t *Tree) NumFullNodesBT() int {
@@ -577,7 +567,7 @@ func (t *Tree) numLeafNodes(curr *Node) int {
 	if curr.left == nil && curr.right == nil {
 		return 1
 	}
-	return (t.numLeafNodes(curr.right) + t.numLeafNodes(curr.left))
+	return t.numLeafNodes(curr.right) + t.numLeafNodes(curr.left)
 }
 
 func (t *Tree) SumAllBT() int {
@@ -658,7 +648,7 @@ func (t *Tree) isBST3(root *Node) bool {
 	if root.right != nil && t.findMin(root.right).value <= root.value {
 		return false
 	}
-	return (t.isBST3(root.left) && t.isBST3(root.right))
+	return t.isBST3(root.left) && t.isBST3(root.right)
 }
 
 func (t *Tree) IsBST() bool {
@@ -984,7 +974,7 @@ func (t *Tree) searchBT(root *Node, value int) bool {
 }
 
 func CreateBinarySearchTree(arr []int) *Tree {
-	t := NewTree()
+	t := &Tree{}
 	size := len(arr)
 	t.root = createBinarySearchTreeUtil(arr, 0, size-1)
 	return t
@@ -995,10 +985,9 @@ func createBinarySearchTreeUtil(arr []int, start int, end int) *Node {
 		return nil
 	}
 	mid := (start + end) / 2
-	curr := NewNode(arr[mid],
+	return &Node{arr[mid],
 		createBinarySearchTreeUtil(arr, start, mid-1),
-		createBinarySearchTreeUtil(arr, mid+1, end))
-	return curr
+		createBinarySearchTreeUtil(arr, mid+1, end)}
 }
 
 func isBSTArray(preorder []int, size int) bool {
@@ -1025,7 +1014,7 @@ func isBSTArray(preorder []int, size int) bool {
 
 // Sort sorts values in place.
 func Sort(values []int) {
-	t := NewTree()
+	t := &Tree{}
 	for _, v := range values {
 		t.Add(v)
 	}
@@ -1154,7 +1143,7 @@ DLL nodes are : 8 4 9 2 10 5 1 6 3 7
 */
 
 func main5() {
-	t := NewTree()
+	t := &Tree{}
 	t.Add(6)
 	t.Add(4)
 	t.Add(2)
@@ -1249,13 +1238,13 @@ func main9() {
 */
 
 func main() {
-	//main1()
-	//main2()
-	//main3()
-	//main4()
-	//main5()
-	//main6()
-	//main7()
+	main1()
+	main2()
+	main3()
+	main4()
+	main5()
+	main6()
+	main7()
 	main8()
 	main9()
 }

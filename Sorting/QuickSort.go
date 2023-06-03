@@ -1,16 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
-
-func less(value1 int, value2 int) bool {
-	return value1 < value2
-}
-
-func greater(value1 int, value2 int) bool {
-	return value1 > value2
-}
+import "fmt"
 
 func QuickSort(arr []int) {
 	size := len(arr)

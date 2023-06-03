@@ -14,7 +14,7 @@ func NewRmqST(input []int) (self *rmqST) {
 	self = &rmqST{}
 	// Height of segment tree.
 	self.n = len(input)
-	//Maximum size of segment tree
+	// Maximum size of segment tree
 	x := (math.Ceil(math.Log(float64(self.n)) / math.Log(2)))
 	// Allocate memory for segment tree
 	maxSize := int(2*math.Pow(2.0, x) - 1)
@@ -24,14 +24,14 @@ func NewRmqST(input []int) (self *rmqST) {
 }
 
 func (self *rmqST) constructST(input []int, start int, end int, index int) int {
-	// Store it in current node of the segment tree and return
+	// Store it in the current node of the segment tree and return
 	if start == end {
 		self.segArr[index] = input[start]
 		return input[start]
 	}
-	// If there are more than one elements,
+	// If there are more than one element,
 	// then traverse left and right subtrees
-	// and store the minimum of values in current node.
+	// and store the minimum of values in the current node.
 	mid := (start + end) / 2
 	self.segArr[index] = self.min(self.constructST(input, start, mid, index*2+1), self.constructST(input, mid+1, end, index*2+2))
 	return self.segArr[index]
@@ -43,21 +43,21 @@ func (self *rmqST) Update(ind int, val int) {
 		fmt.Println("Invalid Input.")
 		return
 	}
-	// Update the values in segment tree
+	// Update the values in the segment tree
 	self.updateUtil(0, self.n-1, ind, val, 0)
 }
 
-// Always min inside valid range will be returned.
+// Always min inside the valid range will be returned.
 func (self *rmqST) updateUtil(segStart int, segEnd int, ind int, val int, index int) int {
-	// Update index lies outside the range of current segment.
-	// So minimum will not change.
+	// Update index lies outside the range of the current segment.
+	// So the minimum will not change.
 	if ind < segStart || ind > segEnd {
 		return self.segArr[index]
 	}
-	// If the input index is in range of this node, then update the
+	// If the input index is in the range of this node, then update the
 	// value of the node and its children
 	if segStart == segEnd {
-		if segStart == ind { // Index value need to be updated.
+		if segStart == ind { // Index value needs to be updated.
 			self.segArr[index] = val
 			return val
 		} else {
@@ -87,7 +87,7 @@ func (self *rmqST) getMinUtil(segStart int, segEnd int, queryStart int, queryEnd
 	if segEnd < queryStart || queryEnd < segStart {
 		return math.MaxInt32
 	}
-	// Segment tree is partly overlaps with the query range.
+	// Segment tree partly overlaps with the query range.
 	mid := (segStart + segEnd) / 2
 	return self.min(self.getMinUtil(segStart, mid, queryStart, queryEnd, 2*index+1), self.getMinUtil(mid+1, segEnd, queryStart, queryEnd, 2*index+2))
 }

@@ -20,11 +20,10 @@ type Graph struct {
 }
 
 func NewGraph(count int) *Graph {
-	gph := &Graph{
+	return &Graph{
 		count: count,
 		Edges: make([]*Edge, count),
 	}
-	return gph
 }
 
 func (gph *Graph) AddDirectedEdge(source, destination, cost int) {
@@ -188,13 +187,13 @@ Path between 0 & 6: true
 */
 
 func (gph *Graph) TopologicalSort() {
-	fmt.Print("Topological order of given graph is: ")
-	var count = gph.count
+	fmt.Print("Topological order of the given graph is: ")
+	count := gph.count
 	stk := new(Stack)
 	visited := make([]bool, count)
 
 	for i := 0; i < count; i++ {
-		if visited[i] == false {
+		if !visited[i] {
 			visited[i] = true
 			gph.TopologicalSortDFS(i, visited, stk)
 		}
@@ -235,7 +234,7 @@ func main3() {
 }
 
 /*
-Topological order of given graph is: 1 3 4 5 6 7 8 0 2
+Topological order of the given graph is: 1 3 4 5 6 7 8 0 2
 */
 
 func (gph *Graph) PathExist(source int, destination int) bool {
@@ -587,7 +586,7 @@ func union(sets []Sets, x int, y int) {
 
 func (gph *Graph) isCyclePresentUndirected3() bool {
 	count := gph.count
-	//Different subsets are created.
+	// Different subsets are created.
 	sets := make([]Sets, count)
 	for i := 0; i < count; i++ {
 		sets[i].parent = i
@@ -1094,14 +1093,16 @@ func main14() {
 	gph.AddDirectedEdge(2, 1, 1)
 	gph.AddDirectedEdge(0, 3, 1)
 	gph.AddDirectedEdge(3, 4, 1)
-	gph.IsEulerian()
+	fmt.Println("IsEulerian :", gph.IsEulerian())
 	gph.AddDirectedEdge(4, 0, 1)
-	gph.IsEulerian()
+	fmt.Println("IsEulerian :", gph.IsEulerian())
 }
 
 /*
 graph is Semi-Eulerian
+IsEulerian : 1
 graph is Eulerian
+IsEulerian : 2
 */
 
 //Testing code

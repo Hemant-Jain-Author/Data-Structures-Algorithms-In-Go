@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type BTree struct {
 	root *Node // Pointer to root node
@@ -9,12 +11,12 @@ type BTree struct {
 }
 
 // Constructor
-func NewBTree(dg int) (self *BTree) {
-	self = &BTree{}
-	self.root = nil
-	self.max = dg     // Max number of children.
-	self.min = dg / 2 // Min number of children.
-	return
+func NewBTree(dg int) *BTree {
+	return &BTree{
+		root: nil,
+		max:  dg,     // Max number of children.
+		min:  dg / 2, // Minimum number of children.
+	}
 }
 
 type Node struct {
@@ -25,13 +27,13 @@ type Node struct {
 }
 
 // Constructor
-func NewNode(leaf bool, max int) (self *Node) {
-	self = &Node{}
-	self.n = 0
-	self.keys = make([]int, max)
-	self.arr = make([]*Node, max+1)
-	self.leaf = leaf
-	return
+func NewNode(leaf bool, max int) *Node {
+	return &Node{
+		n:    0,
+		keys: make([]int, max),
+		arr:  make([]*Node, max+1),
+		leaf: leaf,
+	}
 }
 
 func (self *BTree) PrintTree() {
@@ -43,25 +45,11 @@ func (self *BTree) printTree(node *Node, indent string) {
 	if node == nil {
 		return
 	}
-	var i int
-	for i = 0; i < node.n; i++ {
+	for i := 0; i < node.n; i++ {
 		self.printTree(node.arr[i], indent+"    ")
 		fmt.Println(indent, "key[", i, "]:", node.keys[i])
 	}
-	self.printTree(node.arr[i], indent+"    ")
-}
-
-func (self *BTree) PrintInOrder(node *Node) {
-	var i int
-	for i = 0; i < node.n; i++ {
-		if node.leaf == false {
-			self.PrintInOrder(node.arr[i])
-		}
-		fmt.Print(node.keys[i], " ")
-	}
-	if node.leaf == false {
-		self.PrintInOrder(node.arr[i])
-	}
+	self.printTree(node.arr[node.n], indent+"    ")
 }
 
 func (self *BTree) Search(key int) *Node {
@@ -98,7 +86,8 @@ func (self *BTree) Insert(key int) {
 		self.root.n = 1         // Update number of keys in root
 		return
 	}
-	if self.root.leaf == true {
+
+	if self.root.leaf {
 		// Finds the location where new key can be inserted.
 		// By moving all keys greater than key to one place forward.
 		i := self.root.n - 1
@@ -108,7 +97,7 @@ func (self *BTree) Insert(key int) {
 		}
 		// Insert the new key at found location
 		self.root.keys[i+1] = key
-		self.root.n = self.root.n + 1
+		self.root.n++
 	} else {
 		i := 0
 		for i < self.root.n && self.root.keys[i] < key {
@@ -116,6 +105,7 @@ func (self *BTree) Insert(key int) {
 		}
 		self.insertUtil(self.root, self.root.arr[i], i, key)
 	}
+
 	if self.root.n == self.max {
 		// If root contains more then allowed nodes, then tree grows in height.
 		// Allocate memory for new root
@@ -139,7 +129,7 @@ func (self *BTree) insertUtil(parent *Node, child *Node, index int, key int) {
 		}
 		// Insert the new key at found location
 		child.keys[i+1] = key
-		child.n += 1
+		child.n++
 	} else {
 		// insert the node to the proper child.
 		i := 0
@@ -194,7 +184,7 @@ func (self *BTree) split(parent *Node, child *Node, index int) {
 	parent.keys[index] = child.keys[median]
 
 	// Increment count of keys in this parent
-	parent.n += 1
+	parent.n++
 }
 
 func (self *BTree) Remove(key int) {
@@ -213,11 +203,12 @@ func (self *BTree) Remove(key int) {
 
 func (self *BTree) removeUtil(node *Node, key int) {
 	index := self.findKey(node, key)
+
 	if node.leaf {
 		if index < node.n && node.keys[index] == key {
 			self.removeFromLeaf(node, index) // Leaf node key found.
 		} else {
-			fmt.Println("The key ", key, " not found.")
+			fmt.Println("The key", key, "was not found.")
 			return
 		}
 	} else {
@@ -347,8 +338,8 @@ func (self *BTree) borrowFromLeft(node *Node, index int) {
 	// Moving the key from the sibling to the parent
 	node.keys[index-1] = sibling.keys[sibling.n-1]
 	// Increase child key count and decrease sibling key count.
-	child.n += 1
-	sibling.n -= 1
+	child.n++
+	sibling.n--
 	return
 }
 
@@ -374,8 +365,9 @@ func (self *BTree) borrowFromRight(node *Node, index int) {
 		sibling.arr[i-1] = sibling.arr[i]
 	}
 	// Increase child key count and decrease sibling key count.
-	child.n += 1
-	sibling.n -= 1
+
+	child.n++
+	sibling.n--
 	return
 }
 
@@ -428,3 +420,27 @@ func main() {
 	t.Remove(7)
 	t.PrintTree()
 }
+
+/*
+         key[ 0 ]: 1
+     key[ 0 ]: 2
+         key[ 0 ]: 3
+ key[ 0 ]: 4
+         key[ 0 ]: 5
+     key[ 0 ]: 6
+         key[ 0 ]: 7
+     key[ 1 ]: 8
+         key[ 0 ]: 9
+         key[ 1 ]: 10
+
+6 :  true
+11 :  false
+     key[ 0 ]: 1
+     key[ 1 ]: 2
+ key[ 0 ]: 4
+     key[ 0 ]: 5
+ key[ 1 ]: 8
+     key[ 0 ]: 9
+     key[ 1 ]: 10
+
+*/

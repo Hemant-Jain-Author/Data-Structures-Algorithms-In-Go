@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// CountSort performs counting sort on the given array within the specified range.
 func CountSort(arr []int, lowerRange int, upperRange int) {
 	var i int
 	var j int

@@ -7,9 +7,8 @@ import (
 )
 
 func linearSearchUnsorted(data []int, value int) bool {
-	size := len(data)
-	for i := 0; i < size; i++ {
-		if value == data[i] {
+	for _, num := range data {
+		if num == value {
 			return true
 		}
 	}
@@ -17,8 +16,7 @@ func linearSearchUnsorted(data []int, value int) bool {
 }
 
 func linearSearchSorted(data []int, value int) bool {
-	size := len(data)
-	for i := 0; i < size; i++ {
+	for i := 0; i < len(data); i++ {
 		if value == data[i] {
 			return true
 		} else if value < data[i] {
@@ -30,13 +28,11 @@ func linearSearchSorted(data []int, value int) bool {
 
 // Binary Search Algorithm - Iterative Way
 func BinarySearch(data []int, value int) bool {
-	size := len(data)
 	low := 0
-	high := size - 1
-	mid := 0
+	high := len(data) - 1
 
 	for low <= high {
-		mid = (low + high) / 2
+		mid := (low + high) / 2
 		if data[mid] == value {
 			return true
 		} else if data[mid] < value {
@@ -49,11 +45,10 @@ func BinarySearch(data []int, value int) bool {
 }
 
 func BinarySearchRecursive(data []int, value int) bool {
-	size := len(data)
-	return BinarySearchRecursiveUtil(data, 0, size-1, value)
+	return binarySearchRecursiveUtil(data, 0, len(data)-1, value)
 }
 
-func BinarySearchRecursiveUtil(data []int, low int, high int, value int) bool {
+func binarySearchRecursiveUtil(data []int, low, high, value int) bool {
 	if low > high {
 		return false
 	}
@@ -61,9 +56,9 @@ func BinarySearchRecursiveUtil(data []int, low int, high int, value int) bool {
 	if data[mid] == value {
 		return true
 	} else if data[mid] < value {
-		return BinarySearchRecursiveUtil(data, mid+1, high, value)
+		return binarySearchRecursiveUtil(data, mid+1, high, value)
 	} else {
-		return BinarySearchRecursiveUtil(data, low, mid-1, value)
+		return binarySearchRecursiveUtil(data, low, mid-1, value)
 	}
 }
 
@@ -88,14 +83,13 @@ func FibonacciSearch(arr []int, value int) bool {
 			fibNMn1 = fibNMn2
 			fibNMn2 = fibN - fibNMn1
 			low = i
-		} else { // for feb2 <= 1, these will be invalid.
+		} else {
 			fibN = fibNMn2
 			fibNMn1 = fibNMn1 - fibNMn2
 			fibNMn2 = fibN - fibNMn1
 		}
 	}
-	// above loop does not check when fibNMn2 = 0
-	if arr[low+fibNMn2] == value {
+	if low+fibNMn2 < size && arr[low+fibNMn2] == value {
 		return true
 	}
 	return false
@@ -161,13 +155,13 @@ func FirstRepeated2(arr []int) int {
 
 func main2() {
 	first := []int{1, 3, 5, 3, 9, 1, 30}
-	fmt.Println("FirstRepeated :", FirstRepeated(first))
-	fmt.Println("FirstRepeated :", FirstRepeated2(first))
+	fmt.Println("FirstRepeated:", FirstRepeated(first))
+	fmt.Println("FirstRepeated2:", FirstRepeated2(first))
 }
 
 /*
-FirstRepeated : 1
-FirstRepeated : 1
+FirstRepeated: 1
+FirstRepeated2: 1
 */
 
 func printRepeating(data []int) {
@@ -254,13 +248,13 @@ func RemoveDuplicates(data []int) []int {
 
 func RemoveDuplicates2(arr []int) []int {
 	size := len(arr)
-	hm := make(Set)
+	unique := make(Set)
 	j := 0
 	for i := 0; i < size; i++ {
-		if !hm.Find(arr[i]) {
+		if !unique.Find(arr[i]) {
 			arr[j] = arr[i]
 			j++
-			hm.Add(arr[i])
+			unique.Add(arr[i])
 		}
 	}
 	return arr[:j]
@@ -273,18 +267,22 @@ func main4() {
 	fmt.Println(RemoveDuplicates2(first))
 }
 
+/*
+[1 3 5 9 30]
+[1 3 5 9 30]
+*/
+
 func FindMissingNumber(data []int) (int, bool) {
-	var found int
 	size := len(data)
 	for i := 1; i <= size; i++ {
-		found = 0
+		found := false
 		for j := 0; j < size; j++ {
 			if data[j] == i {
-				found = 1
+				found = true
 				break
 			}
 		}
-		if found == 0 {
+		if !found {
 			return i, true
 		}
 	}
@@ -305,18 +303,18 @@ func FindMissingNumber2(arr []int) (int, bool) {
 
 func FindMissingNumber3(arr []int) (int, bool) {
 	size := len(arr)
-	hm := make(map[int]int)
+	hm := make(map[int]bool)
 	for i := 0; i < size; i++ {
-		hm[arr[i]] = 1
+		hm[arr[i]] = true
 	}
 	for i := 1; i <= size; i++ {
-		_, ok := hm[i]
-		if !ok {
+		if !hm[i] {
 			return i, true
 		}
 	}
 	return math.MaxInt32, false
 }
+
 func FindMissingNumber4(arr []int) (int, bool) {
 	size := len(arr)
 	count := make([]int, size+1)
@@ -333,6 +331,7 @@ func FindMissingNumber4(arr []int) (int, bool) {
 	}
 	return math.MaxInt32, false
 }
+
 func FindMissingNumber5(arr []int) (int, bool) {
 	size := len(arr)
 	sum := 0
@@ -395,7 +394,7 @@ func FindMissingNumber8(arr []int, upperRange int) (int, bool) {
 	}
 	i = 1
 	for i <= upperRange {
-		if st.Find(i) == false {
+		if !st.Find(i) {
 			return i, true
 		}
 		i += 1
@@ -419,14 +418,14 @@ func main5() {
 }
 
 /*
-2 true
-2 true
-2 true
-2 true
-2 true
-2 true
-2 true
-2 true
+7 true
+7 true
+7 true
+7 true
+7 true
+7 true
+7 true
+7 true
 */
 
 func MissingValues(arr []int) {
@@ -479,8 +478,7 @@ func MissingValues3(arr []int) {
 	ht := make(Set)
 	minVal := math.MaxInt32
 	maxVal := math.MinInt32
-	i := 0
-	for i = 0; i < size; i++ {
+	for i := 0; i < size; i++ {
 		ht.Add(arr[i])
 		if minVal > arr[i] {
 			minVal = arr[i]
@@ -489,8 +487,8 @@ func MissingValues3(arr []int) {
 			maxVal = arr[i]
 		}
 	}
-	for i = minVal; i < maxVal+1; i++ {
-		if ht.Find(i) == false {
+	for i := minVal; i < maxVal+1; i++ {
+		if !ht.Find(i) {
 			fmt.Print(i, " ")
 		}
 	}
@@ -525,21 +523,16 @@ func OddCount2(arr []int) {
 	count := 0
 
 	for i := 0; i < size; i++ {
-		val, ok := ctr[arr[i]]
-		if ok {
-			ctr[arr[i]] = val + 1
-		} else {
-			ctr[arr[i]] = 1
-		}
+		ctr[arr[i]]++
 	}
 	for i := 0; i < size; i++ {
-		val, ok := ctr[arr[i]]
-		if ok && (val%2 == 1) {
+		val := ctr[arr[i]]
+		if val%2 == 1 {
 			count++
 			delete(ctr, arr[i])
 		}
 	}
-	fmt.Println("Odd count is :: ", count)
+	fmt.Println("Odd count is : ", count)
 }
 
 func OddCountElements(arr []int) {
@@ -565,13 +558,13 @@ func OddCountElements(arr []int) {
 	* get our numbers.
 	 */
 	for i := 0; i < size; i++ {
-		if (arr[i] & setBit) != 0 {
+		if arr[i]&setBit != 0 {
 			first ^= arr[i]
 		} else {
 			second ^= arr[i]
 		}
 	}
-	fmt.Println("Odd count Elements are :: ", first, "&", second)
+	fmt.Println("Odd count Elements are : ", first, "&", second)
 }
 
 func main7() {
@@ -584,15 +577,15 @@ func main7() {
 
 /*
 Odd values:  30
-Odd count is ::  1
-Odd count Elements are ::  30 & 40
+Odd count is :  1
+Odd count Elements are :  30 & 40
 */
 
 func SumDistinct(arr []int) {
 	sum := 0
 	size := len(arr)
 	sort.Ints(arr)
-	for i := 0; i < (size - 1); i++ {
+	for i := 0; i < size-1; i++ {
 		if arr[i] != arr[i+1] {
 			sum += arr[i]
 		}
@@ -613,11 +606,9 @@ func main8() {
 func minAbsSumPair(data []int) {
 	var sum int
 	size := len(data)
-	// Array should have at least two elements
 	if size < 2 {
 		fmt.Println("InvalidInput")
 	}
-	// Initialization of values
 	minFirst := 0
 	minSecond := 1
 	minSum := abs(data[0] + data[1])
@@ -637,18 +628,16 @@ func minAbsSumPair(data []int) {
 func minAbsSumPair2(data []int) {
 	var sum int
 	size := len(data)
-	// Array should have at least two elements
 	if size < 2 {
 		fmt.Println("InvalidInput")
 	}
-	sort.Ints(data) // Sort(data, size)
+	sort.Ints(data)
 
-	// Initialization of values
 	minFirst := 0
 	minSecond := size - 1
 	minSum := abs(data[minFirst] + data[minSecond])
-	for l, r := 0, (size - 1); l < r; {
-		sum = (data[l] + data[r])
+	for l, r := 0, size-1; l < r; {
+		sum = data[l] + data[r]
 		if abs(sum) < minSum {
 			minSum = abs(sum)
 			minFirst = l
@@ -683,12 +672,13 @@ func FindPair(data []int, value int) bool {
 	fmt.Print("Pairs with sum ", value, " are : ")
 	for i := 0; i < size; i++ {
 		for j := i + 1; j < size; j++ {
-			if (data[i] + data[j]) == value {
+			if data[i]+data[j] == value {
 				fmt.Print("(", data[i], ", ", data[j], ") ")
 				ret = true
 			}
 		}
 	}
+	fmt.Println()
 	return ret
 }
 
@@ -697,7 +687,7 @@ func FindPair2(data []int, value int) bool {
 	first := 0
 	second := size - 1
 	ret := false
-	sort.Ints(data) // Sort(data, size)
+	sort.Ints(data)
 	fmt.Print("Pairs with sum ", value, " are : ")
 	for first < second {
 		curr := data[first] + data[second]
@@ -711,6 +701,7 @@ func FindPair2(data []int, value int) bool {
 			second--
 		}
 	}
+	fmt.Println()
 	return ret
 }
 
@@ -721,12 +712,13 @@ func FindPair3(data []int, value int) bool {
 	fmt.Print("Pairs with sum ", value, " are : ")
 	for i := 0; i < size; i++ {
 		if s.Find(value - data[i]) {
-			fmt.Print("(", data[i], ", ", (value - data[i]), ") ")
+			fmt.Print("(", data[i], ", ", value-data[i], ") ")
 			ret = true
 		} else {
 			s.Add(data[i])
 		}
 	}
+	fmt.Println()
 	return ret
 }
 
@@ -769,6 +761,7 @@ func FindPairTwoLists(arr1 []int, size1 int, arr2 []int, size2 int, value int) b
 	}
 	return false
 }
+
 func FindPairTwoLists2(arr1 []int, size1 int, arr2 []int, size2 int, value int) bool {
 	sort.Ints(arr2)
 	for i := 0; i < size1; i++ {
@@ -779,6 +772,7 @@ func FindPairTwoLists2(arr1 []int, size1 int, arr2 []int, size2 int, value int) 
 	}
 	return false
 }
+
 func FindPairTwoLists3(arr1 []int, size1 int, arr2 []int, size2 int, value int) bool {
 	first := 0
 	second := size2 - 1
@@ -798,6 +792,7 @@ func FindPairTwoLists3(arr1 []int, size1 int, arr2 []int, size2 int, value int) 
 	}
 	return false
 }
+
 func FindPairTwoLists4(arr1 []int, size1 int, arr2 []int, size2 int, value int) bool {
 	hs := make(Set)
 	for i := 0; i < size2; i++ {
@@ -811,6 +806,7 @@ func FindPairTwoLists4(arr1 []int, size1 int, arr2 []int, size2 int, value int) 
 	}
 	return false
 }
+
 func FindPairTwoLists5(arr1 []int, size1 int, arr2 []int, size2 int, rangeVal int, value int) bool {
 	count := make([]int, rangeVal+1)
 	for i := 0; i < size2; i++ {
@@ -853,7 +849,7 @@ func FindDifference(arr []int, value int) bool {
 	for i := 0; i < size; i++ {
 		for j := i + 1; j < size; j++ {
 			if abs(arr[i]-arr[j]) == value {
-				fmt.Println("The pair is::", arr[i], "&", arr[j])
+				fmt.Println("The pair is:", arr[i], "&", arr[j])
 				return true
 			}
 		}
@@ -870,7 +866,7 @@ func FindDifference2(arr []int, value int) bool {
 	for first < size && second < size {
 		diff = abs(arr[first] - arr[second])
 		if diff == value {
-			fmt.Println("The pair is::", arr[first], "&", arr[second])
+			fmt.Println("The pair is:", arr[first], "&", arr[second])
 			return true
 		} else if diff > value {
 			first += 1
@@ -888,9 +884,9 @@ func main11() {
 }
 
 /*
-The pair is:: 1 & 7
+The pair is: 1 & 7
 true
-The pair is:: 1 & 7
+The pair is: 1 & 7
 true
 */
 
@@ -935,8 +931,8 @@ func MinDiffPair(arr1 []int, arr2 []int) int {
 			}
 		}
 	}
-	fmt.Println("The pair is::", first, "&", second)
-	fmt.Println("Minimum difference is :: ", diff)
+	fmt.Println("The pair is:", first, "&", second)
+	fmt.Println("Minimum difference is:", diff)
 	return diff
 }
 
@@ -961,8 +957,8 @@ func MinDiffPair2(arr1 []int, arr2 []int) int {
 			second += 1
 		}
 	}
-	fmt.Println("The pair is ::", out1, "&", out2)
-	fmt.Println("Minimum difference is :: ", minDiff)
+	fmt.Println("The pair is:", out1, "&", out2)
+	fmt.Println("Minimum difference is:", minDiff)
 	return minDiff
 }
 
@@ -978,10 +974,10 @@ func main12() {
 /*
 MinDiff 1
 MinDiff 1
-The pair is:: 9 & 10
-Minimum difference is ::  1
-The pair is :: 9 & 10
-Minimum difference is ::  1
+The pair is: 9 & 10
+Minimum difference is :  1
+The pair is : 9 & 10
+Minimum difference is :  1
 */
 
 func ClosestPair(arr []int, value int) {
@@ -1000,7 +996,7 @@ func ClosestPair(arr []int, value int) {
 			}
 		}
 	}
-	fmt.Println("closest pair is ::", first, "&", second)
+	fmt.Println("Closest pair is:", first, "&", second)
 }
 
 func ClosestPair2(arr []int, value int) {
@@ -1031,7 +1027,7 @@ func ClosestPair2(arr []int, value int) {
 		}
 	}
 
-	fmt.Println("closest pair is ::", first, "&", second)
+	fmt.Println("Closest pair is:", first, "&", second)
 }
 
 func main13() {
@@ -1041,8 +1037,8 @@ func main13() {
 }
 
 /*
-closest pair is :: 1 & 5
-closest pair is :: 1 & 5
+closest pair is : 1 & 5
+closest pair is : 1 & 5
 */
 
 func SumPairRestArray(arr []int) bool {
@@ -1059,7 +1055,7 @@ func SumPairRestArray(arr []int) bool {
 	for low < high {
 		curr = arr[low] + arr[high]
 		if curr == value {
-			fmt.Println("Pair is ::", arr[low], "&", arr[high])
+			fmt.Println("Pair is:", arr[low], "&", arr[high])
 			return true
 		} else if curr < value {
 			low += 1
@@ -1076,12 +1072,12 @@ func main14() {
 }
 
 /*
-Pair is :: 3 & 7
+Pair is: 3 & 7
 */
 
 func ZeroSumTriplets(arr []int) {
 	size := len(arr)
-	fmt.Print("Zero Sum Triplets are :: ")
+	fmt.Print("Zero Sum Triplets are : ")
 	for i := 0; i < (size - 2); i++ {
 		for j := i + 1; j < (size - 1); j++ {
 			for k := j + 1; k < size; k++ {
@@ -1091,13 +1087,14 @@ func ZeroSumTriplets(arr []int) {
 			}
 		}
 	}
+	fmt.Println()
 }
 
 func ZeroSumTriplets2(arr []int) {
 	size := len(arr)
 	var start, stop int
 	sort.Ints(arr)
-	fmt.Print("Zero Sum Triplets are :: ")
+	fmt.Print("Zero Sum Triplets are : ")
 	for i := 0; i < (size - 2); i++ {
 		start = i + 1
 		stop = size - 1
@@ -1114,6 +1111,7 @@ func ZeroSumTriplets2(arr []int) {
 			}
 		}
 	}
+	fmt.Println()
 }
 
 func main15() {
@@ -1123,13 +1121,13 @@ func main15() {
 }
 
 /*
-Zero Sum Triplets are :: (1 2 -3) (1 -4 3) (-4 7 -3)
-Zero Sum Triplets are :: (-4 -3 7)(-4 1 3)(-3 1 2)
+Zero Sum Triplets are : (1 2 -3) (1 -4 3) (-4 7 -3)
+Zero Sum Triplets are : (-4 -3 7)(-4 1 3)(-3 1 2)
 */
 
 func findTriplet(arr []int, value int) {
 	size := len(arr)
-	fmt.Print("Triplet with sum ", value, " are :: ")
+	fmt.Print("Triplet with sum ", value, " are : ")
 	for i := 0; i < (size - 2); i++ {
 		for j := i + 1; j < (size - 1); j++ {
 			for k := j + 1; k < size; k++ {
@@ -1139,13 +1137,14 @@ func findTriplet(arr []int, value int) {
 			}
 		}
 	}
+	fmt.Println()
 }
 
 func findTriplet2(arr []int, value int) {
 	size := len(arr)
 	var start, stop int
 	sort.Ints(arr)
-	fmt.Print("Triplet with sum ", value, " are :: ")
+	fmt.Print("Triplet with sum ", value, " are : ")
 	for i := 0; i < size-2; i++ {
 		start = i + 1
 		stop = size - 1
@@ -1161,6 +1160,7 @@ func findTriplet2(arr []int, value int) {
 			}
 		}
 	}
+	fmt.Println()
 }
 
 func main16() {
@@ -1170,8 +1170,8 @@ func main16() {
 }
 
 /*
-Triplet with sum 6 are :: (1 2 3)(2 7 -3)(-4 3 7)
-Triplet with sum 6 are :: (-4 3 7)(-3 2 7)(1 2 3)
+Triplet with sum 6 are : (1 2 3)(2 7 -3)(-4 3 7)
+Triplet with sum 6 are : (-4 3 7)(-3 2 7)(1 2 3)
 */
 
 func AbcTriplet(arr []int) {
@@ -1180,7 +1180,7 @@ func AbcTriplet(arr []int) {
 		for j := i + 1; j < size; j++ {
 			for k := 0; k < size; k++ {
 				if k != i && k != j && arr[i]+arr[j] == arr[k] {
-					fmt.Println("AbcTriplet ::", arr[i], arr[j], arr[k])
+					fmt.Println("AbcTriplet :", arr[i], arr[j], arr[k])
 					return
 				}
 			}
@@ -1197,7 +1197,7 @@ func AbcTriplet2(arr []int) {
 		stop = size - 1
 		for start < stop {
 			if arr[i] == arr[start]+arr[stop] {
-				fmt.Println("AbcTriplet ::", arr[i], arr[start], arr[stop])
+				fmt.Println("AbcTriplet :", arr[i], arr[start], arr[stop])
 				return
 			} else if arr[i] < arr[start]+arr[stop] {
 				stop -= 1
@@ -1215,9 +1215,8 @@ func main17() {
 }
 
 /*
-AbcTriplet::  1   2   3
-AbcTriplet::  1   -4   -3
-AbcTriplet::  -3   -4   1
+AbcTriplet : 1 2 3
+AbcTriplet : -3 -4 1
 */
 
 func SmallerThenTripletCount(arr []int, value int) {
@@ -1232,7 +1231,7 @@ func SmallerThenTripletCount(arr []int, value int) {
 			}
 		}
 	}
-	fmt.Println("SmallerThenTripletCount::", count)
+	fmt.Println("SmallerThenTripletCount:", count)
 }
 
 func SmallerThenTripletCount2(arr []int, value int) {
@@ -1253,7 +1252,7 @@ func SmallerThenTripletCount2(arr []int, value int) {
 			}
 		}
 	}
-	fmt.Println("SmallerThenTripletCount::", count)
+	fmt.Println("SmallerThenTripletCount:", count)
 }
 
 func main18() {
@@ -1263,8 +1262,8 @@ func main18() {
 }
 
 /*
-SmallerThenTripletCount:: 13
-SmallerThenTripletCount:: 13
+SmallerThenTripletCount: 13
+SmallerThenTripletCount: 13
 */
 
 func APTriplets(arr []int) {
@@ -1275,7 +1274,7 @@ func APTriplets(arr []int) {
 		k = i + 1
 		for j >= 0 && k < size {
 			if arr[j]+arr[k] == 2*arr[i] {
-				fmt.Println("Triplet ::", arr[j], arr[i], arr[k])
+				fmt.Println("Triplet :", arr[j], arr[i], arr[k])
 				k += 1
 				j -= 1
 			} else if arr[j]+arr[k] < 2*arr[i] {
@@ -1295,7 +1294,7 @@ func GPTriplets(arr []int) {
 		k = i + 1
 		for j >= 0 && k < size {
 			if arr[j]*arr[k] == arr[i]*arr[i] {
-				fmt.Println("Triplet is :: ", arr[j], arr[i], arr[k])
+				fmt.Println("Triplet is : ", arr[j], arr[i], arr[k])
 				k += 1
 				j -= 1
 			} else if arr[j]+arr[k] < 2*arr[i] {
@@ -1314,11 +1313,11 @@ func main19() {
 }
 
 /*
-Triplet :: 1 2 3
-Triplet :: 2 3 4
-Triplet :: 1 9 17
+Triplet : 1 2 3
+Triplet : 2 3 4
+Triplet : 1 9 17
 
-Triplet is ::  1 3 9
+Triplet is :  1 3 9
 */
 
 func NumberOfTriangles(arr []int, size int) int {
@@ -1395,7 +1394,7 @@ func getMax2(data []int) int {
 	maxCount := 1
 	curr := data[0]
 	currCount := 1
-	sort.Ints(data) // Sort(data,size)
+	sort.Ints(data)
 	for i := 1; i < size; i++ {
 		if data[i] == data[i-1] {
 			currCount++
@@ -1465,7 +1464,7 @@ func getMajority(data []int) (int, bool) {
 func getMajority2(data []int) (int, bool) {
 	size := len(data)
 	majIndex := size / 2
-	sort.Ints(data) // Sort(data,size)
+	sort.Ints(data)
 	candidate := data[majIndex]
 	count := 0
 	for i := 0; i < size; i++ {
@@ -1561,29 +1560,35 @@ true
 
 func FindBitonicArrayMax(arr []int) int {
 	size := len(arr)
+	if size < 3 {
+		fmt.Println("error: not a bitonic array")
+		return 0
+	}
+
 	for i := 0; i < size-2; i++ {
 		if arr[i] > arr[i+1] {
 			return arr[i]
 		}
 	}
-	fmt.Println("error not a bitonic array")
+
+	fmt.Println("error: not a bitonic array")
 	return 0
 }
 
 func FindBitonicArrayMax2(data []int) (int, bool) {
 	size := len(data)
-	start := 0
-	end := size - 1
-
 	if size < 3 {
-		fmt.Println("InvalidInput")
+		fmt.Println("error: not a bitonic array")
 		return 0, false
 	}
+
+	start := 0
+	end := size - 1
 
 	for start <= end {
 		mid := (start + end) / 2
 
-		if data[mid-1] < data[mid] && data[mid+1] < data[mid] { //maxima
+		if data[mid-1] < data[mid] && data[mid+1] < data[mid] { // maxima
 			return data[mid], true
 		} else if data[mid-1] < data[mid] && data[mid] < data[mid+1] { // increasing
 			start = mid + 1
@@ -1593,7 +1598,8 @@ func FindBitonicArrayMax2(data []int) (int, bool) {
 			break
 		}
 	}
-	fmt.Println("NoMaximaFound")
+
+	fmt.Println("error: not a bitonic array")
 	return 0, false
 }
 
@@ -1605,24 +1611,23 @@ func SearchBitonicArray(data []int, key int) bool {
 		return true
 	}
 	k = BinarySearch2(data, maxIndex+1, size-1, key, false)
-	if k != -1 {
-		return true
-	} else {
-		return false
-	}
+	return k != -1
 }
 
 func FindBitonicArrayMaxIndex(data []int) (int, bool) {
 	size := len(data)
-	start := 0
-	end := size - 1
-	mid := 0
 	if size < 3 {
-		fmt.Println("InvalidInput")
+		fmt.Println("error: not a bitonic array")
 		return -1, false
 	}
+
+	start := 0
+	end := size - 1
+	var mid int
+
 	for start <= end {
 		mid = (start + end) / 2
+
 		if data[mid-1] < data[mid] && data[mid+1] < data[mid] /* maxima */ {
 			return mid, true
 		} else if data[mid-1] < data[mid] && data[mid] < data[mid+1] /* increasing */ {
@@ -1633,7 +1638,8 @@ func FindBitonicArrayMaxIndex(data []int) (int, bool) {
 			break
 		}
 	}
-	fmt.Println("error")
+
+	fmt.Println("error: not a bitonic array")
 	return -1, false
 }
 
@@ -1656,14 +1662,17 @@ func BinarySearch2(data []int, start int, end int, key int, isInc bool) int {
 	if end < start {
 		return -1
 	}
+
 	mid := (start + end) / 2
 	if key == data[mid] {
 		return mid
 	}
+
 	if isInc != false && key < data[mid] || isInc == false && key > data[mid] {
 		return BinarySearch2(data, start, mid-1, key, isInc)
+	} else {
+		return BinarySearch2(data, mid+1, end, key, isInc)
 	}
-	return BinarySearch2(data, mid+1, end, key, isInc)
 }
 
 func findKeyCount(data []int, key int) int {
@@ -1740,8 +1749,9 @@ func MaxProfit(stocks []int) int {
 			}
 		}
 	}
-	fmt.Println("Purchase day is ", buy, " at price ", stocks[buy])
-	fmt.Println("Sell day is ", sell, " at price ", stocks[sell])
+	fmt.Println("Purchase day is", buy, "at price", stocks[buy])
+	fmt.Println("Sell day is", sell, "at price", stocks[sell])
+	fmt.Println("Max Profit: ", maxProfit)
 	return maxProfit
 }
 
@@ -1764,9 +1774,9 @@ func MaxProfit2(stocks []int) int {
 			maxProfit = currProfit
 		}
 	}
-	fmt.Println("Purchase day is ", buy, " at price ", stocks[buy])
-	fmt.Println("Sell day is ", sell, " at price ", stocks[sell])
-	fmt.Println("Max Profit :: ", maxProfit)
+	fmt.Println("Purchase day is", buy, "at price", stocks[buy])
+	fmt.Println("Sell day is", sell, "at price", stocks[sell])
+	fmt.Println("Max Profit: ", maxProfit)
 	return maxProfit
 }
 
@@ -1777,11 +1787,12 @@ func main25() {
 }
 
 /*
-Purchase day is  2  at price  6
-Sell day is  10  at price  150
-Purchase day is  2  at price  6
-Sell day is  10  at price  150
-Max Profit ::  144
+Purchase day is 2 at price 6
+Sell day is 10 at price 150
+Max Profit:  144
+Purchase day is 2 at price 6
+Sell day is 10 at price 150
+Max Profit:  144
 */
 
 func findMedian(dataFirst []int, dataSecond []int) int {
@@ -1941,20 +1952,20 @@ func main28() {
 	fmt.Println(SearchRotateArray(first, 5))
 	fmt.Println(BinarySearchRotateArray(first, 7))
 	fmt.Println(BinarySearchRotateArray(first, 6))
-	fmt.Println("RotationMax is ::", RotationMax(first))
-	fmt.Println("RotationMax is ::", RotationMax2(first))
-	fmt.Println("FindRotationMax is ::", FindRotationMax(first))
-	fmt.Println("CountRotation is ::", CountRotation(first))
+	fmt.Println("RotationMax is :", RotationMax(first))
+	fmt.Println("RotationMax is :", RotationMax2(first))
+	fmt.Println("FindRotationMax is :", FindRotationMax(first))
+	fmt.Println("CountRotation is :", CountRotation(first))
 }
 
 /*
 5
 true
 false
-RotationMax is :: 11
-RotationMax is :: 11
-FindRotationMax is :: 3
-CountRotation is :: 4
+RotationMax is : 11
+RotationMax is : 11
+FindRotationMax is : 3
+CountRotation is : 4
 */
 
 func minAbsDiffAdjCircular(arr []int, size int) int {
@@ -2274,7 +2285,6 @@ func findBalancedPoint(arr []int, size int) int {
 func main34() {
 	arr := []int{-7, 1, 5, 2, -4, 3, 0}
 	fmt.Println("BalancedPoint : ", findBalancedPoint(arr, len(arr)))
-
 }
 
 /*
@@ -2354,13 +2364,13 @@ func main35() {
 	arr := []int{-7, 1, 2, 3, 6, 8, 10}
 	fmt.Println(findFloor(arr, len(arr), 4))
 	fmt.Println(findCeil(arr, len(arr), 4))
-	fmt.Println("ClosestNumber : ", ClosestNumber(arr, len(arr), 4))
+	fmt.Println(ClosestNumber(arr, len(arr), 4))
 }
 
 /*
 3 true
 6 true
-ClosestNumber :  3
+3
 */
 
 func DuplicateKDistance(arr []int, size int, k int) bool {
@@ -2369,7 +2379,7 @@ func DuplicateKDistance(arr []int, size int, k int) bool {
 	for i := 0; i < size; i++ {
 		val, ok := hm[arr[i]]
 		if ok && i-val <= k {
-			fmt.Println("Value:", arr[i], " Index: ", hm[arr[i]], " & ", i)
+			fmt.Println("Value:", arr[i], "Index:", hm[arr[i]], "&", i)
 			return true
 		} else {
 			hm[arr[i]] = i
@@ -2385,7 +2395,7 @@ func main36() {
 }
 
 /*
-Value: 1  Index:  0  &  3
+Value: 1 Index: 0 & 3
 */
 
 func FrequencyCounts(arr []int) {
@@ -2417,7 +2427,7 @@ func FrequencyCounts2(arr []int) {
 			count = 1
 		}
 	}
-	fmt.Print("(", arr[size-1], " : ", count, ")")
+	fmt.Println("(", arr[size-1], ":", count, ")")
 }
 
 func FrequencyCounts3(arr []int) {
@@ -2479,12 +2489,13 @@ func KLargestElements(arrIn []int, size int, k int) {
 		arr[i] = arrIn[i]
 	}
 	sort.Ints(arr)
-	fmt.Print("KLargestElements are ::")
+	fmt.Print("KLargestElements are :")
 	for i := 0; i < size; i++ {
 		if arrIn[i] >= arr[size-k] {
 			fmt.Print(arrIn[i], " ")
 		}
 	}
+	fmt.Println()
 }
 
 func QuickSelectUtil(arr []int, lower int, upper int, k int) {
@@ -2524,12 +2535,13 @@ func KLargestElements2(arrIn []int, size int, k int) {
 
 	QuickSelectUtil(arr, 0, size-1, size-k)
 
-	fmt.Print("KLargestElements are ::")
+	fmt.Print("KLargestElements are :")
 	for i := 0; i < size; i++ {
 		if arrIn[i] >= arr[size-k] {
 			fmt.Print(arrIn[i], " ")
 		}
 	}
+	fmt.Println()
 }
 
 func main38() {
@@ -2539,8 +2551,8 @@ func main38() {
 }
 
 /*
-KLargestElements are ::3 4 2 2 5 9 3
-KLargestElements are ::3 4 2 2 5 9 3
+KLargestElements are :3 4 2 2 5 9 3
+KLargestElements are :3 4 2 2 5 9 3
 */
 
 func FixPoint(arr []int, size int) int {
@@ -2787,51 +2799,51 @@ func Main50() {
 }
 
 func main() {
-	// main1()
-	// main2()
-	// main3()
-	// main4()
-	// main5()
-	// main6()
-	// main7()
-	// main8()
-	// main9()
-	// main10()
-	// Main10A()
-	// main11()
-	// main12()
-	// main13()
-	// main14()
-	// main15()
-	// main16()
-	// main17()
-	// main18()
-	// main19()
-	// main20()
-	// main21()
-	// main22()
-	// main23()
-	// main24()
-	// main25()
-	// main26()
-	// main27()
-	// main28()
-	// main29()
-	// main30()
-	// main30A()
-	// main31()
-	// main32()
-	// main33()
-	// main34()
-	// main35()
-	// main36()
-	// main37()
-	// main38()
-	// main39()
+	main1()
+	main2()
+	main3()
+	main4()
+	main5()
+	main6()
+	main7()
+	main8()
+	main9()
+	main10()
+	Main10A()
+	main11()
+	main12()
+	main13()
+	main14()
+	main15()
+	main16()
+	main17()
+	main18()
+	main19()
+	main20()
+	main21()
+	main22()
+	main23()
+	main24()
+	main25()
+	main26()
+	main27()
+	main28()
+	main29()
+	main30()
+	main30A()
+	main31()
+	main32()
+	main33()
+	main34()
+	main35()
+	main36()
+	main37()
+	main38()
+	main39()
 	main40()
-	// main41()
-	// main42()
-	// main43()
+	main41()
+	main42()
+	main43()
 }
 
 func min(a int, b int) int {

@@ -24,6 +24,7 @@ func main0() {
 }
 
 /*
+Output:
 main line 1
 fun1 line 1
 fun2 line 1
@@ -53,6 +54,7 @@ func main1() {
 }
 
 /*
+Output:
 [1 2 3 4]
 */
 
@@ -70,7 +72,7 @@ func sortStack2(stk *Stack) {
 	stk2 := new(Stack)
 	for stk.Len() > 0 {
 		temp = stk.Pop().(int)
-		for (stk2.Len() > 0) && (stk2.Top().(int) < temp) {
+		for stk2.Len() > 0 && stk2.Top().(int) < temp {
 			stk.Push(stk2.Pop().(int))
 		}
 		stk2.Push(temp)
@@ -93,6 +95,7 @@ func main2() {
 }
 
 /*
+Output:
 [1 2 3 4]
 */
 
@@ -117,6 +120,7 @@ func main3() {
 }
 
 /*
+Output:
 [4 1 2 3]
 */
 
@@ -161,10 +165,10 @@ func main4() {
 	reverseStack(stk2)
 	fmt.Print("Stack after reversal : ")
 	stk2.Print()
-
 }
 
 /*
+Output:
 Stack before reversal : [1 2 3]
 Stack after reversal : [3 2 1]
 */
@@ -194,9 +198,11 @@ func main5() {
 }
 
 /*
+Output:
 [1 2 3 4]
 [1 2 4 3]
 */
+
 func reverseQueue(que *Queue) {
 	stk := new(Stack)
 	for que.Len() != 0 {
@@ -221,9 +227,11 @@ func main6() {
 }
 
 /*
+Output:
 [1 2 3 4]
 [4 3 2 1]
 */
+
 func reverseKElementInQueue(que *Queue, k int) {
 	stk := new(Stack)
 	i := 0
@@ -256,9 +264,11 @@ func main7() {
 }
 
 /*
+Output:
 [1 2 3 4]
 [2 1 3 4]
 */
+
 func IsBalancedParenthesis(expn string) bool {
 	stk := new(Stack)
 	for _, ch := range expn {
@@ -289,11 +299,12 @@ func IsBalancedParenthesis(expn string) bool {
 func main8() {
 	expn := "{()}[]"
 	value := IsBalancedParenthesis(expn)
-	fmt.Println("IsBalancedParenthesis :", value)
+	fmt.Println("IsBalancedParenthesis:", value)
 }
 
 /*
-IsBalancedParenthesis : true
+Output:
+IsBalancedParenthesis: true
 */
 
 func maxDepthParenthesis(expn string, size int) int {
@@ -350,9 +361,11 @@ func main9() {
 }
 
 /*
+Output:
 Max depth parenthesis is 6
 Max depth parenthesis is 6
 */
+
 func longestContBalParen(str string, size int) int {
 	stk := new(Stack)
 	stk.Push(-1)
@@ -386,6 +399,7 @@ func main10() {
 }
 
 /*
+Output:
 longestContBalParen 12
 */
 
@@ -433,6 +447,7 @@ func main11() {
 }
 
 /*
+Output:
 reverse Parenthesis is : 3
 */
 
@@ -468,6 +483,7 @@ func main12() {
 }
 
 /*
+Output:
 Duplicate Parenthesis Found : true
 */
 
@@ -497,23 +513,24 @@ func main13() {
 }
 
 /*
+Output:
 Parenthesis Count : 1234435521
 */
 
 func precedence(x rune) int {
 	if x == '(' {
-		return (0)
+		return 0
 	}
 	if x == '+' || x == '-' {
-		return (1)
+		return 1
 	}
 	if x == '*' || x == '/' || x == '%' {
-		return (2)
+		return 2
 	}
 	if x == '^' {
-		return (3)
+		return 3
 	}
-	return (4)
+	return 4
 }
 
 func InfixToPostfix(expn string) string {
@@ -562,6 +579,7 @@ func main14() {
 }
 
 /*
+Output:
 Infix Expn: 10+((3))*5/(16-4)
 Postfix Expn: 10 3 5 * 16 4 - / +
 */
@@ -573,6 +591,7 @@ func InfixToPrefix(expn string) string {
 	expn = reverseString(expn)
 	return expn
 }
+
 func reverseString(in string) string {
 	expn := []rune(in)
 	lower := 0
@@ -609,6 +628,7 @@ func main15() {
 }
 
 /*
+Output:
 Infix Expn: 10+((3))*5/(16-4)
 Prefix Expn:  +10 * 3 / 5  - 16 4
 */
@@ -647,6 +667,7 @@ func main16() {
 }
 
 /*
+Output:
 Result after Evaluation: 288
 */
 
@@ -692,6 +713,7 @@ func main17() {
 }
 
 /*
+Output:
 [1 1 1 1 1 4 6 8 9]
 [1 1 1 1 1 4 6 8 9]
 */
@@ -724,7 +746,7 @@ func GetMaxArea2(arr []int) int {
 	TopArea := 0
 	i := 0
 	for i < size {
-		for (i < size) && (stk.IsEmpty() || arr[stk.Top().(int)] <= arr[i]) {
+		for i < size && (stk.IsEmpty() || arr[stk.Top().(int)] <= arr[i]) {
 			stk.Push(i)
 			i++
 		}
@@ -736,7 +758,6 @@ func GetMaxArea2(arr []int) int {
 			} else {
 				TopArea = arr[Top] * (i - stk.Top().(int) - 1)
 			}
-
 			if maxArea < TopArea {
 				maxArea = TopArea
 			}
@@ -768,7 +789,7 @@ func StockAnalystAdd(stk *Stack, value int) {
 }
 
 // Testing code.
-func main18A() {
+func main19() {
 	arr := []int{20, 19, 10, 21, 40, 35, 39, 50, 45, 42}
 	stk := new(Stack)
 	for i := len(arr) - 1; i >= 0; i-- {
@@ -805,7 +826,6 @@ func nextLargerElement(arr []int, size int) {
 
 func nextLargerElement2(arr []int, size int) {
 	stk := new(Stack)
-	// output = [-1] * size
 	output := make([]int, size)
 	index := 0
 	var curr int
@@ -871,7 +891,7 @@ func nextSmallerElement2(arr []int, size int) {
 }
 
 // Testing code.
-func main19() {
+func main20() {
 	arr := []int{13, 21, 3, 6, 20, 3}
 	size := len(arr)
 	nextLargerElement(arr, size)
@@ -932,7 +952,7 @@ func nextLargerElementCircular2(arr []int, size int) {
 }
 
 // Testing code.
-func main20() {
+func main21() {
 	arr := []int{6, 3, 9, 8, 10, 2, 1, 15, 7}
 	size := len(arr)
 	nextLargerElementCircular(arr, size)
@@ -964,7 +984,7 @@ func findCelebrity(relation [][]int, count int) int {
 				break
 			}
 		}
-		if cel == true {
+		if cel {
 			return i
 		}
 	}
@@ -989,7 +1009,7 @@ func findCelebrity2(relation [][]int, count int) int {
 		if first != i && isKnown(relation, first, i) {
 			return -1
 		}
-		if first != i && isKnown(relation, i, first) == false {
+		if first != i && !isKnown(relation, i, first) {
 			return -1
 		}
 	}
@@ -1000,7 +1020,7 @@ func findCelebrity3(relation [][]int, count int) int {
 	first := 0
 	second := 1
 
-	for i := 0; i < (count - 1); i++ {
+	for i := 0; i < count-1; i++ {
 		if isKnown(relation, first, second) {
 			first = second
 		}
@@ -1010,7 +1030,7 @@ func findCelebrity3(relation [][]int, count int) int {
 		if first != i && isKnown(relation, first, i) {
 			return -1
 		}
-		if first != i && isKnown(relation, i, first) == false {
+		if first != i && !isKnown(relation, i, first) {
 			return -1
 		}
 	}
@@ -1018,7 +1038,7 @@ func findCelebrity3(relation [][]int, count int) int {
 }
 
 // Testing code.
-func main25() {
+func main22() {
 	arr := make([][]int, 5)
 	arr[0] = []int{1, 0, 1, 1, 0}
 	arr[1] = []int{1, 0, 0, 1, 0}
@@ -1038,35 +1058,29 @@ Celebrity : 3
 
 func main() {
 	main0()
-	/*	main1()
-		main2()
-		main3()
-		main4()
-		main5()
-		main6()
-		main7()
-		main8()
-		main9()
-		main10()
-		main11()
-		main12()
-		main13()
-		main14()
-		main15()
-		main16()
-		main17()
-		main18()
-	*/main18A()
+	main1()
+	main2()
+	main3()
+	main4()
+	main5()
+	main6()
+	main7()
+	main8()
+	main9()
+	main10()
+	main11()
+	main12()
+	main13()
+	main14()
+	main15()
+	main16()
+	main17()
+	main18()
 	main19()
 	main20()
-	/* main21()
+	main21()
 	main22()
-	main23()
-	main24() */
-	main25()
 }
-
-//**************************
 
 type Stack struct {
 	stk []interface{}
@@ -1100,8 +1114,6 @@ func (s Stack) Print() {
 	fmt.Println(s.stk)
 }
 
-//********************************
-
 type Queue struct {
 	que []interface{}
 }
@@ -1128,5 +1140,3 @@ func (q *Queue) Len() int {
 func (q Queue) Print() {
 	fmt.Println(q.que)
 }
-
-//********************************

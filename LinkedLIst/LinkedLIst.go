@@ -14,7 +14,6 @@ type ListNode struct {
 	next  *ListNode
 }
 
-// Sum returns the sum of the list elements.
 func (list *List) Sum() int {
 	temp := list.head
 	sum := 0
@@ -30,7 +29,7 @@ func (list *List) Size() int {
 }
 
 func (list *List) IsEmpty() bool {
-	return (list.count == 0)
+	return list.count == 0
 }
 
 func (list *List) Peek() (int, bool) {
@@ -42,20 +41,20 @@ func (list *List) Peek() (int, bool) {
 }
 
 func (list *List) AddHead(value int) {
-	list.head = &ListNode{value, list.head}
+	list.head = &ListNode{value: value, next: list.head}
 	list.count++
 }
 
 func (list *List) AddTail(value int) {
-	curr := list.head
-	newNode := &ListNode{value, nil}
+	newNode := &ListNode{value: value, next: nil}
 	list.count++
 
-	if curr == nil {
+	if list.head == nil {
 		list.head = newNode
 		return
 	}
 
+	curr := list.head
 	for curr.next != nil {
 		curr = curr.next
 	}
@@ -73,14 +72,14 @@ func (list *List) Print() {
 }
 
 func (list *List) SortedInsert(value int) {
-	newNode := &ListNode{value, nil}
-	curr := list.head
-
-	if curr == nil || curr.value > value {
+	newNode := &ListNode{value: value}
+	if list.head == nil || list.head.value > value {
 		newNode.next = list.head
 		list.head = newNode
 		return
 	}
+	curr := list.head
+
 	for curr.next != nil && curr.next.value < value {
 		curr = curr.next
 	}
@@ -159,14 +158,16 @@ func (list *List) FreeList() {
 }
 
 func (list *List) Reverse() {
-	curr := list.head
 	var prev, next *ListNode
-	for curr != nil {
-		next = curr.next
-		curr.next = prev
-		prev = curr
-		curr = next
+	current := list.head
+
+	for current != nil {
+		next = current.next
+		current.next = prev
+		prev = current
+		current = next
 	}
+
 	list.head = prev
 }
 
@@ -201,6 +202,7 @@ func (list *List) RemoveDuplicate() {
 		}
 	}
 }
+
 func (list *List) CopyListReversed() *List {
 	var tempNode, tempNode2 *ListNode
 	curr := list.head
@@ -340,15 +342,16 @@ func (list *List) LoopDetect() bool {
 	slowPtr := list.head
 	fastPtr := list.head
 
-	for fastPtr.next != nil && fastPtr.next.next != nil {
+	for fastPtr != nil && fastPtr.next != nil {
 		slowPtr = slowPtr.next
 		fastPtr = fastPtr.next.next
+
 		if slowPtr == fastPtr {
-			fmt.Println("loop found")
+			fmt.Println("Loop found")
 			return true
 		}
 	}
-	fmt.Println("loop not found")
+	fmt.Println("Loop not found")
 	return false
 }
 
@@ -357,11 +360,11 @@ func (list *List) ReverseListLoopDetect() bool {
 	list.Reverse()
 	if tempHead == list.head {
 		list.Reverse()
-		fmt.Println("loop found")
+		fmt.Println("Loop found")
 		return true
 	}
 	list.Reverse()
-	fmt.Println("loop not found")
+	fmt.Println("Loop not found")
 	return false
 }
 
@@ -370,17 +373,17 @@ func (list *List) LoopTypeDetect() int {
 	fastPtr := list.head
 	for fastPtr.next != nil && fastPtr.next.next != nil {
 		if list.head == fastPtr.next || list.head == fastPtr.next.next {
-			fmt.Println("circular list loop found")
+			fmt.Println("Circular list loop found")
 			return 2
 		}
 		slowPtr = slowPtr.next
 		fastPtr = fastPtr.next.next
 		if slowPtr == fastPtr {
-			fmt.Println("loop found")
+			fmt.Println("Loop found")
 			return 1
 		}
 	}
-	fmt.Println("loop not found")
+	fmt.Println("Loop not found")
 	return 0
 }
 
@@ -607,7 +610,7 @@ func main8() {
 Intersection :: 2
 */
 
-func main() {
+func main9() {
 	ll := List{}
 	ll.AddHead(1)
 	ll.AddHead(2)
@@ -618,73 +621,7 @@ func main() {
 	fmt.Println(ll.NthNodeFromEnd2(2))
 }
 
-func main233() {
-	/*	ll := new(List)
-		//ll := List{}
-		ll.AddHead(1)
-		ll.AddHead(2)
-		ll.AddHead(3)
-		ll.Print()
-
-		ll2 := ll.CopyList()
-		ll2.Print()
-		fmt.Println(ll.CompareList(ll2))
-
-		ll3 := ll.CopyListReversed()
-		ll3.Print()
-		fmt.Println(ll.Find(7))
-		fmt.Println(ll.Find(2))
-
-		ll := List{}
-		for i := 0; i < 5; i++ {
-		    ll.AddHead(i)
-		}
-
-		for i := 0; i < 5; i++ {
-		    ll.AddTail(i)
-		}
-
-		ll.Print();
-
-	*/
-	/*	ll := List{}
-		for i := 0; i < 5; i++ {
-		    ll.AddHead(i)
-		}
-		fmt.Println(ll.Peek())
-		ll.RemoveHead()
-		ll.Print();
-		fmt.Println(ll.Find(3))
-		ll.DeleteNode(3)
-		fmt.Println(ll.Find(3))
-		ll.Reverse()
-		ll.Print();
-		ll.ReverseRecurse()
-		ll.Print();
-
-		fmt.Println(ll.NthNodeFromBegining(2));
-		fmt.Println(ll.NthNodeFromEnd(2));
-		fmt.Println(ll.NthNodeFromEnd2(2));
-		fmt.Println(ll.FindLength())
-		ll.FreeList()
-		fmt.Println(ll.FindLength())
-	*/
-	/*
-		ll := List{}
-		ll.SortedInsert(1)
-		ll.SortedInsert(2)
-		ll.SortedInsert(3)
-		ll.SortedInsert(1)
-		ll.SortedInsert(2)
-		ll.SortedInsert(3)
-		ll.Print()
-		ll.RemoveDuplicate()
-		ll.Print()
-
-
-
-	*/
-
+func main10() {
 	ll := List{}
 	ll.AddHead(1)
 	ll.AddHead(2)
@@ -703,5 +640,27 @@ func main233() {
 	ll.Print()
 	ll.FreeList()
 	ll.Print()
+}
 
+/*
+3 2 1 1 2 3
+6
+false
+3 true
+2 1 1 2
+false
+1 1 2
+*/
+
+func main() {
+	main1()
+	main2()
+	main3()
+	main4()
+	main5()
+	main6()
+	main7()
+	main8()
+	main9()
+	main10()
 }

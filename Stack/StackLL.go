@@ -55,12 +55,12 @@ func (s *StackLinkedList) Print() {
 	fmt.Println("]")
 }
 
-func (s *StackLinkedList) insertAtBottom(value int) {
+func (s *StackLinkedList) InsertAtBottom(value int) {
 	if s.IsEmpty() {
 		s.Push(value)
 	} else {
 		temp := s.Pop()
-		s.insertAtBottom(value)
+		s.InsertAtBottom(value)
 		s.Push(temp)
 	}
 }
@@ -77,6 +77,7 @@ func main() {
 }
 
 /*
+Output:
 [3 2 1 ]
 3 2
 */

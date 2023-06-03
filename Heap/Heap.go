@@ -20,7 +20,7 @@ func CreateHeap(isMin bool, args ...[]int) *Heap {
 		size = len(arrInput)
 	}
 	h := &Heap{size: size, arr: arr, isMin: isMin}
-	for i := (size / 2); i >= 0; i-- {
+	for i := size / 2; i >= 0; i-- {
 		h.percolateDown(i)
 	}
 
@@ -77,7 +77,7 @@ func (h *Heap) Remove() int {
 	h.arr[0] = h.arr[h.size-1]
 	h.size--
 	h.percolateDown(0)
-	h.arr = h.arr[0:h.size]
+	h.arr = h.arr[:h.size]
 	return value
 }
 
@@ -85,7 +85,7 @@ func (h *Heap) Delete(value int) bool {
 	for i := 0; i < h.size; i++ {
 		if h.arr[i] == value {
 			h.arr[i] = h.arr[h.size-1]
-			h.size -= 1
+			h.size--
 			h.percolateUp(i)
 			h.percolateDown(i)
 			return true
@@ -95,7 +95,7 @@ func (h *Heap) Delete(value int) bool {
 }
 
 func (h *Heap) IsEmpty() bool {
-	return (h.size == 0)
+	return h.size == 0
 }
 
 func (h *Heap) Size() int {
@@ -111,8 +111,8 @@ func (h *Heap) Peek() int {
 }
 
 func (h *Heap) Print() {
-	fmt.Println("Heap size :", h.size)
-	fmt.Print("Heap Array :")
+	fmt.Println("Heap size:", h.size)
+	fmt.Print("Heap Array:")
 	for i := 0; i < h.size; i++ {
 		fmt.Print(" ", h.arr[i])
 	}
@@ -319,36 +319,30 @@ Median after insertion of 3 is 3
 Median after insertion of 7 is 5
 */
 
-func KthSmallest(arr []int, size int, k int) int {
+func KthSmallest(arr []int, k int) int {
 	sort.Ints(arr)
 	return arr[k-1]
 }
 
-func KthSmallest2(arr []int, size int, k int) int {
-	i := 0
-	value := 0
+func KthSmallest2(arr []int, k int) int {
 	hp := CreateHeap(true)
-	for i = 0; i < size; i++ {
-		hp.Add(arr[i])
+	for _, val := range arr {
+		hp.Add(val)
 	}
-	i = 0
-	for i < size && i < k {
-		value = hp.Remove()
-		i += 1
+	for i := 0; i < k; i++ {
+		hp.Remove()
 	}
-	return value
+	return hp.Remove()
 }
 
-func KthSmallest3(arr []int, size int, k int) int {
+func KthSmallest3(arr []int, k int) int {
 	hp := CreateHeap(false)
-	for i := 0; i < size; i++ {
-		if i < k {
-			hp.Add(arr[i])
-		} else {
-			if hp.Peek() > arr[i] {
-				hp.Add(arr[i])
-				hp.Remove()
-			}
+	for _, val := range arr {
+		if hp.size < k {
+			hp.Add(val)
+		} else if hp.Peek() > val {
+			hp.Add(val)
+			hp.Remove()
 		}
 	}
 	return hp.Peek()
@@ -357,11 +351,11 @@ func KthSmallest3(arr []int, size int, k int) int {
 //Testing Code
 func main7() {
 	arr := []int{8, 7, 6, 5, 7, 5, 2, 1}
-	fmt.Println("Kth Smallest ::", KthSmallest(arr, len(arr), 3))
+	fmt.Println("Kth Smallest:", KthSmallest(arr, 3))
 	arr2 := []int{8, 7, 6, 5, 7, 5, 2, 1}
-	fmt.Println("Kth Smallest ::", KthSmallest2(arr2, len(arr2), 3))
+	fmt.Println("Kth Smallest:", KthSmallest2(arr2, 3))
 	arr3 := []int{8, 7, 6, 5, 7, 5, 2, 1}
-	fmt.Println("Kth Smallest ::", KthSmallest3(arr3, len(arr3), 3))
+	fmt.Println("Kth Smallest:", KthSmallest3(arr3, 3))
 }
 
 /*

@@ -24,9 +24,7 @@ func getMax(arr []int, n int) int {
 
 func countSort(arr []int, n int, dividend int) {
 	temp := make([]int, n)
-	for i := range arr {
-		temp[i] = arr[i]
-	}
+	copy(temp, arr)
 
 	// Store count of occurrences in count array.
 	// (number / dividend) % 10 is used to find the working digit.
@@ -42,9 +40,9 @@ func countSort(arr []int, n int, dividend int) {
 	}
 
 	// Copy content to input arr.
-	for i := n - 1; i >= 0; i -= 1 {
+	for i := n - 1; i >= 0; i-- {
 		arr[count[(temp[i]/dividend)%10]-1] = temp[i]
-		count[(temp[i]/dividend)%10] -= 1
+		count[(temp[i]/dividend)%10]--
 	}
 }
 

@@ -22,10 +22,9 @@ func main() {
 
 func SelectionSort(arr []int) {
 	size := len(arr)
-	var i, j, max int
-	for i = 0; i < size; i++ {
-		max = 0
-		for j = 1; j < size-1-i; j++ {
+	for i := 0; i < size; i++ {
+		max := 0
+		for j := 1; j < size-i; j++ {
 			if arr[j] > arr[max] {
 				max = j
 			}
@@ -36,10 +35,9 @@ func SelectionSort(arr []int) {
 
 func SelectionSort2(arr []int) {
 	size := len(arr)
-	var i, j, min int
-	for i = 0; i < size-1; i++ {
-		min = i
-		for j = i + 1; j < size; j++ {
+	for i := 0; i < size-1; i++ {
+		min := i
+		for j := i + 1; j < size; j++ {
 			if arr[j] < arr[min] {
 				min = j
 			}

@@ -10,10 +10,10 @@ func IsAnagram(str1 string, str2 string) bool {
 	}
 	cm := make(Counter)
 	for _, ch := range str1 {
-		cm.add(ch)
+		cm.Add(ch)
 	}
 	for _, ch := range str2 {
-		cm.remove(ch)
+		cm.Remove(ch)
 	}
 	return len(cm) == 0
 }
@@ -37,9 +37,9 @@ func RemoveDuplicate(str string) string {
 	hs := make(Set)
 	var output []rune
 	for _, ch := range input {
-		if !hs.has(ch) {
+		if !hs.Has(ch) {
 			output = append(output, ch)
-			hs.add(ch)
+			hs.Add(ch)
 		}
 	}
 	return string(output)
@@ -57,10 +57,10 @@ helo
 func FindMissing(arr []int, start int, end int) (int, bool) {
 	hs := make(Set)
 	for _, i := range arr {
-		hs.add(i)
+		hs.Add(i)
 	}
 	for curr := start; curr <= end; curr++ {
-		if !hs.has(curr) {
+		if !hs.Has(curr) {
 			return curr, true
 		}
 	}
@@ -81,10 +81,10 @@ func PrintRepeating(arr []int) {
 	hs := make(Set)
 	fmt.Print("Repeating elements are :: ")
 	for _, val := range arr {
-		if hs.has(val) {
+		if hs.Has(val) {
 			fmt.Print(val, " ")
 		} else {
-			hs.add(val)
+			hs.Add(val)
 		}
 	}
 	fmt.Println()
@@ -104,11 +104,11 @@ func PrintFirstRepeating(arr []int) {
 	hs := make(Counter)
 
 	for i := 0; i < size; i++ {
-		hs.add(arr[i])
+		hs.Add(arr[i])
 	}
 	for i := 0; i < size; i++ {
-		hs.remove(arr[i])
-		if hs.has(arr[i]) {
+		hs.Remove(arr[i])
+		if hs.Has(arr[i]) {
 			fmt.Println("First Repeating number is:", arr[i])
 			return
 		}
@@ -146,15 +146,15 @@ func main() {
 
 func main6() {
 	hs := make(Set)
-	hs.add("Banana")
-	hs.add("Apple")
-	hs.add("Mango")
+	hs.Add("Banana")
+	hs.Add("Apple")
+	hs.Add("Mango")
 	fmt.Println(hs)
-	fmt.Println("Apple present:", hs.has("Apple"))
-	fmt.Println("Grapes present:", hs.has("Grapes"))
-	hs.remove("Apple")
+	fmt.Println("Apple present:", hs.Has("Apple"))
+	fmt.Println("Grapes present:", hs.Has("Grapes"))
+	hs.Remove("Apple")
 	fmt.Println(hs)
-	fmt.Println("Apple present:", hs.has("Apple"))
+	fmt.Println("Apple present:", hs.Has("Apple"))
 }
 
 /*
@@ -201,17 +201,17 @@ Apple unavailable.
 
 func main8() {
 	mp := make(Counter)
-	mp.add("a")
-	mp.add("b")
-	mp.add("a")
+	mp.Add("a")
+	mp.Add("b")
+	mp.Add("a")
 
-	fmt.Println(mp.has("a"))
-	fmt.Println(mp.has("b"))
-	fmt.Println(mp.has("c"))
+	fmt.Println(mp.Has("a"))
+	fmt.Println(mp.Has("b"))
+	fmt.Println(mp.Has("c"))
 
-	fmt.Println(mp.get("a"))
-	fmt.Println(mp.get("b"))
-	fmt.Println(mp.get("c"))
+	fmt.Println(mp.Get("a"))
+	fmt.Println(mp.Get("b"))
+	fmt.Println(mp.Get("c"))
 }
 
 /*
@@ -226,16 +226,16 @@ false
 // ***********************
 type Counter map[interface{}]int
 
-func (c *Counter) add(key interface{}) {
+func (c *Counter) Add(key interface{}) {
 	(*c)[key]++
 }
 
-func (c *Counter) has(key interface{}) bool {
+func (c *Counter) Has(key interface{}) bool {
 	_, ok := (*c)[key]
 	return ok
 }
 
-func (c *Counter) remove(key interface{}) {
+func (c *Counter) Remove(key interface{}) {
 	val, ok := (*c)[key]
 	if !ok {
 		return
@@ -246,7 +246,7 @@ func (c *Counter) remove(key interface{}) {
 	(*c)[key]--
 }
 
-func (c *Counter) get(key interface{}) (int, bool) {
+func (c *Counter) Get(key interface{}) (int, bool) {
 	val, ok := (*c)[key]
 	return val, ok
 }
@@ -255,15 +255,15 @@ func (c *Counter) get(key interface{}) (int, bool) {
 
 type Set map[interface{}]bool
 
-func (s *Set) add(key interface{}) {
+func (s *Set) Add(key interface{}) {
 	(*s)[key] = true
 }
 
-func (s *Set) remove(key interface{}) {
+func (s *Set) Remove(key interface{}) {
 	delete(*s, key)
 }
 
-func (s *Set) has(key interface{}) bool {
+func (s *Set) Has(key interface{}) bool {
 	return (*s)[key]
 }
 

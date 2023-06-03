@@ -6,7 +6,7 @@ import (
 	"sort"
 )
 
-func BucketSort(arr []int, maxValue int, numBucket int) {
+func BucketSort(arr []int, maxValue, numBucket int) {
 	length := len(arr)
 	if length == 0 {
 		return

@@ -16,7 +16,7 @@ func main0() {
 	fmt.Println()
 }
 
-func josephus(n int, k int) int {
+func Josephus(n int, k int) int {
 	que := new(Queue)
 	for i := 0; i < n; i++ {
 		que.Add(i + 1)
@@ -33,8 +33,10 @@ func josephus(n int, k int) int {
 
 // Testing code.
 func main1() {
-	fmt.Println("Position :", josephus(11, 5))
+	fmt.Println("Position :", Josephus(11, 5))
 }
+
+// Position : 8
 
 func CircularTour(arr [][2]int, n int) int {
 	for i := 0; i < n; i++ {
@@ -80,30 +82,27 @@ func CircularTour2(arr [][2]int, n int) int {
 	}
 
 	if petrol >= 0 {
-
 		return que.Remove().(int)
-	} else {
-
-		return -1
 	}
+
+	return -1
 }
 
 func main2() {
-	tour := [][2]int{{8, 6}, {1, 4}, {7, 6}}
-	fmt.Println("Circular Tour :", CircularTour(tour, 3))
-	fmt.Println("Circular Tour :", CircularTour2(tour, 3))
+	arr := [][2]int{{4, 6}, {6, 5}, {7, 3}, {4, 5}}
+	fmt.Println("Starting Point :", CircularTour(arr, len(arr)))
+	fmt.Println("Starting Point 2 :", CircularTour2(arr, len(arr)))
 }
 
 /*
-Circular Tour : 2
+Starting Point : 1
+Starting Point 2 : 1
 */
 
-func convertXY(src int, dst int) int {
+func ConvertXY(src int, dst int) int {
 	que := new(Queue)
 	visited := make(map[int]int)
-	a := []int{src, 0}
-	que.Add(a)
-	ok := false
+	que.Add([]int{src, 0})
 
 	for que.Len() != 0 {
 		node := que.Remove().([]int)
@@ -113,12 +112,10 @@ func convertXY(src int, dst int) int {
 		if value == dst {
 			return steps
 		}
-		_, ok = visited[value*2]
-		if value < dst && !ok {
+		if _, ok := visited[value*2]; !ok && value < dst {
 			que.Add([]int{value * 2, steps + 1})
 		}
-		_, ok = visited[value-1]
-		if value > 0 && !ok {
+		if _, ok := visited[value-1]; !ok && value > 0 {
 			que.Add([]int{value - 1, steps + 1})
 		}
 	}
@@ -126,12 +123,13 @@ func convertXY(src int, dst int) int {
 }
 
 func main3() {
-	fmt.Println("Steps to convert 2 to 7 :", convertXY(2, 7))
+	fmt.Println("Steps to convert 2 to 7:", ConvertXY(2, 7))
 }
 
 /*
-Steps to convert 2 to 7 : 3
+Steps to convert 2 to 7: 3
 */
+
 func maxSlidingWindows(arr []int, k int) {
 	size := len(arr)
 	for i := 0; i < size-k+1; i++ {
@@ -179,7 +177,8 @@ func main4() {
 }
 
 /*
-Max Sliding Windows : 75 92 92 92 90
+75 92 92 92 90
+75 92 92 92 90
 */
 
 func minOfMaxSlidingWindows(arr []int, k int) {
@@ -203,7 +202,7 @@ func minOfMaxSlidingWindows(arr []int, k int) {
 		}
 		i += 1
 	}
-	fmt.Println("Min of max is : ", minVal)
+	fmt.Println("Min of max is:", minVal)
 }
 
 func main5() {
@@ -212,7 +211,7 @@ func main5() {
 	minOfMaxSlidingWindows(arr, k)
 }
 
-//Min of max is :  75
+// Min of max is: 75
 
 func maxOfMinSlidingWindows(arr []int, k int) {
 	size := len(arr)
@@ -235,7 +234,7 @@ func maxOfMinSlidingWindows(arr []int, k int) {
 		}
 		i += 1
 	}
-	fmt.Println("Max of min is : ", maxVal)
+	fmt.Println("Max of min is:", maxVal)
 }
 
 func main6() {
@@ -245,7 +244,7 @@ func main6() {
 }
 
 /*
-Max of min is :: 59
+Max of min is: 59
 */
 
 func firstNegSlidingWindows(arr []int, k int) {
@@ -267,7 +266,6 @@ func firstNegSlidingWindows(arr []int, k int) {
 			} else {
 				fmt.Print("NAN ")
 			}
-
 		}
 		i += 1
 	}
@@ -282,7 +280,7 @@ func main7() {
 -2 -2 -6 -14 -14 NAN
 */
 
-func RottenFruitUtil(arr [][]int, maxCol int, maxRow int, currCol int, currRow int, traversed [][]int, day int) { // Range check
+func RottenFruitUtil(arr [][]int, maxCol int, maxRow int, currCol int, currRow int, traversed [][]int, day int) {
 	if currCol < 0 || currCol >= maxCol || currRow < 0 || currRow >= maxRow {
 		return
 	}
@@ -387,14 +385,15 @@ func RottenFruit2(arr [][]int, maxCol int, maxRow int) int {
 }
 
 // Testing code.
-func main21() {
+func main8() {
 	arr := [][]int{{1, 0, 1, 1, 0}, {2, 1, 0, 1, 0}, {0, 0, 0, 2, 1}, {0, 2, 0, 0, 1}, {1, 1, 0, 0, 1}}
 	fmt.Println("RottenFruit :", RottenFruit(arr, 5, 5))
-	fmt.Println("RottenFruit :", RottenFruit2(arr, 5, 5))
+	fmt.Println("RottenFruit2 :", RottenFruit2(arr, 5, 5))
 }
 
 /*
 RottenFruit : 3
+RottenFruit2 : 3
 */
 
 func StepsOfKnightUtil(size int, currCol int, currRow int, traversed [][]int, dist int) {
@@ -475,28 +474,33 @@ func StepsOfKnight2(size int, srcX int, srcY int, dstX int, dstY int) int {
 }
 
 // Testing code.
-func main22() {
+func main9() {
 	fmt.Println("StepsOfKnight :", StepsOfKnight(20, 10, 10, 20, 20))
-	fmt.Println("StepsOfKnight :", StepsOfKnight2(20, 10, 10, 20, 20))
+	fmt.Println("StepsOfKnight2 :", StepsOfKnight2(20, 10, 10, 20, 20))
 }
 
 /*
 StepsOfKnight : 8
+StepsOfKnight2 : 8
 */
 
-func DistNearestFillUtil(arr [][]int, maxCol int, maxRow int, currCol int, currRow int, traversed [][]int, dist int) { // Range check
+func DistNearestFillUtil(arr [][]int, maxCol int, maxRow int, currCol int, currRow int, traversed [][]int, dist int) {
+	// Range check
 	if currCol < 0 || currCol >= maxCol || currRow < 0 || currRow >= maxRow {
 		return
 	}
-	// Traversable if their is a better distance.
+
+	// Traversable if there is a better distance.
 	if traversed[currCol][currRow] <= dist {
 		return
 	}
+
 	// Update distance.
 	traversed[currCol][currRow] = dist
+
 	dir := [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
 
-	// each line corresponding to 4 direction.
+	// Traverse in each direction.
 	for i := 0; i < 4; i++ {
 		x := currCol + dir[i][0]
 		y := currRow + dir[i][1]
@@ -509,11 +513,15 @@ func DistNearestFill(arr [][]int, maxCol int, maxRow int) {
 	for i := range traversed {
 		traversed[i] = make([]int, maxCol)
 	}
+
+	// Initialize traversed distances to a large value.
 	for i := 0; i < maxCol; i++ {
 		for j := 0; j < maxRow; j++ {
 			traversed[i][j] = 999999
 		}
 	}
+
+	// Traverse the grid and find the nearest distance for each cell.
 	for i := 0; i < maxCol; i++ {
 		for j := 0; j < maxRow; j++ {
 			if arr[i][j] == 1 {
@@ -522,6 +530,7 @@ func DistNearestFill(arr [][]int, maxCol int, maxRow int) {
 		}
 	}
 
+	// Print the traversed distances.
 	for i := 0; i < maxCol; i++ {
 		for j := 0; j < maxRow; j++ {
 			fmt.Print(traversed[i][j], " ")
@@ -539,17 +548,27 @@ func DistNearestFill2(arr [][]int, maxCol int, maxRow int) {
 	for i := range traversed {
 		traversed[i] = make([]int, maxCol)
 	}
+
 	dir := [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
 	que := new(Queue)
+
+	// Initialize traversed distances to a large value.
 	for i := 0; i < maxCol; i++ {
 		for j := 0; j < maxRow; j++ {
 			traversed[i][j] = 999999
+		}
+	}
+
+	// Traverse the grid and find the nearest distance for each cell.
+	for i := 0; i < maxCol; i++ {
+		for j := 0; j < maxRow; j++ {
 			if arr[i][j] == 1 {
 				que.Add(Node2{x: i, y: j, dist: 0})
 				traversed[i][j] = 0
 			}
 		}
 	}
+
 	var x, y, dist int
 	var temp Node2
 	for !que.IsEmpty() {
@@ -564,6 +583,8 @@ func DistNearestFill2(arr [][]int, maxCol int, maxRow int) {
 			}
 		}
 	}
+
+	// Print the traversed distances.
 	for i := 0; i < maxCol; i++ {
 		for j := 0; j < maxRow; j++ {
 			fmt.Print(traversed[i][j], " ")
@@ -573,7 +594,7 @@ func DistNearestFill2(arr [][]int, maxCol int, maxRow int) {
 }
 
 // Testing code.
-func main23() {
+func main10() {
 	arr := [][]int{{1, 0, 1, 1, 0}, {1, 1, 0, 1, 0}, {0, 0, 0, 0, 1}, {0, 0, 0, 0, 1}, {0, 0, 0, 0, 1}}
 
 	DistNearestFill(arr, 5, 5)
@@ -588,11 +609,12 @@ func main23() {
 3 3 2 1 0
 */
 
-func findLargestIslandUtil(arr [][]int, maxCol int, maxRow int, currCol int,
-	currRow int, traversed [][]bool) int {
+func findLargestIslandUtil(arr [][]int, maxCol int, maxRow int, currCol int, currRow int, traversed [][]bool) int {
 	dir := [][]int{{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}}
 	var x, y int
 	var sum = 1
+
+	// Traverse in all eight directions.
 	for i := 0; i < 8; i++ {
 		x = currCol + dir[i][0]
 		y = currRow + dir[i][1]
@@ -601,24 +623,28 @@ func findLargestIslandUtil(arr [][]int, maxCol int, maxRow int, currCol int,
 			sum += findLargestIslandUtil(arr, maxCol, maxRow, x, y, traversed)
 		}
 	}
-	return sum
 
+	return sum
 }
 
 func findLargestIsland(arr [][]int, maxCol int, maxRow int) int {
 	maxVal := 0
 	currVal := 0
 
+	// Create a 2D boolean array to keep track of visited cells.
 	traversed := make([][]bool, maxRow)
 	for i := range traversed {
 		traversed[i] = make([]bool, maxCol)
 	}
+
+	// Initialize all cells as unvisited.
 	for i := 0; i < maxCol; i++ {
 		for j := 0; j < maxRow; j++ {
 			traversed[i][j] = false
 		}
 	}
 
+	// Traverse the grid and find the largest island.
 	for i := 0; i < maxCol; i++ {
 		for j := 0; j < maxRow; j++ {
 			if arr[i][j] == 1 {
@@ -630,22 +656,23 @@ func findLargestIsland(arr [][]int, maxCol int, maxRow int) int {
 			}
 		}
 	}
+
 	return maxVal
 }
 
 // Testing code.
-func main24() {
+func main11() {
 	arr := [][]int{{1, 0, 1, 1, 0},
 		{1, 0, 0, 1, 0},
 		{0, 1, 1, 1, 1},
 		{0, 1, 0, 0, 0},
 		{1, 1, 0, 0, 1}}
 
-	fmt.Println("Largest Island :", findLargestIsland(arr, 5, 5))
+	fmt.Println("Largest Island:", findLargestIsland(arr, 5, 5))
 }
 
 /*
-Largest Island :  12
+Largest Island: 12
 */
 
 func main() {
@@ -656,10 +683,10 @@ func main() {
 	main5()
 	main6()
 	main7()
-	main21()
-	main22()
-	main23()
-	main24()
+	main8()
+	main9()
+	main10()
+	main11()
 }
 
 type Queue struct {
@@ -671,9 +698,8 @@ func (q *Queue) Add(value interface{}) {
 }
 
 func (q *Queue) Remove() interface{} {
-	n := len(q.que)
 	value := q.que[0]
-	q.que = q.que[1:n]
+	q.que = q.que[1:]
 	return value
 }
 
@@ -701,6 +727,6 @@ func (q *Queue) Len() int {
 	return len(q.que)
 }
 
-func (q Queue) Print() {
+func (q *Queue) Print() {
 	fmt.Println(q.que)
 }

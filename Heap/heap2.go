@@ -65,7 +65,7 @@ func (h *Heap) Add(value interface{}) {
 func (h *Heap) Remove() interface{} {
 	if h.IsEmpty() {
 		fmt.Println("HeapEmptyException.")
-		return 0
+		return nil
 	}
 	value := h.arr[0]
 	h.arr[0] = h.arr[h.size-1]
@@ -89,7 +89,7 @@ func (h *Heap) Delete(value interface{}) bool {
 }
 
 func (h *Heap) IsEmpty() bool {
-	return (h.size == 0)
+	return h.size == 0
 }
 
 func (h *Heap) Size() int {
@@ -99,14 +99,14 @@ func (h *Heap) Size() int {
 func (h *Heap) Peek() interface{} {
 	if h.IsEmpty() {
 		fmt.Println("Heap empty exception.")
-		return 0
+		return nil
 	}
 	return h.arr[0]
 }
 
 func (h *Heap) Print() {
-	fmt.Println("Heap size :", h.size)
-	fmt.Print("Heap Array :")
+	fmt.Println("Heap size:", h.size)
+	fmt.Print("Heap Array:")
 	for i := 0; i < h.size; i++ {
 		fmt.Print(" ", h.arr[i])
 	}
@@ -235,7 +235,7 @@ func IsMaxHeap(arr []int) bool {
 	return true
 }
 
-//Testing Code
+// Testing Code
 func main5() {
 	bb := []int{1, 2, 3, 4, 5, 6, 7, 8}
 	fmt.Println(IsMinHeap(bb))
@@ -308,7 +308,7 @@ func (h *MedianHeap) getMedian() int {
 	}
 }
 
-//Testing Code
+// Testing Code
 func main6() {
 	arr := []int{1, 9, 2, 8, 3, 7}
 	hp := NewMedianHeap()

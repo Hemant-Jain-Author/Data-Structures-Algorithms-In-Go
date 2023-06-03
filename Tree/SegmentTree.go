@@ -79,7 +79,7 @@ func (self *SegmentTree) setUtil(segStart int, segEnd int, ind int, val int, ind
 	// If the input index is in range of this node, then set the
 	// value of the node and its children
 	if segStart == segEnd {
-		if segStart == ind { // Index that need to be set.
+		if segStart == ind { // Index that needs to be set.
 			diff := val - self.segArr[index]
 			self.segArr[index] = val
 			return diff
