@@ -22,7 +22,8 @@ func LargestBitonicSubseq(arr []int) int {
 	for i := range lds {
 		lds[i] = 1
 	}
-	// Populating LIS values in bottom up manner.
+
+	// Populating LIS values in bottom-up manner.
 	for i := 0; i < n; i++ {
 		for j := 0; j < i; j++ {
 			if arr[j] < arr[i] && lis[i] < lis[j]+1 {
@@ -31,7 +32,7 @@ func LargestBitonicSubseq(arr []int) int {
 		}
 	}
 
-	// Populating LDS values in bottom up manner.
+	// Populating LDS values in bottom-up manner.
 	for i := n - 1; i > 0; i-- {
 		for j := n - 1; j > i; j-- {
 			if arr[j] < arr[i] && lds[i] < lds[j]+1 {
@@ -46,6 +47,7 @@ func LargestBitonicSubseq(arr []int) int {
 			maxVal = lis[i] + lds[i] - 1
 		}
 	}
+
 	return maxVal
 }
 

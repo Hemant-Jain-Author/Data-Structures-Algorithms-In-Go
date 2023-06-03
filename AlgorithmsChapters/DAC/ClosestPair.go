@@ -58,7 +58,7 @@ func ClosestPairDC(arr [][]int) float64 {
 
 func closestPairUtil(p []*Point, start int, stop int, q []*Point, n int) float64 {
 	if stop-start < 1 {
-		return math.MaxInt32
+		return math.MaxFloat64
 	}
 	if stop-start == 1 {
 		return distance(p[start], p[stop])
@@ -81,10 +81,10 @@ func closestPairUtil(p []*Point, start int, stop int, q []*Point, n int) float64
 func stripMin(q []*Point, n int, d float64) float64 {
 	min := d
 	for i := 0; i < n; i++ {
-		for j := i + 1; j < n && (float64)(q[j].y-q[i].y) < min; j++ {
-			d = distance(q[i], q[j])
-			if d < min {
-				min = d
+		for j := i + 1; j < n && float64(q[j].y-q[i].y) < min; j++ {
+			dist := distance(q[i], q[j])
+			if dist < min {
+				min = dist
 			}
 		}
 	}

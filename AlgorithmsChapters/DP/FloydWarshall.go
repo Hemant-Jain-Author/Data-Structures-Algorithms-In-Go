@@ -20,15 +20,14 @@ func FloydWarshall(graph [][]int, V int) {
 		for i := 0; i < V; i++ {
 			// Pick destination vertices.
 			for j := 0; j < V; j++ {
-				// If we have shorter path from i to j via k.
-				// then update dist[i][j]
+				// If we have a shorter path from i to j via k, then update dist[i][j].
 				if dist[i][k] != INF && dist[k][j] != INF && dist[i][k]+dist[k][j] < dist[i][j] {
 					dist[i][j] = dist[i][k] + dist[k][j]
 				}
 			}
 		}
 	}
-	// Print the shortest distance matrix
+	// Print the shortest distance matrix.
 	printSolution(dist, V)
 }
 

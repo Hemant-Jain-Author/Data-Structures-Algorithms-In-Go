@@ -9,23 +9,24 @@ type Activity struct {
 	start, stop int
 }
 
-func NewActivity(a int, b int) *Activity {
+func NewActivity(a, b int) *Activity {
 	p := new(Activity)
 	p.start = a
 	p.stop = b
 	return p
 }
 
-func MaxActivities(s []int, f []int, n int) {
+func MaxActivities(s, f []int, n int) {
 	act := make([]*Activity, n)
 	for i := 0; i < n; i++ {
 		act[i] = NewActivity(s[i], f[i])
 	}
 
-	// sort according to finish time.
+	// Sort the activities according to finish time.
 	sort.Slice(act, func(i, j int) bool {
 		return act[i].stop < act[j].stop
 	})
+
 	i := 0 // The first activity at index 0 is always selected.
 	fmt.Print("Activities are: (", act[i].start, ",", act[i].stop, ")")
 	for j := 1; j < n; j++ {

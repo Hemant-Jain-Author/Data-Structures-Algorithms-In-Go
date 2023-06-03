@@ -50,92 +50,92 @@ func MinCoins2(coins []int, n int, val int) int {
 }
 
 func MinCoinsBU(coins []int, n int, val int) int {
-	count := make([]int, val+1)
-	for i := range count {
-		count[i] = math.MaxInt32
+	minCoins := make([]int, val+1)
+	for i := range minCoins {
+		minCoins[i] = math.MaxInt32
 	}
-	count[0] = 0
+	minCoins[0] = 0
 	for i := 1; i <= val; i++ {
 		for j := 0; j < n; j++ {
 			if coins[j] <= i {
-				if count[i-coins[j]] != math.MaxInt32 {
-					count[i] = min(count[i], count[i-coins[j]]+1)
+				if minCoins[i-coins[j]] != math.MaxInt32 {
+					minCoins[i] = min(minCoins[i], minCoins[i-coins[j]]+1)
 				}
 			}
 		}
 	}
-	if count[val] != math.MaxInt32 {
-		return count[val]
+	if minCoins[val] != math.MaxInt32 {
+		return minCoins[val]
 	}
 	return -1
 }
 
 func MinCoinsBU2(coins []int, n int, val int) int {
-	count := make([]int, val+1)
-	cvalue := make([]int, val+1)
-	for i := range count {
-		count[i] = math.MaxInt32
+	minCoins := make([]int, val+1)
+	coinUsed := make([]int, val+1)
+	for i := range minCoins {
+		minCoins[i] = math.MaxInt32
 	}
-	count[0] = 0
+	minCoins[0] = 0
 	for i := 1; i <= val; i++ {
 		for j := 0; j < n; j++ {
 			if coins[j] <= i {
-				if count[i-coins[j]] != math.MaxInt32 {
-					count[i] = min(count[i], count[i-coins[j]]+1)
-					cvalue[i] = coins[j]
+				if minCoins[i-coins[j]] != math.MaxInt32 {
+					minCoins[i] = min(minCoins[i], minCoins[i-coins[j]]+1)
+					coinUsed[i] = coins[j]
 				}
 			}
 		}
 	}
-	if count[val] == math.MaxInt32 {
+	if minCoins[val] == math.MaxInt32 {
 		return -1
 	}
 
-	printCoins(cvalue, val)
-	return count[val]
+	printCoins(coinUsed, val)
+	return minCoins[val]
 }
 
-func printCoinsUtil(cvalue []int, val int) string {
+func printCoinsUtil(coinUsed []int, val int) string {
 	if val > 0 {
-		ret := printCoinsUtil(cvalue, val-cvalue[val])
-		return ret + strconv.Itoa(cvalue[val]) + " "
+		ret := printCoinsUtil(coinUsed, val-coinUsed[val])
+		return ret + strconv.Itoa(coinUsed[val]) + " "
 	}
 	return ""
 }
 
-func printCoins(cvalue []int, val int) {
-	ret := printCoinsUtil(cvalue, val)
+func printCoins(coinUsed []int, val int) {
+	ret := printCoinsUtil(coinUsed, val)
 	fmt.Println("Coins are:", ret)
 }
 
 func MinCoinsTD(coins []int, n int, val int) int {
-	count := make([]int, val+1)
-	for i := range count {
-		count[i] = math.MaxInt32
+	minCoins := make([]int, val+1)
+	for i := range minCoins {
+		minCoins[i] = math.MaxInt32
 	}
-	return MinCoinsTDUtil(count, coins, n, val)
+	return MinCoinsTDUtil(minCoins, coins, val)
 }
 
-func MinCoinsTDUtil(count []int, coins []int, n int, val int) int {
+func MinCoinsTDUtil(minCoins []int, coins []int, val int) int {
 	// Base Case
 	if val == 0 {
 		return 0
 	}
-	if count[val] != math.MaxInt32 {
-		return count[val]
+	if minCoins[val] != math.MaxInt32 {
+		return minCoins[val]
 	}
 
 	// Recursion
-	for i := 0; i < n; i++ {
+	for i := 0; i < len(coins); i++ {
 		// check validity of a sub-problem
 		if coins[i] <= val {
-			subCount := MinCoinsTDUtil(count, coins, n, val-coins[i])
+			subCount := MinCoinsTDUtil(minCoins, coins, val-coins[i])
 			if subCount != math.MaxInt32 {
-				count[val] = min(count[val], subCount+1)
+				minCoins[val] = min(minCoins[val], subCount+1)
 			}
 		}
 	}
-	return count[val]
+	return minCoins[val]
 }
 
 func min(a, b int) int {

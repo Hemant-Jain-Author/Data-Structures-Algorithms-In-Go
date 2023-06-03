@@ -5,7 +5,7 @@ import "fmt"
 func min(a, b, c int) int {
 	// Find the minimum of three numbers.
 	minVal := a
-	if b < a {
+	if b < minVal {
 		minVal = b
 	}
 	if c < minVal {

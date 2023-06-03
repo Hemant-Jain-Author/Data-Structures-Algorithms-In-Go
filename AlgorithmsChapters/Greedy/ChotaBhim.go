@@ -12,7 +12,7 @@ func ChotaBhim(cups []int) int {
 
 	sort.Slice(cups, func(i, j int) bool {
 		return cups[i] > cups[j]
-	}) // sort decreasing
+	}) // Sort decreasing
 
 	total := 0
 	var index int

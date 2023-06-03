@@ -18,9 +18,9 @@ func matrixChainMulBruteForceUtil(p []int, i int, j int) int {
 	}
 	min := math.MaxInt32
 
-	// place parenthesis at different places between
-	// first and last matrix, recursively calculate
-	// count of multiplications for each parenthesis
+	// Place parentheses at different places between
+	// the first and last matrix, recursively calculate
+	// the count of multiplications for each parenthesis
 	// placement and return the minimum count
 	for k := i; k < j; k++ {
 		count := matrixChainMulBruteForceUtil(p, i, k) +

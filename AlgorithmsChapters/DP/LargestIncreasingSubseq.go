@@ -7,7 +7,7 @@ func LargestIncreasingSubseq(arr []int) int {
 	lis := make([]int, n)
 	maxVal := 0
 
-	// Populating LIS values in bottom up manner.
+	// Populating LIS values in bottom-up manner.
 	for i := 0; i < n; i++ {
 		lis[i] = 1 // Initialize LIS values for all indexes as 1.
 		for j := 0; j < i; j++ {
@@ -15,10 +15,11 @@ func LargestIncreasingSubseq(arr []int) int {
 				lis[i] = lis[j] + 1
 			}
 		}
-		if maxVal < lis[i] { // Max LIS values.
+		if maxVal < lis[i] {
 			maxVal = lis[i]
 		}
 	}
+
 	return maxVal
 }
 

@@ -16,11 +16,11 @@ func IsPrime(n int) bool {
 }
 
 func main() {
-	fmt.Println(7, IsPrime(7))
-	fmt.Println(8, IsPrime(8))
+	fmt.Println("7:", IsPrime(7))
+	fmt.Println("8:", IsPrime(8))
 }
 
 /*
-7 true
-8 false
+7: true
+8: false
 */

@@ -10,7 +10,7 @@ func MakePairs(nuts []int, bolts []int) {
 		return
 	}
 	makePairsUtil(nuts, bolts, 0, len(nuts)-1)
-	fmt.Print("Matched nuts and bolts are : ", nuts, " & ", bolts)
+	fmt.Print("Matched nuts and bolts are: ", nuts, " & ", bolts)
 }
 
 func makePairsUtil(nuts []int, bolts []int, low int, high int) {
@@ -48,5 +48,5 @@ func main() {
 }
 
 /*
-Matched nuts and bolts are : [1 2 3 4 5 6] & [1 2 3 4 5 6]
+Matched nuts and bolts are: [1 2 3 4 5 6] & [1 2 3 4 5 6]
 */

@@ -23,6 +23,7 @@ func GetMaxCostGreedy(weights []int, costs []int, capacity int) int {
 	totalCost := 0
 	n := len(weights)
 	items := make([]*Item, n)
+
 	for i := 0; i < n; i++ {
 		items[i] = NewItem(weights[i], costs[i])
 	}
@@ -37,6 +38,7 @@ func GetMaxCostGreedy(weights []int, costs []int, capacity int) int {
 			totalCost += items[i].cost
 		}
 	}
+
 	return totalCost
 }
 
@@ -47,3 +49,7 @@ func main() {
 	maxCost := GetMaxCostGreedy(weights, costs, capacity)
 	fmt.Println("Maximum cost obtained:", maxCost)
 }
+
+/*
+Maximum cost obtained: 150
+*/

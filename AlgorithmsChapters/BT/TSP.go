@@ -31,9 +31,7 @@ func tspUtil(graph [][]int, n int, path []int, pSize int, pCost int, visited []b
 	if pSize == n {
 		if graph[curr][0] > 0 && ans > pCost+graph[curr][0] {
 			ans = pCost + graph[curr][0]
-			for i := 0; i <= n; i++ {
-				ansPath[i] = path[i%n]
-			}
+			copy(ansPath, path)
 		}
 		return ans
 	}

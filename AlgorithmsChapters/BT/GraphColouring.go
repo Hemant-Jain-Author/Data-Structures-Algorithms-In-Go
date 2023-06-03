@@ -18,7 +18,7 @@ func graphColouringUtil(graph [][]bool, V int, m int, colour []int, i int) bool 
 	}
 
 	for j := 1; j <= m; j++ {
-		if isSafe(graph, V, colour, i, j) {
+		if isGraphColouredProperly(graph, V, colour, i, j) {
 			colour[i] = j
 			if graphColouringUtil(graph, V, m, colour, i+1) {
 				return true
@@ -30,7 +30,7 @@ func graphColouringUtil(graph [][]bool, V int, m int, colour []int, i int) bool 
 }
 
 // Check if the whole graph is coloured properly.
-func isSafe(graph [][]bool, V int, colour []int, v int, c int) bool {
+func isGraphColouredProperly(graph [][]bool, V int, colour []int, v int, c int) bool {
 	for i := 0; i < V; i++ {
 		if graph[v][i] && c == colour[i] {
 			return false
@@ -51,22 +51,21 @@ func GraphColouring2(graph [][]bool, V int, m int) bool {
 
 func graphColouringUtil2(graph [][]bool, V int, m int, colour []int, i int) bool {
 	if i == V {
-		if isSafe2(graph, colour, V) {
-			return true
-		}
-		return false
+		return isGraphColouredProperly2(graph, colour, V)
 	}
+
 	for j := 1; j <= m; j++ {
 		colour[i] = j
 		if graphColouringUtil2(graph, V, m, colour, i+1) {
 			return true
 		}
 	}
+
 	return false
 }
 
 // Check if the whole graph is coloured properly.
-func isSafe2(graph [][]bool, colour []int, V int) bool {
+func isGraphColouredProperly2(graph [][]bool, colour []int, V int) bool {
 	for i := 0; i < V; i++ {
 		for j := i + 1; j < V; j++ {
 			if graph[i][j] && colour[j] == colour[i] {
@@ -94,6 +93,6 @@ func main() {
 }
 
 /*
-Assigned colours are :: [1 2 1 2 3]
-Assigned colours are :: [1 2 1 2 3]
+Assigned colours are: [1 2 1 2 3]
+Assigned colours are: [1 2 1 2 3]
 */

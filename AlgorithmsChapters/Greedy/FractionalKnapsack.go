@@ -26,7 +26,7 @@ func GetMaxCostFractional(wt []int, cost []int, capacity int) float64 {
 		itemList[i] = NewItems(wt[i], cost[i])
 	}
 
-	// Sort density in decreasing order.
+	// Sort items by density in decreasing order.
 	sort.Slice(itemList, func(i, j int) bool {
 		return itemList[i].density > itemList[j].density
 	})

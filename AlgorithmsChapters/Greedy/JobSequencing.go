@@ -60,7 +60,7 @@ func (jobSeq *JobSequencing) Print() {
 		// Find a time slot for the current job starting from its deadline
 		for j := jobSeq.jobs[i].deadline - 1; j >= 0; j-- {
 			// If the time slot is available, assign the job to it
-			if result[j] == false {
+			if !result[j] {
 				result[j] = true
 				job[j] = jobSeq.jobs[i].id
 				profit += jobSeq.jobs[i].profit

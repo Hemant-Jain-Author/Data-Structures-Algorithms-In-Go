@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func power(x int, n int) int {
+func power(x, n int) int {
 	if n == 0 {
 		return 1
 	}

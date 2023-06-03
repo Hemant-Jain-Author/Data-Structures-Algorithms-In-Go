@@ -78,7 +78,7 @@ func MinCostBSTBU(arr []int) int {
 		maxVal[i][i] = arr[i]
 	}
 
-	for l := 1; l < n; l++ { // l is length of range.
+	for l := 1; l < n; l++ { // l is the length of the range.
 		for i, j := 0, l; j < n; i, j = i+1, j+1 {
 			dp[i][j] = math.MaxInt32
 			for k := i; k < j; k++ {
