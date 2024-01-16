@@ -4,37 +4,38 @@ import (
 	"fmt"
 )
 
-func less(value1 int, value2 int) bool {
+func less(value1, value2 int) bool {
 	return value1 < value2
 }
 
-func greater(value1 int, value2 int) bool {
+func greater(value1, value2 int) bool {
 	return value1 > value2
 }
 
-//BubbleSort sorting method.
+// BubbleSort sorts the array using the specified comparison function.
 func BubbleSort(arr []int, comp func(int, int) bool) {
 	size := len(arr)
-	for i := 0; i < (size - 1); i++ {
+	for i := 0; i < size-1; i++ {
 		for j := 0; j < size-i-1; j++ {
 			if comp(arr[j], arr[j+1]) {
-				/* Swapping */
+				// Swapping
 				arr[j+1], arr[j] = arr[j], arr[j+1]
 			}
 		}
 	}
 }
 
-//BubbleSort2 sorting method.
+// BubbleSort2 sorts the array using the specified comparison function.
+// It includes an optimization to stop early if no swaps are made in a pass.
 func BubbleSort2(arr []int, comp func(int, int) bool) {
 	size := len(arr)
-	swapped := 1
-	for i := 0; i < (size-1) && swapped == 1; i++ {
-		swapped = 0
+	swapped := true
+	for i := 0; i < size-1 && swapped; i++ {
+		swapped = false
 		for j := 0; j < size-i-1; j++ {
 			if comp(arr[j], arr[j+1]) {
 				arr[j+1], arr[j] = arr[j], arr[j+1]
-				swapped = 1
+				swapped = true
 			}
 		}
 	}

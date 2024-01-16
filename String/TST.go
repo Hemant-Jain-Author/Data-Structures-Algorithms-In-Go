@@ -16,59 +16,69 @@ func (t *TST) Insert(word string) {
 	t.root = t.insertUtil(t.root, word, 0)
 }
 
-func (t *TST) insertUtil(curr *TSTNode, word string, wordIndex int) *TSTNode {
-	if curr == nil {
-		curr = new(TSTNode)
-		curr.data = word[wordIndex]
-	}
-	if word[wordIndex] < curr.data {
-		curr.left = t.insertUtil(curr.left, word, wordIndex)
-	} else if word[wordIndex] > curr.data {
-		curr.right = t.insertUtil(curr.right, word, wordIndex)
-	} else {
-		if wordIndex < len(word)-1 {
-			curr.equal = t.insertUtil(curr.equal, word, wordIndex+1)
-		} else {
-			curr.isLastChar = true
+func (t *TST) insertUtil(currentNode *TSTNode, word string, currentIndex int) *TSTNode {
+	if currentNode == nil {
+		currentNode = &TSTNode{
+			data: word[currentIndex],
 		}
 	}
-	return curr
+
+	if word[currentIndex] < currentNode.data {
+		currentNode.left = t.insertUtil(currentNode.left, word, currentIndex)
+		return currentNode
+	}
+
+	if word[currentIndex] > currentNode.data {
+		currentNode.right = t.insertUtil(currentNode.right, word, currentIndex)
+		return currentNode
+	}
+
+	if currentIndex < len(word)-1 {
+		currentNode.equal = t.insertUtil(currentNode.equal, word, currentIndex+1)
+	} else {
+		currentNode.isLastChar = true
+	}
+
+	return currentNode
 }
 
-func (t *TST) findUtil(curr *TSTNode, word string, wordIndex int) bool {
-	if curr == nil {
+func (t *TST) findUtil(currentNode *TSTNode, searchWord string, currentIndex int) bool {
+	if currentNode == nil {
 		return false
 	}
-	if word[wordIndex] < curr.data {
-		return t.findUtil(curr.left, word, wordIndex)
-	} else if word[wordIndex] > curr.data {
-		return t.findUtil(curr.right, word, wordIndex)
-	} else {
-		if wordIndex == len(word)-1 {
-			return curr.isLastChar
-		}
-		return t.findUtil(curr.equal, word, wordIndex+1)
+
+	if searchWord[currentIndex] < currentNode.data {
+		return t.findUtil(currentNode.left, searchWord, currentIndex)
 	}
+
+	if searchWord[currentIndex] > currentNode.data {
+		return t.findUtil(currentNode.right, searchWord, currentIndex)
+	}
+
+	if currentIndex == len(searchWord)-1 {
+		return currentNode.isLastChar
+	}
+
+	return t.findUtil(currentNode.equal, searchWord, currentIndex+1)
 }
 
-func (t *TST) Find(word string) bool {
-	ret := t.findUtil(t.root, word, 0)
-	return ret
+func (t *TST) Find(searchWord string) bool {
+	return t.findUtil(t.root, searchWord, 0)
 }
 
 // Testing code.
 func main() {
-	tt := new(TST)
-	tt.Insert("banana")
-	tt.Insert("apple")
-	tt.Insert("mango")
-	fmt.Println("Apple Found :", tt.Find("apple"));
-    fmt.Println("Banana Found :", tt.Find("banana"));
-    fmt.Println("Grapes Found :", tt.Find("grapes"));
+	t := new(TST)
+	t.Insert("banana")
+	t.Insert("apple")
+	t.Insert("mango")
+	fmt.Println("Apple Found:", t.Find("apple"))
+	fmt.Println("Banana Found:", t.Find("banana"))
+	fmt.Println("Grapes Found:", t.Find("grapes"))
 }
 
 /*
-Apple Found : true
-Banana Found : true
-Grapes Found : false
+Apple Found: true
+Banana Found: true
+Grapes Found: false
 */

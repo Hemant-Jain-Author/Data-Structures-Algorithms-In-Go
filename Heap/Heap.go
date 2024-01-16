@@ -20,7 +20,7 @@ func CreateHeap(isMin bool, args ...[]int) *Heap {
 		size = len(arrInput)
 	}
 	h := &Heap{size: size, arr: arr, isMin: isMin}
-	for i := (size / 2); i >= 0; i-- {
+	for i := size / 2; i >= 0; i-- {
 		h.percolateDown(i)
 	}
 
@@ -39,7 +39,7 @@ func (h *Heap) swap(i, j int) {
 }
 
 func (h *Heap) percolateDown(parent int) {
-	lChild := 2 * parent + 1
+	lChild := 2*parent + 1
 	rChild := lChild + 1
 	child := -1
 	if lChild < h.size {
@@ -65,7 +65,7 @@ func (h *Heap) percolateUp(child int) {
 func (h *Heap) Add(value int) {
 	h.arr = append(h.arr, value)
 	h.size++
-	h.percolateUp(h.size-1)
+	h.percolateUp(h.size - 1)
 }
 
 func (h *Heap) Remove() int {
@@ -74,30 +74,28 @@ func (h *Heap) Remove() int {
 		return 0
 	}
 	value := h.arr[0]
-	h.arr[0] = h.arr[h.size - 1]
+	h.arr[0] = h.arr[h.size-1]
 	h.size--
 	h.percolateDown(0)
-	h.arr = h.arr[0 : h.size]
+	h.arr = h.arr[:h.size]
 	return value
 }
 
-
-func (h *Heap) Delete( value int) bool {
-    for i := 0; i < h.size; i++ {
-        if (h.arr[i] == value) {
-            h.arr[i] = h.arr[h.size - 1]
-            h.size -= 1
-            h.percolateUp(i)
-            h.percolateDown(i)
-            return true
-        }
-    }
-    return false
+func (h *Heap) Delete(value int) bool {
+	for i := 0; i < h.size; i++ {
+		if h.arr[i] == value {
+			h.arr[i] = h.arr[h.size-1]
+			h.size--
+			h.percolateUp(i)
+			h.percolateDown(i)
+			return true
+		}
+	}
+	return false
 }
 
-
 func (h *Heap) IsEmpty() bool {
-	return (h.size == 0)
+	return h.size == 0
 }
 
 func (h *Heap) Size() int {
@@ -113,28 +111,28 @@ func (h *Heap) Peek() int {
 }
 
 func (h *Heap) Print() {
-	fmt.Println("Heap size :", h.size)
-	fmt.Print("Heap Array :")
+	fmt.Println("Heap size:", h.size)
+	fmt.Print("Heap Array:")
 	for i := 0; i < h.size; i++ {
 		fmt.Print(" ", h.arr[i])
 	}
 	fmt.Println()
 }
 
-//Testing Code 
+//Testing Code
 func main1() {
-    hp := CreateHeap(true)
-    hp.Add(1)
-    hp.Add(6)
-    hp.Add(5)
-    hp.Add(7)
-    hp.Add(3)
-    hp.Add(4)
-    hp.Add(2)
-    hp.Print()
-    for  !hp.IsEmpty() {
-        fmt.Print(hp.Remove(), " ")
-    }
+	hp := CreateHeap(true)
+	hp.Add(1)
+	hp.Add(6)
+	hp.Add(5)
+	hp.Add(7)
+	hp.Add(3)
+	hp.Add(4)
+	hp.Add(2)
+	hp.Print()
+	for !hp.IsEmpty() {
+		fmt.Print(hp.Remove(), " ")
+	}
 }
 
 /*
@@ -143,30 +141,32 @@ Heap Array : 1 3 2 7 6 5 4
 1 2 3 4 5 6 7
 */
 
-//Testing Code 
+//Testing Code
 func main2() {
-    a := []int{1, 2, 10, 8, 7, 3, 4, 6, 5, 9}
-    hp := CreateHeap(true, a)// Min Heap
-    hp.Print()
-    for !hp.IsEmpty() {
-        fmt.Print(hp.Remove(), " ")
-    }
+	a := []int{1, 2, 10, 8, 7, 3, 4, 6, 5, 9}
+	hp := CreateHeap(true, a) // Min Heap
+	hp.Print()
+	for !hp.IsEmpty() {
+		fmt.Print(hp.Remove(), " ")
+	}
 }
+
 /*
 Heap size : 10
 Heap Array : 1 2 3 5 7 10 4 6 8 9
 1 2 3 4 5 6 7 8 9 10
 */
 
-//Testing Code 
+//Testing Code
 func main3() {
-    a := []int{1, 2, 10, 8, 7, 3, 4, 6, 5, 9}
-    hp := CreateHeap(false, a)// Max Heap
-    hp.Print()
-    for !hp.IsEmpty() {
-        fmt.Print(hp.Remove(), " ")
-    }
+	a := []int{1, 2, 10, 8, 7, 3, 4, 6, 5, 9}
+	hp := CreateHeap(false, a) // Max Heap
+	hp.Print()
+	for !hp.IsEmpty() {
+		fmt.Print(hp.Remove(), " ")
+	}
 }
+
 /*
 Heap size : 10
 Heap Array : 10 9 4 8 7 3 1 6 5 2
@@ -181,7 +181,7 @@ func HeapSort(arrInput []int, ismin bool) {
 	}
 }
 
-//Testing Code 
+//Testing Code
 func main4() {
 	a := []int{1, 9, 6, 7, 8, 0, 2, 4, 5, 3}
 	HeapSort(a, true)
@@ -196,37 +196,37 @@ func main4() {
 [9 8 7 6 5 4 3 2 1 0]
 */
 
-func IsMinHeap(arr[] int) bool {
+func IsMinHeap(arr []int) bool {
 	var lchild, rchild int
 	size := len(arr)
-	for parent := 0; parent < (size / 2 + 1); parent++ {
-		lchild = parent * 2 + 1
-		rchild = parent * 2 + 2
+	for parent := 0; parent < (size/2 + 1); parent++ {
+		lchild = parent*2 + 1
+		rchild = parent*2 + 2
 		// heap property check.
-		if (((lchild < size) && (arr[parent] > arr[lchild])) ||
-		((rchild < size) && (arr[parent] > arr[rchild]))) {
+		if ((lchild < size) && (arr[parent] > arr[lchild])) ||
+			((rchild < size) && (arr[parent] > arr[rchild])) {
 			return false
 		}
 	}
 	return true
 }
 
-func IsMaxHeap(arr[] int) bool {
+func IsMaxHeap(arr []int) bool {
 	var lchild, rchild int
 	size := len(arr)
-	for parent := 0; parent < (size / 2 + 1); parent++ {
-		lchild = parent * 2 + 1
+	for parent := 0; parent < (size/2 + 1); parent++ {
+		lchild = parent*2 + 1
 		rchild = lchild + 1
 		// heap property check.
-		if (((lchild < size) && (arr[parent] < arr[lchild])) ||
-		((rchild < size) && (arr[parent] < arr[rchild]))) {
+		if ((lchild < size) && (arr[parent] < arr[lchild])) ||
+			((rchild < size) && (arr[parent] < arr[rchild])) {
 			return false
 		}
 	}
 	return true
 }
 
-//Testing Code 
+//Testing Code
 func main5() {
 	bb := []int{1, 2, 3, 4, 5, 6, 7, 8}
 	fmt.Println(IsMinHeap(bb))
@@ -299,7 +299,7 @@ func (h *MedianHeap) getMedian() int {
 	}
 }
 
-//Testing Code 
+//Testing Code
 func main6() {
 	arr := []int{1, 9, 2, 8, 3, 7}
 	hp := NewMedianHeap()
@@ -309,6 +309,7 @@ func main6() {
 		fmt.Println("Median after insertion of", arr[i], "is", hp.getMedian())
 	}
 }
+
 /*
 Median after insertion of 1 is 1
 Median after insertion of 9 is 5
@@ -318,49 +319,43 @@ Median after insertion of 3 is 3
 Median after insertion of 7 is 5
 */
 
-func KthSmallest(arr[] int, size int, k int) int {
+func KthSmallest(arr []int, k int) int {
 	sort.Ints(arr)
-	return arr[k - 1]
+	return arr[k-1]
 }
 
-func KthSmallest2(arr[] int, size int, k int) int {
-	i := 0
-	value := 0
+func KthSmallest2(arr []int, k int) int {
 	hp := CreateHeap(true)
-	for i = 0; i < size; i++ {
-		hp.Add(arr[i])
+	for _, val := range arr {
+		hp.Add(val)
 	}
-	i = 0
-	for i < size && i < k {
-		value = hp.Remove()
-		i += 1
+	for i := 0; i < k; i++ {
+		hp.Remove()
 	}
-	return value
+	return hp.Remove()
 }
 
-func KthSmallest3(arr []int, size int, k int) int {
+func KthSmallest3(arr []int, k int) int {
 	hp := CreateHeap(false)
-	for i := 0; i < size; i++ {
-		if i < k {
-			hp.Add(arr[i])
-		} else {
-			if hp.Peek() > arr[i] {
-				hp.Add(arr[i])
-				hp.Remove()
-			}
+	for _, val := range arr {
+		if hp.size < k {
+			hp.Add(val)
+		} else if hp.Peek() > val {
+			hp.Add(val)
+			hp.Remove()
 		}
 	}
 	return hp.Peek()
 }
 
-//Testing Code 
+//Testing Code
 func main7() {
-	arr :=  []int { 8, 7, 6, 5, 7, 5, 2, 1 }
-	fmt.Println("Kth Smallest ::", KthSmallest(arr, len(arr), 3))
-	arr2 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
-	fmt.Println("Kth Smallest ::", KthSmallest2(arr2, len(arr2), 3))
-	arr3 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
-	fmt.Println("Kth Smallest ::", KthSmallest3(arr3, len(arr3), 3))
+	arr := []int{8, 7, 6, 5, 7, 5, 2, 1}
+	fmt.Println("Kth Smallest:", KthSmallest(arr, 3))
+	arr2 := []int{8, 7, 6, 5, 7, 5, 2, 1}
+	fmt.Println("Kth Smallest:", KthSmallest2(arr2, 3))
+	arr3 := []int{8, 7, 6, 5, 7, 5, 2, 1}
+	fmt.Println("Kth Smallest:", KthSmallest3(arr3, 3))
 }
 
 /*
@@ -368,7 +363,7 @@ Kth Smallest :: 5
 Kth Smallest :: 5
 */
 
-func KSmallestProduct(arr[] int, size int, k int) int {
+func KSmallestProduct(arr []int, size int, k int) int {
 	sort.Ints(arr)
 	product := 1
 	for i := 0; i < k; i++ {
@@ -377,7 +372,7 @@ func KSmallestProduct(arr[] int, size int, k int) int {
 	return product
 }
 
-func KSmallestProduct2(arr[] int, size int, k int) int {
+func KSmallestProduct2(arr []int, size int, k int) int {
 	hp := CreateHeap(true)
 	i := 0
 	product := 1
@@ -385,21 +380,21 @@ func KSmallestProduct2(arr[] int, size int, k int) int {
 		hp.Add(arr[i])
 	}
 	i = 0
-	for (i < size && i < k) {
+	for i < size && i < k {
 		product *= hp.Remove()
 		i += 1
 	}
 	return product
 }
 
-func swap(arr[] int, i int, j int) {
+func swap(arr []int, i int, j int) {
 	temp := arr[i]
 	arr[i] = arr[j]
 	arr[j] = temp
 }
 
-func QuickSelectUtil(arr[] int, lower int, upper int, k int) {
-	if (upper <= lower) {
+func QuickSelectUtil(arr []int, lower int, upper int, k int) {
+	if upper <= lower {
 		return
 	}
 
@@ -407,29 +402,29 @@ func QuickSelectUtil(arr[] int, lower int, upper int, k int) {
 	start := lower
 	stop := upper
 
-	for (lower < upper) {
-		for (lower < upper && arr[lower] <= pivot) {
+	for lower < upper {
+		for lower < upper && arr[lower] <= pivot {
 			lower++
 		}
-		for (lower <= upper && arr[upper] > pivot) {
+		for lower <= upper && arr[upper] > pivot {
 			upper--
 		}
-		if (lower < upper) {
+		if lower < upper {
 			swap(arr, upper, lower)
 		}
 	}
 
 	swap(arr, upper, start) // upper is the pivot position
-	if (k < upper) {
-		QuickSelectUtil(arr, start, upper - 1, k) // pivot -1 is the upper for left sub array.
+	if k < upper {
+		QuickSelectUtil(arr, start, upper-1, k) // pivot -1 is the upper for left sub array.
 	}
-	if (k > upper) {
-		QuickSelectUtil(arr, upper + 1, stop, k) // pivot + 1 is the lower for right sub array.
+	if k > upper {
+		QuickSelectUtil(arr, upper+1, stop, k) // pivot + 1 is the lower for right sub array.
 	}
 }
 
-func KSmallestProduct3(arr[] int, size int, k int) int {
-	QuickSelectUtil(arr, 0, size - 1, k)
+func KSmallestProduct3(arr []int, size int, k int) int {
+	QuickSelectUtil(arr, 0, size-1, k)
 	product := 1
 	for i := 0; i < k; i++ {
 		product *= arr[i]
@@ -455,13 +450,13 @@ func KSmallestProduct4(arr []int, size int, k int) int {
 	return product
 }
 
-//Testing Code 
+//Testing Code
 func main8() {
-	arr := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	arr := []int{8, 7, 6, 5, 7, 5, 2, 1}
 	fmt.Println("Kth Smallest product ::", KSmallestProduct(arr, 8, 3))
-	arr2 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	arr2 := []int{8, 7, 6, 5, 7, 5, 2, 1}
 	fmt.Println("Kth Smallest product ::", KSmallestProduct2(arr2, 8, 3))
-	arr3 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	arr3 := []int{8, 7, 6, 5, 7, 5, 2, 1}
 	fmt.Println("Kth Smallest product ::", KSmallestProduct3(arr3, 8, 3))
 	arr4 := []int{8, 7, 6, 5, 7, 5, 2, 1}
 	fmt.Println("Kth Smallest product ::", KSmallestProduct4(arr4, 8, 3))
@@ -486,7 +481,7 @@ func KthLargest(arr []int, size int, k int) int {
 	return value
 }
 
-func PrintLargerHalf(arr[] int, size int) {
+func PrintLargerHalf(arr []int, size int) {
 	sort.Ints(arr) // , size, 1)
 	for i := size / 2; i < size; i++ {
 		fmt.Print(arr[i], " ")
@@ -494,43 +489,43 @@ func PrintLargerHalf(arr[] int, size int) {
 	fmt.Println()
 }
 
-func PrintLargerHalf2(arr[] int, size int) {
+func PrintLargerHalf2(arr []int, size int) {
 	hp := CreateHeap(false)
 	for i := 0; i < size; i++ {
 		hp.Add(arr[i])
 	}
 
-	for i := 0; i < size / 2; i++ {
+	for i := 0; i < size/2; i++ {
 		fmt.Print(hp.Remove(), " ")
 	}
 	fmt.Println()
 }
 
-func PrintLargerHalf3(arr[] int, size int) {
-	QuickSelectUtil(arr, 0, size - 1, size / 2)
+func PrintLargerHalf3(arr []int, size int) {
+	QuickSelectUtil(arr, 0, size-1, size/2)
 	for i := size / 2; i < size; i++ {
 		fmt.Print(arr[i], " ")
 	}
 	fmt.Println()
 }
 
-//Testing Code 
+//Testing Code
 func main9() {
-	arr := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	arr := []int{8, 7, 6, 5, 7, 5, 2, 1}
 	PrintLargerHalf(arr, 8)
-	arr2 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	arr2 := []int{8, 7, 6, 5, 7, 5, 2, 1}
 	PrintLargerHalf2(arr2, 8)
-	arr3 := []int { 8, 7, 6, 5, 7, 5, 2, 1 }
+	arr3 := []int{8, 7, 6, 5, 7, 5, 2, 1}
 	PrintLargerHalf3(arr3, 8)
 }
 
 /*
-6 7 7 8 
-8 7 7 6 
+6 7 7 8
+8 7 7 6
 6 7 7 8
 */
 
-func sortK(arr[] int, size int, k int) {
+func sortK(arr []int, size int, k int) {
 	hp := CreateHeap(true)
 	for i := 0; i < k && i < size; i++ {
 		hp.Add(arr[i])
@@ -543,7 +538,7 @@ func sortK(arr[] int, size int, k int) {
 		hp.Add(arr[i])
 	}
 
-	for (hp.Size() > 0) {
+	for hp.Size() > 0 {
 		arr[index] = hp.Remove()
 		index++
 	}
@@ -552,7 +547,7 @@ func sortK(arr[] int, size int, k int) {
 // Testing Code
 func main10() {
 	k := 3
-	arr := []int { 1, 5, 4, 10, 50, 9 }
+	arr := []int{1, 5, 4, 10, 50, 9}
 	sortK(arr, len(arr), k)
 	fmt.Println(arr)
 }
@@ -566,31 +561,31 @@ func kthLargestStream(k int) {
 	size := 0
 	data := 0
 
-	for (true) {
+	for true {
 		fmt.Println("Enter data: ")
 		fmt.Scanf("%d", &data)
 
-		if (size < k - 1) {
+		if size < k-1 {
 			hp.Add(data)
 		} else {
-			if (size == k - 1) {
+			if size == k-1 {
 				hp.Add(data)
-			} else if (hp.Peek() < data) {
+			} else if hp.Peek() < data {
 				hp.Add(data)
 				hp.Remove()
 			}
-			fmt.Println("Kth larges element is ::", hp , hp.Peek())
+			fmt.Println("Kth larges element is ::", hp, hp.Peek())
 		}
-		size += 1;
+		size += 1
 	}
 }
 
-//Testing Code 
+//Testing Code
 func main11() {
 	kthLargestStream(3)
 }
 
-func main(){
+func main() {
 	main1()
 	main2()
 	main3()

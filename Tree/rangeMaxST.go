@@ -10,28 +10,28 @@ type rangeMaxST struct {
 	n      int
 }
 
-func NewrangeMaxST(input []int) (self *rangeMaxST) {
-	self = &rangeMaxST{}
+func NewrangeMaxST(input []int) *rangeMaxST {
+	self := &rangeMaxST{}
 	self.n = len(input)
 	// Height of segment tree.
-	x := (math.Ceil(math.Log(float64(self.n)) / math.Log(2)))
-	//Maximum size of segment tree
-	max_size := int(2*math.Pow(2.0, x) - 1)
+	x := math.Ceil(math.Log(float64(self.n)) / math.Log(2))
+	// Maximum size of segment tree
+	maxSize := int(2*math.Pow(2.0, x) - 1)
 	// Allocate memory for segment tree
-	self.segArr = make([]int, max_size)
+	self.segArr = make([]int, maxSize)
 	self.constructST(input, 0, self.n-1, 0)
-	return
+	return self
 }
 
 func (self *rangeMaxST) constructST(input []int, start int, end int, index int) int {
-	// Store it in current node of the segment tree and return
+	// Store it in the current node of the segment tree and return
 	if start == end {
 		self.segArr[index] = input[start]
 		return input[start]
 	}
 	// If there are more than one elements,
 	// then traverse left and right subtrees
-	// and store the minimum of values in current node.
+	// and store the minimum of values in the current node.
 	mid := (start + end) / 2
 	self.segArr[index] = self.max(self.constructST(input, start, mid, index*2+1), self.constructST(input, mid+1, end, index*2+2))
 	return self.segArr[index]
@@ -60,7 +60,7 @@ func (self *rangeMaxST) getMaxUtil(segStart int, segEnd int, queryStart int, que
 	if segEnd < queryStart || queryEnd < segStart {
 		return math.MinInt32
 	}
-	// Segment tree is partly overlaps with the query range.
+	// Segment tree partly overlaps with the query range.
 	mid := (segStart + segEnd) / 2
 	return self.max(self.getMaxUtil(segStart, mid, queryStart, queryEnd, 2*index+1), self.getMaxUtil(mid+1, segEnd, queryStart, queryEnd, 2*index+2))
 }
@@ -71,33 +71,33 @@ func (self *rangeMaxST) Update(ind int, val int) {
 		fmt.Println("Invalid Input.")
 		return
 	}
-	// Update the values in segment tree
+	// Update the values in the segment tree
 	self.updateUtil(0, self.n-1, ind, val, 0)
 }
 
 // Always min inside valid range will be returned.
 func (self *rangeMaxST) updateUtil(segStart int, segEnd int, ind int, val int, index int) int {
-	// Update index lies outside the range of current segment.
-	// So minimum will not change.
+	// Update index lies outside the range of the current segment.
+	// So the minimum will not change.
 	if ind < segStart || ind > segEnd {
 		return self.segArr[index]
 	}
-	// If the input index is in range of this node, then update the
-	// value of the node and its children
+	// If the input index is in the range of this node, then update the
+	// value of the node and its children.
 	if segStart == segEnd {
-		if segStart == ind { // Index value need to be updated.
+		if segStart == ind { // Index value needs to be updated.
 			self.segArr[index] = val
 			return val
 		} else {
-			return self.segArr[index] // index value is not changed.
+			return self.segArr[index] // Index value is not changed.
 		}
 	}
 	mid := (segStart + segEnd) / 2
-	// Current node value is updated with min. 
-    self.segArr[index] = self.max(self.updateUtil(segStart, mid, ind, val, 2*index+1), 
-					self.updateUtil(mid+1, segEnd, ind, val, 2*index+2))
-	// Value of diff is propagated to the parent node.
-    return self.segArr[index]
+	// Current node value is updated with min.
+	self.segArr[index] = self.max(self.updateUtil(segStart, mid, ind, val, 2*index+1),
+		self.updateUtil(mid+1, segEnd, ind, val, 2*index+2))
+	// The value of diff is propagated to the parent node.
+	return self.segArr[index]
 }
 
 func main() {

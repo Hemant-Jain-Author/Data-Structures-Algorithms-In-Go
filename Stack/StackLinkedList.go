@@ -50,12 +50,12 @@ func main() {
 	for i := 0; i < 5; i++ {
 		stk.Push(i)
 	}
-	//stk.Print()
 	for stk.IsEmpty() == false {
 		fmt.Print(stk.Pop(), " ")
 	}
 }
 
 /*
+Output:
 4 3 2 1 0
 */

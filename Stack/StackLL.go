@@ -3,71 +3,71 @@ package main
 import "fmt"
 
 type Node struct {
-    value int
-    next  *Node
+	value int
+	next  *Node
 }
 
 type StackLinkedList struct {
-    head *Node
-    size int
+	head *Node
+	size int
 }
 
 func (s *StackLinkedList) Size() int {
-    return s.size
+	return s.size
 }
 
 func (s *StackLinkedList) IsEmpty() bool {
-    return s.size == 0
+	return s.size == 0
 }
 
 func (s *StackLinkedList) Peek() int {
-    if s.IsEmpty() {
-        fmt.Println("StackEmptyException")
-        return 0
-    }
-    return s.head.value
+	if s.IsEmpty() {
+		fmt.Println("StackEmptyException")
+		return 0
+	}
+	return s.head.value
 }
 
 func (s *StackLinkedList) Push(value int) {
-    s.head = &Node{value, s.head}
-    s.size++
+	s.head = &Node{value, s.head}
+	s.size++
 }
 
 func (s *StackLinkedList) Pop() int {
-    if s.IsEmpty() {
-        fmt.Println("StackEmptyException")
-        return 0
-    }
+	if s.IsEmpty() {
+		fmt.Println("StackEmptyException")
+		return 0
+	}
 
-    value := s.head.value
-    s.head = s.head.next
-    s.size--
-    return value
+	value := s.head.value
+	s.head = s.head.next
+	s.size--
+	return value
 }
 
 func (s *StackLinkedList) Print() {
-    temp := s.head
-    fmt.Print("[")
-    for temp != nil {
-        fmt.Print(temp.value, " ")
-        temp = temp.next
-    }
-    fmt.Println("]")
+	temp := s.head
+	fmt.Print("[")
+	for temp != nil {
+		fmt.Print(temp.value, " ")
+		temp = temp.next
+	}
+	fmt.Println("]")
 }
 
-func (s *StackLinkedList) insertAtBottom(value int) {
-    if s.IsEmpty() {
-        s.Push(value)
-    } else {
-        temp := s.Pop()
-        s.insertAtBottom(value)
-        s.Push(temp)
-    }
+func (s *StackLinkedList) InsertAtBottom(value int) {
+	if s.IsEmpty() {
+		s.Push(value)
+	} else {
+		temp := s.Pop()
+		s.InsertAtBottom(value)
+		s.Push(temp)
+	}
 }
 
 // Testing code
 func main() {
-    stk := new(StackLinkedList)
+	stk := new(StackLinkedList)
 	stk.Push(1)
 	stk.Push(2)
 	stk.Push(3)
@@ -77,7 +77,7 @@ func main() {
 }
 
 /*
+Output:
 [3 2 1 ]
-3 2 
+3 2
 */
-

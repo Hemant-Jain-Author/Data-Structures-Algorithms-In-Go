@@ -6,14 +6,14 @@ import (
 	"sort"
 )
 
-func BucketSort(arr []int, maxValue int, numBucket int) {
+func BucketSort(arr []int, maxValue, numBucket int) {
 	length := len(arr)
 	if length == 0 {
 		return
 	}
 	bucket := make([][]int, numBucket)
 	div := int(math.Ceil(float64(maxValue / numBucket)))
-	
+
 	for i := 0; i < length; i++ {
 		if arr[i] < 0 || arr[i] > maxValue {
 			fmt.Println("Value out of range.")

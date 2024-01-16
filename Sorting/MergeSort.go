@@ -1,22 +1,20 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func MergeSort(arr []int) {
 	size := len(arr)
 	tempArray := make([]int, size)
-	mergeSrt(arr, tempArray, 0, size-1)
+	mergeSort(arr, tempArray, 0, size-1)
 }
 
-func mergeSrt(arr []int, tempArray []int, lowerIndex int, upperIndex int) {
+func mergeSort(arr []int, tempArray []int, lowerIndex int, upperIndex int) {
 	if lowerIndex >= upperIndex {
 		return
 	}
 	middleIndex := (lowerIndex + upperIndex) / 2
-	mergeSrt(arr, tempArray, lowerIndex, middleIndex)
-	mergeSrt(arr, tempArray, middleIndex+1, upperIndex)
+	mergeSort(arr, tempArray, lowerIndex, middleIndex)
+	mergeSort(arr, tempArray, middleIndex+1, upperIndex)
 	merge(arr, tempArray, lowerIndex, middleIndex, upperIndex)
 }
 

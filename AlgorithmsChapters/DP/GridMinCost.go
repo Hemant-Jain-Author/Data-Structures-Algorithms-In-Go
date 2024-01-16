@@ -6,11 +6,12 @@ func MinCost(cost [][]int, m int, n int) int {
 	if m == 0 || n == 0 {
 		return 99999
 	}
-	if m == 1 && n == 1{
+	if m == 1 && n == 1 {
 		return cost[0][0]
 	}
 	return cost[m-1][n-1] + min(MinCost(cost, m-1, n-1), MinCost(cost, m-1, n), MinCost(cost, m, n-1))
 }
+
 func MinCostBU(cost [][]int, m int, n int) int {
 	tc := make([][]int, m)
 	for i := range tc {
@@ -27,6 +28,7 @@ func MinCostBU(cost [][]int, m int, n int) int {
 	for j := 1; j < n; j++ {
 		tc[0][j] = tc[0][j-1] + cost[0][j]
 	}
+
 	for i := 1; i < m; i++ {
 		for j := 1; j < n; j++ {
 			tc[i][j] = cost[i][j] + min(tc[i-1][j-1], tc[i-1][j], tc[i][j-1])

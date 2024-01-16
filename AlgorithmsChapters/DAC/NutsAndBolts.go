@@ -1,10 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func MakePairs(nuts []int, bolts []int) {
+	if len(nuts) != len(bolts) {
+		fmt.Println("Mismatched sizes of nuts and bolts")
+		return
+	}
 	makePairsUtil(nuts, bolts, 0, len(nuts)-1)
-	fmt.Print("Matched nuts and bolts are : ", nuts, " & ", bolts)
+	fmt.Print("Matched nuts and bolts are: ", nuts, " & ", bolts)
 }
 
 func makePairsUtil(nuts []int, bolts []int, low int, high int) {
@@ -16,14 +22,14 @@ func makePairsUtil(nuts []int, bolts []int, low int, high int) {
 	}
 }
 
-func partition(arr []int, low int, high int, pivot int) (int) {
+func partition(arr []int, low int, high int, pivot int) int {
 	i := low
 	for j := low; j < high; j++ {
 		if arr[j] < pivot {
 			swap(arr, i, j)
 			i++
 		} else if arr[j] == pivot {
-			swap(arr, high, j)
+			swap(arr, j, high)
 			j--
 		}
 	}
@@ -42,5 +48,5 @@ func main() {
 }
 
 /*
-Matched nuts and bolts are : [1 2 3 4 5 6] & [1 2 3 4 5 6]
+Matched nuts and bolts are: [1 2 3 4 5 6] & [1 2 3 4 5 6]
 */

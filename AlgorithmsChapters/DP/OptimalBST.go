@@ -140,6 +140,7 @@ func OptimalBSTCostBU2(keys []int, freq []int) int {
 	}
 	return cost[0][n-1]
 }
+
 func sumInit(freq []int, n int) []int {
 	sum := make([]int, n)
 	sum[0] = freq[0]

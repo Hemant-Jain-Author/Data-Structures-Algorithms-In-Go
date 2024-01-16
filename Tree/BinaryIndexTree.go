@@ -7,59 +7,60 @@ type BinaryIndexTree struct {
 	size int
 }
 
-func NewBinaryIndexTree(arr []int) (self *BinaryIndexTree) {
-	self = &BinaryIndexTree{}
-	self.size = len(arr)
-	self.BIT = make([]int, self.size+1)
+func NewBinaryIndexTree(arr []int) *BinaryIndexTree {
+	t := &BinaryIndexTree{
+		size: len(arr),
+		BIT:  make([]int, len(arr)+1),
+	}
 
 	// Populating bit.
-	for i := 0; i < self.size; i++ {
-		self.Update(i, arr[i])
+	for i := 0; i < t.size; i++ {
+		t.Update(i, arr[i])
 	}
-	return
+	return t
 }
 
-func (self *BinaryIndexTree) Update(index int, val int) {
+func (t *BinaryIndexTree) Update(index int, val int) {
 	// Index in bit is 1 more than the input array.
-	index = index + 1
+	index++
 
 	// Traverse to ancestors of nodes.
-	for index <= self.size {
-		// Add val to current node of Binary Index Tree.
-		self.BIT[index] += val
-		// Next element which need to store val.
+	for index <= t.size {
+		// Add val to the current node of the Binary Index Tree.
+		t.BIT[index] += val
+		// Next element that needs to store val.
 		index += index & -index
 	}
 }
 
-func (self *BinaryIndexTree) Set(arr []int, index int, val int) {
+func (t *BinaryIndexTree) Set(arr []int, index int, val int) {
 	diff := val - arr[index]
 	arr[index] = val
 
 	// Difference is propagated.
-	self.Update(index, diff)
+	t.Update(index, diff)
 }
 
 // Range sum in the range start to end.
-func (self *BinaryIndexTree) RangeSum(start int, end int) int {
+func (t *BinaryIndexTree) RangeSum(start int, end int) int {
 	// Check for error conditions.
-	if start > end || start < 0 || end > self.size-1 {
-		fmt.Println("Invalid Input.")
+	if start > end || start < 0 || end > t.size-1 {
+		fmt.Println("Invalid input.")
 		return -1
 	}
-	return self.PrefixSum(end) - self.PrefixSum(start-1)
+	return t.PrefixSum(end) - t.PrefixSum(start-1)
 }
 
 // Prefix sum in the range 0 to index.
-func (self *BinaryIndexTree) PrefixSum(index int) int {
+func (t *BinaryIndexTree) PrefixSum(index int) int {
 	sum := 0
-	index = index + 1
+	index++
 
 	// Traverse ancestors of Binary Index Tree nodes.
 	for index > 0 {
-		// Add current element to sum.
-		sum += self.BIT[index]
-		// Parent index calculation.
+		// Add the current element to the sum.
+		sum += t.BIT[index]
+		// Calculate the parent index.
 		index -= index & -index
 	}
 	return sum

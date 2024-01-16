@@ -5,22 +5,28 @@ import (
 	"math"
 )
 
-func NQueens(Q []int, k int, n int) {
-	if k == n {
-		fmt.Println(Q)
+func NQueens(n int) {
+	board := make([]int, n)
+	nQueensUtil(board, 0, n)
+}
+
+func nQueensUtil(board []int, col int, n int) {
+	if col == n {
+		fmt.Println(board)
 		return
 	}
-	for i := 0; i < n; i++ {
-		Q[k] = i
-		if feasible(Q, k) {
-			NQueens(Q, k+1, n)
+
+	for row := 0; row < n; row++ {
+		board[col] = row
+		if isSafe(board, col) {
+			nQueensUtil(board, col+1, n)
 		}
 	}
 }
 
-func feasible(Q []int, k int) bool {
-	for i := 0; i < k; i++ {
-		if Q[k] == Q[i] || math.Abs(float64(Q[i]-Q[k])) == math.Abs(float64(i-k)) {
+func isSafe(board []int, col int) bool {
+	for i := 0; i < col; i++ {
+		if board[col] == board[i] || math.Abs(float64(board[col]-board[i])) == float64(col-i) {
 			return false
 		}
 	}
@@ -29,8 +35,7 @@ func feasible(Q []int, k int) bool {
 
 // Testing code.
 func main() {
-	Q := make([]int, 8)
-	NQueens(Q, 0, 8)
+	NQueens(8)
 }
 
 /*

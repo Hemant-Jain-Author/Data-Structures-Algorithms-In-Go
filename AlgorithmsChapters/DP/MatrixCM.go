@@ -18,9 +18,9 @@ func matrixChainMulBruteForceUtil(p []int, i int, j int) int {
 	}
 	min := math.MaxInt32
 
-	// place parenthesis at different places between
-	// first and last matrix, recursively calculate
-	// count of multiplications for each parenthesis
+	// Place parentheses at different places between
+	// the first and last matrix, recursively calculate
+	// the count of multiplications for each parenthesis
 	// placement and return the minimum count
 	for k := i; k < j; k++ {
 		count := matrixChainMulBruteForceUtil(p, i, k) +
@@ -43,7 +43,6 @@ func MatrixChainMulTD(p []int, n int) int {
 	return matrixChainMulTDUtil(dp, p, 1, n-1)
 }
 
-// Function for matrix chain multiplication
 func matrixChainMulTDUtil(dp [][]int, p []int, i int, j int) int {
 	// Base Case
 	if i == j {
@@ -115,39 +114,40 @@ func MatrixChainMulBU2(p []int, n int) int {
 			}
 		}
 	}
-	PrintOptimalParenthesis(n, pos)
+	printOptimalParenthesis(n, pos)
 	return dp[1][n-1]
 }
 
-func PrintOptPar(n int, pos [][]int, i int, j int) string {
-	output := "";
-	if i == j{
-		output +=  "M" + strconv.Itoa(pos[i][i]) + " ";
+func printOptPar(n int, pos [][]int, i int, j int) string {
+	output := ""
+	if i == j {
+		output += "M" + strconv.Itoa(pos[i][i]) + " "
 	} else {
-		output +=  "( ";
-		output +=  PrintOptPar(n, pos, i, pos[i][j])
-		output +=  PrintOptPar(n, pos, pos[i][j] + 1, j)
-		output +=  ") ";
+		output += "( "
+		output += printOptPar(n, pos, i, pos[i][j])
+		output += printOptPar(n, pos, pos[i][j]+1, j)
+		output += ") "
 	}
-	return output;
-};
+	return output
+}
 
-func PrintOptimalParenthesis(n int, pos [][]int) {
-	fmt.Println("OptimalParenthesis :", PrintOptPar(n, pos , 1, n - 1));
-};
+func printOptimalParenthesis(n int, pos [][]int) {
+	fmt.Println("Optimal Parenthesis:", printOptPar(n, pos, 1, n-1))
+}
+
 func main() {
 	arr := []int{1, 2, 3, 4}
 	n := len(arr)
-	fmt.Println("Matrix Chain Multiplication is :", MatrixChainMulBruteForce(arr, n))
-	fmt.Println("Matrix Chain Multiplication is :", MatrixChainMulTD(arr, n))
-	fmt.Println("Matrix Chain Multiplication is :", MatrixChainMulBU(arr, n))
-	fmt.Println("Matrix Chain Multiplication is :", MatrixChainMulBU2(arr, n))
+	fmt.Println("Matrix Chain Multiplication is:", MatrixChainMulBruteForce(arr, n))
+	fmt.Println("Matrix Chain Multiplication is:", MatrixChainMulTD(arr, n))
+	fmt.Println("Matrix Chain Multiplication is:", MatrixChainMulBU(arr, n))
+	fmt.Println("Matrix Chain Multiplication is:", MatrixChainMulBU2(arr, n))
 }
 
 /*
-Matrix Chain Multiplication is : 18
-Matrix Chain Multiplication is : 18
-Matrix Chain Multiplication is : 18
-OptimalParenthesis : ( ( M1 M2 ) M3 ) 
-Matrix Chain Multiplication is : 18
+Matrix Chain Multiplication is: 18
+Matrix Chain Multiplication is: 18
+Matrix Chain Multiplication is: 18
+Optimal Parenthesis: ( ( M1 M2 ) M3 )
+Matrix Chain Multiplication is: 18
 */

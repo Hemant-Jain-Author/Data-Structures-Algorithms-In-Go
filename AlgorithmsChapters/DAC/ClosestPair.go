@@ -11,31 +11,27 @@ type Point struct {
 	y int
 }
 
-func NewPoint(a int, b int) *Point {
-    p := new(Point)
-    p.x = a
-    p.y = b
-    return p
+func NewPoint(a, b int) *Point {
+	return &Point{x: a, y: b}
 }
 
-func distance(a *Point, b *Point) float64 {
+func distance(a, b *Point) float64 {
 	return math.Sqrt(float64((a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y)))
 }
 
 func ClosestPairBF(arr [][]int) float64 {
 	n := len(arr)
-	var dMin float64
-	dMin = math.MaxInt32
-	var d float64
+	dMin := math.MaxFloat64
+
 	for i := 0; i < n-1; i++ {
 		for j := i + 1; j < n; j++ {
-			d = math.Sqrt(float64((arr[i][0]-arr[j][0])*(arr[i][0]-arr[j][0]) +
-				(arr[i][1]-arr[j][1])*(arr[i][1]-arr[j][1])))
+			d := distance(NewPoint(arr[i][0], arr[i][1]), NewPoint(arr[j][0], arr[j][1]))
 			if d < dMin {
 				dMin = d
 			}
 		}
 	}
+
 	return dMin
 }
 
@@ -60,10 +56,9 @@ func ClosestPairDC(arr [][]int) float64 {
 	return closestPairUtil(p, 0, n-1, q, n)
 }
 
-
 func closestPairUtil(p []*Point, start int, stop int, q []*Point, n int) float64 {
 	if stop-start < 1 {
-		return math.MaxInt32
+		return math.MaxFloat64
 	}
 	if stop-start == 1 {
 		return distance(p[start], p[stop])
@@ -86,10 +81,10 @@ func closestPairUtil(p []*Point, start int, stop int, q []*Point, n int) float64
 func stripMin(q []*Point, n int, d float64) float64 {
 	min := d
 	for i := 0; i < n; i++ {
-		for j := i + 1; j < n && (float64)(q[j].y-q[i].y) < min; j++ {
-			d = distance(q[i], q[j])
-			if d < min {
-				min = d
+		for j := i + 1; j < n && float64(q[j].y-q[i].y) < min; j++ {
+			dist := distance(q[i], q[j])
+			if dist < min {
+				min = dist
 			}
 		}
 	}
@@ -97,7 +92,7 @@ func stripMin(q []*Point, n int, d float64) float64 {
 }
 
 func main() {
-	arr := [][]int{{648, 896},{269, 879},{250, 922},{453, 347},{213, 17}}
+	arr := [][]int{{648, 896}, {269, 879}, {250, 922}, {453, 347}, {213, 17}}
 	fmt.Println("Smallest distance is:", ClosestPairBF(arr))
 	fmt.Println("Smallest distance is:", ClosestPairDC(arr))
 }

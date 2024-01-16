@@ -11,9 +11,8 @@ func (q *Queue) Add(value interface{}) {
 }
 
 func (q *Queue) Remove() interface{} {
-	n := len(q.que)
 	value := q.que[0]
-	q.que = q.que[1:n]
+	q.que = q.que[1:]
 	return value
 }
 
@@ -41,26 +40,25 @@ func (q *Queue) Len() int {
 	return len(q.que)
 }
 
-func (q Queue) Print() {
+func (q *Queue) Print() {
 	fmt.Println(q.que)
 }
 
-
 func main() {
-	que := new(Queue)
-	que.Add(1)
-	que.Add(2)
-	que.Add(3)
-	fmt.Println("IsEmpty :", que.IsEmpty());
-    fmt.Println("Size :", que.Len());
-    fmt.Println("Queue remove :", que.Remove());
-    fmt.Println("Queue remove :", que.Remove());
-
+	queue := new(Queue)
+	queue.Add(1)
+	queue.Add(2)
+	queue.Add(3)
+	fmt.Println("IsEmpty:", queue.IsEmpty())
+	fmt.Println("Size:", queue.Len())
+	fmt.Println("Queue remove:", queue.Remove())
+	fmt.Println("Queue remove:", queue.Remove())
 }
 
 /*
-IsEmpty : false
-Size : 3
-Queue remove : 1
-Queue remove : 2
+Output:
+IsEmpty: false
+Size: 3
+Queue remove: 1
+Queue remove: 2
 */

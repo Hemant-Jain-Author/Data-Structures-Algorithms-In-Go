@@ -28,16 +28,16 @@ func LargestPalindromicSubstr(str string) int {
 			}
 		}
 	}
-	fmt.Println("Max Length Palindromic Substrings :", str[start:start+maxVal])
+	fmt.Println("Max Length Palindromic Substrings:", str[start:start+maxVal])
 	return maxVal
 }
 
 func main() {
 	str := "ABCAUCBCxxCBA"
-	fmt.Println("Max Palindromic Substrings len :", LargestPalindromicSubstr(str))
+	fmt.Println("Max Palindromic Substrings len:", LargestPalindromicSubstr(str))
 }
 
 /*
-Max Length Palindromic Substrings : BCxxCB
-Max Palindromic Substrings len : 6
+Max Length Palindromic Substrings: BCxxCB
+Max Palindromic Substrings len: 6
 */

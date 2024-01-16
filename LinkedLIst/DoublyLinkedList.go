@@ -1,8 +1,6 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type DoublyLinkedList struct {
 	head  *DLLNode
@@ -24,15 +22,16 @@ func (list *DoublyLinkedList) IsEmpty() bool {
 	return list.count == 0
 }
 
-func (list *DoublyLinkedList) Peek() int {
+func (list *DoublyLinkedList) Peek() (int, bool) {
 	if list.IsEmpty() {
 		fmt.Println("EmptyListException")
+		return 0, false
 	}
-	return list.head.value
+	return list.head.value, true
 }
 
 func (list *DoublyLinkedList) AddHead(value int) {
-	newNode := &DLLNode{value, nil, nil}
+	newNode := &DLLNode{value: value}
 	if list.count == 0 {
 		list.tail = newNode
 		list.head = newNode
@@ -45,7 +44,7 @@ func (list *DoublyLinkedList) AddHead(value int) {
 }
 
 func (list *DoublyLinkedList) AddTail(value int) {
-	newNode := &DLLNode{value, nil, nil}
+	newNode := &DLLNode{value: value}
 	if list.count == 0 {
 		list.head = newNode
 		list.tail = newNode
@@ -149,8 +148,8 @@ func (list *DoublyLinkedList) ReverseList() {
 	}
 }
 
-func (list *DoublyLinkedList) CopyListReversed( ) *DoublyLinkedList {
-	dll := new(DoublyLinkedList)
+func (list *DoublyLinkedList) CopyListReversed() *DoublyLinkedList {
+	dll := &DoublyLinkedList{}
 
 	curr := list.head
 	for curr != nil {
@@ -161,8 +160,8 @@ func (list *DoublyLinkedList) CopyListReversed( ) *DoublyLinkedList {
 	return dll
 }
 
-func (list *DoublyLinkedList) CopyList( ) *DoublyLinkedList {
-	dll := new(DoublyLinkedList)
+func (list *DoublyLinkedList) CopyList() *DoublyLinkedList {
+	dll := &DoublyLinkedList{}
 	curr := list.head
 	for curr != nil {
 		dll.AddTail(curr.value)
@@ -173,7 +172,7 @@ func (list *DoublyLinkedList) CopyList( ) *DoublyLinkedList {
 }
 
 func (list *DoublyLinkedList) SortedInsert(value int) {
-	temp := &DLLNode{value, nil, nil}
+	temp := &DLLNode{value: value}
 	curr := list.head
 	if curr == nil { // first element
 		list.head = temp
@@ -181,14 +180,14 @@ func (list *DoublyLinkedList) SortedInsert(value int) {
 		return
 	}
 
-	if list.head.value > value { // at the begining
+	if list.head.value > value { // at the beginning
 		temp.next = list.head
 		list.head.prev = temp
 		list.head = temp
-		return 
+		return
 	}
 
-	for curr.next != nil && curr.next.value < value { // treversal
+	for curr.next != nil && curr.next.value < value { // traversal
 		curr = curr.next
 	}
 
@@ -207,7 +206,7 @@ func (list *DoublyLinkedList) SortedInsert(value int) {
 func (list *DoublyLinkedList) RemoveDuplicate() {
 	curr := list.head
 	for curr != nil {
-		if (curr.next != nil) && curr.value == curr.next.value {
+		if curr.next != nil && curr.value == curr.next.value {
 			curr.next = curr.next.next
 			if curr.next != nil {
 				curr.next.prev = curr
@@ -221,24 +220,25 @@ func (list *DoublyLinkedList) RemoveDuplicate() {
 }
 
 func main1() {
-	ll := new(DoublyLinkedList)
+	ll := &DoublyLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
 	ll.Print()
-	fmt.Println("Size : ", ll.Size());
-    fmt.Println("IsEmpty : ", ll.IsEmpty());
+	fmt.Println("Size:", ll.Size())
+	fmt.Println("IsEmpty:", ll.IsEmpty())
 }
 
 func main2() {
-	ll := new(DoublyLinkedList)
+	ll := &DoublyLinkedList{}
 	ll.SortedInsert(1)
 	ll.SortedInsert(2)
 	ll.SortedInsert(3)
 	ll.Print()
 }
+
 func main3() {
-	ll := new(DoublyLinkedList)
+	ll := &DoublyLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
@@ -246,8 +246,9 @@ func main3() {
 	ll.RemoveHead()
 	ll.Print()
 }
+
 func main4() {
-	ll := new(DoublyLinkedList)
+	ll := &DoublyLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
@@ -255,8 +256,9 @@ func main4() {
 	ll.RemoveNode(2)
 	ll.Print()
 }
+
 func main5() {
-	ll := new(DoublyLinkedList)
+	ll := &DoublyLinkedList{}
 	ll.SortedInsert(1)
 	ll.SortedInsert(2)
 	ll.SortedInsert(3)
@@ -269,7 +271,7 @@ func main5() {
 }
 
 func main6() {
-	ll := new(DoublyLinkedList)
+	ll := &DoublyLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
@@ -278,8 +280,8 @@ func main6() {
 	ll.Print()
 }
 
-func main(){
-	ll := new(DoublyLinkedList)
+func main7() {
+	ll := &DoublyLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
@@ -290,9 +292,8 @@ func main(){
 	ll2.Print()
 }
 
-
-func main222() {
-	ll := new(DoublyLinkedList)
+func main8() {
+	ll := &DoublyLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
@@ -316,5 +317,39 @@ func main222() {
 	ll2.Print()
 	ll2 = ll.CopyListReversed()
 	ll2.Print()
-
 }
+
+func main() {
+	main1()
+	main2()
+	main3()
+	main4()
+	main5()
+	main6()
+	main7()
+	main8()
+}
+
+/*
+3 2 1
+Size: 3
+IsEmpty: false
+1 2 3
+3 2 1
+2 1
+3 2 1
+3 1
+1 1 2 2 3 3
+1 2 3
+3 2 1
+1 2 3
+3 2 1
+3 2 1
+1 2 3
+6 5 4 3 2 1
+5 4 3 2 1
+
+61 51 41 31 21 11
+61 51 41 31 21 11
+11 21 31 41 51 61
+*/

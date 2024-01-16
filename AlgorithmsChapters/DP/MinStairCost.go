@@ -3,9 +3,15 @@ package main
 import "fmt"
 
 func MinStairCost(cost []int, n int) int {
-	// base case
+	// base cases
+	if n == 0 {
+		return 0
+	}
 	if n == 1 {
 		return cost[0]
+	}
+	if n == 2 {
+		return min(cost[0], cost[1])
 	}
 	dp := make([]int, n)
 	dp[0] = cost[0]
@@ -26,7 +32,7 @@ func min(a, b int) int {
 func main() {
 	a := []int{1, 5, 6, 3, 4, 7, 9, 1, 2, 11}
 	n := len(a)
-	fmt.Print(MinStairCost(a, n))
+	fmt.Println(MinStairCost(a, n))
 }
 
 /*

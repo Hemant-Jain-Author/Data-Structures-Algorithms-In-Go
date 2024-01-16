@@ -22,21 +22,21 @@ func max(a, b int) int {
 func MinCostBSTTD(arr []int) int {
 	n := len(arr)
 	dp := make([][]int, n)
-	max := make([][]int, n)
+	maxVal := make([][]int, n)
 
 	for i := range dp {
 		dp[i] = make([]int, n)
-		max[i] = make([]int, n)
+		maxVal[i] = make([]int, n)
 		for j := range dp[i] {
 			dp[i][j] = math.MaxInt32
-			max[i][j] = math.MinInt32
+			maxVal[i][j] = math.MinInt32
 		}
 	}
 
 	for i := 0; i < n; i++ {
-		max[i][i] = arr[i]
+		maxVal[i][i] = arr[i]
 	}
-	return minCostBSTTDUtil(dp, max, 0, n-1, arr)
+	return minCostBSTTDUtil(dp, maxVal, 0, n-1, arr)
 }
 
 func minCostBSTTDUtil(dp [][]int, maxVal [][]int, i int, j int, arr []int) int {
@@ -78,7 +78,7 @@ func MinCostBSTBU(arr []int) int {
 		maxVal[i][i] = arr[i]
 	}
 
-	for l := 1; l < n; l++ { // l is length of range.
+	for l := 1; l < n; l++ { // l is the length of the range.
 		for i, j := 0, l; j < n; i, j = i+1, j+1 {
 			dp[i][j] = math.MaxInt32
 			for k := i; k < j; k++ {

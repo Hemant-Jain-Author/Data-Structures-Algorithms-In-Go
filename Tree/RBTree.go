@@ -27,16 +27,16 @@ func NewNode(d int, nullNode *Node) (nd *Node) {
 	nd.left = nullNode
 	nd.right = nullNode
 	nd.parent = nullNode
-	nd.colour = true // New node are red in colour.
+	nd.colour = true // New nodes are red in colour.
 	return
 }
 
-// To check whether node is of colour red or not.
+// To check whether a node is red or not.
 func (self *RBTree) isRed(node *Node) bool {
 	if node == nil {
 		return false
 	}
-	return (node.colour == true)
+	return node.colour == true
 }
 
 func (self *RBTree) uncle(node *Node) *Node {
@@ -45,10 +45,10 @@ func (self *RBTree) uncle(node *Node) *Node {
 		return nil
 	}
 	if node.parent == node.parent.parent.left {
-		// uncle on right
+		// Uncle on the right
 		return node.parent.parent.right
 	} else {
-		// uncle on left
+		// Uncle on the left
 		return node.parent.parent.left
 	}
 }
@@ -75,7 +75,7 @@ func (self *RBTree) rightRotate(x *Node) *Node {
 	} else {
 		y.parent.right = y
 	}
-	// Return new root
+	// Return the new root
 	return y
 }
 
@@ -101,7 +101,7 @@ func (self *RBTree) leftRotate(x *Node) *Node {
 	} else {
 		y.parent.right = y
 	}
-	// Return new root
+	// Return the new root
 	return y
 }
 

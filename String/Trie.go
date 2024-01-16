@@ -5,9 +5,11 @@ import (
 	"strings"
 )
 
+const numChars = 26
+
 type TrieNode struct {
 	isLastChar bool
-	child      [26](*TrieNode)
+	child      [numChars]*TrieNode
 }
 
 type Trie struct {
@@ -20,17 +22,18 @@ func (t *Trie) Insert(s string) {
 	}
 
 	str := strings.ToLower(s)
-	t.root = t.InsertUtil(t.root, str, 0)
+	t.root = t.insertUtil(t.root, str, 0)
 }
 
-func (t *Trie) InsertUtil(curr *TrieNode, str string, index int) *TrieNode {
+func (t *Trie) insertUtil(curr *TrieNode, str string, index int) *TrieNode {
 	if curr == nil {
-		curr = new(TrieNode)
+		curr = &TrieNode{}
 	}
-	if len(str) == index {
+	if index == len(str) {
 		curr.isLastChar = true
 	} else {
-		curr.child[str[index]-'a'] = t.InsertUtil(curr.child[str[index]-'a'], str, index+1)
+		charIndex := str[index] - 'a'
+		curr.child[charIndex] = t.insertUtil(curr.child[charIndex], str, index+1)
 	}
 	return curr
 }
@@ -41,21 +44,20 @@ func (t *Trie) Remove(s string) {
 	}
 
 	str := strings.ToLower(s)
-	t.RemoveUtil(t.root, str, 0)
+	t.removeUtil(t.root, str, 0)
 }
 
-func (t *Trie) RemoveUtil(curr *TrieNode, str string, index int) {
+func (t *Trie) removeUtil(curr *TrieNode, str string, index int) {
 	if curr == nil {
 		return
 	}
 
-	if len(str) == index {
-		if curr.isLastChar {
-			curr.isLastChar = false
-		}
+	if index == len(str) {
+		curr.isLastChar = false
 		return
 	}
-	t.RemoveUtil(curr.child[str[index]-'a'], str, index+1)
+	charIndex := str[index] - 'a'
+	t.removeUtil(curr.child[charIndex], str, index+1)
 }
 
 func (t *Trie) Find(s string) bool {
@@ -63,32 +65,27 @@ func (t *Trie) Find(s string) bool {
 		return false
 	}
 	str := strings.ToLower(s)
-	return t.FindUtil(t.root, str, 0)
+	return t.findUtil(t.root, str, 0)
 }
 
-func (t *Trie) FindUtil(curr *TrieNode, str string, index int) bool {
+func (t *Trie) findUtil(curr *TrieNode, str string, index int) bool {
 	if curr == nil {
 		return false
 	}
-	if len(str) == index {
+	if index == len(str) {
 		return curr.isLastChar
 	}
-	return t.FindUtil(curr.child[str[index]-'a'], str, index+1)
+	charIndex := str[index] - 'a'
+	return t.findUtil(curr.child[charIndex], str, index+1)
 }
 
 // Testing code.
 func main() {
-	t := new(Trie)
+	t := &Trie{}
 	t.Insert("banana")
 	t.Insert("apple")
 	t.Insert("mango")
-	fmt.Println("Apple Found :", t.Find("apple"))
-	fmt.Println("Grapes Found :", t.Find("grapes"))
-	fmt.Println("Banana Found :", t.Find("banana"))
+	fmt.Println("Apple Found:", t.Find("apple"))
+	fmt.Println("Grapes Found:", t.Find("grapes"))
+	fmt.Println("Banana Found:", t.Find("banana"))
 }
-
-/*
-Apple Found : true
-Grapes Found : false
-Banana Found : true
-*/

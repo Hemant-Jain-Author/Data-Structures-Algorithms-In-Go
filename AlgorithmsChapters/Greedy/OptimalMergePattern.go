@@ -5,11 +5,11 @@ import (
 )
 
 func OptimalMergePattern(lists []int, size int) int {
-	cmp := func(a, b interface{}) bool { 
-		return a.(int) > b.(int) 
+	cmp := func(a, b interface{}) bool {
+		return a.(int) > b.(int)
 	}
 	hp := CreateHeap(cmp)
-	
+
 	for i := 0; i < size; i++ {
 		hp.Add(lists[i])
 	}
@@ -34,8 +34,8 @@ Total: 29
 */
 
 type Heap struct {
-	size  int
-	arr   []interface{}
+	size int
+	arr  []interface{}
 	comp func(x interface{}, y interface{}) bool
 }
 
@@ -48,7 +48,7 @@ func CreateHeap(comp func(x interface{}, y interface{}) bool, args ...[]interfac
 		size = len(arrInput)
 	}
 
-	h := &Heap{comp: comp, arr : arr, size : size}
+	h := &Heap{comp: comp, arr: arr, size: size}
 	for i := (size / 2); i >= 0; i-- {
 		h.percolateDown(i)
 	}
@@ -61,7 +61,7 @@ func (h *Heap) swap(i, j int) {
 }
 
 func (h *Heap) percolateDown(parent int) {
-	lChild := 2 * parent + 1
+	lChild := 2*parent + 1
 	rChild := lChild + 1
 	child := -1
 	if lChild < h.size {
@@ -87,7 +87,7 @@ func (h *Heap) percolateUp(child int) {
 func (h *Heap) Add(value interface{}) {
 	h.arr = append(h.arr, value)
 	h.size++
-	h.percolateUp(h.size-1)
+	h.percolateUp(h.size - 1)
 }
 
 func (h *Heap) Remove() interface{} {
@@ -96,27 +96,25 @@ func (h *Heap) Remove() interface{} {
 		return 0
 	}
 	value := h.arr[0]
-	h.arr[0] = h.arr[h.size - 1]
+	h.arr[0] = h.arr[h.size-1]
 	h.size--
 	h.percolateDown(0)
-	h.arr = h.arr[0 : h.size]
+	h.arr = h.arr[0:h.size]
 	return value
 }
 
-
-func (h *Heap) Delete( value interface{}) bool {
-    for i := 0; i < h.size; i++ {
-        if (h.arr[i] == value) {
-            h.arr[i] = h.arr[h.size - 1]
-            h.size -= 1
-            h.percolateUp(i)
-            h.percolateDown(i)
-            return true
-        }
-    }
-    return false
+func (h *Heap) Delete(value interface{}) bool {
+	for i := 0; i < h.size; i++ {
+		if h.arr[i] == value {
+			h.arr[i] = h.arr[h.size-1]
+			h.size -= 1
+			h.percolateUp(i)
+			h.percolateDown(i)
+			return true
+		}
+	}
+	return false
 }
-
 
 func (h *Heap) IsEmpty() bool {
 	return (h.size == 0)
@@ -135,8 +133,8 @@ func (h *Heap) Peek() interface{} {
 }
 
 func (h *Heap) Print() {
-	fmt.Println("Heap size :", h.size)
-	fmt.Print("Heap Array :")
+	fmt.Println("Heap size:", h.size)
+	fmt.Print("Heap Array:")
 	for i := 0; i < h.size; i++ {
 		fmt.Print(" ", h.arr[i])
 	}

@@ -56,6 +56,7 @@ func (list *CircularLinkedList) AddTail(value int) {
 func (list *CircularLinkedList) RemoveHead() int {
 	if list.IsEmpty() {
 		fmt.Println("EmptyListException")
+		return 0
 	}
 	value := list.tail.next.value
 
@@ -74,7 +75,6 @@ func (list *CircularLinkedList) IsPresent(data int) bool {
 		if temp.value == data {
 			return true
 		}
-
 		temp = temp.next
 	}
 	return false
@@ -104,7 +104,7 @@ func (list *CircularLinkedList) RemoveNode(key int) bool {
 
 	prev := list.tail
 	curr := list.tail.next
-	head := list.tail.next
+	head := curr
 
 	if curr.value == key { // head and single node case.
 		if curr == curr.next { // single node case
@@ -135,7 +135,7 @@ func (list *CircularLinkedList) RemoveNode(key int) bool {
 }
 
 func (list *CircularLinkedList) CopyListReversed() *CircularLinkedList {
-	cl := new(CircularLinkedList)
+	cl := &CircularLinkedList{}
 	curr := list.tail.next
 	head := curr
 
@@ -151,9 +151,8 @@ func (list *CircularLinkedList) CopyListReversed() *CircularLinkedList {
 	return cl
 }
 
-
 func (list *CircularLinkedList) CopyList() *CircularLinkedList {
-	cl := new(CircularLinkedList)
+	cl := &CircularLinkedList{}
 	curr := list.tail.next
 	head := curr
 
@@ -170,7 +169,7 @@ func (list *CircularLinkedList) CopyList() *CircularLinkedList {
 }
 
 func main1() {
-	ll := new(CircularLinkedList)
+	ll := &CircularLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
@@ -182,9 +181,8 @@ func main1() {
 
 */
 
-
 func main2() {
-	ll := new(CircularLinkedList)
+	ll := &CircularLinkedList{}
 	ll.AddTail(1)
 	ll.AddTail(2)
 	ll.AddTail(3)
@@ -193,12 +191,10 @@ func main2() {
 
 /*
 1 2 3
-
 */
 
-
 func main3() {
-	ll := new(CircularLinkedList)
+	ll := &CircularLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
@@ -206,15 +202,13 @@ func main3() {
 	fmt.Println("IsPresent:", ll.IsPresent(3))
 }
 
-
 /*
 3 2 1
 IsPresent: true
 */
 
-
 func main4() {
-	ll := new(CircularLinkedList)
+	ll := &CircularLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
@@ -229,9 +223,8 @@ func main4() {
 2 1
 */
 
-
 func main5() {
-	ll := new(CircularLinkedList)
+	ll := &CircularLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
@@ -245,9 +238,8 @@ func main5() {
 3 1
 */
 
-
 func main6() {
-	ll := new(CircularLinkedList)
+	ll := &CircularLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
@@ -261,13 +253,12 @@ func main6() {
 1 2 3
 */
 
-
 func main7() {
-	ll := new(CircularLinkedList)
+	ll := &CircularLinkedList{}
 	ll.AddHead(1)
 	ll.AddHead(2)
 	ll.AddHead(3)
-	ll.Print()	
+	ll.Print()
 	ll2 := ll.CopyList()
 	ll2.Print()
 }
@@ -286,6 +277,3 @@ func main() {
 	main6()
 	main7()
 }
-
-
-

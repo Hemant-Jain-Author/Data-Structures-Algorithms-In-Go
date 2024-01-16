@@ -10,7 +10,7 @@ type Items struct {
 	density  float64
 }
 
-func NewItems(a int, b int) *Items {
+func NewItems(a, b int) *Items {
 	p := new(Items)
 	p.wt = a
 	p.cost = b
@@ -26,7 +26,7 @@ func GetMaxCostFractional(wt []int, cost []int, capacity int) float64 {
 		itemList[i] = NewItems(wt[i], cost[i])
 	}
 
-	// Sort dencity in decreasing order.
+	// Sort items by density in decreasing order.
 	sort.Slice(itemList, func(i, j int) bool {
 		return itemList[i].density > itemList[j].density
 	})
